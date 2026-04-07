@@ -19,4 +19,12 @@ class SeatGradeTest {
         // then : 해당 자리의 가격은 15_000이다.
         assertEquals(result.price, 15_000)
     }
+
+    @Test
+    fun `B석의 가격은 12,000원이다`() {
+        // given & when : SeatGrade에서 B석을 생성할 때
+        val result = SeatGrade.B
+        // then : 해당 자리의 가격은 12_000이다.
+        assertEquals(result.price, 12_000)
+    }
 }
