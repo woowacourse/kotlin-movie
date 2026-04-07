@@ -56,4 +56,15 @@ class SeatTest {
         // then : 예외가 발생한다.
         assertEquals(exception.message, "행은 양수이여야 합니다.")
     }
+
+    @Test
+    fun `행이 음수이면 예외가 발생한다`() {
+        // given & when : Seat 객체를 생성할 때 행에 음수를 입력한다.
+        val exception = assertThrows<IllegalArgumentException> {
+            Seat('A', -1, SeatGrade.S, false)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals(exception.message, "행은 양수이여야 합니다.")
+    }
 }
