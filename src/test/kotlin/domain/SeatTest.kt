@@ -36,4 +36,12 @@ class SeatTest {
         // then : 예외가 발생한다.
         assertEquals(exception.message, "열은 한 글자 대문자 알파벳이여야 합니다.")
     }
+
+    @Test
+    fun `행이 양수이면 좌석이 정상 생성된다`() {
+        // given & when : Seat 객체를 생성할 때 행에 양수를 입력한다.
+        val result = Seat('A', 1, SeatGrade.S, false)
+        // then : 정상 생성된다.
+        assertNotNull(result)
+    }
 }
