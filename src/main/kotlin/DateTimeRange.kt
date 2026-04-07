@@ -1,0 +1,12 @@
+import java.time.LocalDateTime
+
+data class DateTimeRange(
+    val start: LocalDateTime,
+    val end: LocalDateTime,
+) {
+    init {
+        require(start.isBefore(end)) { "시작 시간이 종료 시간보다 늦을 수 없습니다" }
+    }
+
+    fun contains(time: LocalDateTime): Boolean = time.isAfter(start) && time.isBefore(end)
+}
