@@ -21,7 +21,7 @@ class MovieTest {
     }
 
     @Test
-    fun `id가 같으면 같은 영화로 판단한다`() {
+    fun `러닝 타임이 달라도 id가 같으면 같은 영화로 판단한다`() {
         assertThat(
             Movie(
                 id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
