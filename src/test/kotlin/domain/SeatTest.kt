@@ -8,6 +8,7 @@ import org.junit.jupiter.api.assertThrows
 class Seat(row: Char, column: Int, grade: SeatGrade, isReserved: Boolean) {
     init {
         require(row.isUpperCase()) { "열은 한 글자 대문자 알파벳이여야 합니다." }
+        require(column > 0) { "행은 양수이여야 합니다." }
     }
 }
 
@@ -43,5 +44,16 @@ class SeatTest {
         val result = Seat('A', 1, SeatGrade.S, false)
         // then : 정상 생성된다.
         assertNotNull(result)
+    }
+
+    @Test
+    fun `행이 0이면 예외가 발생한다`() {
+        // given & when : Seat 객체를 생성할 때 행에 0을 입력한다.
+        val exception = assertThrows<IllegalArgumentException> {
+            Seat('A', 0, SeatGrade.S, false)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals(exception.message, "행은 양수이여야 합니다.")
     }
 }
