@@ -50,4 +50,18 @@ class UserTest {
         // then : 전체 포인트 값이 500이 된다.
         assertEquals(result.point, 500)
     }
+
+    @Test
+    fun `보유 포인트보다 많은 금액을 차감하면 예외가 발생한다`() {
+        // given : User 객체가 주어진다
+        val result = User(1)
+
+        // when : discountPoint로 1500을 입력했을 때
+        val exception = assertThrows<IllegalArgumentException> {
+            result.discountPoint(1500)
+        }
+
+        // then : 예외가 발생 한다.
+        assertEquals(exception.message, "차감액은 전체 포인트보다 작아야 합니다.")
+    }
 }
