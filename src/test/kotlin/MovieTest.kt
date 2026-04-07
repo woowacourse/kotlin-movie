@@ -19,4 +19,19 @@ class MovieTest {
             ),
         )
     }
+
+    @Test
+    fun `id가 같으면 같은 영화로 판단한다`() {
+        assertThat(
+            Movie(
+                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                runningTime = RunningTime(10),
+            ),
+        ).isEqualTo(
+            Movie(
+                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                runningTime = RunningTime(15),
+            ),
+        )
+    }
 }
