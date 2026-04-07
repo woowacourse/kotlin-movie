@@ -5,19 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertThrows
 
-class Seat(row: Char, column: Int, grade: SeatGrade, isReserved: Boolean) {
-    init {
-        require(row.isUpperCase()) { "열은 한 글자 대문자 알파벳이여야 합니다." }
-        require(column > 0) { "행은 양수이여야 합니다." }
-    }
-}
-
-enum class SeatGrade(val price: Int) {
-    S(18_000),
-    A(15_000),
-    B(12_000),
-}
-
 class SeatTest {
     @Test
     fun `열이 한 글자 알파벳이면 좌석이 정상 생성된다`() {
