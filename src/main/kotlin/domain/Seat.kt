@@ -1,15 +1,19 @@
 package domain
 
 data class Seat(
-    val row: Row,
-    val column: Column,
+    val position: SeatPosition,
     val state: ReserveState = ReserveState.AVAILABLE,
 ) {
     val grade: SeatGrade
-        get() = SeatGrade.of(row = row, column = column)
+        get() = SeatGrade.of(position)
 }
 
 enum class ReserveState {
     RESERVED,
     AVAILABLE,
 }
+
+data class SeatPosition(
+    val row: Row,
+    val column: Column,
+)

@@ -10,10 +10,9 @@ enum class SeatGrade(
 
     companion object {
         fun of(
-            row: Row,
-            column: Column,
+            position: SeatPosition
         ): SeatGrade =
-            when (row) {
+            when (position.row) {
                 Row("A"), Row("B") -> B
                 Row("C"), Row("D") -> S
                 else -> A
