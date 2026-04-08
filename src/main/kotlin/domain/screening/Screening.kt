@@ -11,7 +11,7 @@ class Screening(
     val reservatedSeats: ReservatedSeats
 ) {
     fun isReserveAvailable(selectedSeats: List<Seat>): List<Seat> {
-
+        require(isValidSeats(selectedSeats)) { "존재하지 않는 좌석입니다." }
         require(selectedSeats.all { reservatedSeats.isAvailable(it) }) { "이미 예약된 좌석입니다." }
 
         return selectedSeats
@@ -19,8 +19,11 @@ class Screening(
 
     fun reserve(selectedSeats: List<Seat>): Reservation {
         reservatedSeats.add(selectedSeats)
-
         return Reservation(this, selectedSeats)
 
+    }
+
+    private fun isValidSeats(selectedSeats: List<Seat>): Boolean {
+        return selectedSeats.all { screen.seats.hasSeat(it) }
     }
 }
