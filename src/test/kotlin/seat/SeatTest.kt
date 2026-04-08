@@ -46,4 +46,34 @@ class SeatTest {
             ),
         )
     }
+
+    @Test
+    fun `예약되지 않은 좌석에 예약을 성공하면 예약 성공 결과를 반환한다`() {
+        val seat =
+            Seat(
+                row = SeatRow("A"),
+                column = SeatColumn(1),
+                grade = SeatGrade.A,
+                state = SeatState.AVAILABLE,
+            )
+
+        assertThat(
+            seat.reserve(),
+        ).isTrue
+    }
+
+    @Test
+    fun `예약된 좌석에 예약을 시도하면 예약 실패 결과를 반환한다`() {
+        val seat =
+            Seat(
+                row = SeatRow("A"),
+                column = SeatColumn(1),
+                grade = SeatGrade.A,
+                state = SeatState.RESERVED,
+            )
+
+        assertThat(
+            seat.reserve(),
+        ).isFalse
+    }
 }

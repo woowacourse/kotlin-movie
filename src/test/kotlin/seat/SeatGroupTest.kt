@@ -13,48 +13,6 @@ import org.junit.jupiter.api.Test
 
 class SeatGroupTest {
     @Test
-    fun `예약되지 않은 좌석에 예약을 성공하면 예약 성공 결과를 반환한다`() {
-        val seats =
-            listOf(
-                Seat(
-                    row = SeatRow("A"),
-                    column = SeatColumn(1),
-                    grade = SeatGrade.A,
-                    state = SeatState.AVAILABLE,
-                ),
-            )
-        assertThat(
-            SeatGroup(
-                seats = seats,
-            ).reserve(
-                row = SeatRow("A"),
-                column = SeatColumn(1),
-            ),
-        ).isEqualTo(MovieReservationResult.SUCCESS)
-    }
-
-    @Test
-    fun `예약된 좌석에 예약을 시도하면 예약 실패 결과를 반환한다`() {
-        val seats =
-            listOf(
-                Seat(
-                    row = SeatRow("A"),
-                    column = SeatColumn(1),
-                    grade = SeatGrade.A,
-                    state = SeatState.RESERVED,
-                ),
-            )
-        assertThat(
-            SeatGroup(
-                seats = seats,
-            ).reserve(
-                row = SeatRow("A"),
-                column = SeatColumn(1),
-            ),
-        ).isEqualTo(MovieReservationResult.FAILED)
-    }
-
-    @Test
     fun `구매완료된 좌석에 예약을 시도하면 예약 실패 결과를 반환한다`() {
         val seats =
             listOf(
@@ -68,11 +26,11 @@ class SeatGroupTest {
         assertThat(
             SeatGroup(
                 seats = seats,
-            ).reserve(
+            ).getSeat(
                 row = SeatRow("A"),
                 column = SeatColumn(1),
             ),
-        ).isEqualTo(MovieReservationResult.FAILED)
+        ).isEqualTo(MovieReservationResult.Failed)
     }
 
     @Test

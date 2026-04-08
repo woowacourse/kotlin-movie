@@ -2,6 +2,7 @@ import model.DateTimeRange
 import model.Movie
 import model.MovieScreening
 import model.RunningTime
+import model.SeatGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -19,11 +20,13 @@ class MovieScreeningTest {
             MovieScreening(
                 movie = oneHourMovie,
                 screenTime = oneHourScreenTime,
+                seatGroup = SeatGroup(emptyList()),
             ),
         ).isEqualTo(
             MovieScreening(
                 movie = oneHourMovie,
                 screenTime = oneHourScreenTime,
+                seatGroup = SeatGroup(emptyList()),
             ),
         )
     }
@@ -42,6 +45,7 @@ class MovieScreeningTest {
                         start = LocalDateTime.of(2026, 4, 8, 16, 0),
                         end = LocalDateTime.of(2026, 4, 8, 18, 0),
                     ),
+                seatGroup = SeatGroup(emptyList()),
             )
         }.isInstanceOf(IllegalArgumentException::class.java)
     }
@@ -60,6 +64,7 @@ class MovieScreeningTest {
                         start = LocalDateTime.of(2026, 4, 8, 16, 0),
                         end = LocalDateTime.of(2026, 4, 8, 17, 0),
                     ),
+                seatGroup = SeatGroup(emptyList()),
             )
         }.doesNotThrowAnyException()
     }

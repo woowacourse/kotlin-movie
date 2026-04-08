@@ -4,6 +4,7 @@ import model.MovieSchedule
 import model.MovieScreening
 import model.RunningTime
 import model.ScreenSchedule
+import model.SeatGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -86,6 +87,7 @@ class ScreenScheduleTest {
                                     start = LocalDateTime.of(2026, 4, 8, 6, 0),
                                     end = LocalDateTime.of(2026, 4, 8, 7, 0),
                                 ),
+                            seatGroup = SeatGroup(emptyList()),
                         ),
                     ),
             )
@@ -115,6 +117,7 @@ class ScreenScheduleTest {
                                     start = LocalDateTime.of(2026, 4, 8, 7, 30),
                                     end = LocalDateTime.of(2026, 4, 8, 8, 30),
                                 ),
+                            seatGroup = SeatGroup(emptyList()),
                         ),
                     ),
             )
@@ -145,6 +148,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 11, 0),
                                 end = LocalDateTime.of(2026, 4, 8, 11, 10),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
             ).getMovieSchedule(movieOne),
@@ -158,6 +162,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 11, 0),
                                 end = LocalDateTime.of(2026, 4, 8, 11, 10),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
             ),
@@ -184,6 +189,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 11, 0),
                                 end = LocalDateTime.of(2026, 4, 8, 12, 0),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
             )
@@ -208,6 +214,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 10, 0),
                                 end = LocalDateTime.of(2026, 4, 8, 11, 0),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
                 Arguments.of(
@@ -218,6 +225,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 12, 0),
                                 end = LocalDateTime.of(2026, 4, 8, 13, 0),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
                 Arguments.of(
@@ -228,6 +236,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 11, 30),
                                 end = LocalDateTime.of(2026, 4, 8, 12, 30),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
                 Arguments.of(
@@ -238,6 +247,7 @@ class ScreenScheduleTest {
                                 start = LocalDateTime.of(2026, 4, 8, 10, 30),
                                 end = LocalDateTime.of(2026, 4, 8, 11, 30),
                             ),
+                        seatGroup = SeatGroup(emptyList()),
                     ),
                 ),
             )

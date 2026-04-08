@@ -1,21 +1,19 @@
 package model.seat
 
-import model.MovieReservationResult
 import java.util.Objects
 
 class Seat(
     val row: SeatRow,
     val column: SeatColumn,
     val grade: SeatGrade,
-    var state: SeatState,
+    private var state: SeatState,
 ) {
-    fun reserve(): MovieReservationResult {
+    fun reserve(): Boolean {
         if (state == SeatState.AVAILABLE) {
             state = SeatState.RESERVED
-            return MovieReservationResult.SUCCESS
+            return true
         }
-
-        return MovieReservationResult.FAILED
+        return false
     }
 
     override fun equals(other: Any?): Boolean {

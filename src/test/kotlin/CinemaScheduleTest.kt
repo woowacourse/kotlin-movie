@@ -5,6 +5,7 @@ import model.MovieSchedule
 import model.MovieScreening
 import model.RunningTime
 import model.ScreenSchedule
+import model.SeatGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -40,6 +41,7 @@ class CinemaScheduleTest {
                             start = LocalDateTime.of(2026, 4, 8, 16, 0),
                             end = LocalDateTime.of(2026, 4, 8, 17, 0),
                         ),
+                    seatGroup = SeatGroup(emptyList()),
                 ),
             )
 
@@ -52,6 +54,7 @@ class CinemaScheduleTest {
                             start = LocalDateTime.of(2026, 4, 8, 16, 0),
                             end = LocalDateTime.of(2026, 4, 8, 17, 0),
                         ),
+                    seatGroup = SeatGroup(emptyList()),
                 ),
                 MovieScreening(
                     movie = movie,
@@ -60,6 +63,7 @@ class CinemaScheduleTest {
                             start = LocalDateTime.of(2026, 4, 8, 16, 0),
                             end = LocalDateTime.of(2026, 4, 8, 17, 0),
                         ),
+                    seatGroup = SeatGroup(emptyList()),
                 ),
             )
 
