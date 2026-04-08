@@ -60,6 +60,10 @@ object Reservation {
 
         require(history.isEmpty()) { "동일한 시간대에 예매한 내역이 존재합니다." }
     }
+
+    fun checkSeatFormat(seat: String) {
+        require(Regex("^[A-Z][0-9]+$").matches(seat)) { "입력된 값이 유효하지 않습니다." }
+    }
 }
 
 class ReservationTest {
@@ -142,6 +146,19 @@ class ReservationTest {
         }
         // then : 예외가 발생한다.
         assertEquals("동일한 시간대에 예매한 내역이 존재합니다.", exception.message)
+    }
+
+    @Test
+    fun `좌석 정보가 (알파벳)(숫자) 형식이 아니면 예외가 발생한다`() {
+        // given : 입력값이 11이다.
+        val seat = "11"
+
+        // when : 사용자가 해당 좌석을 예약하려고 할 때
+        val exception = assertThrows<IllegalArgumentException> {
+            Reservation.checkSeatFormat(seat)
+        }
+        // then : 예외가 발생한다.
+        assertEquals("입력된 값이 유효하지 않습니다.", exception.message)
     }
 }
 
