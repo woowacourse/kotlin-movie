@@ -17,7 +17,7 @@ class TimeDiscountTest {
         val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(8, 0), LocalTime.of(9, 0))
 
         // when
-        val result = timeDiscount.calculateDiscount(money, screenDateTime)
+        val result = timeDiscount.applyDiscount(money, screenDateTime)
 
         // then
         assertThat(result).isEqualTo(Money(8000))
@@ -31,7 +31,7 @@ class TimeDiscountTest {
         val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(20, 10), LocalTime.of(22, 0))
 
         // when
-        val result = timeDiscount.calculateDiscount(money, screenDateTime)
+        val result = timeDiscount.applyDiscount(money, screenDateTime)
 
         // then
         assertThat(result).isEqualTo(Money(8000))
@@ -45,7 +45,7 @@ class TimeDiscountTest {
         val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(12, 0), LocalTime.of(14, 0))
 
         // when
-        val result = timeDiscount.calculateDiscount(money, screenDateTime)
+        val result = timeDiscount.applyDiscount(money, screenDateTime)
 
         // then
         assertThat(result).isEqualTo(Money(10000))

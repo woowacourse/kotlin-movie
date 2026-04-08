@@ -17,7 +17,7 @@ class DiscountPoliciesTest {
         val discountPolicies = DiscountPolicies(listOf(movieDayDiscount), listOf(timeDiscount))
 
         // when
-        val result = discountPolicies.calculateDiscount(Money(10000),
+        val result = discountPolicies.applyDiscount(Money(10000),
             ScreeningDateTime(
                 LocalDate.of(2026, 1, 10),
                 LocalTime.of(10, 0),
