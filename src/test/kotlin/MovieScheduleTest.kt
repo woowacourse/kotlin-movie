@@ -1,3 +1,8 @@
+import model.DateTimeRange
+import model.Movie
+import model.MovieSchedule
+import model.MovieScreening
+import model.RunningTime
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -19,44 +24,33 @@ class MovieScheduleTest {
                 runningTime = RunningTime(100),
             )
 
-        val cinemaScreen =
-            CinemaScreen(
-                id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
-                servicePeriod =
-                    DateTimeRange(
-                        LocalDateTime.of(1999, 4, 7, 21, 50),
-                        LocalDateTime.of(2026, 4, 7, 22, 50),
-                    ),
-            )
-
         assertThatThrownBy {
             MovieSchedule(
-                ScheduledScreen(
-                    movie = movieOne,
-                    cinemaScreen = cinemaScreen,
-                    screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 11, 10),
-                        ),
-                ),
-                ScheduledScreen(
-                    movie = movieOne,
-                    cinemaScreen = cinemaScreen,
-                    screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 11, 20),
-                            end = LocalDateTime.of(2026, 4, 8, 11, 30),
-                        ),
-                ),
-                ScheduledScreen(
-                    movie = movieTwo,
-                    cinemaScreen = cinemaScreen,
-                    screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 11, 40),
-                            end = LocalDateTime.of(2026, 4, 8, 13, 20),
-                        ),
+                listOf(
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 11, 0),
+                                end = LocalDateTime.of(2026, 4, 8, 11, 10),
+                            ),
+                    ),
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 11, 20),
+                                end = LocalDateTime.of(2026, 4, 8, 11, 30),
+                            ),
+                    ),
+                    MovieScreening(
+                        movie = movieTwo,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 11, 40),
+                                end = LocalDateTime.of(2026, 4, 8, 13, 20),
+                            ),
+                    ),
                 ),
             )
         }.isInstanceOf(IllegalArgumentException::class.java)

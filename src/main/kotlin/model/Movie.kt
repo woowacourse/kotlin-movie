@@ -1,3 +1,5 @@
+package model
+
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 

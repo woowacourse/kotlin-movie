@@ -1,3 +1,5 @@
+import model.Movie
+import model.RunningTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import kotlin.uuid.ExperimentalUuidApi

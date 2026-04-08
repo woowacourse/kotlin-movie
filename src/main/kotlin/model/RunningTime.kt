@@ -1,3 +1,5 @@
+package model
+
 @JvmInline
 value class RunningTime(
     val minute: Int,
