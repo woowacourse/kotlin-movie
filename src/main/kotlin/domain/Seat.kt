@@ -6,6 +6,8 @@ data class Seat(
 ) {
     val grade: SeatGrade
         get() = SeatGrade.of(position)
+
+    fun changeState(state: ReserveState): Seat = this.copy(state = state)
 }
 
 enum class ReserveState {

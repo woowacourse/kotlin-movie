@@ -65,7 +65,7 @@ class ScreeningTest {
                 operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(18, 0)),
                 seats = Seats(listOf(Seat(position = SeatPosition(Row("A"), Column(1))))),
             ),
-            startTime = LocalDateTime.of(2026, 4, 8, 9, 0)
+            startTime = LocalDateTime.of(2026, 4, 8, 10, 0)
         )
 
         screening.reserve(position = SeatPosition(Row("A"), Column(1)))
