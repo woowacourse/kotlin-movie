@@ -10,14 +10,15 @@ class Screening(
     var seats = room.seats
         private set
 
+    val screenTimeRange: TimeRange = TimeRange(
+        startTime.toLocalTime(),
+        startTime.toLocalTime().plusMinutes(movie.runningTime.duration.toLong())
+    )
+
     init {
         require(
-            startTime.toLocalTime().isBefore(room.operatingTime.start).not() &&
-                (
-                    startTime
-                        .toLocalTime()
-                        .plusMinutes(movie.runningTime.duration.toLong())
-                ).isBefore(room.operatingTime.end),
+            screenTimeRange.start.isBefore(room.operatingTime.start).not() &&
+                    screenTimeRange.end.isBefore(room.operatingTime.end),
         ) {
             "상영 시간이 상영관의 운영시간에 포함되지 않습니다."
         }
