@@ -2,7 +2,7 @@ package model
 
 class MovieSchedule(
     movieScreenings: List<MovieScreening>,
-) {
+) : Iterable<MovieScreening> {
     private val scheduledScreens = movieScreenings.toList()
 
     init {
@@ -19,4 +19,6 @@ class MovieSchedule(
     }
 
     override fun hashCode(): Int = scheduledScreens.hashCode()
+
+    override fun iterator(): Iterator<MovieScreening> = scheduledScreens.iterator()
 }
