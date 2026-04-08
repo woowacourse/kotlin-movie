@@ -5,7 +5,17 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 object Calculator {
-    fun applyDiscountByMovie(
+
+    fun subtractUserPoint(
+        price: Int,
+        user: User,
+        subtractPoint: Long,
+    ): Long {
+        user.discountPoint(subtractPoint)
+        return price - subtractPoint
+    }
+
+    fun calculateByMovie(
         price: Int,
         date: LocalDateTime,
     ): Int {
@@ -64,7 +74,7 @@ class CalculatorTest {
         val date = LocalDateTime(2026, 4, 11, 14, 0)
 
         // when : 할인을 적용하면
-        val result = Calculator.applyDiscountByMovie(price, date)
+        val result = Calculator.calculateByMovie(price, date)
 
         // then : 16_000원이 반환된다.
         assertEquals(16_000, result)
@@ -77,9 +87,27 @@ class CalculatorTest {
         val date = LocalDateTime(2026, 4, 10, 10, 0)
 
         // when : 할인을 적용하면
-        val result = Calculator.applyDiscountByMovie(price, date)
+        val result = Calculator.calculateByMovie(price, date)
 
         // then : 12_400원이 반환된다.
         assertEquals(12_400, result)
+    }
+
+    @Test
+    fun `포인트가 예매 금액에서 직접 차감된다`() {
+        // given : user는 1000 포인트를 가지고 있다.
+        val user = User(1)
+        val price = 16_000
+
+        // when : 사용 포인트가 1000이면
+        val result = Calculator.subtractUserPoint(
+            price = price,
+            user = user,
+            subtractPoint = 1000,
+        )
+
+        // then : user의 포인트는 0이 되고 15_000원이 반환된다.
+        assertEquals(15_000, result)
+        assertEquals(0, user.point)
     }
 }
