@@ -38,6 +38,13 @@ object Calculator {
     ): Int {
         return price - DiscountPolicy.showTimeDiscount(date)
     }
+
+    fun applyPaymentDiscount(
+        price: Int,
+        method: PaymentMethod,
+    ): Int {
+        return ((1 - DiscountPolicy.paymentDiscount(method)) * price).toInt()
+    }
 }
 
 class CalculatorTest {
@@ -109,5 +116,18 @@ class CalculatorTest {
         // then : user의 포인트는 0이 되고 15_000원이 반환된다.
         assertEquals(15_000, result)
         assertEquals(0, user.point)
+    }
+
+    @Test
+    fun `결제 수단에 따라 할인이 적용된다`() {
+        // given : 결제 수단은 카드이다.
+        val price = 16_000
+        val method = PaymentMethod.CARD
+
+        // when : 할인을 적용하면
+        val result = Calculator.applyPaymentDiscount(price, method)
+
+        // then : 15_200원이 반환된다.
+        assertEquals(15_200, result)
     }
 }
