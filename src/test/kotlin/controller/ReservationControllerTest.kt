@@ -36,15 +36,17 @@ class ReservationController(val movieTheater: MovieTheater) {
         return movieTheater.movies[movieIndex]
     }
 
-    fun chooseDate(): LocalDate {
+    fun chooseDate(movie: Movie): LocalDate {
         println("날짜를 입력하세요 (YYYY-MM-DD):")
         val input = readln()
 
-        try {
-            return LocalDate.parse(input)
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException("올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)")
-        }
+        val date = runCatching { LocalDate.parse(input) }.getOrNull()
+        require(date != null) { "올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)" }
+
+        val showings = movieTheater.showings.filter { it.movie == movie && it.startTime.date == date }
+        require(showings.isNotEmpty()) { "해당 날짜에 선택한 영화의 상영이 없습니다." }
+
+        return date
     }
 
     fun chooseShowingTime(
@@ -134,11 +136,12 @@ class ReservationControllerTest {
     fun `날짜 형식이 YYYY-MM-DD가 아니면 예외가 발생한다`() {
         // given : 2026_04_08이 입력된다.
         val input = "2026_04_08"
+        val movie: Movie = TestFixtureData.movieTheater.movies.first()
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 날짜를 처리하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.chooseDate()
+            controller.chooseDate(movie)
         }
 
         // then : 예외가 발생한다.
@@ -147,28 +150,29 @@ class ReservationControllerTest {
 
     @Test
     fun `날짜 형식이 YYYY-MM-DD이면 Date를 반환한다`() {
-        // given : 2026-04-08이 입력된다.
-        val input = "2026-04-08"
+        // given : 2026-04-10이 입력된다.
+        val input = "2026-04-10"
+        val movie: Movie = TestFixtureData.movieTheater.movies.first()
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 날짜를 처리하면
-        val result = controller.chooseDate()
+        val result = controller.chooseDate(movie)
 
         // then : Date가 반환된다.
-        assertEquals(LocalDate(2026, 4, 8), result)
+        assertEquals(LocalDate(2026, 4, 10), result)
     }
 
     @Test
     fun `해당 날짜에 선택한 영화의 상영이 없으면 예외가 발생한다`() {
-        // given : 특정 영화를 선택한 상태에서 상영일자가 존재하지 않는 날짜를 선택한다
+        // given : 특정 영화를 선택한 상태에서 상영일자가 존재하지 않는 날짜를 입력한다
+        val input = "2026-04-08"
         val movie: Movie = TestFixtureData.movieTheater.movies.first()
-        val date: LocalDate = LocalDate(2026, 4, 8)
 
-//        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 상영을 확인하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.chooseShowingTime(movie, date)
+            controller.chooseDate(movie)
         }
 
         // then : 예외가 발생한다.
