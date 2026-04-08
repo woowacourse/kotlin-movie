@@ -1,6 +1,6 @@
 package domain.seat
 
-class Seat(
+data class Seat(
     val row: String,
     val column: Int,
     val grade: SeatGrade,
