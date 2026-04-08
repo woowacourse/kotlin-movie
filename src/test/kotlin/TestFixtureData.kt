@@ -50,6 +50,7 @@ object TestFixtureData {
     val movieTheater = MovieTheater(
         screens,
         movies,
+        showings,
         reservationInfos,
         users,
     )
