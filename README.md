@@ -18,11 +18,10 @@
   * [x] 영화 ID를 가진다.
 
 ### ScreeningMovie
-* [] ScreeningMovie 도메인을 구현한다.
-  * [] 스크린 Id를 가진다.
-  * [] Movie 정보를 가진다.
-  * [] 상영 시작 / 종료 시간을 가진다.
-  * [] seat 정보를 가진다.
+* [x] ScreeningMovie 도메인을 구현한다.
+  * [x] Theater를 가진다.
+  * [x] Movie 정보를 가진다.
+  * [x] 상영 시작 / 종료 시간을 가진다.
 
 ### Theater
 * [x] Theater 도메인을 구현한다.
