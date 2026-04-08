@@ -41,15 +41,15 @@
 ### 2. ScreenTime
 
 1. ScreeningTime
-- [ ] 입력받은 시간이 startTime과 endTime 사이에 있다면 true를 반환한다.
+- [x] 입력받은 시간이 startTime과 endTime 사이에 있다면 true를 반환한다.
     1. startTime
-       - [ ] 입력된 시간이 소유하고 있는 시간과 같다면 true를 반환한다.
-       - [ ] 입력받은 시간이 소유하고 있는 시간과 다르다면 false를 반환하다.
+       - [x] 입력된 시간이 소유하고 있는 시간과 같다면 true를 반환한다.
+       - [x] 입력받은 시간이 소유하고 있는 시간과 다르다면 false를 반환하다.
     2. endTime
 
 2. ScreeningDate
-    - [ ] 입력받은 날자가 소유하고 있는 날자와 같다면 true를 반환한다.
-    - [ ] 입력받은 날자가 소유하고 있는 날자와 다르다면 false를 반환하다.
+    - [x] 입력받은 날자가 소유하고 있는 날자와 같다면 true를 반환한다.
+    - [x] 입력받은 날자가 소유하고 있는 날자와 다르다면 false를 반환하다.
 
 ### 3. screening schedule
 
