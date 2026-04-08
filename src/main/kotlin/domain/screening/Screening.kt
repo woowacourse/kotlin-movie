@@ -3,6 +3,7 @@ package domain.screening
 import domain.reservation.Reservation
 import domain.seat.ReservatedSeats
 import domain.seat.Seat
+import domain.seat.SelectedSeats
 
 class Screening(
     val id: Int,
@@ -19,7 +20,7 @@ class Screening(
 
     fun reserve(selectedSeats: List<Seat>): Reservation {
         reservatedSeats.add(selectedSeats)
-        return Reservation(this, selectedSeats)
+        return Reservation(this, SelectedSeats(selectedSeats))
 
     }
 
