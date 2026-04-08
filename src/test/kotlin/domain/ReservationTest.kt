@@ -29,6 +29,16 @@ object Reservation {
         require(showings.isNotEmpty()) { "해당 영화는 해당 날짜에 상영되지 않습니다." }
         return showings
     }
+
+    fun findUser(
+        movieTheater: MovieTheater,
+        id: Long,
+    ): User {
+        val userIndex = movieTheater.users.indexOfFirst { it.id == id }
+
+        require(userIndex != -1) { "존재하지 않는 사용자입니다." }
+        return movieTheater.users[userIndex]
+    }
 }
 
 class Movie(val title: String, val id: Int, val runningTime: Int)
@@ -105,5 +115,18 @@ class ReservationTest {
         }
         // then : 예외가 발생한다.
         assertEquals("해당 영화는 해당 날짜에 상영되지 않습니다.", exception.message)
+    }
+
+    @Test
+    fun `존재하지 않는 사용자를 찾는 경우, 예외가 발생한다`() {
+        // given : 사용자의 id 는 4이다.
+        val userId = 4
+
+        // when : 사용자의 id에 해당하는 사용자를 찾을 경우
+        val exception = assertThrows<IllegalArgumentException> {
+            Reservation.findUser(TestFixtureData.movieTheater, userId.toLong())
+        }
+        // then : 예외가 발생한다.
+        assertEquals("존재하지 않는 사용자입니다.", exception.message)
     }
 }
