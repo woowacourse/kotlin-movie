@@ -6,6 +6,11 @@ import kotlinx.datetime.LocalTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+enum class PaymentMethod {
+    CARD,
+    CASH,
+}
+
 object DiscountPolicy {
     private val movieDay = listOf<Int>(10, 20, 30)
     private val noneDiscountTimeBoundary =
@@ -17,6 +22,8 @@ object DiscountPolicy {
     const val TIME_DISCOUNT_PRICE = 2000
     const val NONE_DISCOUNT_PRICE = 0
 
+    const val CARD_DISCOUNT_PERCENT = 0.05
+    const val CASH_DISCOUNT_PERCENT = 0.02
     fun movieDayDiscount(date: Int): Double {
         if (movieDay.contains(date)) {
             return MOVIE_DAY_DISCOUNT_PERCENT
@@ -29,6 +36,13 @@ object DiscountPolicy {
             return NONE_DISCOUNT_PRICE
         }
         return TIME_DISCOUNT_PRICE
+    }
+
+    fun paymentDiscount(method: PaymentMethod): Double {
+        return when (method) {
+            PaymentMethod.CARD -> CARD_DISCOUNT_PERCENT
+            PaymentMethod.CASH -> CASH_DISCOUNT_PERCENT
+        }
     }
 }
 
@@ -115,5 +129,29 @@ class DiscountPolicyTest {
 
         // then : 2000이 반환된다.
         assertEquals(DiscountPolicy.NONE_DISCOUNT_PRICE, result)
+    }
+
+    @Test
+    fun `신용카드 결제 시 5% 할인된다`() {
+        // given : 결제수단으로 신용카드가 제시된다
+        val method = PaymentMethod.CARD
+
+        // when : 할인율을 계산하면
+        val result = DiscountPolicy.paymentDiscount(method)
+
+        // then : 0.05가 반환된다.
+        assertEquals(DiscountPolicy.CARD_DISCOUNT_PERCENT, result)
+    }
+
+    @Test
+    fun `현금 결제 시 2% 할인된다`() {
+        // given : 결제수단으로 현금이 제시된다
+        val method = PaymentMethod.CASH
+
+        // when : 할인율을 계산하면
+        val result = DiscountPolicy.paymentDiscount(method)
+
+        // then : 0.02가 반환된다.
+        assertEquals(DiscountPolicy.CASH_DISCOUNT_PERCENT, result)
     }
 }
