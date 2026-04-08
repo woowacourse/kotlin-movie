@@ -75,6 +75,7 @@ object Reservation {
 
         val seat = seats.filter { it.row == row && it.column == column }
         require(seat.isNotEmpty()) { "해당 상영관에는 해당 좌석이 존재하지 않습니다." }
+        require(!seat.first().isReserved) { "해당 좌석은 이미 예약되었습니다." }
     }
 }
 
@@ -184,6 +185,19 @@ class ReservationTest {
         }
         // then : 예외가 발생한다.
         assertEquals("해당 상영관에는 해당 좌석이 존재하지 않습니다.", exception.message)
+    }
+
+    @Test
+    fun `이미 예약된 좌석이면 예외가 발생한다`() {
+        // given : 입력값이 A1이다.
+        val seat = "A1"
+
+        // when : 사용자가 해당 좌석을 예약하려고 할 때
+        val exception = assertThrows<IllegalArgumentException> {
+            Reservation.checkSeat(TestFixtureData.seats, seat)
+        }
+        // then : 예외가 발생한다.
+        assertEquals("해당 좌석은 이미 예약되었습니다.", exception.message)
     }
 }
 

@@ -22,7 +22,7 @@ object TestFixtureData {
     )
 
     val seats = listOf(
-        Seat('A', 1, SeatGrade.S, false),
+        Seat('A', 1, SeatGrade.S, true),
         Seat('A', 2, SeatGrade.S, false),
         Seat('B', 1, SeatGrade.A, false),
         Seat('B', 2, SeatGrade.A, false),
