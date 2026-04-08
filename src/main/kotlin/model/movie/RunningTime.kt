@@ -4,11 +4,11 @@ import model.DateTimeRange
 
 @JvmInline
 value class RunningTime(
-    val minute: Int,
+    private val minute: Int,
 ) {
     init {
-        require(minute > 0)
+        require(minute > 0) { "상영 시간은 0분 초과이어야 합니다." }
     }
 
-    fun isSameDuration(dateTimeRange: DateTimeRange): Boolean = dateTimeRange.durationMinute.toInt() == minute
+    fun isSameDuration(dateTimeRange: DateTimeRange): Boolean = dateTimeRange.durationMinute == minute
 }

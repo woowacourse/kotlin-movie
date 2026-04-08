@@ -2,6 +2,7 @@ package movie
 
 import model.movie.RunningTime
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatCode
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
@@ -14,9 +15,10 @@ class RunningTimeTest {
     }
 
     @Test
-    fun `러닝 타임이 양수라면 해당하는 값이 저장된다`() {
-        val runningTime = RunningTime(100)
-        assertThat(runningTime.minute).isEqualTo(100)
+    fun `러닝 타임이 양수라면 예외를 던지지 않는다`() {
+        assertThatCode {
+            RunningTime(100)
+        }.doesNotThrowAnyException()
     }
 
     @Test
