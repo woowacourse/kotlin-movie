@@ -22,7 +22,7 @@ class SeatTest {
         }
 
         // then : 예외가 발생한다.
-        assertEquals(exception.message, "열은 한 글자 대문자 알파벳이여야 합니다.")
+        assertEquals("열은 한 글자 대문자 알파벳이여야 합니다.", exception.message)
     }
 
     @Test
@@ -41,7 +41,7 @@ class SeatTest {
         }
 
         // then : 예외가 발생한다.
-        assertEquals(exception.message, "행은 양수이여야 합니다.")
+        assertEquals("행은 양수이여야 합니다.", exception.message)
     }
 
     @Test
@@ -52,6 +52,6 @@ class SeatTest {
         }
 
         // then : 예외가 발생한다.
-        assertEquals(exception.message, "행은 양수이여야 합니다.")
+        assertEquals("행은 양수이여야 합니다.", exception.message)
     }
 }

@@ -42,7 +42,7 @@ class DiscountPolicyTest {
         val result = DiscountPolicy.movieDayDiscount(date)
 
         // then : 0.1이 반환된다.
-        assertEquals(result, DiscountPolicy.MOVIE_DAY_DISCOUNT_PERCENT)
+        assertEquals(DiscountPolicy.MOVIE_DAY_DISCOUNT_PERCENT, result)
     }
 
     @Test
@@ -54,7 +54,7 @@ class DiscountPolicyTest {
         val result = DiscountPolicy.movieDayDiscount(date)
 
         // then : 0.1이 반환된다.
-        assertEquals(result, DiscountPolicy.MOVIE_DAY_DISCOUNT_PERCENT)
+        assertEquals(DiscountPolicy.MOVIE_DAY_DISCOUNT_PERCENT, result)
     }
 
     @Test
@@ -66,7 +66,7 @@ class DiscountPolicyTest {
         val result = DiscountPolicy.movieDayDiscount(date)
 
         // then : 0.1이 반환된다.
-        assertEquals(result, DiscountPolicy.MOVIE_DAY_DISCOUNT_PERCENT)
+        assertEquals(DiscountPolicy.MOVIE_DAY_DISCOUNT_PERCENT, result)
     }
 
     @Test
@@ -78,7 +78,7 @@ class DiscountPolicyTest {
         val result = DiscountPolicy.movieDayDiscount(date)
 
         // then : 0.0이 반환된다.
-        assertEquals(result, DiscountPolicy.NONE_DISCOUNT_PERCENT)
+        assertEquals(DiscountPolicy.NONE_DISCOUNT_PERCENT, result)
     }
 
     @Test
@@ -90,7 +90,7 @@ class DiscountPolicyTest {
         val result = DiscountPolicy.showTimeDiscount(time)
 
         // then : 2000이 반환된다.
-        assertEquals(result, DiscountPolicy.TIME_DISCOUNT_PRICE)
+        assertEquals(DiscountPolicy.TIME_DISCOUNT_PRICE, result)
     }
 
     @Test
@@ -102,7 +102,7 @@ class DiscountPolicyTest {
         val result = DiscountPolicy.showTimeDiscount(time)
 
         // then : 2000이 반환된다.
-        assertEquals(result, DiscountPolicy.TIME_DISCOUNT_PRICE)
+        assertEquals(DiscountPolicy.TIME_DISCOUNT_PRICE, result)
     }
 
     @Test

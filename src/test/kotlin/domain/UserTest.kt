@@ -23,7 +23,7 @@ class UserTest {
         }
 
         // then : 예외가 발생한다.
-        assertEquals(exception.message, "ID는 양수이어야 합니다.")
+        assertEquals("ID는 양수이어야 합니다.", exception.message)
     }
 
     @Test
@@ -35,7 +35,7 @@ class UserTest {
         result.discountPoint(500)
 
         // then : 전체 포인트 값이 500이 된다.
-        assertEquals(result.point, 500)
+        assertEquals(500, result.point)
     }
 
     @Test
@@ -49,6 +49,6 @@ class UserTest {
         }
 
         // then : 예외가 발생 한다.
-        assertEquals(exception.message, "차감액은 전체 포인트보다 작아야 합니다.")
+        assertEquals("차감액은 전체 포인트보다 작아야 합니다.", exception.message)
     }
 }
