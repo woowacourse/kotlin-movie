@@ -48,6 +48,29 @@ class DateTimeRangeTest {
         ).isFalse
     }
 
+    @Test
+    fun `2025년 12월 25일 12시는 2025년 12월 25일 12시 ~ 13시의 기간에 포함된다`() {
+        val startTime = LocalDateTime.of(2025, 12, 25, 12, 0)
+        assertThat(
+            DateTimeRange(
+                startTime,
+                LocalDateTime.of(2025, 12, 25, 13, 0),
+            ).contains(startTime),
+        ).isTrue
+    }
+
+    @Test
+    fun `2025년 12월 25일 13시는 2025년 12월 25일 12시 ~ 13시의 기간에 포함된다`() {
+        val endTime = LocalDateTime.of(2025, 12, 25, 13, 0)
+        assertThat(
+            DateTimeRange(
+                LocalDateTime.of(2025, 12, 25, 12, 0),
+                endTime
+            ).contains(endTime),
+        ).isTrue
+    }
+
+
     companion object {
         @JvmStatic
         fun invalidDuration(): List<Arguments> =
