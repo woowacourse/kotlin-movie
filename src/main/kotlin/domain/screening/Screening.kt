@@ -19,9 +19,8 @@ class Screening(
     }
 
     fun reserve(selectedSeats: List<Seat>): Reservation {
-        reservatedSeats.add(selectedSeats)
-        return Reservation(this, SelectedSeats(selectedSeats))
-
+        val finalSeats = reservatedSeats.add(selectedSeats)
+        return Reservation(this, SelectedSeats(finalSeats))
     }
 
     private fun isValidSeats(selectedSeats: List<Seat>): Boolean {

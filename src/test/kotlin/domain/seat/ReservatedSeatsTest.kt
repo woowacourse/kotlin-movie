@@ -40,8 +40,8 @@ class ReservatedSeatsTest {
         val reservatedSeats = ReservatedSeats(seats)
 
         // when
-        val newReservatedSeats = reservatedSeats.add(listOf(Seat("A", 1, SeatGrade.S)))
-        val result = newReservatedSeats.isAvailable(Seat("A", 1, SeatGrade.S))
+        val newReservatedSeats = reservatedSeats.add(listOf(Seat("A", 1, SeatGrade.B)))
+        val result = ReservatedSeats(newReservatedSeats).isAvailable(Seat("A", 1, SeatGrade.B))
 
         // then
         assertThat(result).isFalse()
