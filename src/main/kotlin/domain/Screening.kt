@@ -3,9 +3,9 @@ package domain
 import java.time.LocalDateTime
 
 class Screening(
-    movie: Movie,
-    room: ScreeningRoom,
-    startTime: LocalDateTime,
+    val movie: Movie,
+    val room: ScreeningRoom,
+    val startTime: LocalDateTime,
 ) {
     var seats = room.seats
         private set
