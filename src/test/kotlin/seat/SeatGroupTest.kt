@@ -1,6 +1,5 @@
 package seat
 
-import model.MovieReservationResult
 import model.SeatGroup
 import model.seat.Seat
 import model.seat.SeatColumn
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 class SeatGroupTest {
     @Test
-    fun `구매완료된 좌석에 예약을 시도하면 예약 실패 결과를 반환한다`() {
+    fun `존재하는 좌석을 요청하면 해당 좌석을 반환한다`() {
         val seats =
             listOf(
                 Seat(
@@ -30,7 +29,14 @@ class SeatGroupTest {
                 row = SeatRow("A"),
                 column = SeatColumn(1),
             ),
-        ).isEqualTo(MovieReservationResult.Failed)
+        ).isEqualTo(
+            Seat(
+                row = SeatRow("A"),
+                column = SeatColumn(1),
+                grade = SeatGrade.A,
+                state = SeatState.PURCHASED,
+            ),
+        )
     }
 
     @Test
