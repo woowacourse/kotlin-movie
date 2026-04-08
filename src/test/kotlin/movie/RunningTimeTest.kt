@@ -1,4 +1,6 @@
-import model.RunningTime
+package movie
+
+import model.movie.RunningTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test

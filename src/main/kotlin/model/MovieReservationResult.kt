@@ -1,5 +1,6 @@
 package model
 
+import model.movie.Movie
 import model.seat.Seat
 import kotlin.uuid.ExperimentalUuidApi
 

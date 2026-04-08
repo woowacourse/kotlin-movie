@@ -1,5 +1,6 @@
-package model
+package model.schedule
 
+import model.schedule.MovieScreening
 import java.time.LocalDateTime
 
 class MovieSchedule(

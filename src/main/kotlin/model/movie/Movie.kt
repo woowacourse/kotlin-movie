@@ -1,5 +1,6 @@
-package model
+package model.movie
 
+import model.movie.RunningTime
 import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)

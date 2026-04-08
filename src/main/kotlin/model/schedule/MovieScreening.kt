@@ -1,7 +1,10 @@
-package model
+package model.schedule
 
+import model.DateTimeRange
+import model.movie.Movie
 import model.seat.Seat
 import model.seat.SeatColumn
+import model.seat.SeatGroup
 import model.seat.SeatRow
 import java.util.Objects
 import kotlin.uuid.ExperimentalUuidApi

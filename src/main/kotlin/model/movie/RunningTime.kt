@@ -1,4 +1,6 @@
-package model
+package model.movie
+
+import model.DateTimeRange
 
 @JvmInline
 value class RunningTime(

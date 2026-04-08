@@ -1,8 +1,5 @@
-package model
+package model.seat
 
-import model.seat.Seat
-import model.seat.SeatColumn
-import model.seat.SeatRow
 import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)

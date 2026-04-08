@@ -1,5 +1,8 @@
-package model
+package model.schedule
 
+import model.DateTimeRange
+import model.movie.Movie
+import model.schedule.MovieScreening
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
 

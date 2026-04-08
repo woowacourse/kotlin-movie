@@ -1,15 +1,17 @@
+package payment
+
 import model.DateTimeRange
-import model.Movie
-import model.MoviePayment
 import model.MovieReservationResult
-import model.PayType
-import model.RunningTime
+import model.movie.Movie
+import model.movie.RunningTime
+import model.payment.MoviePayment
+import model.payment.PayType
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
 import model.seat.SeatRow
 import model.seat.SeatState
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
@@ -30,35 +32,36 @@ class MoviePaymentTest {
                 LocalDateTime.of(2026, 4, 11, 22, 0),
             )
 
-        assertThat(
-            MoviePayment(
-                reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+        Assertions
+            .assertThat(
+                MoviePayment(
+                    reservations =
+                        listOf(
+                            MovieReservationResult.Success(
+                                movie = movieOne,
+                                screenTime = screenTime,
+                                seat =
+                                    Seat(
+                                        row = SeatRow("A"),
+                                        column = SeatColumn(1),
+                                        grade = SeatGrade.A,
+                                        state = SeatState.RESERVED,
+                                    ),
+                            ),
+                            MovieReservationResult.Success(
+                                movie = movieOne,
+                                screenTime = screenTime,
+                                seat =
+                                    Seat(
+                                        row = SeatRow("A"),
+                                        column = SeatColumn(2),
+                                        grade = SeatGrade.S,
+                                        state = SeatState.RESERVED,
+                                    ),
+                            ),
                         ),
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(2),
-                                    grade = SeatGrade.S,
-                                    state = SeatState.RESERVED,
-                                ),
-                        ),
-                    ),
-            ).calculateTotalPrice,
-        ).isEqualTo(33_000)
+                ).calculateTotalPrice,
+            ).isEqualTo(33_000)
     }
 
     @Test
@@ -98,9 +101,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.discountMovieDay()
-        assertThat(
-            moviePayment.currentPrice,
-        ).isEqualTo(29_700)
+        Assertions
+            .assertThat(
+                moviePayment.currentPrice,
+            ).isEqualTo(29_700)
     }
 
     @Test
@@ -129,9 +133,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.discountTime()
-        assertThat(
-            moviePayment.currentPrice,
-        ).isEqualTo(15_000 - 2_000)
+        Assertions
+            .assertThat(
+                moviePayment.currentPrice,
+            ).isEqualTo(15_000 - 2_000)
     }
 
     @Test
@@ -160,9 +165,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.discountTime()
-        assertThat(
-            moviePayment.currentPrice,
-        ).isEqualTo(15_000 - 2_000)
+        Assertions
+            .assertThat(
+                moviePayment.currentPrice,
+            ).isEqualTo(15_000 - 2_000)
     }
 
     @Test
@@ -191,9 +197,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.discount()
-        assertThat(
-            moviePayment.currentPrice,
-        ).isEqualTo(11_500)
+        Assertions
+            .assertThat(
+                moviePayment.currentPrice,
+            ).isEqualTo(11_500)
     }
 
     @Test
@@ -222,9 +229,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.applyPoint(5000)
-        assertThat(
-            moviePayment.currentPrice,
-        ).isEqualTo(10_000)
+        Assertions
+            .assertThat(
+                moviePayment.currentPrice,
+            ).isEqualTo(10_000)
     }
 
     @Test
@@ -253,9 +261,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.applyPoint(5000)
-        assertThat(
-            moviePayment.pay(PayType.CREDIT_CARD),
-        ).isEqualTo(9_500)
+        Assertions
+            .assertThat(
+                moviePayment.pay(PayType.CREDIT_CARD),
+            ).isEqualTo(9_500)
     }
 
     @Test
@@ -284,9 +293,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.applyPoint(5000)
-        assertThat(
-            moviePayment.pay(PayType.CASH),
-        ).isEqualTo(9_800)
+        Assertions
+            .assertThat(
+                moviePayment.pay(PayType.CASH),
+            ).isEqualTo(9_800)
     }
 
     @Test
@@ -316,8 +326,9 @@ class MoviePaymentTest {
             )
         moviePayment.discount()
         moviePayment.applyPoint(0)
-        assertThat(
-            moviePayment.calculateTotalPrice,
-        ).isEqualTo(moviePayment.currentPrice)
+        Assertions
+            .assertThat(
+                moviePayment.calculateTotalPrice,
+            ).isEqualTo(moviePayment.currentPrice)
     }
 }

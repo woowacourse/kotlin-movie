@@ -1,6 +1,7 @@
-import model.CinemaSchedule
-import model.Movie
-import model.MovieReservationResult
+package model
+
+import model.movie.Movie
+import model.schedule.CinemaSchedule
 import model.seat.SeatColumn
 import model.seat.SeatRow
 import java.time.LocalDateTime

@@ -1,4 +1,4 @@
-package model
+package model.payment
 
 enum class PayType {
     CREDIT_CARD,

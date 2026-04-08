@@ -1,13 +1,14 @@
-import model.CinemaSchedule
+package schedule
+
 import model.DateTimeRange
-import model.Movie
-import model.MovieSchedule
-import model.MovieScreening
-import model.RunningTime
-import model.ScreenSchedule
-import model.SeatGroup
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import model.movie.Movie
+import model.movie.RunningTime
+import model.schedule.CinemaSchedule
+import model.schedule.MovieSchedule
+import model.schedule.MovieScreening
+import model.schedule.ScreenSchedule
+import model.seat.SeatGroup
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
@@ -82,38 +83,40 @@ class CinemaScheduleTest {
 
         val expected = MovieSchedule(movieScreenings = expectedMovieScreening)
 
-        assertThat(
-            CinemaSchedule(
-                screenSchedules = schedules,
-            ).getMovieSchedule(movie),
-        ).isEqualTo(expected)
+        Assertions
+            .assertThat(
+                CinemaSchedule(
+                    screenSchedules = schedules,
+                ).getMovieSchedule(movie),
+            ).isEqualTo(expected)
     }
 
     @Test
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
-        assertThatThrownBy {
-            val dateTimeRange =
-                DateTimeRange(
-                    LocalDateTime.of(2026, 4, 7, 21, 50),
-                    LocalDateTime.of(2026, 4, 10, 22, 50),
-                )
+        Assertions
+            .assertThatThrownBy {
+                val dateTimeRange =
+                    DateTimeRange(
+                        LocalDateTime.of(2026, 4, 7, 21, 50),
+                        LocalDateTime.of(2026, 4, 10, 22, 50),
+                    )
 
-            val schedules =
-                listOf(
-                    ScreenSchedule(
-                        screenId = uuidOne,
-                        servicePeriod = dateTimeRange,
-                        movieScreenings = emptyList(),
-                    ),
-                    ScreenSchedule(
-                        screenId = uuidOne,
-                        servicePeriod = dateTimeRange,
-                        movieScreenings = emptyList(),
-                    ),
+                val schedules =
+                    listOf(
+                        ScreenSchedule(
+                            screenId = uuidOne,
+                            servicePeriod = dateTimeRange,
+                            movieScreenings = emptyList(),
+                        ),
+                        ScreenSchedule(
+                            screenId = uuidOne,
+                            servicePeriod = dateTimeRange,
+                            movieScreenings = emptyList(),
+                        ),
+                    )
+                CinemaSchedule(
+                    screenSchedules = schedules,
                 )
-            CinemaSchedule(
-                screenSchedules = schedules,
-            )
-        }.isInstanceOf(IllegalArgumentException::class.java)
+            }.isInstanceOf(IllegalArgumentException::class.java)
     }
 }

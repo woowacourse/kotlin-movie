@@ -1,5 +1,6 @@
-package model
+package model.payment
 
+import model.MovieReservationResult
 import model.seat.toPrice
 import java.time.LocalTime
 

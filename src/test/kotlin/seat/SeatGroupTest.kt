@@ -1,9 +1,9 @@
 package seat
 
-import model.SeatGroup
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
+import model.seat.SeatGroup
 import model.seat.SeatRow
 import model.seat.SeatState
 import org.assertj.core.api.Assertions.assertThat
