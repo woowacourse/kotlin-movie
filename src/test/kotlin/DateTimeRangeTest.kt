@@ -65,11 +65,10 @@ class DateTimeRangeTest {
         assertThat(
             DateTimeRange(
                 LocalDateTime.of(2025, 12, 25, 12, 0),
-                endTime
+                endTime,
             ).contains(endTime),
         ).isTrue
     }
-
 
     companion object {
         @JvmStatic

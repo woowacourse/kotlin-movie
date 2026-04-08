@@ -1,11 +1,14 @@
+import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class CinemaScreen(
     val id: Uuid,
-    val dateTimeRange: DateTimeRange,
+    val servicePeriod: DateTimeRange,
 ) {
+    fun isContainServicePeriod(time: LocalDateTime): Boolean = servicePeriod.contains(time)
+
     override fun equals(other: Any?): Boolean {
         if (other is CinemaScreen) {
             return this.id == other.id

@@ -16,38 +16,36 @@ class CinemaScreenTest {
         assertThat(
             CinemaScreen(
                 id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                dateTimeRange = dateTimeRange,
+                servicePeriod = dateTimeRange,
             ),
         ).isNotEqualTo(
             CinemaScreen(
                 id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
-                dateTimeRange = dateTimeRange,
+                servicePeriod = dateTimeRange,
             ),
         )
     }
 
     @Test
     fun `운영 기간이 다르더라도 id가 같으면 같은 상영관으로 판단한다`() {
-        val dateTimeRange =
-
-            assertThat(
-                CinemaScreen(
-                    id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                    dateTimeRange =
-                        DateTimeRange(
-                            LocalDateTime.of(2026, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 7, 22, 50),
-                        ),
-                ),
-            ).isNotEqualTo(
-                CinemaScreen(
-                    id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
-                    dateTimeRange =
-                        DateTimeRange(
-                            LocalDateTime.of(1999, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 7, 22, 50),
-                        ),
-                ),
-            )
+        assertThat(
+            CinemaScreen(
+                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                servicePeriod =
+                    DateTimeRange(
+                        LocalDateTime.of(2026, 4, 7, 21, 50),
+                        LocalDateTime.of(2026, 4, 7, 22, 50),
+                    ),
+            ),
+        ).isNotEqualTo(
+            CinemaScreen(
+                id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
+                servicePeriod =
+                    DateTimeRange(
+                        LocalDateTime.of(1999, 4, 7, 21, 50),
+                        LocalDateTime.of(2026, 4, 7, 22, 50),
+                    ),
+            ),
+        )
     }
 }

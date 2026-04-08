@@ -5,4 +5,6 @@ value class RunningTime(
     init {
         require(minute > 0)
     }
+
+    fun isSameDuration(dateTimeRange: DateTimeRange): Boolean = dateTimeRange.durationMinute.toInt() == minute
 }
