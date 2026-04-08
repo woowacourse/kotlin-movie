@@ -1,18 +1,34 @@
 package domain
 
+import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 object DiscountPolicy {
     private val movieDay = listOf<Int>(10, 20, 30)
+    private val noneDiscountTimeBoundary =
+        LocalTime(11, 0) to LocalTime(20, 0)
+
     const val MOVIE_DAY_DISCOUNT_PERCENT = 0.1
     const val NONE_DISCOUNT_PERCENT = 0.0
+
+    const val TIME_DISCOUNT_PRICE = 2000
+    const val NONE_DISCOUNT_PRICE = 0
 
     fun movieDayDiscount(date: Int): Double {
         if (movieDay.contains(date)) {
             return MOVIE_DAY_DISCOUNT_PERCENT
         }
         return NONE_DISCOUNT_PERCENT
+    }
+
+    fun showTimeDiscount(date: LocalDateTime): Int {
+        if (date.time < noneDiscountTimeBoundary.first && date.time > noneDiscountTimeBoundary.second) {
+            return NONE_DISCOUNT_PRICE
+        }
+        return TIME_DISCOUNT_PRICE
     }
 }
 
@@ -63,5 +79,17 @@ class DiscountPolicyTest {
 
         // then : 0.0이 반환된다.
         assertEquals(result, DiscountPolicy.NONE_DISCOUNT_PERCENT)
+    }
+
+    @Test
+    fun `오전 11시 이전에 시작하는 상영은 2,000원이 할인된다`() {
+        // given : 오전 11시 이전 시간이 주어진다
+        val time: LocalDateTime = LocalDateTime(2026, 4, 8, 10, 0)
+
+        // when : 할인액을 계산하면
+        val result = DiscountPolicy.showTimeDiscount(time)
+
+        // then : 2000이 반환된다.
+        assertEquals(result, DiscountPolicy.TIME_DISCOUNT_PRICE)
     }
 }
