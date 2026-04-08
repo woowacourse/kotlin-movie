@@ -1,0 +1,16 @@
+package movie.domain.seat
+
+import movie.domain.Price
+import movie.domain.seat.number.SeatNumber
+import movie.domain.seat.rank.SeatRank
+
+class Seat(
+    private val seatNumber: SeatNumber,
+    private val rank: SeatRank,
+) {
+    fun isSeat(seatNumber: SeatNumber): Boolean = this.seatNumber == seatNumber
+
+    fun getPrice(): Price {
+        return rank.getPrice()
+    }
+}
