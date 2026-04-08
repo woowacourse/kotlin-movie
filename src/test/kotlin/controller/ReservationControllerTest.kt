@@ -3,6 +3,7 @@ package controller
 import domain.Movie
 import domain.MovieTheater
 import java.io.ByteArrayInputStream
+import kotlinx.datetime.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -32,6 +33,17 @@ class ReservationController(val movieTheater: MovieTheater) {
         require(movieIndex != -1) { "존재하지 않는 영화입니다." }
 
         return movieTheater.movies[movieIndex]
+    }
+
+    fun chooseDate(): LocalDate {
+        println("날짜를 입력하세요 (YYYY-MM-DD):")
+        val input = readln()
+
+        try {
+            return LocalDate.parse(input)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)")
+        }
     }
 }
 
@@ -93,5 +105,20 @@ class ReservationControllerTest {
 
         // then : 영화가 반환된다.
         assertEquals(TestFixtureData.movieTheater.movies.first(), result)
+    }
+
+    @Test
+    fun `날짜 형식이 YYYY-MM-DD가 아니면 예외가 발생한다`() {
+        // given : 2026_04_08이 입력된다.
+        val input = "2026_04_08"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 날짜를 처리하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseDate()
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)", exception.message)
     }
 }
