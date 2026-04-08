@@ -32,35 +32,35 @@ object Reservation {
 
     fun findUser(
         movieTheater: MovieTheater,
-        id: Long,
+        id: Int,
     ): User {
         val userIndex = movieTheater.users.indexOfFirst { it.id == id }
 
         require(userIndex != -1) { "존재하지 않는 사용자입니다." }
         return movieTheater.users[userIndex]
     }
+
+    fun makeReservation(
+        movieTheater: MovieTheater,
+        userId: Int,
+        showing: Showing,
+    ) {
+        checkReservationHistory(movieTheater.reservationInfos, userId, showing)
+    }
+
+    fun checkReservationHistory(
+        reservationInfos: List<ReservationInfo>,
+        userId: Int,
+        showing: Showing,
+    ) {
+        val history = reservationInfos.filter {
+            it.user.id == userId &&
+                (showing.startTime >= it.showing.startTime && showing.startTime <= it.showing.endTime)
+        }
+
+        require(history.isEmpty()) { "동일한 시간대에 예매한 내역이 존재합니다." }
+    }
 }
-
-class Movie(val title: String, val id: Int, val runningTime: Int)
-
-class MovieTheater(
-    val screens: List<Screen>,
-    val movies: List<Movie>,
-    val showings: List<Showing>,
-    val reservationInfos: List<ReservationInfo>,
-    val users: List<User>,
-)
-
-class Screen(val seats: List<Seat>, val id: Int)
-
-class Showing(val startTime: LocalDateTime, val screen: Screen, val movie: Movie) {
-    val endTime = startTime
-        .toInstant(TimeZone.currentSystemDefault())
-        .plus(movie.runningTime.minutes)
-        .toLocalDateTime(TimeZone.currentSystemDefault())
-}
-
-class ReservationInfo(val showing: Showing, val seat: Seat, val user: User)
 
 class ReservationTest {
     @Test
@@ -124,9 +124,44 @@ class ReservationTest {
 
         // when : 사용자의 id에 해당하는 사용자를 찾을 경우
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.findUser(TestFixtureData.movieTheater, userId.toLong())
+            Reservation.findUser(TestFixtureData.movieTheater, userId)
         }
         // then : 예외가 발생한다.
         assertEquals("존재하지 않는 사용자입니다.", exception.message)
     }
+
+    @Test
+    fun `동일한 시간대에 이미 예매한 내역이 있으면 예외가 발생한다`() {
+        // given : 사용자의 id 는 1이다. 사용자는 해당 시간에 예매한 내역이 있다.
+        val userId = 1
+        val showing = TestFixtureData.showings[0]
+
+        // when : 사용자가 해당 시간에 예약하려고 할 때
+        val exception = assertThrows<IllegalArgumentException> {
+            Reservation.checkReservationHistory(TestFixtureData.movieTheater.reservationInfos, userId, showing)
+        }
+        // then : 예외가 발생한다.
+        assertEquals("동일한 시간대에 예매한 내역이 존재합니다.", exception.message)
+    }
 }
+
+class Movie(val title: String, val id: Int, val runningTime: Int)
+
+class MovieTheater(
+    val screens: List<Screen>,
+    val movies: List<Movie>,
+    val showings: List<Showing>,
+    val reservationInfos: List<ReservationInfo>,
+    val users: List<User>,
+)
+
+class Screen(val seats: List<Seat>, val id: Int)
+
+class Showing(val startTime: LocalDateTime, val screen: Screen, val movie: Movie) {
+    val endTime = startTime
+        .toInstant(TimeZone.currentSystemDefault())
+        .plus(movie.runningTime.minutes)
+        .toLocalDateTime(TimeZone.currentSystemDefault())
+}
+
+class ReservationInfo(val showing: Showing, val seat: Seat, val user: User)
