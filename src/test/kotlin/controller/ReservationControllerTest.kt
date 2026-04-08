@@ -1,11 +1,13 @@
 package controller
 
+import domain.Movie
+import domain.MovieTheater
 import java.io.ByteArrayInputStream
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class ReservationController {
+class ReservationController(val movieTheater: MovieTheater) {
     fun run() {
     }
 
@@ -20,11 +22,22 @@ class ReservationController {
         }
         return false
     }
+
+    fun chooseMovie(): Movie {
+        println("예매할 영화 제목을 입력하세요:")
+        val input = readln()
+
+        val movieIndex = movieTheater.movies.indexOfFirst { it.title == input }
+
+        require(movieIndex != -1) { "존재하지 않는 영화입니다." }
+
+        return movieTheater.movies[movieIndex]
+    }
 }
 
 class ReservationControllerTest {
 
-    val controller = ReservationController()
+    val controller = ReservationController(TestFixtureData.movieTheater)
 
     @Test
     fun `생성 여부가 Y,N이 아닐 경우 예외가 발생한다`() {
@@ -52,5 +65,20 @@ class ReservationControllerTest {
 
         // then : 예외가 발생한다.
         assertEquals(true, result)
+    }
+
+    @Test
+    fun `존재하지 않는 영화 제목이면 예외가 발생한다`() {
+        // given : 존재하지 않는 영화 제목이 입력된다.
+        val input = "X"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 영화 제목을 처리하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseMovie()
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("존재하지 않는 영화입니다.", exception.message)
     }
 }
