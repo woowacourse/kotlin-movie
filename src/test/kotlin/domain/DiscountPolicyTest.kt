@@ -24,8 +24,8 @@ object DiscountPolicy {
 
     const val CARD_DISCOUNT_PERCENT = 0.05
     const val CASH_DISCOUNT_PERCENT = 0.02
-    fun movieDayDiscount(date: Int): Double {
-        if (movieDay.contains(date)) {
+    fun movieDayDiscount(date: LocalDateTime): Double {
+        if (movieDay.contains(date.day)) {
             return MOVIE_DAY_DISCOUNT_PERCENT
         }
         return NONE_DISCOUNT_PERCENT
@@ -50,7 +50,7 @@ class DiscountPolicyTest {
     @Test
     fun `매월 10일에 상영되는 영화는 10% 할인된다`() {
         // given : 날짜가 10일이다.
-        val date = 10
+        val date = LocalDateTime(2026, 4, 10, 14, 0)
 
         // when : 할인율을 계산하면
         val result = DiscountPolicy.movieDayDiscount(date)
@@ -62,7 +62,7 @@ class DiscountPolicyTest {
     @Test
     fun `매월 20일에 상영되는 영화는 10% 할인된다`() {
         // given : 날짜가 20일이다.
-        val date = 20
+        val date = LocalDateTime(2026, 4, 20, 14, 0)
 
         // when : 할인율을 계산하면
         val result = DiscountPolicy.movieDayDiscount(date)
@@ -74,7 +74,7 @@ class DiscountPolicyTest {
     @Test
     fun `매월 30일에 상영되는 영화는 10% 할인된다`() {
         // given : 날짜가 30일이다.
-        val date = 30
+        val date = LocalDateTime(2026, 4, 30, 14, 0)
 
         // when : 할인율을 계산하면
         val result = DiscountPolicy.movieDayDiscount(date)
@@ -86,7 +86,7 @@ class DiscountPolicyTest {
     @Test
     fun `무비데이가 아닌 날에는 무비데이 할인이 적용되지 않는다`() {
         // given : 날짜가 1일이다.
-        val date = 1
+        val date = LocalDateTime(2026, 4, 1, 14, 0)
 
         // when : 할인율을 계산하면
         val result = DiscountPolicy.movieDayDiscount(date)
