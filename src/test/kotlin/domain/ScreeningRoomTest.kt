@@ -10,7 +10,7 @@ class ScreeningRoomTest {
         ScreeningRoom(
             name = ScreeningRoomName("커피"),
             operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(18, 0)),
-            seats = Seats(listOf(Seat(Row("A"), Column(1)))),
+            seats = Seats(listOf(Seat(SeatPosition(Row("A"), Column(1))))),
         )
     }
 
@@ -20,7 +20,7 @@ class ScreeningRoomTest {
             ScreeningRoom(
                 name = ScreeningRoomName(" "),
                 operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(18, 0)),
-                seats = Seats(listOf(Seat(Row("A"), Column(1)))),
+                seats = Seats(listOf(Seat(SeatPosition(Row("A"), Column(1))))),
             )
         }
     }
@@ -31,7 +31,7 @@ class ScreeningRoomTest {
             ScreeningRoom(
                 name = ScreeningRoomName("커피"),
                 operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(9, 0)),
-                seats = Seats(listOf(Seat(Row("A"), Column(1)))),
+                seats = Seats(listOf(Seat(SeatPosition(Row("A"), Column(1))))),
             )
         }
     }

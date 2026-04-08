@@ -3,6 +3,7 @@ package domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import javax.swing.text.Position
 
 class SeatGradeTest {
     @ParameterizedTest(name = "등급: {0}, 가격: {1}")
@@ -31,7 +32,7 @@ class SeatGradeTest {
         givenC: Column,
         expected: SeatGrade,
     ) {
-        val result = SeatGrade.of(row = givenR, column = givenC)
+        val result = SeatGrade.of(SeatPosition(row = givenR, column = givenC))
         assertThat(result).isEqualTo(expected)
     }
 }
