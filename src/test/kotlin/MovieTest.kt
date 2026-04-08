@@ -3,35 +3,36 @@ import model.RunningTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieTest {
+    private val movieOne =
+        Movie(
+            id = "1",
+            runningTime = RunningTime(10),
+        )
+    private val movieTwo =
+        Movie(
+            id = "2",
+            runningTime = RunningTime(10),
+        )
+
     @Test
     fun `러닝 타임이 같아도 id가 다르면 다른 영화로 판단한다`() {
         assertThat(
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(10),
-            ),
+            movieOne,
         ).isNotEqualTo(
-            Movie(
-                id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
-                runningTime = RunningTime(10),
-            ),
+            movieTwo,
         )
     }
 
     @Test
     fun `러닝 타임이 달라도 id가 같으면 같은 영화로 판단한다`() {
         assertThat(
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(10),
-            ),
+            movieOne,
         ).isEqualTo(
             Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                id = "1",
                 runningTime = RunningTime(15),
             ),
         )

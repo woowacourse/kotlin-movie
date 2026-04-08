@@ -12,30 +12,42 @@ import model.seat.SeatGrade
 import model.seat.SeatRow
 import model.seat.SeatState
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class CinemaKioskTest {
-    @Test
-    fun `동일한 시간에 예약을 했다면 예약 실패 결과를 반환한다`() {
-        val movieOne =
+    private lateinit var movieOne: Movie
+    private lateinit var movieTwo: Movie
+    private lateinit var idOne: String
+    private lateinit var idTwo: String
+
+    @BeforeEach
+    fun setUp() {
+        movieOne =
             Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                id = "1",
                 runningTime = RunningTime(60),
             )
-        val movieTwo =
+
+        movieTwo =
             Movie(
-                id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
+                id = "2",
                 runningTime = RunningTime(100),
             )
 
+        idOne = "1"
+        idTwo = "2"
+    }
+
+    @Test
+    fun `동일한 시간에 예약을 했다면 예약 실패 결과를 반환한다`() {
         val screenSchedules =
             listOf(
                 ScreenSchedule(
-                    screenId = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                    screenId = "1",
                     servicePeriod =
                         DateTimeRange(
                             LocalDateTime.of(1999, 4, 7, 21, 50),
@@ -65,7 +77,7 @@ class CinemaKioskTest {
                         ),
                 ),
                 ScreenSchedule(
-                    screenId = Uuid.parse("22222222-2222-2222-2222-222222222222"),
+                    screenId = "2",
                     servicePeriod =
                         DateTimeRange(
                             LocalDateTime.of(1999, 4, 7, 21, 50),
@@ -123,16 +135,10 @@ class CinemaKioskTest {
 
     @Test
     fun `같은 영화 상영 일정에 두 번 이상 예약이 가능하다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenSchedules =
             listOf(
                 ScreenSchedule(
-                    screenId = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                    screenId = idOne,
                     servicePeriod =
                         DateTimeRange(
                             LocalDateTime.of(1999, 4, 7, 21, 50),

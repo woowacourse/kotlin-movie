@@ -13,18 +13,17 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MoviePaymentTest {
+    private val movieOne =
+        Movie(
+            id = "1",
+            runningTime = RunningTime(60),
+        )
+
     @Test
     fun `좌석 등급과 예약한 좌석 수에 따라서 가격이 계산된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 11, 21, 0),
@@ -64,12 +63,6 @@ class MoviePaymentTest {
 
     @Test
     fun `무비데이(매월 10일, 20일, 30일)에 상영되는 영화는 10% 할인된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 21, 0),
@@ -112,12 +105,6 @@ class MoviePaymentTest {
 
     @Test
     fun `오전 11시까지 시작하는 상영은 2,000원이 할인된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -149,12 +136,6 @@ class MoviePaymentTest {
 
     @Test
     fun `오후 8시부터 시작하는 상영은 2,000원이 할인된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 20, 0),
@@ -186,12 +167,6 @@ class MoviePaymentTest {
 
     @Test
     fun `무비데이이면서 시간 조건을 만족하면 무비데이 할인이 먼저 적용된 후 시간 조건 할인이 적용된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 20, 0),
@@ -223,12 +198,6 @@ class MoviePaymentTest {
 
     @Test
     fun `포인트를 사용하면 예매 금액에서 차감된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 20, 0),
@@ -260,12 +229,6 @@ class MoviePaymentTest {
 
     @Test
     fun `신용카드로 결제하면 포인트 적용 후 금액에서 5% 할인된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 20, 0),
@@ -297,12 +260,6 @@ class MoviePaymentTest {
 
     @Test
     fun `현금으로 결제하면 포인트 적용 후 금액에서 2% 할인된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 10, 20, 0),
@@ -334,12 +291,6 @@ class MoviePaymentTest {
 
     @Test
     fun `할인 조건이 없으면 기본 금액이 그대로 적용된다`() {
-        val movieOne =
-            Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
-                runningTime = RunningTime(60),
-            )
-
         val screenTime =
             DateTimeRange(
                 LocalDateTime.of(2026, 4, 13, 13, 0),

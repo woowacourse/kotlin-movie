@@ -1,11 +1,10 @@
 package model
 
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class Movie(
-    val id: Uuid,
+    val id: String,
     val runningTime: RunningTime,
 ) {
     override fun equals(other: Any?): Boolean {

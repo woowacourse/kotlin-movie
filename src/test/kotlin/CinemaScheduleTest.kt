@@ -11,15 +11,14 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class CinemaScheduleTest {
+    private val uuidOne = "1"
+    private val uuidTwo = "2"
+
     @Test
     fun `모든 상영관의 영화 상영 일정을 반환한다`() {
-        val uuidOne = Uuid.parse("11111111-1111-1111-1111-111111111111")
-        val uuidTwo = Uuid.parse("22222222-2222-2222-2222-222222222222")
-
         val movie =
             Movie(
                 id = uuidOne,
@@ -93,7 +92,6 @@ class CinemaScheduleTest {
     @Test
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
         assertThatThrownBy {
-            val uuidOne = Uuid.parse("11111111-1111-1111-1111-111111111111")
             val dateTimeRange =
                 DateTimeRange(
                     LocalDateTime.of(2026, 4, 7, 21, 50),

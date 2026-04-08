@@ -2,11 +2,10 @@ package model
 
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class ScreenSchedule(
-    val screenId: Uuid,
+    val screenId: String,
     val servicePeriod: DateTimeRange,
     movieScreenings: List<MovieScreening>,
 ) {

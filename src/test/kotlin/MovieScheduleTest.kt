@@ -8,7 +8,6 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieScheduleTest {
@@ -16,12 +15,12 @@ class MovieScheduleTest {
     fun `특정 영화의 상영 일정 목록에 포함된 모든 영화들이 같은 영화가 아니라면 예외를 발생시킨다`() {
         val movieOne =
             Movie(
-                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                id = "1",
                 runningTime = RunningTime(10),
             )
         val movieTwo =
             Movie(
-                id = Uuid.parse("22222222-2222-2222-2222-222222222222"),
+                id = "2",
                 runningTime = RunningTime(100),
             )
 

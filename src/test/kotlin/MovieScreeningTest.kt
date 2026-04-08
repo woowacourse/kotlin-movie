@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.provider.Arguments
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieScreeningTest {
@@ -37,7 +36,7 @@ class MovieScreeningTest {
             MovieScreening(
                 movie =
                     Movie(
-                        id = onlyOneUuid,
+                        id = idOne,
                         runningTime = RunningTime(minute = 60),
                     ),
                 screenTime =
@@ -56,7 +55,7 @@ class MovieScreeningTest {
             MovieScreening(
                 movie =
                     Movie(
-                        id = onlyOneUuid,
+                        id = idOne,
                         runningTime = RunningTime(minute = 60),
                     ),
                 screenTime =
@@ -70,16 +69,16 @@ class MovieScreeningTest {
     }
 
     companion object {
-        private val onlyOneUuid = Uuid.parse("11111111-1111-1111-1111-111111111111")
-        private val onlyTwoUuid = Uuid.parse("22222222-2222-2222-2222-222222222222")
+        private val idOne = "1"
+        private val idTwo = "2"
         private val oneHourMovie =
             Movie(
-                id = onlyOneUuid,
+                id = idOne,
                 runningTime = RunningTime(minute = 60),
             )
         private val twoHourMovie =
             Movie(
-                id = onlyTwoUuid,
+                id = idTwo,
                 runningTime = RunningTime(minute = 120),
             )
 
