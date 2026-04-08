@@ -25,7 +25,7 @@ object DiscountPolicy {
     }
 
     fun showTimeDiscount(date: LocalDateTime): Int {
-        if (date.time < noneDiscountTimeBoundary.first && date.time > noneDiscountTimeBoundary.second) {
+        if (date.time > noneDiscountTimeBoundary.first && date.time < noneDiscountTimeBoundary.second) {
             return NONE_DISCOUNT_PRICE
         }
         return TIME_DISCOUNT_PRICE
@@ -103,5 +103,17 @@ class DiscountPolicyTest {
 
         // then : 2000이 반환된다.
         assertEquals(result, DiscountPolicy.TIME_DISCOUNT_PRICE)
+    }
+
+    @Test
+    fun `오전 11시 ~ 오후 8시 사이에 시작하는 상영은 시간 할인이 적용되지 않는다`() {
+        // given : 오후 4시 시간이 주어진다
+        val time: LocalDateTime = LocalDateTime(2026, 4, 8, 16, 0)
+
+        // when : 할인액을 계산하면
+        val result = DiscountPolicy.showTimeDiscount(time)
+
+        // then : 2000이 반환된다.
+        assertEquals(DiscountPolicy.NONE_DISCOUNT_PRICE, result)
     }
 }
