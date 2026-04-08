@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class MovieTest {
-
     @Test
     fun `영화 제목이 공백일 경우 예외를 던진다`() {
         assertThrows(IllegalArgumentException::class.java) { Title(title = "") }
@@ -18,13 +17,12 @@ class MovieTest {
 
     @Test
     fun `종료일이 시작일보다 앞 설 경우 예외를 던진다`() {
-
         val startDate = LocalDate.of(2026, 4, 8)
         val endDate = LocalDate.of(2026, 4, 7)
         assertThrows(IllegalArgumentException::class.java) {
             ScreeningPeriod(
                 startDate = startDate,
-                endDate = endDate
+                endDate = endDate,
             )
         }
     }
@@ -34,10 +32,11 @@ class MovieTest {
         Movie(
             title = Title(title = "안녕하세요 커피입니다"),
             runningTime = RunningTime(duration = 178),
-            screeningPeriod = ScreeningPeriod(
-                startDate = LocalDate.of(2026, 4, 7),
-                endDate = LocalDate.of(2026, 4, 8)
-            ),
+            screeningPeriod =
+                ScreeningPeriod(
+                    startDate = LocalDate.of(2026, 4, 7),
+                    endDate = LocalDate.of(2026, 4, 8),
+                ),
         )
     }
 }
