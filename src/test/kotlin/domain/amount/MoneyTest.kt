@@ -32,7 +32,7 @@ class MoneyTest {
     @Test
     fun `비율 계산을 할 수 있다`() {
         // given
-        val money = Money(1000)
+        val money = Money(10000)
 
         // when
         val result = money.percentOf(10)
