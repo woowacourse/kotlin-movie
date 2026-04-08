@@ -92,4 +92,16 @@ class DiscountPolicyTest {
         // then : 2000이 반환된다.
         assertEquals(result, DiscountPolicy.TIME_DISCOUNT_PRICE)
     }
+
+    @Test
+    fun `오후 8시 이후에 시작하는 상영은 2,000원이 할인된다`() {
+        // given : 오후 8시 이후 시간이 주어진다
+        val time: LocalDateTime = LocalDateTime(2026, 4, 8, 21, 0)
+
+        // when : 할인액을 계산하면
+        val result = DiscountPolicy.showTimeDiscount(time)
+
+        // then : 2000이 반환된다.
+        assertEquals(result, DiscountPolicy.TIME_DISCOUNT_PRICE)
+    }
 }
