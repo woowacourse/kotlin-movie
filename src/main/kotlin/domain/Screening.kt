@@ -1,8 +1,10 @@
 package domain
 
 import java.time.LocalDateTime
+import java.util.UUID
 
 class Screening(
+    val id: String = UUID.randomUUID().toString(),
     val movie: Movie,
     val room: ScreeningRoom,
     val startTime: LocalDateTime,
