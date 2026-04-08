@@ -17,4 +17,6 @@ data class DateTimeRange(
         if (time.isEqual(start) || time.isEqual(end)) return true
         return time.isAfter(start) && time.isBefore(end)
     }
+
+    fun overlaps(other: DateTimeRange): Boolean = !start.isAfter(other.end) && !other.start.isAfter(end)
 }

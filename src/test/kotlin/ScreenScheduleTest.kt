@@ -7,6 +7,9 @@ import model.ScreenSchedule
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -159,5 +162,84 @@ class ScreenScheduleTest {
                 ),
             ),
         )
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidMovieScreening")
+    fun `동일한 상영관에서 상영 시간이 겹칠 경우 예외를 발생시킨다`(movieScreening: MovieScreening) {
+        assertThatThrownBy {
+            ScreenSchedule(
+                screenId = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                servicePeriod =
+                    DateTimeRange(
+                        LocalDateTime.of(1999, 4, 7, 21, 50),
+                        LocalDateTime.of(2026, 4, 10, 22, 50),
+                    ),
+                listOf(
+                    movieScreening,
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 11, 0),
+                                end = LocalDateTime.of(2026, 4, 8, 12, 0),
+                            ),
+                    ),
+                ),
+            )
+        }
+    }
+
+    companion object {
+        private val movieOne =
+            Movie(
+                id = Uuid.parse("11111111-1111-1111-1111-111111111111"),
+                runningTime = RunningTime(60),
+            )
+
+        @JvmStatic
+        fun invalidMovieScreening(): List<Arguments> =
+            listOf(
+                Arguments.of(
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 10, 0),
+                                end = LocalDateTime.of(2026, 4, 8, 11, 0),
+                            ),
+                    ),
+                ),
+                Arguments.of(
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 12, 0),
+                                end = LocalDateTime.of(2026, 4, 8, 13, 0),
+                            ),
+                    ),
+                ),
+                Arguments.of(
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 11, 30),
+                                end = LocalDateTime.of(2026, 4, 8, 12, 30),
+                            ),
+                    ),
+                ),
+                Arguments.of(
+                    MovieScreening(
+                        movie = movieOne,
+                        screenTime =
+                            DateTimeRange(
+                                start = LocalDateTime.of(2026, 4, 8, 10, 30),
+                                end = LocalDateTime.of(2026, 4, 8, 11, 30),
+                            ),
+                    ),
+                ),
+            )
     }
 }
