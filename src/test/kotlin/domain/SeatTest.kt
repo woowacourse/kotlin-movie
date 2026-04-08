@@ -44,5 +44,4 @@ class SeatTest {
         val expected = ReserveState.AVAILABLE
         assertThat(given.state).isEqualTo(expected)
     }
-
 }

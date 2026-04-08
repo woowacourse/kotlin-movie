@@ -11,7 +11,7 @@ class ScreeningRoomTest {
             name = "챱",
             startTime = LocalTime.of(10, 0),
             endTime = LocalTime.of(18, 0),
-            seats = listOf(Seat(Row("A"), Column(1)))
+            seats = listOf(Seat(Row("A"), Column(1))),
         )
     }
 
@@ -22,7 +22,7 @@ class ScreeningRoomTest {
                 name = " ",
                 startTime = LocalTime.of(10, 0),
                 endTime = LocalTime.of(18, 0),
-                seats = listOf(Seat(Row("A"), Column(1)))
+                seats = listOf(Seat(Row("A"), Column(1))),
             )
         }
     }
@@ -34,19 +34,19 @@ class ScreeningRoomTest {
                 name = " 커비",
                 startTime = LocalTime.of(10, 0),
                 endTime = LocalTime.of(9, 0),
-                seats = listOf(Seat(Row("A"), Column(1)))
+                seats = listOf(Seat(Row("A"), Column(1))),
             )
         }
     }
 
     @Test
-    fun `좌석이 없을 경우 예외를 던진다`(){
+    fun `좌석이 없을 경우 예외를 던진다`() {
         assertThrows(IllegalArgumentException::class.java) {
             ScreeningRoom(
                 name = " 커비",
                 startTime = LocalTime.of(10, 0),
                 endTime = LocalTime.of(9, 0),
-                seats = emptyList()
+                seats = emptyList(),
             )
         }
     }
