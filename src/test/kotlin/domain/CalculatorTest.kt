@@ -20,6 +20,13 @@ object Calculator {
     ): Int {
         return ((1 - DiscountPolicy.movieDayDiscount(date)) * price).toInt()
     }
+
+    fun applyTimeDiscount(
+        price: Int,
+        date: LocalDateTime,
+    ): Int {
+        return price - DiscountPolicy.showTimeDiscount(date)
+    }
 }
 
 class CalculatorTest {
@@ -34,5 +41,18 @@ class CalculatorTest {
 
         // then : 14_400원이 반환된다.
         assertEquals(14_400, result)
+    }
+
+    @Test
+    fun `할인 시간에 상영되는 영화는 2000원 할인이 적용된다`() {
+        // given : 시간이 10시이고, 영화가 16_000원이다.
+        val price = 16_000
+        val date = LocalDateTime(2026, 4, 10, 10, 0)
+
+        // when : 할인액을 적용하면
+        val result = Calculator.applyTimeDiscount(price, date)
+
+        // then : 14_000원이 반환된다.
+        assertEquals(14_000, result)
     }
 }
