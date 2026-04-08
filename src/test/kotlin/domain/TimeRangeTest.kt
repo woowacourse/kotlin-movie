@@ -6,14 +6,11 @@ import org.junit.jupiter.api.Test
 import java.time.LocalTime
 
 class TimeRangeTest {
-
     @Test
     fun `종료시간이 시작시간보다 앞서면 예외를 던진다`() {
         assertThrows(IllegalArgumentException::class.java) {
-
             TimeRange(LocalTime.of(10, 0), LocalTime.of(9, 0))
         }
-
     }
 
     @Test

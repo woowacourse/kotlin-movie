@@ -10,7 +10,5 @@ data class TimeRange(
         require(end.isAfter(start)) { "종료시간이 시작시간보다 앞설 수 없습니다." }
     }
 
-    fun isOverlapping(other: TimeRange): Boolean {
-        return this.start.isBefore(other.end) && this.end.isAfter(other.start)
-    }
+    fun isOverlapping(other: TimeRange): Boolean = this.start.isBefore(other.end) && this.end.isAfter(other.start)
 }
