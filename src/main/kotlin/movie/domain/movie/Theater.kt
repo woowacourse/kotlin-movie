@@ -1,0 +1,28 @@
+package movie.domain.movie
+
+import movie.domain.Price
+import movie.domain.seat.Seats
+import movie.domain.seat.number.SeatNumber
+import java.time.LocalTime
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
+
+@OptIn(ExperimentalUuidApi::class)
+class Theater(
+    val id: Uuid = Uuid.random(),
+    val seats: Seats = Seats(),
+    val openTime: LocalTime,
+    val closeTime: LocalTime,
+) {
+    fun validateSeat(seatNumber: SeatNumber): Boolean {
+        return seats.contains(seatNumber)
+    }
+
+    fun getPrice(seatNumber: SeatNumber): Price {
+        return seats.getPrice(seatNumber)
+    }
+
+    fun validateTime(startTime: LocalTime, endTime: LocalTime): Boolean {
+        return (startTime in openTime..closeTime) && (endTime in openTime..closeTime)
+    }
+}

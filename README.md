@@ -25,10 +25,10 @@
   * [] seat 정보를 가진다.
 
 ### Theater
-* [] Theater 도메인을 구현한다.
-  * [] theaterId를 가진다.
-  * [] 상영관 운영 시작 / 종료 시간을 가진다.
-  * [] 좌석 목록을 가진다.
+* [x] Theater 도메인을 구현한다.
+  * [x] theaterId를 가진다.
+  * [x] 상영관 운영 시작 / 종료 시간을 가진다.
+  * [x] 좌석 목록을 가진다.
 
 ### TheaterScheduler
 * [] TheaterScheduler 도메인을 구현한다.
