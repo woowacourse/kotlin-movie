@@ -1,4 +1,4 @@
-package model
+package model.seat
 
 enum class SeatGrade {
     S,
