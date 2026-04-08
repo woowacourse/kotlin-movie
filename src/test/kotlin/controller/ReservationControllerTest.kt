@@ -2,6 +2,7 @@ package controller
 
 import domain.Movie
 import domain.MovieTheater
+import domain.Showing
 import java.io.ByteArrayInputStream
 import kotlinx.datetime.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -44,6 +45,28 @@ class ReservationController(val movieTheater: MovieTheater) {
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException("올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)")
         }
+    }
+
+    fun chooseShowingTime(
+        movie: Movie,
+        date: LocalDate,
+    ): Showing {
+        val showings = movieTheater.showings.filter { it.movie == movie && it.startTime.date == date }
+
+        require(showings.isNotEmpty()) { "해당 날짜에 선택한 영화의 상영이 없습니다." }
+
+//        println("해당 날짜의 상영 목록")
+//
+//        showings.forEachIndexed { index, showing ->
+//            println("[${index + 1}] ${showing.startTime.time}")
+//        }
+//        println("상영 번호를 선택하세요:")
+//        val input = readln()
+//
+//        require(input.is)
+//
+//
+        return showings[0]
     }
 }
 
@@ -133,5 +156,22 @@ class ReservationControllerTest {
 
         // then : Date가 반환된다.
         assertEquals(LocalDate(2026, 4, 8), result)
+    }
+
+    @Test
+    fun `해당 날짜에 선택한 영화의 상영이 없으면 예외가 발생한다`() {
+        // given : 특정 영화를 선택한 상태에서 상영일자가 존재하지 않는 날짜를 선택한다
+        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val date: LocalDate = LocalDate(2026, 4, 8)
+
+//        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 상영을 확인하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseShowingTime(movie, date)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("해당 날짜에 선택한 영화의 상영이 없습니다.", exception.message)
     }
 }
