@@ -54,21 +54,17 @@ class ReservationController(val movieTheater: MovieTheater) {
         date: LocalDate,
     ): Showing {
         val showings = movieTheater.showings.filter { it.movie == movie && it.startTime.date == date }
+        println("해당 날짜의 상영 목록")
 
-        require(showings.isNotEmpty()) { "해당 날짜에 선택한 영화의 상영이 없습니다." }
+        showings.forEachIndexed { index, showing ->
+            println("[${index + 1}] ${showing.startTime.time}")
+        }
+        println("상영 번호를 선택하세요:")
+        val input = readln()
 
-//        println("해당 날짜의 상영 목록")
-//
-//        showings.forEachIndexed { index, showing ->
-//            println("[${index + 1}] ${showing.startTime.time}")
-//        }
-//        println("상영 번호를 선택하세요:")
-//        val input = readln()
-//
-//        require(input.is)
-//
-//
-        return showings[0]
+        require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "유효하지 않은 상영 번호입니다." }
+
+        return showings[input.toInt() - 1]
     }
 }
 
@@ -177,5 +173,20 @@ class ReservationControllerTest {
 
         // then : 예외가 발생한다.
         assertEquals("해당 날짜에 선택한 영화의 상영이 없습니다.", exception.message)
+    }
+
+    @Test
+    fun `해당 날짜에 상영이 있으면 상영 리스트를 반환한다`() {
+        // given : 특정 영화를 선택한 상태에서 상영일자가 존재하는 날짜를 입력한다
+        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val date = LocalDate(2026, 4, 10)
+
+        // when : 상영을 처리하고 1번을 입력하면
+        val input = "1"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val result = controller.chooseShowingTime(movie, date)
+
+        // then : 특정 상영이 반환된다.
+        assertEquals(TestFixtureData.movieTheater.showings.first(), result)
     }
 }
