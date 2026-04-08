@@ -6,28 +6,28 @@ import org.junit.jupiter.api.Test
 class PointTest {
 
     @Test
-    fun `잔액보다 적은 금액을 차감할 수 있다`() {
+    fun `포인트가 잔액보다 큰 경우 잔액만큼을 사용할 수 있다`() {
         // given
         val point = Point(5000)
         val money = Money(3000)
 
         // when
-        val result = point.minus(money)
+        val usagePoint = point.usableAmount(money)
 
         // then
-        assertThat(result).isEqualTo(Point(2000))
+        assertThat(usagePoint).isEqualTo(Money(3000))
     }
 
     @Test
-    fun `잔액보다 큰 금액을 차감하면 잔액만큼만 차감된다`() {
+    fun `포인트가 잔액보다 작은 경우 보유한 포인트만큼을 사용할 수 있다`() {
         // given
         val point = Point(5000)
         val money = Money(10000)
 
         // when
-        val result = point.minus(money)
+        val usagePoint = point.usableAmount(money)
 
         // then
-        assertThat(result).isEqualTo(Point(0))
+        assertThat(usagePoint).isEqualTo(Money(5000))
     }
 }

@@ -8,11 +8,10 @@ value class Point(
         require(value >= 0) { "포인트는 0원 이상이어야 합니다." }
     }
 
-    operator fun minus(money: Money): Point {
-        val result = this.value - money.value
-        if (result < 0) {
-            return Point(0)
+    fun usableAmount(price: Money): Money {
+        if (value >= price.value) {
+            return price
         }
-        return Point(result)
+        return Money(value)
     }
 }
