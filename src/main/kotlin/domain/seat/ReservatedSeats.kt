@@ -7,7 +7,7 @@ class ReservatedSeats(
         return seats.none { it.row == seat.row && it.column == seat.column }
     }
 
-    fun add(seat: Seat): ReservatedSeats {
-        return ReservatedSeats(seats + seat)
+    fun add(selectedSeats: List<Seat>): ReservatedSeats {
+        return ReservatedSeats(seats + selectedSeats)
     }
 }

@@ -40,7 +40,7 @@ class ReservatedSeatsTest {
         val reservatedSeats = ReservatedSeats(seats)
 
         // when
-        val newReservatedSeats = reservatedSeats.add(Seat("A", 1, SeatGrade.S))
+        val newReservatedSeats = reservatedSeats.add(listOf(Seat("A", 1, SeatGrade.S)))
         val result = newReservatedSeats.isAvailable(Seat("A", 1, SeatGrade.S))
 
         // then
