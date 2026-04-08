@@ -63,7 +63,7 @@ class ReservationControllerTest {
         // when : 입력 여부를 처리하면
         val result = controller.create()
 
-        // then : 예외가 발생한다.
+        // then : true가 반환된다.
         assertEquals(true, result)
     }
 
