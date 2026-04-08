@@ -69,4 +69,17 @@ class CalculatorTest {
         // then : 16_000원이 반환된다.
         assertEquals(16_000, result)
     }
+
+    @Test
+    fun `무비데이 할인과 시간 할인이 순서대로 적용된다`() {
+        // given : 날짜가 10일이고 시간이 10시이고, 영화가 16_000원이다.
+        val price = 16_000
+        val date = LocalDateTime(2026, 4, 10, 10, 0)
+
+        // when : 할인을 적용하면
+        val result = Calculator.applyDiscountByMovie(price, date)
+
+        // then : 12_400원이 반환된다.
+        assertEquals(12_400, result)
+    }
 }
