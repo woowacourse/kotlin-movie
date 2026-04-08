@@ -1,12 +1,11 @@
 package model.payment
 
 import model.MovieReservationResult
-import model.seat.toPrice
 import java.time.LocalTime
 
 class MoviePayment(
     val reservations: List<MovieReservationResult.Success>,
-    val calculateTotalPrice: Int = reservations.sumOf { it.seat.grade.toPrice() },
+    val calculateTotalPrice: Int = reservations.sumOf { it.seat.price },
     var currentPrice: Int = calculateTotalPrice,
 ) {
     init {
@@ -22,7 +21,7 @@ class MoviePayment(
         reservations.forEach { reservation ->
             val day = reservation.screenTime.start.dayOfMonth
             if (day == 10 || day == 20 || day == 30) {
-                currentPrice -= (reservation.seat.grade.toPrice() * 0.1).toInt()
+                currentPrice -= (reservation.seat.price * 0.1).toInt()
             }
         }
     }

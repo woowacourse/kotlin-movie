@@ -2,7 +2,7 @@ package model.seat
 
 @JvmInline
 value class SeatColumn(
-    val column: Int,
+    private val column: Int,
 ) {
     init {
         require(column in MIN_COLUMN..MAX_COLUMN) { "열 번호는 ${MIN_COLUMN}부터 ${MAX_COLUMN}까지 가능합니다." }

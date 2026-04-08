@@ -11,9 +11,7 @@ import model.seat.SeatGroup
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class)
 class CinemaScheduleTest {
     private val uuidOne = "1"
     private val uuidTwo = "2"

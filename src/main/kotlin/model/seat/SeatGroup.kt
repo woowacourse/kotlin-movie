@@ -1,8 +1,5 @@
 package model.seat
 
-import kotlin.uuid.ExperimentalUuidApi
-
-@OptIn(ExperimentalUuidApi::class)
 class SeatGroup(
     seats: List<Seat>,
 ) {
@@ -16,7 +13,7 @@ class SeatGroup(
         row: SeatRow,
         column: SeatColumn,
     ): Seat {
-        val seat = seats.first { it.row == row && it.column == column }
+        val seat = seats.first { it.isSameSeat(row, column) }
         return seat
     }
 }

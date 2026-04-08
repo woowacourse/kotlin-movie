@@ -9,9 +9,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.provider.Arguments
 import java.time.LocalDateTime
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class)
 class MovieScreeningTest {
     @Test
     fun `영화, 상영관, 기간이 같은 일정은 동일한 일정으로 판단한다`() {

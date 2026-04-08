@@ -7,16 +7,14 @@ import model.seat.SeatColumn
 import model.seat.SeatGroup
 import model.seat.SeatRow
 import java.util.Objects
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class)
 class MovieScreening(
     val movie: Movie,
     val screenTime: DateTimeRange,
     val seatGroup: SeatGroup,
 ) {
     init {
-        require(movie.runningTime.isSameDuration(screenTime)) { "영화의 러닝타임과 상영관의 상영 시간이 일치하지 않습니다." }
+        require(movie.isSameDuration(screenTime)) { "영화의 러닝타임과 상영관의 상영 시간이 일치하지 않습니다." }
     }
 
     override fun equals(other: Any?): Boolean {

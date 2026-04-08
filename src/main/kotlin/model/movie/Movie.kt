@@ -1,13 +1,13 @@
 package model.movie
 
-import model.movie.RunningTime
-import kotlin.uuid.ExperimentalUuidApi
+import model.DateTimeRange
 
-@OptIn(ExperimentalUuidApi::class)
 class Movie(
-    val id: String,
-    val runningTime: RunningTime,
+    private val id: String,
+    private val runningTime: RunningTime,
 ) {
+    fun isSameDuration(dateTimeRange: DateTimeRange): Boolean = runningTime.isSameDuration(dateTimeRange)
+
     override fun equals(other: Any?): Boolean {
         if (other is Movie) {
             return this.id == other.id

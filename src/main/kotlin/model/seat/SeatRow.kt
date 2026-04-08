@@ -2,7 +2,7 @@ package model.seat
 
 @JvmInline
 value class SeatRow(
-    val row: String,
+    private val row: String,
 ) {
     init {
         require(row.length == 1) { "행 문자는 1글자이어야 합니다." }

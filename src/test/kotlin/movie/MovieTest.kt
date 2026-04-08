@@ -4,9 +4,7 @@ import model.movie.Movie
 import model.movie.RunningTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class)
 class MovieTest {
     private val movieOne =
         Movie(

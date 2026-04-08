@@ -14,9 +14,7 @@ import model.seat.SeatState
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class)
 class MoviePaymentTest {
     private val movieOne =
         Movie(

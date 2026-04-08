@@ -2,14 +2,11 @@ package model.schedule
 
 import model.DateTimeRange
 import model.movie.Movie
-import model.schedule.MovieScreening
 import java.time.LocalDateTime
-import kotlin.uuid.ExperimentalUuidApi
 
-@OptIn(ExperimentalUuidApi::class)
 class ScreenSchedule(
-    val screenId: String,
-    val servicePeriod: DateTimeRange,
+    private val screenId: String,
+    private val servicePeriod: DateTimeRange,
     movieScreenings: List<MovieScreening>,
 ) {
     private val movieScreenings = movieScreenings.toList()
