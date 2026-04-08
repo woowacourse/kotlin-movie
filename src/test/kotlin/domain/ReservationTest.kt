@@ -48,4 +48,16 @@ class ReservationTest {
         // then : 예외가 발생한다.
         assertEquals("해당 영화는 존재하지 않습니다.", exception.message)
     }
+
+    @Test
+    fun `영화의 id가 존재할 경우, 해당 영화를 반환한다`() {
+        // given : 확인하려는 영화의 id는 1이다.
+        val movieId = 1
+
+        // when : 영화를 찾으면
+        val result = Reservation.findMovieById(TestFixtureData.movieTheater, movieId)
+
+        // then : 해당 영화가 반환된다.
+        assertEquals(TestFixtureData.movies.first(), result)
+    }
 }
