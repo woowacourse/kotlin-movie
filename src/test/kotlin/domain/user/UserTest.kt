@@ -3,6 +3,7 @@ package domain.user
 import domain.amount.Point
 import domain.reservation.ReservationData
 import domain.reservation.Reservations
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class UserTest {
@@ -17,7 +18,7 @@ class UserTest {
         val user = User(reservations, point)
 
         // then
-        assert(user.reservations == reservations)
-        assert(user.point == point)
+        assertThat(user.reservations).isEqualTo(reservations)
+        assertThat(user.point).isEqualTo(point)
     }
 }
