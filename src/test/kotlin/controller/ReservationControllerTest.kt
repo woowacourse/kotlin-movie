@@ -121,4 +121,17 @@ class ReservationControllerTest {
         // then : 예외가 발생한다.
         assertEquals("올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)", exception.message)
     }
+
+    @Test
+    fun `날짜 형식이 YYYY-MM-DD이면 Date를 반환한다`() {
+        // given : 2026-04-08이 입력된다.
+        val input = "2026-04-08"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 날짜를 처리하면
+        val result = controller.chooseDate()
+
+        // then : Date가 반환된다.
+        assertEquals(LocalDate(2026, 4, 8), result)
+    }
 }
