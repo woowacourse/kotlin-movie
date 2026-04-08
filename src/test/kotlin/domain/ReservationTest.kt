@@ -64,6 +64,18 @@ object Reservation {
     fun checkSeatFormat(seat: String) {
         require(Regex("^[A-Z][0-9]+$").matches(seat)) { "입력된 값이 유효하지 않습니다." }
     }
+
+    fun checkSeat(
+        seats: List<Seat>,
+        input: String,
+    ) {
+        checkSeatFormat(input)
+        val row = input[0]
+        val column = input.substring(1).toInt()
+
+        val seat = seats.filter { it.row == row && it.column == column }
+        require(seat.isNotEmpty()) { "해당 상영관에는 해당 좌석이 존재하지 않습니다." }
+    }
 }
 
 class ReservationTest {
@@ -159,6 +171,19 @@ class ReservationTest {
         }
         // then : 예외가 발생한다.
         assertEquals("입력된 값이 유효하지 않습니다.", exception.message)
+    }
+
+    @Test
+    fun `해당 상영관에 존재하지 않는 좌석이면 예외가 발생한다`() {
+        // given : 입력값이 D1이다.
+        val seat = "D1"
+
+        // when : 사용자가 해당 좌석을 예약하려고 할 때
+        val exception = assertThrows<IllegalArgumentException> {
+            Reservation.checkSeat(TestFixtureData.seats, seat)
+        }
+        // then : 예외가 발생한다.
+        assertEquals("해당 상영관에는 해당 좌석이 존재하지 않습니다.", exception.message)
     }
 }
 
