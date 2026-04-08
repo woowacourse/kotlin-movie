@@ -1,5 +1,6 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -28,5 +29,12 @@ class SeatTest {
         assertThrows(IllegalArgumentException::class.java) {
             Seat(row = Row("J"), column = Column(13))
         }
+    }
+
+    @Test
+    fun `좌석 위치에 따른 등급을 안다`() {
+        val given = Seat(row = Row("A"), column = Column(1))
+        val expected = SeatGrade.B
+        assertThat(given.grade).isEqualTo(expected)
     }
 }
