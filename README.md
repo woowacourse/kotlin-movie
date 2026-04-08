@@ -52,9 +52,9 @@
   * [x] 예매한 좌석 정보들을 가진다.
 
 ### Ticket
-* [] Ticket 도메인을 구현한다.
-  * [] 예매 목록(Reservation)을 가진다.
-  * [] 총 결제 금액을 가진다.
+* [x] Ticket 도메인을 구현한다.
+  * [x] 예매 목록(Reservation)을 가진다.
+  * [x] 총 결제 금액을 가진다.
 
 ### DiscountPolicy
 * [] DiscountPolicy을 구현한다.
