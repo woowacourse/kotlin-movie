@@ -5,5 +5,5 @@ import domain.reservation.Reservations
 
 data class User(
     val reservations: Reservations,
-    val point: Point
+    val point: Point,
 )

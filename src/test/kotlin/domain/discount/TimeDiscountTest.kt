@@ -8,7 +8,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class TimeDiscountTest {
-
     @Test
     fun `오전 11시 이전 상영은 2000원 할인된다`() {
         // given

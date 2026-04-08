@@ -3,7 +3,6 @@ package domain.seat
 import org.junit.jupiter.api.Test
 
 class SeatGradeTest {
-
     @Test
     fun `S 등급의 가격은 18000원이다`() {
         // given

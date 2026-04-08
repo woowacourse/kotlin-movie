@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 class MovieTest {
-
     @Test
     fun `영화 ID와 상영 목록을 갖고 있다`() {
         // given

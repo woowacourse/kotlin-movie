@@ -5,9 +5,12 @@ import domain.screening.ScreeningDateTime
 
 class DiscountPolicies(
     private val percentagePolicies: List<DiscountPolicy>,
-    private val fixedPolicies: List<DiscountPolicy>
+    private val fixedPolicies: List<DiscountPolicy>,
 ) {
-    fun applyDiscount(price: Money, dateTime: ScreeningDateTime): Money {
+    fun applyDiscount(
+        price: Money,
+        dateTime: ScreeningDateTime,
+    ): Money {
         var result = price
         percentagePolicies.forEach {
             result = it.applyDiscount(result, dateTime)

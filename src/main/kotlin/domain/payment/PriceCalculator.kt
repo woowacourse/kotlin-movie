@@ -10,7 +10,7 @@ class PriceCalculator(
     private val screenDateTime: ScreeningDateTime,
     private val discountPolicies: DiscountPolicies,
     private val point: Point,
-    private val paymentMethod: PaymentMethod
+    private val paymentMethod: PaymentMethod,
 ) {
     fun calculate(): Payment {
         var result = ticketPrice

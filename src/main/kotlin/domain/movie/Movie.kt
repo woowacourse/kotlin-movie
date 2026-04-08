@@ -5,5 +5,5 @@ import java.util.UUID
 
 data class Movie(
     val id: UUID,
-    val screenings: Screenings
+    val screenings: Screenings,
 )

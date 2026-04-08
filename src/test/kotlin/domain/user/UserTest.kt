@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class UserTest {
-
     @Test
     fun `예매 목록과 포인트를 갖고 있다`() {
         // given

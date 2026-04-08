@@ -4,11 +4,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ReservatedSeatsTest {
-    private val seats = listOf(
-        Seat("C", 1, SeatGrade.S),
-        Seat("C", 2, SeatGrade.S),
-        Seat("E", 1, SeatGrade.A),
-    )
+    private val seats =
+        listOf(
+            Seat("C", 1, SeatGrade.S),
+            Seat("C", 2, SeatGrade.S),
+            Seat("E", 1, SeatGrade.A),
+        )
 
     @Test
     fun `예약되지 않은 좌석은 예약 가능으로 판단한다`() {

@@ -15,28 +15,33 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class ReservationTest {
-
     @Test
     fun `선택한 좌석들의 총 가격을 계산할 수 있다`() {
         // given
-        val selectedSeats = SelectedSeats(listOf(
-            Seat("A", 1, SeatGrade.B),
-            Seat("C", 1, SeatGrade.S)
-        ))
+        val selectedSeats =
+            SelectedSeats(
+                listOf(
+                    Seat("A", 1, SeatGrade.B),
+                    Seat("C", 1, SeatGrade.S),
+                ),
+            )
 
-        val screening = Screening(
-            1,
-            Screen(1, Seats.createDefault()),
-            ScreeningDateTime(
-                LocalDate.of(2026, 1, 1),
-                LocalTime.of(10,0),
-                LocalTime.of(12,0)),
-            ReservatedSeats(listOf(
-                Seat("C", 1, SeatGrade.S),
-                Seat("C", 2, SeatGrade.S),
-                Seat("E", 1, SeatGrade.A),
-            )),
-
+        val screening =
+            Screening(
+                1,
+                Screen(1, Seats.createDefault()),
+                ScreeningDateTime(
+                    LocalDate.of(2026, 1, 1),
+                    LocalTime.of(10, 0),
+                    LocalTime.of(12, 0),
+                ),
+                ReservatedSeats(
+                    listOf(
+                        Seat("C", 1, SeatGrade.S),
+                        Seat("C", 2, SeatGrade.S),
+                        Seat("E", 1, SeatGrade.A),
+                    ),
+                ),
             )
         val reservation = Reservation(screening, selectedSeats)
 

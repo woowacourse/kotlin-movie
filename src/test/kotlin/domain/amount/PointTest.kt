@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PointTest {
-
     @Test
     fun `포인트가 잔액보다 큰 경우 잔액만큼을 사용할 수 있다`() {
         // given

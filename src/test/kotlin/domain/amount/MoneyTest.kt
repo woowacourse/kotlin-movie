@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MoneyTest {
-
     @Test
     fun `금액끼리 더할 수 있다`() {
         // given

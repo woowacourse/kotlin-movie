@@ -8,7 +8,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieDayDiscountTest {
-
     @Test
     fun `무비데이이면 10프로가 할인된다`() {
         // given

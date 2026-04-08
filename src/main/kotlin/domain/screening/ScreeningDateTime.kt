@@ -8,15 +8,9 @@ class ScreeningDateTime(
     val startTime: LocalTime,
     val endTime: LocalTime,
 ) {
-    fun isOverlapping(other: ScreeningDateTime): Boolean {
-        return date == other.date && (startTime < other.endTime && endTime > other.startTime)
-    }
+    fun isOverlapping(other: ScreeningDateTime): Boolean = date == other.date && (startTime < other.endTime && endTime > other.startTime)
 
-    fun isMovieDay(): Boolean {
-        return date.dayOfMonth == 10 || date.dayOfMonth == 20 || date.dayOfMonth == 30
-    }
+    fun isMovieDay(): Boolean = date.dayOfMonth == 10 || date.dayOfMonth == 20 || date.dayOfMonth == 30
 
-    fun isTimeDiscountTarget(): Boolean {
-        return startTime.hour < 11 || endTime.hour > 20
-    }
+    fun isTimeDiscountTarget(): Boolean = startTime.hour < 11 || endTime.hour > 20
 }
