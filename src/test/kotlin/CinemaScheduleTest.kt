@@ -87,7 +87,7 @@ class CinemaScheduleTest {
     }
 
     @Test
-    fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다` () {
+    fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
         assertThatThrownBy {
             val uuidOne = Uuid.parse("11111111-1111-1111-1111-111111111111")
             val dateTimeRange =
@@ -110,7 +110,7 @@ class CinemaScheduleTest {
                     ),
                 )
             CinemaSchedule(
-                screenSchedules = schedules
+                screenSchedules = schedules,
             )
         }.isInstanceOf(IllegalArgumentException::class.java)
     }
