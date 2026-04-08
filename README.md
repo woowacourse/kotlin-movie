@@ -47,9 +47,9 @@
   * [x] 예매된 좌석 번호를 가진다.
 
 ### Reservation
-* [] Reservation 도메인을 구현한다.
-  * [] 예매한 영화 정보(ScreeningMovie)를 가진다.
-  * [] 예매한 좌석 정보들을 가진다.
+* [x] Reservation 도메인을 구현한다.
+  * [x] 예매한 영화 정보(ScreeningMovie)를 가진다.
+  * [x] 예매한 좌석 정보들을 가진다.
 
 ### Ticket
 * [] Ticket 도메인을 구현한다.
