@@ -11,6 +11,10 @@ class Screening(
     val screeningDateTime: ScreeningDateTime,
     val reservatedSeats: ReservatedSeats
 ) {
+    fun isTimeOverlapping(other: Screening): Boolean {
+        return screeningDateTime.isOverlapping(other.screeningDateTime)
+    }
+
     fun isReserveAvailable(selectedSeats: List<Seat>): List<Seat> {
         require(isValidSeats(selectedSeats)) { "존재하지 않는 좌석입니다." }
         require(selectedSeats.all { reservatedSeats.isAvailable(it) }) { "이미 예약된 좌석입니다." }
