@@ -81,4 +81,17 @@ class ReservationControllerTest {
         // then : 예외가 발생한다.
         assertEquals("존재하지 않는 영화입니다.", exception.message)
     }
+
+    @Test
+    fun `존재하는 영화 제목이면 해당 영화를 반환한다`() {
+        // given : 존재하는 영화 제목이 입력된다.
+        val input = "해리 포터"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 영화 제목을 처리하면
+        val result = controller.chooseMovie()
+
+        // then : 영화가 반환된다.
+        assertEquals(TestFixtureData.movieTheater.movies.first(), result)
+    }
 }
