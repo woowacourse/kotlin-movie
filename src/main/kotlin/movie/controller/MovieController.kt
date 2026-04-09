@@ -75,8 +75,11 @@ class MovieController(
 
     //결제 상세 로직
     private fun inputPoint(): Point {
-        val input = executeWithRetry { inputView.inputPoint() }
-        return Point(input)
+        return executeWithRetry {
+            val input = inputView.inputPoint()
+            require(input <= user.point.value) { "보유 포인트를 초과할 수 없습니다." }
+            Point(input)
+        }
     }
 
     private fun selectPaymentMethod(): PaymentMethod {
