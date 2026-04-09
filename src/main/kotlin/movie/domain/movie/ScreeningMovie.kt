@@ -13,6 +13,10 @@ class ScreeningMovie(
 ) {
     private val value = reservedSeats.toMutableList()
 
+    fun addReservedSeats(seatNumbers: List<SeatNumber>) {
+        value.addAll(seatNumbers)
+    }
+
     fun reserve(targetSeatNumbers: List<SeatNumber>) {
         targetSeatNumbers.forEach {
             reserveCheck(it)
@@ -37,4 +41,6 @@ class ScreeningMovie(
             }
 
     fun isReserved(seatNumber: SeatNumber) = value.contains(seatNumber)
+
+    fun isAbleReservation(seatNumbers: List<SeatNumber>): Boolean = seatNumbers.any { value.contains(it) }
 }

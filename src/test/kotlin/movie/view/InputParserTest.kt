@@ -49,16 +49,17 @@ class InputParserTest {
     @Test
     fun `좌석 번호를 파싱하고, 좌석 번호 리스트를 반환한다`() {
         val result = InputParser.parseSeatNumbers("A1, B1")
-        val seatNumbers = listOf(
-            SeatNumber(
-                row = Row('A'),
-                col = Column(1)
-            ),
-            SeatNumber(
-                row = Row('B'),
-                col = Column(1)
-            ),
-        )
+        val seatNumbers =
+            listOf(
+                SeatNumber(
+                    row = Row('A'),
+                    col = Column(1),
+                ),
+                SeatNumber(
+                    row = Row('B'),
+                    col = Column(1),
+                ),
+            )
 
         assertThat(result).isEqualTo(seatNumbers)
     }

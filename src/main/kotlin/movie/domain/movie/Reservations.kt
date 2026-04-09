@@ -19,4 +19,12 @@ class Reservations(
             .fold(Price(0)) { total, price ->
                 total.sumPrice(price)
             }
+
+    fun isDupTime(movieTime: MovieTime): Boolean =
+        value.any {
+            val srcMovieTime = it.screeningMovie.movieTime
+            srcMovieTime.date == movieTime.date &&
+                srcMovieTime.startTime in movieTime.startTime..movieTime.endTime &&
+                srcMovieTime.endTime in movieTime.startTime..movieTime.endTime
+        }
 }

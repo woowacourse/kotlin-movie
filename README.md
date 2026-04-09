@@ -135,5 +135,5 @@
 
 ### MovieController
 
-* [] MovieController를 구현한다.
-    * 영화 예매를 진행할 수 있다.
+* [x] MovieController를 구현한다.
+    * [x] 영화 예매를 진행할 수 있다.

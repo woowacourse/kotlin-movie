@@ -1,5 +1,7 @@
 package movie.domain.movie
 
+import java.time.LocalDate
+
 class ScreeningMovies(
     screeningMovies: List<ScreeningMovie> = emptyList(),
 ) {
@@ -25,8 +27,18 @@ class ScreeningMovies(
             .map { it.movie.title }
             .distinct()
 
-    fun getMovieTimes(movie: Movie): List<MovieTime> =
-        value
-            .filter { it.movie.isSameMovie(movie) }
-            .map { it.movieTime }
+    fun getMovies(
+        title: MovieTitle,
+        date: LocalDate,
+    ): List<ScreeningMovie> {
+        val screeningMovies = value.filter { it.movie.title == title && it.movieTime.date == date }
+
+        if (screeningMovies.isEmpty()) {
+            throw IllegalArgumentException("날짜가 올바르지 않습니다.")
+        }
+
+        return screeningMovies
+    }
+
+    fun containsMovieTitle(movieTitle: MovieTitle): Boolean = value.any { it.movie.title == movieTitle }
 }
