@@ -53,7 +53,7 @@ fun main() {
     val flowController = FlowController()
 
     var input = InputView.startTicketing()
-    while (flowController.start(input).not()) {
+    while (flowController.start(input)) {
         val reservationController = ReservationController(
             movieTheater = movieTheater,
         )

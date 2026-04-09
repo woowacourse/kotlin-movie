@@ -23,10 +23,11 @@ object OutputView {
         ('A' until 'A' + maxRow).forEach { row ->
             val line = "$row" + (1..maxColumn).joinToString("") { col ->
                 val seat = screen.seats.find { it.row == row && it.column == col }
-                " [${seat?.grade?.name ?: " "}]"
+                " [ ${seat?.grade?.name ?: " "}]"
             }
             println(line)
         }
+        println()
     }
 
     fun printCart(cart: List<String>) {
@@ -34,10 +35,12 @@ object OutputView {
         cart.forEach {
             println(it)
         }
+        println()
     }
 
     fun printTotalPrice(price: Int) {
         println("가격 계산")
         println("최종 결제 금액: ${price}원")
+        println()
     }
 }
