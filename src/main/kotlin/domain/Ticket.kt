@@ -5,7 +5,6 @@ data class Ticket(
     val seatPositions: SeatPositions,
 ) {
     val totalPrice get() = calculate()
-    private fun calculate(): Money {
-        return seatPositions.calculate()
-    }
+
+    private fun calculate(): Money = seatPositions.calculate()
 }
