@@ -8,7 +8,9 @@ import domain.cinema.Screen
 import domain.cinema.Showing
 import domain.reservation.Cart
 import domain.seat.Seat
+import domain.seat.SeatCoordinate
 import domain.seat.SeatGrade
+import domain.seat.SeatState
 import domain.user.User
 import kotlinx.datetime.LocalDateTime
 import view.InputView
@@ -22,26 +24,26 @@ fun main() {
     )
 
     val seats = listOf(
-        Seat('A', 1, SeatGrade.B, false),
-        Seat('A', 2, SeatGrade.B, false),
-        Seat('A', 3, SeatGrade.B, false),
-        Seat('A', 4, SeatGrade.B, false),
-        Seat('B', 1, SeatGrade.B, false),
-        Seat('B', 2, SeatGrade.B, false),
-        Seat('B', 3, SeatGrade.B, false),
-        Seat('B', 4, SeatGrade.B, false),
-        Seat('C', 1, SeatGrade.S, false),
-        Seat('C', 2, SeatGrade.S, false),
-        Seat('C', 3, SeatGrade.S, false),
-        Seat('C', 4, SeatGrade.S, false),
-        Seat('D', 1, SeatGrade.S, false),
-        Seat('D', 2, SeatGrade.S, false),
-        Seat('D', 3, SeatGrade.S, false),
-        Seat('D', 4, SeatGrade.S, false),
-        Seat('E', 1, SeatGrade.A, false),
-        Seat('E', 2, SeatGrade.A, false),
-        Seat('E', 3, SeatGrade.A, false),
-        Seat('E', 4, SeatGrade.A, false),
+        Seat(SeatCoordinate('A', 1), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('A', 2), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('A', 3), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('A', 4), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('B', 1), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('B', 2), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('B', 3), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('B', 4), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('C', 1), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('C', 2), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('C', 3), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('C', 4), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('D', 1), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('D', 2), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('D', 3), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('D', 4), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('E', 1), SeatGrade.A, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('E', 2), SeatGrade.A, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('E', 3), SeatGrade.A, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('E', 4), SeatGrade.A, SeatState.AVAILABLE),
     )
 
     val screens = listOf(

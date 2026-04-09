@@ -37,7 +37,7 @@ class CartController {
         val carts = cart.reservationInfos.groupBy { it.showing }
             .map { (key, group) ->
                 val showing = key
-                val seats = group.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                val seats = group.joinToString(", ") { "${it.seat.coordinate.row}${it.seat.coordinate.column}" }
                 "- [${showing.movie.title}] ${
                     showing.startTime.toString().replace("T", " ").substring(0, 16)
                 } 좌석: $seats"

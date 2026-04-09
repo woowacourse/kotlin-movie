@@ -5,7 +5,9 @@ import domain.cinema.Showing
 import domain.reservation.Cart
 import domain.reservation.ReservationInfo
 import domain.seat.Seat
+import domain.seat.SeatCoordinate
 import domain.seat.SeatGrade
+import domain.seat.SeatState
 import domain.user.User
 import kotlinx.datetime.LocalDateTime
 
@@ -23,12 +25,12 @@ object TestFixtureData {
     )
 
     val seats = listOf(
-        Seat('A', 1, SeatGrade.S, true),
-        Seat('A', 2, SeatGrade.S, false),
-        Seat('B', 1, SeatGrade.A, false),
-        Seat('B', 2, SeatGrade.A, false),
-        Seat('C', 1, SeatGrade.B, false),
-        Seat('C', 2, SeatGrade.B, false),
+        Seat(SeatCoordinate('A', 1), SeatGrade.S, SeatState.RESERVED),
+        Seat(SeatCoordinate('A', 2), SeatGrade.S, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('B', 1), SeatGrade.A, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('B', 2), SeatGrade.A, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('C', 1), SeatGrade.B, SeatState.AVAILABLE),
+        Seat(SeatCoordinate('C', 2), SeatGrade.B, SeatState.AVAILABLE),
     )
 
     val screens = listOf(
