@@ -22,7 +22,7 @@ class PaymentController(val cart: Cart, val user: User) {
 
     fun getUserPoint(totalPrice: Int): Pair<Int, Int> {
         val input = InputView.readPoint()
-        user.discountPoint(input.toLong())
+        user.discountPoint(input.toInt())
 
         val finalPrice = totalPrice - input.toInt()
         return finalPrice to input.toInt()

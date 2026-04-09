@@ -8,8 +8,8 @@ object Calculator {
     fun subtractUserPoint(
         price: Int,
         user: User,
-        subtractPoint: Long,
-    ): Long {
+        subtractPoint: Int,
+    ): Int {
         user.discountPoint(subtractPoint)
         return price - subtractPoint
     }
