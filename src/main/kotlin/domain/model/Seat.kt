@@ -18,4 +18,8 @@ enum class ReserveState {
 data class SeatPosition(
     val row: Row,
     val column: Column,
-)
+) {
+    override fun toString(): String {
+        return "$row$column"
+    }
+}

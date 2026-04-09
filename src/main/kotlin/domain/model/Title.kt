@@ -9,4 +9,8 @@ value class Title(
             "제목은 공백일 수 없습니다."
         }
     }
+
+    override fun toString(): String {
+        return title
+    }
 }

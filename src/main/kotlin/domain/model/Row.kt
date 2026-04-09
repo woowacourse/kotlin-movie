@@ -9,4 +9,8 @@ value class Row(
             "행은 A~J 사이의 알파벳이어야 합니다."
         }
     }
+
+    override fun toString(): String {
+        return value
+    }
 }
