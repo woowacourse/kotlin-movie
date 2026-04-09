@@ -27,4 +27,10 @@ class Reservations(
                 srcMovieTime.startTime in movieTime.startTime..movieTime.endTime &&
                 srcMovieTime.endTime in movieTime.startTime..movieTime.endTime
         }
+
+    fun reset() {
+        value.forEach {
+            it.screeningMovie.deleteReservedSeats(it.seatNumbers)
+        }
+    }
 }

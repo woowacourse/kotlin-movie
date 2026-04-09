@@ -17,6 +17,10 @@ class ScreeningMovie(
         value.addAll(seatNumbers)
     }
 
+    fun deleteReservedSeats(seatNumbers: List<SeatNumber>) {
+        value.removeAll(seatNumbers)
+    }
+
     fun reserve(targetSeatNumbers: List<SeatNumber>) {
         targetSeatNumbers.forEach {
             reserveCheck(it)
