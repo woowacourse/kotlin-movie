@@ -2,6 +2,7 @@ package controller
 
 import domain.Calculator
 import domain.Cart
+import domain.PaymentMethod
 import domain.User
 import java.io.ByteArrayInputStream
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -33,7 +34,7 @@ class PaymentController(val cart: Cart, val user: User) {
         return discountPrice.sum()
     }
 
-    fun getPaymentMethod() {
+    fun getPaymentMethod(price: Int): Int {
         println(
             """
             결제 수단을 선택하세요:
@@ -44,6 +45,10 @@ class PaymentController(val cart: Cart, val user: User) {
         val input = readln()
 
         require(input.toInt() in 1..2) { "유효하지 않은 결제 수단입니다." }
+
+        val method = PaymentMethod.entries.first { it.ordinal == input.toInt() }
+
+        return Calculator.applyPaymentDiscount(price, method)
     }
 }
 
@@ -83,14 +88,29 @@ class PaymentControllerTest {
     fun `결제 수단 입력이 유효하지 않으면 예외가 발생한다`() {
         // given : 3을 입력한다
         val input = "3"
+        val price = 27_700
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 포인트를 처리하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.getPaymentMethod()
+            controller.getPaymentMethod(price)
         }
 
         // then : 예외가 발생한다.
         assertEquals("유효하지 않은 결제 수단입니다.", exception.message)
+    }
+
+    @Test
+    fun `결제 수단 할인(신용카드 5%, 현금 2%)이 적용된다`() {
+        // given : 결제 수단으로 신용카드가 제시된다.
+        val input = "1"
+        val price = 27_700
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 결제 수단을 적용하면
+        val result = controller.getPaymentMethod(price)
+
+        // then : 할인된 금액이 반환된다.
+        assertEquals(27146, result)
     }
 }
