@@ -14,7 +14,7 @@ class PointTest {
         val usagePoint = point.usableAmount(money)
 
         // then
-        assertThat(usagePoint).isEqualTo(Money(3000))
+        assertThat(usagePoint).isEqualTo(Point(3000))
     }
 
     @Test
@@ -27,6 +27,6 @@ class PointTest {
         val usagePoint = point.usableAmount(money)
 
         // then
-        assertThat(usagePoint).isEqualTo(Money(5000))
+        assertThat(usagePoint).isEqualTo(Point(5000))
     }
 }

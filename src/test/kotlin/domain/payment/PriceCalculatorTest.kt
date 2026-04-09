@@ -42,6 +42,6 @@ class PriceCalculatorTest {
 
         // then
         assertThat(result.price).isEqualTo(Money(5700))
-        assertThat(result.usagePoint).isEqualTo(Money(1000))
+        assertThat(result.usagePoint).isEqualTo(Point(1000))
     }
 }

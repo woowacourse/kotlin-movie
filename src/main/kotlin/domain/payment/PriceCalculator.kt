@@ -16,7 +16,7 @@ class PriceCalculator(
         var result = ticketPrice
         result = discountPolicies.applyDiscount(result, screenDateTime)
         val usagePoint = point.usableAmount(result)
-        result = result.minus(usagePoint)
+        result = result.minus(Money(usagePoint.value))
         result = paymentMethod.applyDiscount(result)
         return Payment(result, usagePoint)
     }
