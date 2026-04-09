@@ -20,12 +20,14 @@ class CinemaController(
 
     fun run() {
         if (startMovieReservation().not()) return
-        val movieSchedule = getMovieSchedule()
-        val date = inputDate()
-        OutputView.showMovieSchedule(movieSchedule)
-        val movieScreening = selectMovieScreening(movieSchedule)
-        OutputView.showSeatGroup(movieScreening.seatGroup)
-        reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
+        do {
+            val movieSchedule = getMovieSchedule()
+            val date = inputDate()
+            OutputView.showMovieSchedule(movieSchedule)
+            val movieScreening = selectMovieScreening(movieSchedule)
+            OutputView.showSeatGroup(movieScreening.seatGroup)
+            reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
+        } while (inputContinue())
     }
 
     private fun startMovieReservation(): Boolean {
@@ -99,6 +101,16 @@ class CinemaController(
                 return
             } catch (_: Exception) {
                 println("문제가 생겼으니 알아서 에러를 찾으십쇼?")
+            }
+        }
+    }
+
+    private fun inputContinue(): Boolean {
+        while (true) {
+            try {
+                return InputView.inputContinue()
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
             }
         }
     }

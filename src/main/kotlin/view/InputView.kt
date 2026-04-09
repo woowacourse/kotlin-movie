@@ -51,4 +51,11 @@ object InputView {
             SeatRow(rawSeat[0].toString()) to SeatColumn(rawSeat[1].digitToInt())
         }
     }
+
+    fun inputContinue(): Boolean {
+        println(Message.INPUT_CONTINUE)
+        val input = readln()
+        InputValidator.validateYesOrNo(input)
+        return input == "Y"
+    }
 }
