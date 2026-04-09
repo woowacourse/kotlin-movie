@@ -126,6 +126,8 @@ class MovieController {
 
         if (!isPayment) {
             ticket.resetSeat()
+
+            return
         }
 
         OutputView.printReceipt(
