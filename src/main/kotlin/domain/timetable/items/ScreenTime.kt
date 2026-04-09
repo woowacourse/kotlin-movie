@@ -12,5 +12,11 @@ class ScreenTime(
 
     fun isStartAt(time: LocalTime): Boolean = startTime == time
 
+    fun isStartBefore(time: LocalTime): Boolean = startTime <= time
+
+    fun isStartAfter(time: LocalTime): Boolean = startTime >= time
+
     fun isScreeningAt(date: LocalDate): Boolean = screeningDate == date
+
+    fun screeningDayOfMonth(): Int = screeningDate.dayOfMonth
 }

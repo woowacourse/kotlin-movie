@@ -9,4 +9,10 @@ value class Money(
     }
 
     fun getAmount() = amount
+
+    operator fun plus(other: Money): Money = Money(amount + other.amount)
+
+    operator fun minus(other: Money): Money = Money(amount - other.amount)
+
+    operator fun times(scale: Double): Money = Money((amount * scale).toInt())
 }

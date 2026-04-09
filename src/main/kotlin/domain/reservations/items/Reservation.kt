@@ -1,5 +1,6 @@
 package domain.reservations.items
 
+import domain.money.Money
 import domain.movie.Movie
 import domain.seat.Seat
 import domain.timetable.items.ScreenTime
@@ -14,4 +15,13 @@ class Reservation(
     fun isDuplicatedDate(date: LocalDate): Boolean = screenTime.isScreeningAt(date)
 
     fun isDuplicatedTime(time: LocalTime): Boolean = screenTime.isContain(time)
+
+    fun getReservationInfo(): ReservationInfo {
+        val price = seats.sumOf { it.getPrice().getAmount() }
+
+        return ReservationInfo(
+            screenTime = screenTime,
+            price = Money(price),
+        )
+    }
 }
