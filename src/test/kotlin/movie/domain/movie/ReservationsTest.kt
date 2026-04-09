@@ -16,32 +16,11 @@ import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.uuid.ExperimentalUuidApi
 
-class TicketTest {
-
-    private class TestSeatLayout : SeatLayout {
-        override fun createSeats(): List<Seat> {
-            return listOf(
-                Seat(
-                    seatNumber = SeatNumber(Row('A'), Column(1)),
-                    rank = SRank(),
-                ),
-                Seat(
-                    seatNumber = SeatNumber(Row('A'), Column(2)),
-                    rank = ARank(),
-                ),
-                Seat(
-                    seatNumber = SeatNumber(Row('A'), Column(3)),
-                    rank = BRank(),
-                ),
-            )
-        }
-    }
-
-    @OptIn(ExperimentalUuidApi::class)
+@OptIn(ExperimentalUuidApi::class)
+class ReservationsTest {
     @Test
     fun `예약 1개를 가진다면 그 예약 금액과 동일하다`() {
         val seatNumbers = listOf(
-            // S 랭크 좌석
             SeatNumber(
                 row = Row('A'),
                 col = Column(1)
@@ -66,11 +45,9 @@ class TicketTest {
             seatNumbers = seatNumbers
         )
 
-        val ticket = Ticket(
-            reservations = listOf(reservation)
-        )
+        val reservations = Reservations(listOf(reservation))
 
-        assertThat(ticket.getTotalPrice()).isEqualTo(reservation.getTotalPrice())
+        assertThat(reservations.getTotalPrice()).isEqualTo(Price(18_000))
     }
 
     @OptIn(ExperimentalUuidApi::class)
@@ -120,13 +97,34 @@ class TicketTest {
             seatNumbers = seatNumbers3
         )
 
-        val ticket = Ticket(
+        val reservations = Reservations(
             reservations = listOf(reservation1, reservation2, reservation3)
         )
         val totalPrice = reservation1.getTotalPrice()
             .sumPrice(reservation2.getTotalPrice())
             .sumPrice(reservation3.getTotalPrice())
 
-        assertThat(ticket.getTotalPrice()).isEqualTo(totalPrice)
+        assertThat(reservations.getTotalPrice()).isEqualTo((totalPrice))
+    }
+
+    companion object {
+        private class TestSeatLayout : SeatLayout {
+            override fun createSeats(): List<Seat> {
+                return listOf(
+                    Seat(
+                        seatNumber = SeatNumber(Row('A'), Column(1)),
+                        rank = SRank(),
+                    ),
+                    Seat(
+                        seatNumber = SeatNumber(Row('A'), Column(2)),
+                        rank = ARank(),
+                    ),
+                    Seat(
+                        seatNumber = SeatNumber(Row('A'), Column(3)),
+                        rank = BRank(),
+                    ),
+                )
+            }
+        }
     }
 }
