@@ -10,7 +10,18 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class PaymentController(val cart: Cart, val user: User) {
-    fun run() {
+    fun run(): Int {
+        var price = discountPerSeat()
+        price = getUserPoint(price)
+        price = getPaymentMethod(price)
+
+        println("가격 계산")
+        println("최종 결제 금액: ${price}원")
+
+        println("위 금액으로 결제하시겠습니까? (Y/N)")
+        val input = readln()
+
+        return price
     }
 
     fun getUserPoint(totalPrice: Int): Int {
@@ -112,5 +123,18 @@ class PaymentControllerTest {
 
         // then : 할인된 금액이 반환된다.
         assertEquals(27146, result)
+    }
+
+    @Test
+    fun `모든 할인이 순서대로 적용된 최종 금액을 계산한다`() {
+        // given : 각각의 입력값을 받는다.
+        val input = "2000\n1\nY"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 결제를 적용하면
+        val result = controller.run()
+
+        // then : 할인된 총 금액이 반환된다.
+        assertEquals(25186, result)
     }
 }
