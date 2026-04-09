@@ -11,4 +11,8 @@ value class Price(
     fun sumPrice(targetPrice: Price): Price {
         return Price(value + targetPrice.value)
     }
+
+    fun minusPrice(targetPrice: Price): Price {
+        return Price(value - targetPrice.value)
+    }
 }

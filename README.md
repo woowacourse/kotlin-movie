@@ -62,8 +62,8 @@
   * [x] 시간 할인 정책 여부를 판단한다.
 
 ### DiscountPolicy
-* [] DiscountPolicy을 구현한다.
-  * [] 할인 정책에 따라 계산된 금액을 반환한다.
+* [x] DiscountPolicy을 구현한다.
+  * [x] 할인 정책에 따라 계산된 금액을 반환한다.
 
 ### PointCondition
 * [] PointCondition 도메인을 구현한다.
