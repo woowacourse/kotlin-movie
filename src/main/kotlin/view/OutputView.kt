@@ -3,6 +3,8 @@ package view
 import model.MovieReservationResult
 import model.schedule.MovieSchedule
 import model.seat.SeatGroup
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 object OutputView {
     fun showMovieSchedule(movieSchedule: MovieSchedule) {
@@ -48,5 +50,32 @@ object OutputView {
                 val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
                 println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
             }
+    }
+
+    fun totalReservation(
+        successResults: List<MovieReservationResult.Success>,
+        price: Int,
+        point: Int,
+    ) {
+        println("예매 완료")
+        println("내역:")
+        successResults
+            .groupBy { it.movie.name to it.screenTime.start }
+            .forEach { (key, results) ->
+                val (movieName, startTime) = key
+                val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+            }
+        println("결제 금액: %,d원 (포인트: %,d원 사용)".format(price, point))
+    }
+
+    fun printTotalPrice(price: Int) {
+        println(Message.TOTAL_PRICE_TITLE)
+        print(Message.TOTAL_PRICE)
+        println("${"%,d".format(price)}원")
+    }
+
+    fun end() {
+        println("감사합니다.")
     }
 }

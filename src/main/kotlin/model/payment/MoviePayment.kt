@@ -40,8 +40,14 @@ class MoviePayment(
 
     fun pay(payType: PayType): Int =
         when (payType) {
-            PayType.CREDIT_CARD -> (currentPrice * 0.95).toInt()
-            PayType.CASH -> (currentPrice * 0.98).toInt()
+            PayType.CREDIT_CARD -> {
+                currentPrice = (currentPrice * 0.95).toInt()
+                currentPrice
+            }
+            PayType.CASH -> {
+                currentPrice = (currentPrice * 0.98).toInt()
+                currentPrice
+            }
         }
 
     fun applyPoint(point: Int) {

@@ -2,6 +2,8 @@ import model.CinemaKiosk
 import model.CinemaTime
 import model.MovieReservationResult
 import model.movie.MovieName
+import model.payment.MoviePayment
+import model.payment.PayType
 import model.schedule.MovieNameGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
@@ -22,14 +24,33 @@ class CinemaController(
     fun run() {
         if (startMovieReservation().not()) return
         do {
-            val movieSchedule = getMovieSchedule()
+            val movieScheduleOne = getMovieSchedule()
             val date = inputDate()
+            val movieSchedule = movieScheduleOne.getMovieSchedule(date)
             OutputView.showMovieSchedule(movieSchedule)
             val movieScreening = selectMovieScreening(movieSchedule)
             OutputView.showSeatGroup(movieScreening.seatGroup)
             reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
         } while (inputContinue())
         OutputView.showShoppingCart(cinemaKiosk.reserveResults)
+        val point = inputPoint()
+        val payType = inputPayType()
+        val payment =
+            MoviePayment(
+                reservations = cinemaKiosk.reserveResults,
+            )
+        payment.discount()
+        payment.applyPoint(point)
+        OutputView.printTotalPrice(payment.pay(payType))
+        val confirm = inputConfirmPayment()
+        if (confirm) {
+            OutputView.totalReservation(
+                successResults = cinemaKiosk.reserveResults,
+                price = payment.currentPrice,
+                point = point,
+            )
+        }
+        OutputView.end()
     }
 
     private fun startMovieReservation(): Boolean {
@@ -95,14 +116,14 @@ class CinemaController(
                         is MovieReservationResult.Failed -> {
                             val successPositions = successPositions.map { it.seat.row to it.seat.column }
                             cinemaKiosk.cancelReservations(movieName, startTime, successPositions)
-                            throw IllegalArgumentException("예약 실패했습니다? 잘 좀 하시죠?")
+                            throw IllegalArgumentException("예약에 실패했습니다.")
                         }
                     }
                 }
                 OutputView.showReservationInfo(successPositions)
                 return
             } catch (_: Exception) {
-                println("문제가 생겼으니 알아서 에러를 찾으십쇼?")
+                println("문제가 발생했습니다.")
             }
         }
     }
@@ -115,5 +136,42 @@ class CinemaController(
                 println(e.message)
             }
         }
+    }
+
+    private fun inputPoint(): Int {
+        while (true) {
+            try {
+                return InputView.inputPoint()
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+    }
+
+    private fun inputPayType(): PayType {
+        while (true) {
+            try {
+                val input = InputView.inputPaymentMethod()
+                return selectTypeNumber(input)
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+    }
+
+    private fun inputConfirmPayment(): Boolean {
+        while (true) {
+            try {
+                return InputView.inputConfirmPayment()
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+    }
+
+    private fun selectTypeNumber(number: Int): PayType {
+        if (number == 1) return PayType.CREDIT_CARD
+        if (number == 2) return PayType.CASH
+        throw IllegalArgumentException("존재하지 않는 선택번호입니다")
     }
 }

@@ -24,6 +24,13 @@ class MovieSchedule(
         return false
     }
 
+    fun getMovieSchedule(time: CinemaTime): MovieSchedule =
+        MovieSchedule(
+            scheduledScreens.filter { screen ->
+                screen.screenTime.start.isEqualDate(time)
+            },
+        )
+
     fun getMovieScreening(time: CinemaTime): MovieScreening = scheduledScreens.first { it.screenTime.start.isEqual(time) }
 
     fun isEmpty(): Boolean = scheduledScreens.isEmpty()

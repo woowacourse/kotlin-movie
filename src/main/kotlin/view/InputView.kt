@@ -1,6 +1,7 @@
 package view
 
 import model.CinemaTime
+import model.payment.PayType
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import model.seat.SeatColumn
@@ -58,4 +59,34 @@ object InputView {
         InputValidator.validateYesOrNo(input)
         return input == "Y"
     }
+
+    fun inputPoint(): Int {
+        println(Message.INPUT_POINT)
+        val point = readln()
+        InputValidator.validateNumber(point)
+        return point.toInt()
+    }
+
+    fun inputPaymentMethod(): Int {
+        println(Message.SELECT_PAYMENT_METHOD)
+        PayType.entries.forEach { payType ->
+            println(displayPayType(payType))
+        }
+        val input = readln()
+        InputValidator.validateType(input)
+        return input.toInt()
+    }
+
+    fun inputConfirmPayment(): Boolean {
+        println(Message.INPUT_CONFIRM_PAYMENT)
+        val input = readln()
+        InputValidator.validateYesOrNo(input)
+        return input == "Y"
+    }
+
+    private fun displayPayType(payType: PayType) =
+        when (payType) {
+            PayType.CREDIT_CARD -> "1) 신용카드(5% 할인)"
+            PayType.CASH -> "2) 현금(2% 할인)"
+        }
 }

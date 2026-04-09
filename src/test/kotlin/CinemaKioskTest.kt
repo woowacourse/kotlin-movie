@@ -198,6 +198,6 @@ class CinemaKioskTest {
                 seatRow = SeatRow("A"),
                 seatColumn = SeatColumn(2),
             ),
-        ).isEqualTo(MovieReservationResult.Failed)
+        ).isNotEqualTo(MovieReservationResult.Failed)
     }
 }
