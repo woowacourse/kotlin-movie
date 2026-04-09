@@ -37,7 +37,7 @@ class OutputView {
     }
 
     fun printCartAdded(item: ReservedScreen) {
-        val seats = item.seats.allSeats().joinToString(", ") { it.seatNumber }
+        val seats = item.seats.joinToString(", ") { it.seatNumber }
         println("장바구니에 추가됨")
         println(
             "- [${item.screen.movie.title.value}] ${
@@ -49,7 +49,7 @@ class OutputView {
     fun printCart(cart: Cart) {
         println("장바구니")
         cart.items.forEach {
-            val seats = it.seats.allSeats().joinToString(", ") { seat -> seat.seatNumber }
+            val seats = it.seats.joinToString(", ") { seat -> seat.seatNumber }
             println(
                 "- [${it.screen.movie.title.value}] ${
                     it.screen.startTime.value.format(dateTimeFormatter)
