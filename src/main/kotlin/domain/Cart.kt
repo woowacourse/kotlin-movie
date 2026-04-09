@@ -6,12 +6,4 @@ class Cart(val reservationInfos: List<ReservationInfo>) {
             reservationInfos.plus(info),
         )
     }
-
-    fun getTotalPrice(): Int {
-        var price = 0
-        reservationInfos.forEach {
-            price += it.seat.grade.price
-        }
-        return price
-    }
 }

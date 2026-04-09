@@ -1,6 +1,6 @@
 package domain
 class User(val id: Int) {
-    var point: Long = 1000
+    var point: Long = 2000
 
     init {
         require(id > 0) { "ID는 양수이어야 합니다." }
