@@ -35,4 +35,6 @@ class ScreeningMovie(
             .fold(Price(0)) { price, targetPrice ->
                 price.sumPrice(targetPrice = targetPrice)
             }
+
+    fun isReserved(seatNumber: SeatNumber) = value.contains(seatNumber)
 }

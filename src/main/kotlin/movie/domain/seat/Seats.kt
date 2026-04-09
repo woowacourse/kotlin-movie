@@ -8,6 +8,8 @@ class Seats(
 ) {
     private val seats = seatLayout.createSeats()
 
+    fun getSeats() = seats
+
     fun contains(seatNumber: SeatNumber): Boolean = seats.any { it.isSeat(seatNumber) }
 
     fun getPrice(seatNumber: SeatNumber): Price =

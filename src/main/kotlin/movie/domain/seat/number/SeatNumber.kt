@@ -1,8 +1,8 @@
 package movie.domain.seat.number
 
 data class SeatNumber(
-    private val row: Row,
-    private val col: Column,
+    val row: Row,
+    val col: Column,
 ) {
     override fun toString(): String = row.toString() + col.toString()
 }

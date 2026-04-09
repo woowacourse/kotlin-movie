@@ -6,4 +6,6 @@ class Ticket(
     private val reservations: Reservations = Reservations(),
 ) {
     fun getTotalPrice(): Price = reservations.getTotalPrice()
+
+    fun getReservations(): List<Reservation> = reservations.getReservations()
 }

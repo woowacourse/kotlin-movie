@@ -7,6 +7,8 @@ class Reservations(
 ) {
     private val value = reservations.toMutableList()
 
+    fun getReservations() = value.toList()
+
     fun addReservation(reservation: Reservation) {
         value.add(reservation)
     }

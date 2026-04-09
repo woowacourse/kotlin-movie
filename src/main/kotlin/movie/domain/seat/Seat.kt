@@ -5,8 +5,8 @@ import movie.domain.seat.number.SeatNumber
 import movie.domain.seat.rank.SeatRank
 
 class Seat(
-    private val seatNumber: SeatNumber,
-    private val rank: SeatRank,
+    val seatNumber: SeatNumber,
+    val rank: SeatRank,
 ) {
     fun isSeat(seatNumber: SeatNumber): Boolean = this.seatNumber == seatNumber
 
