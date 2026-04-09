@@ -2,6 +2,7 @@ import controller.CartController
 import controller.FlowController
 import controller.PaymentController
 import controller.ReservationController
+import domain.Id
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Screen
@@ -18,9 +19,9 @@ import view.OutputView
 
 fun main() {
     val movies = listOf(
-        Movie("F1 더 무비", 1, 130),
-        Movie("토이 스토리", 2, 100),
-        Movie("아이언맨", 3, 126),
+        Movie("F1 더 무비", Id(1), 130),
+        Movie("토이 스토리", Id(2), 100),
+        Movie("아이언맨", Id(3), 126),
     )
 
     val seats = listOf(
@@ -47,9 +48,9 @@ fun main() {
     )
 
     val screens = listOf(
-        Screen(seats, 1),
-        Screen(seats, 2),
-        Screen(seats, 3),
+        Screen(seats, Id(1)),
+        Screen(seats, Id(2)),
+        Screen(seats, Id(3)),
     )
 
     val showings = listOf(
@@ -63,7 +64,6 @@ fun main() {
     )
 
     val movieTheater = MovieTheater(
-        screens,
         movies,
         showings,
         emptyList(),
@@ -90,7 +90,9 @@ fun main() {
 
     val paymentController = PaymentController(
         cart = cart,
-        user = User(1),
+        user = User(
+            Id(1),
+        ),
     )
 
     val total = paymentController.run()

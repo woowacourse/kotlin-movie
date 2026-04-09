@@ -1,3 +1,4 @@
+import domain.Id
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Screen
@@ -13,15 +14,15 @@ import kotlinx.datetime.LocalDateTime
 
 object TestFixtureData {
     val users = listOf(
-        User(1),
-        User(2),
-        User(3),
+        User(Id(1)),
+        User(Id(2)),
+        User(Id(3)),
     )
 
     val movies = listOf(
-        Movie("해리 포터", 1, 152),
-        Movie("인터스텔라", 2, 169),
-        Movie("기생충", 3, 132),
+        Movie("해리 포터", Id(1), 152),
+        Movie("인터스텔라", Id(2), 169),
+        Movie("기생충", Id(3), 132),
     )
 
     val seats = listOf(
@@ -34,9 +35,9 @@ object TestFixtureData {
     )
 
     val screens = listOf(
-        Screen(seats, 1),
-        Screen(seats, 2),
-        Screen(seats, 3),
+        Screen(seats, Id(1)),
+        Screen(seats, Id(2)),
+        Screen(seats, Id(3)),
     )
 
     val showings = listOf(
@@ -51,7 +52,7 @@ object TestFixtureData {
     )
 
     val movieTheater = MovieTheater(
-        screens,
+//        screens,
         movies,
         showings,
         reservationInfos,

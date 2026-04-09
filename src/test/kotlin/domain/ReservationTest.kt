@@ -11,7 +11,7 @@ class ReservationTest {
     @Test
     fun `영화의 id가 존재하지 않으면 예외가 발생한다`() {
         // given : 확인하려는 영화의 id는 10이다.(존재하지 않는다.)
-        val movieId = 10
+        val movieId = Id(10)
 
         // when : 전체 영화 리스트에서 영화를 확인하면
         val exception = assertThrows<IllegalArgumentException> {
@@ -24,7 +24,7 @@ class ReservationTest {
     @Test
     fun `영화의 id가 존재할 경우, 해당 영화를 반환한다`() {
         // given : 확인하려는 영화의 id는 1이다.
-        val movieId = 1
+        val movieId = Id(1)
 
         // when : 영화를 찾으면
         val result = Reservation.findMovieById(TestFixtureData.movieTheater, movieId)
@@ -36,7 +36,7 @@ class ReservationTest {
     @Test
     fun `예매 영화와 예매 날짜를 입력하였을 때 해당하는 상영 일정을 반환한다`() {
         // given : 예매 영화의 id는 1이고, 예매 날짜는 2026-4-10일이다.
-        val movieId = 1
+        val movieId = Id(1)
         val date = LocalDate(2026, 4, 10)
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
@@ -50,7 +50,7 @@ class ReservationTest {
     @Test
     fun `예매 영화와 예매 날짜를 입력하였을 때 해당하는 상영 일정이 없을 경우, 예외가 발생한다`() {
         // given : 예매 영화의 id는 1이고, 예매 날짜는 2026-4-11일이다.
-        val movieId = 1
+        val movieId = Id(1)
         val date = LocalDate(2026, 4, 11)
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면

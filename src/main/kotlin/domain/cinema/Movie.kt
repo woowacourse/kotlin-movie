@@ -1,3 +1,5 @@
 package domain.cinema
 
-class Movie(val title: String, val id: Int, val runningTime: Int)
+import domain.Id
+
+class Movie(val title: String, val id: Id, val runningTime: Int)
