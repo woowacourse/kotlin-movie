@@ -93,7 +93,10 @@
 
 ### 8. reservations
 
-- [ ] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 있다면 true를 반환받는다.
+- [x] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 있다면 true를 반환받는다.
+- [x] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 없다면 false를 반환받는다.
+- [x] reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 있다면 true를 반환받는다.
+- [x] reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 없다면 false를 반환받는다.
 
 ### 9. point
 
