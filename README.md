@@ -254,3 +254,6 @@
 
 - 테스트 코드의 `assertEquals(actual, expected)` 인자 순서를 `assertEquals(expected, actual)`로 일괄 수정
 - `TestFixtureData` 객체에 도메인 클래스 구조에 맞는 테스트 픽스처 예시 데이터 작성
+- SeatCoordinate, SeatState, Id 객체 타입에 변경에 따른 호출 코드 일괄 적용
+- Main.kt에서 예시 입출력에 맞는 케이스에 따라 임시 변수들 작성
+- 현 프로젝트 상태 검증 및 리팩토링 방향성 확인
