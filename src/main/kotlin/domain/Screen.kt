@@ -2,7 +2,7 @@ package domain
 
 class Screen(val seats: List<Seat>, val id: Int) {
     companion object {
-        val maxRow = 5
-        val maxColumn = 4
+        const val MAX_ROW = 5
+        const val MAX_COLUMN = 4
     }
 }

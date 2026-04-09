@@ -74,8 +74,8 @@ class ReservationController(val movieTheater: MovieTheater) {
     fun chooseSeat(showing: Showing) {
         println("좌석 배치도")
         val screen = showing.screen
-        val maxRow = Screen.maxRow
-        val maxColumn = Screen.maxColumn
+        val maxRow = Screen.MAX_ROW
+        val maxColumn = Screen.MAX_COLUMN
 
         val header = " ".repeat(3) + (1..maxColumn).joinToString("    ")
         println(header)
@@ -264,5 +264,21 @@ class ReservationControllerTest {
 
         // then : 예외가 발생한다.
         assertEquals("입력된 값이 유효하지 않습니다.", exception.message)
+    }
+
+    @Test
+    fun `상영관에 존재하지 않는 좌석이면 예외가 발생한다`() {
+        // given : 좌석을 입력받는다.
+        val input = "F10"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val showing = TestFixtureData.showings.first()
+
+        // when : 상영을 확인한 뒤 상영 번호를 입력하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseSeat(showing)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("해당 상영관에는 해당 좌석이 존재하지 않습니다.", exception.message)
     }
 }
