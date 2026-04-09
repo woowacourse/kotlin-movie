@@ -65,9 +65,9 @@
 * [x] DiscountPolicy을 구현한다.
   * [x] 할인 정책에 따라 계산된 금액을 반환한다.
 
-### PointCondition
-* [] PointCondition 도메인을 구현한다.
-  * [] 포인트 정책에 따라 계산된 금액을 반환한다.
+### PointPolicy
+* [x] PointPolicy 도메인을 구현한다.
+  * [x] 포인트 정책에 따라 계산된 금액을 반환한다.
 
 ### Payment
 * [] Payment 도메인을 구현한다.
