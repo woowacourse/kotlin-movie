@@ -17,10 +17,4 @@ class Seat(
     }
 
     fun getPrice(): Money = seatGrade.price
-
-    companion object {
-//        fun create(number: String): Seat {
-//            return
-//        }
-    }
 }

@@ -88,8 +88,8 @@
     - [x] 지정된 랭크에 따라 좌석의 가격을 반환한다.
 
 ### 7. reservation
-- [ ] 입력된 상영 일자가 screenTime의 screeningDate과 같다면 true를 반환받는다.
-- [ ] 입력된 상영 시간이 screenTime의 ScreeningTime과 같다면 true를 반환받는다.
+- [x] 입력된 상영 일자가 screenTime의 screeningDate과 같다면 true를 반환받는다.
+- [x] 입력된 상영 시간이 screenTime의 ScreeningTime과 같다면 true를 반환받는다.
 
 ### 8. reservations
 

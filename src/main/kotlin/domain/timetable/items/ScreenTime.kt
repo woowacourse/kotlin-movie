@@ -8,7 +8,7 @@ class ScreenTime(
     private val endTime: LocalTime,
     private val screeningDate: LocalDate,
 ) {
-    fun isContain(time: LocalTime): Boolean = startTime.isBefore(time) && endTime.isAfter(time)
+    fun isContain(time: LocalTime): Boolean = time in startTime..endTime
 
     fun isStartAt(time: LocalTime): Boolean = startTime == time
 
