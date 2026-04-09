@@ -3,6 +3,7 @@ package schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
+import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.MovieScreening
 import model.seat.SeatGroup
@@ -37,7 +38,7 @@ class MovieScreeningTest {
                 MovieScreening(
                     movie =
                         Movie(
-                            id = idOne,
+                            name = MovieName("혼자사는남자", id = idOne),
                             runningTime = RunningTime(minute = 60),
                         ),
                     screenTime =
@@ -57,7 +58,7 @@ class MovieScreeningTest {
                 MovieScreening(
                     movie =
                         Movie(
-                            id = idOne,
+                            name = MovieName("혼자사는남자", id = idOne),
                             runningTime = RunningTime(minute = 60),
                         ),
                     screenTime =
@@ -75,12 +76,12 @@ class MovieScreeningTest {
         private val idTwo = "2"
         private val oneHourMovie =
             Movie(
-                id = idOne,
+                name = MovieName("혼자사는남자", id = idOne),
                 runningTime = RunningTime(minute = 60),
             )
         private val twoHourMovie =
             Movie(
-                id = idTwo,
+                name = MovieName("혼자사는남자", id = idTwo),
                 runningTime = RunningTime(minute = 120),
             )
 

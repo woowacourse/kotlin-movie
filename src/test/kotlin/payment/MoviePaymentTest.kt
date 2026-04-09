@@ -4,6 +4,7 @@ import model.CinemaTime
 import model.CinemaTimeRange
 import model.MovieReservationResult
 import model.movie.Movie
+import model.movie.MovieName
 import model.movie.RunningTime
 import model.payment.MoviePayment
 import model.payment.PayType
@@ -19,7 +20,7 @@ import java.time.LocalDateTime
 class MoviePaymentTest {
     private val movieOne =
         Movie(
-            id = "1",
+            name = MovieName("혼자사는남자", id = "1"),
             runningTime = RunningTime(60),
         )
 

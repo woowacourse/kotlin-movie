@@ -3,6 +3,7 @@ package schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
+import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
@@ -84,7 +85,7 @@ class ScreenScheduleTest {
                             MovieScreening(
                                 movie =
                                     Movie(
-                                        id = idOne,
+                                        name = MovieName("혼자사는남자", id = idOne),
                                         runningTime = RunningTime(minute = 60),
                                     ),
                                 screenTime =
@@ -115,7 +116,7 @@ class ScreenScheduleTest {
                             MovieScreening(
                                 movie =
                                     Movie(
-                                        id = idOne,
+                                        name = MovieName("혼자사는남자", id = idOne),
                                         runningTime = RunningTime(minute = 60),
                                     ),
                                 screenTime =
@@ -134,7 +135,7 @@ class ScreenScheduleTest {
     fun `특정 영화를 요청받으면 해당하는 상영관의 영화 전체 일정을 반환한다`() {
         val movieOne =
             Movie(
-                id = idOne,
+                name = MovieName("혼자사는남자", id = idOne),
                 runningTime = RunningTime(10),
             )
 
@@ -147,18 +148,19 @@ class ScreenScheduleTest {
                             CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
                             CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                         ),
-                    listOf(
-                        MovieScreening(
-                            movie = movieOne,
-                            screenTime =
-                                CinemaTimeRange(
-                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
-                                ),
-                            seatGroup = SeatGroup(emptyList()),
+                    movieScreenings =
+                        listOf(
+                            MovieScreening(
+                                movie = movieOne,
+                                screenTime =
+                                    CinemaTimeRange(
+                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
+                                    ),
+                                seatGroup = SeatGroup(emptyList()),
+                            ),
                         ),
-                    ),
-                ).getMovieSchedule(movieOne),
+                ).getMovieSchedule(MovieName("혼자사는남자", id = idOne)),
             ).isEqualTo(
                 MovieSchedule(
                     listOf(
@@ -187,18 +189,19 @@ class ScreenScheduleTest {
                         CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
                         CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                     ),
-                listOf(
-                    movieScreening,
-                    MovieScreening(
-                        movie = movieOne,
-                        screenTime =
-                            CinemaTimeRange(
-                                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
-                            ),
-                        seatGroup = SeatGroup(emptyList()),
+                movieScreenings =
+                    listOf(
+                        movieScreening,
+                        MovieScreening(
+                            movie = movieOne,
+                            screenTime =
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
+                                ),
+                            seatGroup = SeatGroup(emptyList()),
+                        ),
                     ),
-                ),
             )
         }
     }
@@ -206,7 +209,7 @@ class ScreenScheduleTest {
     companion object {
         private val movieOne =
             Movie(
-                id = "1",
+                name = MovieName("혼자사는남자", id = "1"),
                 runningTime = RunningTime(60),
             )
 

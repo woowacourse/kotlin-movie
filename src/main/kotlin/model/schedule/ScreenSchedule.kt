@@ -2,7 +2,7 @@ package model.schedule
 
 import model.CinemaTime
 import model.CinemaTimeRange
-import model.movie.Movie
+import model.movie.MovieName
 
 class ScreenSchedule(
     private val screenId: String,
@@ -34,5 +34,5 @@ class ScreenSchedule(
 
     override fun hashCode(): Int = screenId.hashCode()
 
-    fun getMovieSchedule(movie: Movie): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie == movie })
+    fun getMovieSchedule(movie: MovieName): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie.isEqualName(movie) })
 }

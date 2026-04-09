@@ -3,6 +3,7 @@ import model.CinemaTime
 import model.CinemaTimeRange
 import model.MovieReservationResult
 import model.movie.Movie
+import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.CinemaSchedule
 import model.schedule.MovieScreening
@@ -28,13 +29,13 @@ class CinemaKioskTest {
     fun setUp() {
         movieOne =
             Movie(
-                id = "1",
+                name = MovieName("혼자사는남자", id = "1"),
                 runningTime = RunningTime(60),
             )
 
         movieTwo =
             Movie(
-                id = "2",
+                name = MovieName("혼자사는남자", id = "2"),
                 runningTime = RunningTime(100),
             )
 
@@ -117,7 +118,7 @@ class CinemaKioskTest {
             )
 
         cinemaKiosk.reserve(
-            movie = movieOne,
+            movieName = MovieName("혼자사는남자", id = "1"),
             startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
             seatRow = SeatRow("A"),
             seatColumn = SeatColumn(2),
@@ -125,7 +126,7 @@ class CinemaKioskTest {
 
         assertThat(
             cinemaKiosk.reserve(
-                movie = movieTwo,
+                movieName = MovieName("혼자사는남자", id = "1"),
                 startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                 seatRow = SeatRow("A"),
                 seatColumn = SeatColumn(2),
@@ -184,7 +185,7 @@ class CinemaKioskTest {
             )
 
         cinemaKiosk.reserve(
-            movie = movieOne,
+            movieName = MovieName("혼자사는남자", id = "1"),
             startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
             seatRow = SeatRow("A"),
             seatColumn = SeatColumn(1),
@@ -192,7 +193,7 @@ class CinemaKioskTest {
 
         assertThat(
             cinemaKiosk.reserve(
-                movie = movieOne,
+                movieName = MovieName("혼자사는남자", id = "1"),
                 startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                 seatRow = SeatRow("A"),
                 seatColumn = SeatColumn(2),

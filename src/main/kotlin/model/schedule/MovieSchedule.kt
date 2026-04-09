@@ -22,6 +22,8 @@ class MovieSchedule(
 
     fun getMovieScreening(time: CinemaTime): MovieScreening = scheduledScreens.first { it.screenTime.start.isEqual(time) }
 
+    fun isEmpty(): Boolean = scheduledScreens.isEmpty()
+
     override fun hashCode(): Int = scheduledScreens.hashCode()
 
     override fun iterator(): Iterator<MovieScreening> = scheduledScreens.iterator()

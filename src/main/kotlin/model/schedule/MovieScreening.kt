@@ -26,6 +26,10 @@ class MovieScreening(
 
     override fun hashCode(): Int = Objects.hash(movie.hashCode(), screenTime.hashCode())
 
+    fun isValidMovieNames(movieNameGroup: MovieNameGroup) {
+        movieNameGroup.contains(movie.name)
+    }
+
     fun getSeat(
         seatRow: SeatRow,
         seatColumn: SeatColumn,

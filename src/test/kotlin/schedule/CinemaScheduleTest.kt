@@ -3,6 +3,7 @@ package schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
+import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.CinemaSchedule
 import model.schedule.MovieSchedule
@@ -21,7 +22,7 @@ class CinemaScheduleTest {
     fun `모든 상영관의 영화 상영 일정을 반환한다`() {
         val movie =
             Movie(
-                id = uuidOne,
+                name = MovieName("혼자사는남자", id = uuidOne),
                 runningTime = RunningTime(minute = 60),
             )
 
@@ -86,7 +87,7 @@ class CinemaScheduleTest {
             .assertThat(
                 CinemaSchedule(
                     screenSchedules = schedules,
-                ).getMovieSchedule(movie),
+                ).getMovieSchedule(MovieName("혼자사는남자", id = "1")),
             ).isEqualTo(expected)
     }
 

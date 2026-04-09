@@ -12,4 +12,9 @@ object InputView {
         InputValidator.validateYesOrNo(input)
         return input == "Y"
     }
+
+    fun inputMovieName(): String {
+        println(Message.INPUT_MOVIE_NAME)
+        return readln()
+    }
 }
