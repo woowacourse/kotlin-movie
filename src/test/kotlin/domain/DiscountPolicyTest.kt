@@ -6,11 +6,10 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class DiscountPolicyTest {
-
     @Test
     fun `카드 결제 시 할인 금액을 반환한다`() {
         val given = Money(10000)
-        val result = DiscountPolicy().cardDiscount(given)
+        val result = DiscountPolicy().paymentDiscount(given, PaymentType.CREDIT_CARD)
 
         assertThat(result).isEqualTo(Money(500))
     }
@@ -18,7 +17,7 @@ class DiscountPolicyTest {
     @Test
     fun `현금 결제 시 할인 금액을 반환한다`() {
         val given = Money(10000)
-        val result = DiscountPolicy().cashDiscount(given)
+        val result = DiscountPolicy().paymentDiscount(given, PaymentType.CASH)
 
         assertThat(result).isEqualTo(Money(200))
     }

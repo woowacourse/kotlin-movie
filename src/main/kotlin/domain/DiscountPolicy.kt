@@ -15,11 +15,7 @@ class DiscountPolicy {
         result -= movieDayDiscount(result, dateTime.toLocalDate())
         result -= timeDiscount(result, dateTime.toLocalTime())
         result -= point.amount
-        result -=
-            when (paymentType) {
-                PaymentType.CREDIT_CARD -> cardDiscount(result)
-                PaymentType.CASH -> cashDiscount(result)
-            }
+        result -= paymentDiscount(result, paymentType)
 
         return result
     }
@@ -42,7 +38,8 @@ class DiscountPolicy {
         return Money(0)
     }
 
-    fun cardDiscount(money: Money): Money = Money((money.amount * 0.05).toInt())
-
-    fun cashDiscount(money: Money): Money = Money((money.amount * 0.02).toInt())
+    fun paymentDiscount(
+        money: Money,
+        paymentType: PaymentType,
+    ): Money = money * paymentType.discountRate
 }
