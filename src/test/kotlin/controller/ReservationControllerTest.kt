@@ -62,7 +62,7 @@ class ReservationController(val movieTheater: MovieTheater) {
         println("상영 번호를 선택하세요:")
         val input = readln()
 
-        require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "유효하지 않은 상영 번호입니다." }
+        require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "선택하신 상영 번호는 없는 상영 번호입니다." }
 
         return showings[input.toInt() - 1]
     }
@@ -188,5 +188,22 @@ class ReservationControllerTest {
 
         // then : 특정 상영이 반환된다.
         assertEquals(TestFixtureData.movieTheater.showings.first(), result)
+    }
+
+    @Test
+    fun `상영 번호가 유효 범위 밖이면 예외가 발생한다`() {
+        // given : 상영번호에 대해 유효 범위 밖 값을 입력한다
+        val input = "2"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val date = LocalDate(2026, 4, 10)
+
+        // when : 상영을 확인한 뒤 상영 번호를 입력하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseShowingTime(movie, date)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("선택하신 상영 번호는 없는 상영 번호입니다.", exception.message)
     }
 }
