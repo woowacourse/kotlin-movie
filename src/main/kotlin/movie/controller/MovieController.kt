@@ -28,11 +28,7 @@ import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieController {
-    private val movies = listOf(
-        Movie(title = MovieTitle("F1 더 무비")),
-        Movie(title = MovieTitle("토이 스토리")),
-        Movie(title = MovieTitle("아이언맨")),
-    )
+    private val movie = Movie(title = MovieTitle("아이언맨"))
     private val movieTime =
         MovieTime(
             date = LocalDate.of(2026, 4, 9),
@@ -55,34 +51,9 @@ class MovieController {
         ScreeningMovies(
             listOf(
                 ScreeningMovie(
-                    movie = movies[0],
-                    movieTime =
-                        MovieTime(
-                            date = LocalDate.of(2025, 9, 20),
-                            startTime = LocalTime.of(10, 20, 0),
-                            endTime = LocalTime.of(12, 50, 0),
-                        ),
-                    theater = theaterList[1],
-                ),
-                ScreeningMovie(
-                    movie = movies[0],
-                    movieTime =
-                        MovieTime(
-                            date = LocalDate.of(2025, 9, 20),
-                            startTime = LocalTime.of(13, 0, 0),
-                            endTime = LocalTime.of(15, 30, 0),
-                        ),
-                    theater = theaterList[0],
-                ),
-                ScreeningMovie(
                     movie = movie,
-                    movieTime =
-                        MovieTime(
-                            date = LocalDate.of(2026, 4, 9),
-                            startTime = LocalTime.of(20, 30, 0),
-                            endTime = LocalTime.of(23, 30, 0),
-                        ),
-                    theater = theaterList[1],
+                    movieTime = movieTime,
+                    theater = theaterList[0],
                 ),
             ),
         )
@@ -120,10 +91,7 @@ class MovieController {
             OutputView.printSeats(screeningMovie = screeningMovie)
             val selectedSeatNumbers = getSeatNumbers(screeningMovie = screeningMovie)
 
-            val reservation = ticket.addReservation(
-                screeningMovie = screeningMovie,
-                seatNumbers = selectedSeatNumbers
-            )
+            val reservation = ticket.addReservation(screeningMovie = screeningMovie, seatNumbers = selectedSeatNumbers)
 
             OutputView.printReservationAddMessage(reservation = reservation)
 
@@ -156,15 +124,17 @@ class MovieController {
 
         val isPayment = getUserPayment()
 
-        if (isPayment) {
-            OutputView.printReceipt(
-                ticket = ticket,
-                paymentPrice = paymentPrice,
-                usePoint = point,
-            )
-
-            OutputView.printThankYou()
+        if (!isPayment) {
+            ticket.resetSeat()
         }
+
+        OutputView.printReceipt(
+            ticket = ticket,
+            paymentPrice = paymentPrice,
+            usePoint = point,
+        )
+
+        OutputView.printThankYou()
     }
 
     fun getMovieTimes(title: MovieTitle): List<ScreeningMovie> =
