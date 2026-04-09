@@ -1,7 +1,7 @@
 package movie.domain.movie
 
 class Theaters(
-    theaters: List<Theater>
+    theaters: List<Theater>,
 ) {
-    private val _theaters = theaters.toList()
+    private val value = theaters.toList()
 }

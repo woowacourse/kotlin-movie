@@ -16,15 +16,17 @@ class ScreeningMoviesTest {
         val theater = Theater(openTime = openTime, closeTime = closeTime)
         val movieTitle = MovieTitle("아이언맨")
         val movie = Movie(title = movieTitle)
-        val screeningMovie = ScreeningMovie(
-            theater = theater,
-            movie = movie,
-            movieTime = MovieTime(
-                date = LocalDate.of(2026, 4, 8),
-                startTime = LocalTime.of(1, 1, 1),
-                endTime = LocalTime.of(2, 1, 1),
+        val screeningMovie =
+            ScreeningMovie(
+                theater = theater,
+                movie = movie,
+                movieTime =
+                    MovieTime(
+                        date = LocalDate.of(2026, 4, 8),
+                        startTime = LocalTime.of(1, 1, 1),
+                        endTime = LocalTime.of(2, 1, 1),
+                    ),
             )
-        )
 
         screeningMovies.addMovie(screeningMovie)
 
@@ -37,23 +39,26 @@ class ScreeningMoviesTest {
         val closeTime = LocalTime.of(23, 59, 59)
         val theater = Theater(openTime = openTime, closeTime = closeTime)
         val movie = Movie(title = MovieTitle("아이언맨"))
-        val movieTime = MovieTime(
-            date = LocalDate.of(2026, 4, 8),
-            startTime = LocalTime.of(1, 1, 1),
-            endTime = LocalTime.of(2, 1, 1),
-        )
-        val screeningMovie = ScreeningMovie(
-            theater = theater,
-            movie = movie,
-            movieTime = movieTime
-        )
+        val movieTime =
+            MovieTime(
+                date = LocalDate.of(2026, 4, 8),
+                startTime = LocalTime.of(1, 1, 1),
+                endTime = LocalTime.of(2, 1, 1),
+            )
+        val screeningMovie =
+            ScreeningMovie(
+                theater = theater,
+                movie = movie,
+                movieTime = movieTime,
+            )
 
         val screeningMovies = ScreeningMovies(listOf(screeningMovie))
 
-        val isDupTime = screeningMovies.checkDuplicateTime(
-            theater = theater,
-            movieTime = movieTime
-        )
+        val isDupTime =
+            screeningMovies.checkDuplicateTime(
+                theater = theater,
+                movieTime = movieTime,
+            )
 
         assertThat(isDupTime).isTrue
     }
@@ -63,17 +68,19 @@ class ScreeningMoviesTest {
         val openTime = LocalTime.of(0, 0, 0)
         val closeTime = LocalTime.of(23, 59, 59)
         val theater = Theater(openTime = openTime, closeTime = closeTime)
-        val movieTime = MovieTime(
-            date = LocalDate.of(2026, 4, 8),
-            startTime = LocalTime.of(1, 1, 1),
-            endTime = LocalTime.of(2, 1, 1),
-        )
+        val movieTime =
+            MovieTime(
+                date = LocalDate.of(2026, 4, 8),
+                startTime = LocalTime.of(1, 1, 1),
+                endTime = LocalTime.of(2, 1, 1),
+            )
         val screeningMovies = ScreeningMovies()
 
-        val isDupTime = screeningMovies.checkDuplicateTime(
-            theater = theater,
-            movieTime = movieTime
-        )
+        val isDupTime =
+            screeningMovies.checkDuplicateTime(
+                theater = theater,
+                movieTime = movieTime,
+            )
 
         assertThat(isDupTime).isFalse
     }
@@ -85,16 +92,18 @@ class ScreeningMoviesTest {
         val theater = Theater(openTime = openTime, closeTime = closeTime)
         val movieTitle = MovieTitle("아이언맨")
         val movie = Movie(title = movieTitle)
-        val movieTime = MovieTime(
-            date = LocalDate.of(2026, 4, 8),
-            startTime = LocalTime.of(1, 1, 1),
-            endTime = LocalTime.of(2, 1, 1),
-        )
-        val screeningMovie = ScreeningMovie(
-            theater = theater,
-            movie = movie,
-            movieTime = movieTime
-        )
+        val movieTime =
+            MovieTime(
+                date = LocalDate.of(2026, 4, 8),
+                startTime = LocalTime.of(1, 1, 1),
+                endTime = LocalTime.of(2, 1, 1),
+            )
+        val screeningMovie =
+            ScreeningMovie(
+                theater = theater,
+                movie = movie,
+                movieTime = movieTime,
+            )
         val screeningMovies = ScreeningMovies(listOf(screeningMovie))
 
         screeningMovies.getMovieTimes(movie)

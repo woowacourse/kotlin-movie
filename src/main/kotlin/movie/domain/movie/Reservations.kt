@@ -3,19 +3,18 @@ package movie.domain.movie
 import movie.domain.Price
 
 class Reservations(
-    reservations: List<Reservation> = emptyList()
+    reservations: List<Reservation> = emptyList(),
 ) {
-    private val _reservations = reservations.toMutableList()
+    private val value = reservations.toMutableList()
 
     fun addReservation(reservation: Reservation) {
-        _reservations.add(reservation)
+        value.add(reservation)
     }
 
-    fun getTotalPrice(): Price {
-        return _reservations
+    fun getTotalPrice(): Price =
+        value
             .map { it.getTotalPrice() }
             .fold(Price(0)) { total, price ->
                 total.sumPrice(price)
             }
-    }
 }

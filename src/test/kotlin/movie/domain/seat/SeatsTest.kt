@@ -14,10 +14,11 @@ class SeatsTest {
     @Test
     fun `좌석 금액을 정상적으로 가져온다`() {
         val seats = Seats(seatLayout = TestSeatLayout())
-        val seatNumber = SeatNumber(
-            row = Row('A'),
-            col = Column(1)
-        )
+        val seatNumber =
+            SeatNumber(
+                row = Row('A'),
+                col = Column(1),
+            )
 
         assertThat(seats.getPrice(seatNumber = seatNumber)).isEqualTo(Price(18_000))
     }
@@ -31,10 +32,11 @@ class SeatsTest {
                 return rows.flatMap { row ->
                     cols.map { col ->
                         Seat(
-                            seatNumber = SeatNumber(
-                                row = Row(row),
-                                col = Column(col),
-                            ),
+                            seatNumber =
+                                SeatNumber(
+                                    row = Row(row),
+                                    col = Column(col),
+                                ),
                             rank = SRank(),
                         )
                     }

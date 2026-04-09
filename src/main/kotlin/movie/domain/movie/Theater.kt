@@ -14,18 +14,14 @@ class Theater(
     val openTime: LocalTime,
     val closeTime: LocalTime,
 ) {
-    fun sameTheater(target: Theater): Boolean {
-        return id == target.id
-    }
-    fun validateSeat(seatNumber: SeatNumber): Boolean {
-        return seats.contains(seatNumber)
-    }
+    fun sameTheater(target: Theater): Boolean = id == target.id
 
-    fun getPrice(seatNumber: SeatNumber): Price {
-        return seats.getPrice(seatNumber)
-    }
+    fun validateSeat(seatNumber: SeatNumber): Boolean = seats.contains(seatNumber)
 
-    fun validateTime(startTime: LocalTime, endTime: LocalTime): Boolean {
-        return (startTime in openTime..closeTime) && (endTime in openTime..closeTime)
-    }
+    fun getPrice(seatNumber: SeatNumber): Price = seats.getPrice(seatNumber)
+
+    fun validateTime(
+        startTime: LocalTime,
+        endTime: LocalTime,
+    ): Boolean = (startTime in openTime..closeTime) && (endTime in openTime..closeTime)
 }

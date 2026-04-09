@@ -8,7 +8,5 @@ class Movie(
     private val id: Uuid = Uuid.random(),
     val title: MovieTitle,
 ) {
-    fun isSameMovie(target: Movie): Boolean {
-        return id == target.id
-    }
+    fun isSameMovie(target: Movie): Boolean = id == target.id
 }

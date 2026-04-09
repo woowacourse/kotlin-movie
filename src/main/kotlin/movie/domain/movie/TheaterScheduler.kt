@@ -16,38 +16,37 @@ class TheaterScheduler(
             throw IllegalArgumentException("시간 중복으로 영화를 추가할 수 없습니다.")
         }
 
-        val newMovie = createScreeningMovie(
-            theater = theater,
-            movie = movie,
-            movieTime = movieTime,
-        )
+        val newMovie =
+            createScreeningMovie(
+                theater = theater,
+                movie = movie,
+                movieTime = movieTime,
+            )
 
         screeningMovies.addMovie(newMovie)
     }
 
-    fun createScreeningMovie(theater: Theater, movie: Movie, movieTime: MovieTime): ScreeningMovie {
-        return ScreeningMovie(
+    fun createScreeningMovie(
+        theater: Theater,
+        movie: Movie,
+        movieTime: MovieTime,
+    ): ScreeningMovie =
+        ScreeningMovie(
             theater = theater,
             movie = movie,
             movieTime = movieTime,
         )
-    }
 
     fun checkDuplicateTime(
         theater: Theater,
         movieTime: MovieTime,
-    ): Boolean {
-       return screeningMovies.checkDuplicateTime(
-           theater = theater,
-           movieTime = movieTime,
-       )
-    }
+    ): Boolean =
+        screeningMovies.checkDuplicateTime(
+            theater = theater,
+            movieTime = movieTime,
+        )
 
-    fun getMovieTitles(): List<MovieTitle> {
-        return screeningMovies.getMovieTitles()
-    }
+    fun getMovieTitles(): List<MovieTitle> = screeningMovies.getMovieTitles()
 
-    fun getMovieTimes(movie: Movie): List<MovieTime> {
-        return screeningMovies.getMovieTimes(movie = movie)
-    }
+    fun getMovieTimes(movie: Movie): List<MovieTime> = screeningMovies.getMovieTimes(movie = movie)
 }

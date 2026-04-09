@@ -15,18 +15,20 @@ class TheaterSchedulerTest {
         val theater = Theater(openTime = openTime, closeTime = closeTime)
         val movieTitle = MovieTitle("아이언맨")
         val movie = Movie(title = movieTitle)
-        val movieTime = MovieTime(
-            date = LocalDate.of(2026, 4, 8),
-            startTime = LocalTime.of(1, 1, 1),
-            endTime = LocalTime.of(2, 1, 1),
-        )
+        val movieTime =
+            MovieTime(
+                date = LocalDate.of(2026, 4, 8),
+                startTime = LocalTime.of(1, 1, 1),
+                endTime = LocalTime.of(2, 1, 1),
+            )
         val theaterScheduler = TheaterScheduler(theaters = Theaters(listOf(theater)))
 
-        val resultScreeningMovie = theaterScheduler.createScreeningMovie(
-            theater = theater,
-            movieTime = movieTime,
-            movie = movie,
-        )
+        val resultScreeningMovie =
+            theaterScheduler.createScreeningMovie(
+                theater = theater,
+                movieTime = movieTime,
+                movie = movie,
+            )
 
         assertThat(resultScreeningMovie.theater).isEqualTo(theater)
         assertThat(resultScreeningMovie.movie).isEqualTo(movie)

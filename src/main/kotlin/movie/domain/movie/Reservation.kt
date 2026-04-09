@@ -5,9 +5,7 @@ import movie.domain.seat.number.SeatNumber
 
 class Reservation(
     val screeningMovie: ScreeningMovie,
-    val seatNumbers: List<SeatNumber>
+    val seatNumbers: List<SeatNumber>,
 ) {
-    fun getTotalPrice(): Price {
-        return screeningMovie.calculatePrice(targetSeatNumbers = seatNumbers)
-    }
+    fun getTotalPrice(): Price = screeningMovie.calculatePrice(targetSeatNumbers = seatNumbers)
 }

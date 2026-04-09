@@ -2,7 +2,7 @@ package movie.domain
 
 @JvmInline
 value class Point(
-    val value: Int
+    val value: Int,
 ) {
     init {
         require(value >= 0) { "포인트는 0 포인트 이상이어야 합니다." }

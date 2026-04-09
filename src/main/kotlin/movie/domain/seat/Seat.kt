@@ -10,7 +10,5 @@ class Seat(
 ) {
     fun isSeat(seatNumber: SeatNumber): Boolean = this.seatNumber == seatNumber
 
-    fun getPrice(): Price {
-        return rank.getPrice()
-    }
+    fun getPrice(): Price = rank.getPrice()
 }

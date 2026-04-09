@@ -13,10 +13,11 @@ class PointPolicyTest {
         val totalPrice = Price(20_000)
         val usePoint = Point(1000)
 
-        val resultPrice = pointPolicy.usePoint(
-            totalPrice = totalPrice,
-            usePoint = usePoint
-        )
+        val resultPrice =
+            pointPolicy.usePoint(
+                totalPrice = totalPrice,
+                usePoint = usePoint,
+            )
 
         assertThat(resultPrice.value).isEqualTo(19_000)
     }

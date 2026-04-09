@@ -6,7 +6,7 @@ import java.time.LocalTime
 class MovieTime(
     val date: LocalDate,
     val startTime: LocalTime,
-    val endTime: LocalTime
+    val endTime: LocalTime,
 ) {
     fun checkDuplicate(movieTime: MovieTime): Boolean {
         if (date != movieTime.date) {

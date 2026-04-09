@@ -1,34 +1,32 @@
 package movie.domain.movie
 
 class ScreeningMovies(
-    screeningMovies: List<ScreeningMovie> = emptyList()
+    screeningMovies: List<ScreeningMovie> = emptyList(),
 ) {
-    private val _screeningMovies = screeningMovies.toMutableList()
+    private val value = screeningMovies.toMutableList()
 
     fun addMovie(movie: ScreeningMovie) {
-        _screeningMovies.add(movie)
+        value.add(movie)
     }
 
     fun checkDuplicateTime(
         theater: Theater,
         movieTime: MovieTime,
-    ): Boolean {
-        return _screeningMovies.filter {
-            it.theater.sameTheater(theater)
-        }.any {
-            it.movieTime.checkDuplicate(movieTime)
-        }
-    }
+    ): Boolean =
+        value
+            .filter {
+                it.theater.sameTheater(theater)
+            }.any {
+                it.movieTime.checkDuplicate(movieTime)
+            }
 
-    fun getMovieTitles(): List<MovieTitle> {
-        return _screeningMovies
+    fun getMovieTitles(): List<MovieTitle> =
+        value
             .map { it.movie.title }
             .distinct()
-    }
 
-    fun getMovieTimes(movie: Movie): List<MovieTime> {
-        return _screeningMovies
+    fun getMovieTimes(movie: Movie): List<MovieTime> =
+        value
             .filter { it.movie.isSameMovie(movie) }
             .map { it.movieTime }
-    }
 }

@@ -13,10 +13,11 @@ class DefaultSeatLayout : SeatLayout {
         return rows.flatMap { row ->
             cols.map { col ->
                 Seat(
-                    seatNumber = SeatNumber(
-                        row = Row(row),
-                        col = Column(col),
-                    ),
+                    seatNumber =
+                        SeatNumber(
+                            row = Row(row),
+                            col = Column(col),
+                        ),
                     rank = ARank(),
                 )
             }
