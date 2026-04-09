@@ -124,15 +124,17 @@ class MovieController {
 
         val isPayment = getUserPayment()
 
-        if (isPayment) {
-            OutputView.printReceipt(
-                ticket = ticket,
-                paymentPrice = paymentPrice,
-                usePoint = point,
-            )
-
-            OutputView.printThankYou()
+        if (!isPayment) {
+            ticket.resetSeat()
         }
+
+        OutputView.printReceipt(
+            ticket = ticket,
+            paymentPrice = paymentPrice,
+            usePoint = point,
+        )
+
+        OutputView.printThankYou()
     }
 
     fun getMovieTimes(title: MovieTitle): List<ScreeningMovie> =

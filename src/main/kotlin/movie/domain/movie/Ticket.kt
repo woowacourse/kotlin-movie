@@ -9,6 +9,9 @@ class Ticket(
 
     fun isDupTime(movieTime: MovieTime): Boolean = reservations.isDupTime(movieTime = movieTime)
 
+    fun resetSeat() {
+        reservations.reset()
+    }
     fun addReservation(
         screeningMovie: ScreeningMovie,
         seatNumbers: List<SeatNumber>,
