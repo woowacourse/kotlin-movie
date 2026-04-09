@@ -10,7 +10,17 @@ class Seat(
     private val columnNumber: ColumnNumber,
     private val seatGrade: SeatGrade,
 ) {
-    fun isExist(number: String): Boolean = columnNumber.isSame(number[0]) && rowNumber.isSame(number[1])
+    fun isExist(number: String): Boolean {
+        val row = number.substring(0, 1)
+        val col = number.substring(1).toInt()
+        return columnNumber.isSame(col) && rowNumber.isSame(row)
+    }
 
     fun getPrice(): Money = seatGrade.price
+
+    companion object {
+//        fun create(number: String): Seat {
+//            return
+//        }
+    }
 }

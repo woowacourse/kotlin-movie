@@ -10,13 +10,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ScreenTest {
+    val row = listOf("A", "B", "C", "D", "E")
+    val col = listOf(1, 2, 3, 4, 5, 6)
     val seats =
-        ('A'..'E').flatMap { col ->
-            ('1'..'4').map { row ->
+        row.flatMap { row ->
+            col.map { col ->
                 val grade =
                     when (row) {
-                        'A', 'B' -> GradeB()
-                        'C', 'D' -> GradeS()
+                        "A", "B" -> GradeB()
+                        "C", "D" -> GradeS()
                         else -> GradeA()
                     }
                 Seat(

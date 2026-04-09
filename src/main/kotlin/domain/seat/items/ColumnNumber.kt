@@ -2,7 +2,7 @@ package domain.seat.items
 
 @JvmInline
 value class ColumnNumber(
-    private val columnNumber: Char,
+    private val columnNumber: Int,
 ) {
-    fun isSame(number: Char) = columnNumber == number
+    fun isSame(number: Int) = columnNumber == number
 }
