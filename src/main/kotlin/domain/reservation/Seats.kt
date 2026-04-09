@@ -27,7 +27,7 @@ class Seats private constructor(
 
     fun allSeats(): List<Seat> = values.toList()
 
-    fun findBySeatNumber(seatNumber: String): Seat {
+    private fun findBySeatNumber(seatNumber: String): Seat {
         return values.firstOrNull { it.seatNumber == seatNumber.trim().uppercase() }
             ?: throw IllegalArgumentException("존재하지 않는 좌석입니다: $seatNumber")
     }
