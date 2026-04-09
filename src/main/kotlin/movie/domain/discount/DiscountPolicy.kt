@@ -1,11 +1,28 @@
 package movie.domain.discount
 
 import movie.domain.Price
+import movie.domain.movie.MovieTime
 import java.time.LocalDate
 import java.time.LocalTime
 
 class DiscountPolicy {
     private val discountCondition = DiscountCondition()
+
+    fun calculateDiscount(
+        totalPrice: Price,
+        movieTime: MovieTime,
+    ): Price {
+        val movieDayPrice =
+            calculateMovieDayDiscount(
+                totalPrice = totalPrice,
+                date = movieTime.date,
+            )
+
+        return calculateTimeDiscount(
+            totalPrice = movieDayPrice,
+            startTime = movieTime.startTime,
+        )
+    }
 
     fun calculateMovieDayDiscount(
         totalPrice: Price,

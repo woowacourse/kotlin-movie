@@ -1,5 +1,6 @@
 package movie.domain.movie
 
+import java.time.LocalDate
 import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)
@@ -46,7 +47,10 @@ class TheaterScheduler(
             movieTime = movieTime,
         )
 
-    fun getMovieTitles(): List<MovieTitle> = screeningMovies.getMovieTitles()
+    fun containsMovieTitle(movieTitle: MovieTitle): Boolean = screeningMovies.containsMovieTitle(movieTitle)
 
-    fun getMovieTimes(movie: Movie): List<MovieTime> = screeningMovies.getMovieTimes(movie = movie)
+    fun getMovies(
+        title: MovieTitle,
+        date: LocalDate,
+    ): List<ScreeningMovie> = screeningMovies.getMovies(title = title, date = date)
 }

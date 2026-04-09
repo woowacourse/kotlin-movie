@@ -51,7 +51,7 @@ object InputView {
         paymentMethods.forEachIndexed { index, method ->
             val discountPercent = (method.discountRate * 100).toInt()
 
-            println("${index + 1}) ${method.name}(${discountPercent}% 할인)")
+            println("${index + 1}) ${method.name}($discountPercent% 할인)")
         }
 
         return readln()

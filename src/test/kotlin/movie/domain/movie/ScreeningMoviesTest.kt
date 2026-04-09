@@ -106,8 +106,8 @@ class ScreeningMoviesTest {
             )
         val screeningMovies = ScreeningMovies(listOf(screeningMovie))
 
-        screeningMovies.getMovieTimes(movie)
+        screeningMovies.getMovies(title = movie.title, date = movieTime.date)
 
-        assertThat(screeningMovies.getMovieTimes(movie)).isEqualTo(listOf(movieTime))
+        assertThat(screeningMovies.getMovies(title = movie.title, date = movieTime.date)).isEqualTo(listOf(screeningMovie))
     }
 }
