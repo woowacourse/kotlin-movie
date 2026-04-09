@@ -37,12 +37,4 @@ class ScreeningMovie(
                 price.sumPrice(targetPrice = targetPrice)
             }
     }
-
-    fun getMovieTitle(): MovieTitle {
-        return movie.title
-    }
-
-    fun getMovieId(): Uuid {
-        return movie.id
-    }
 }
