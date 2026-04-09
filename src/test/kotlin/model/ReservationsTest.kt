@@ -19,19 +19,20 @@ import java.time.LocalTime
 class ReservationsTest {
     private val date = LocalDate.of(2026, 4, 8)
 
-    private val movie = Movie(
-        title = "스파이더맨",
-        runningTime = RunningTime(120),
-        showingPeriod = ShowingPeriod(
-            startDate = LocalDate.of(2026, 4, 1),
-            endDate = LocalDate.of(2026, 4, 30)
+    private val movie =
+        Movie(
+            title = "스파이더맨",
+            runningTime = RunningTime(120),
+            showingPeriod =
+                ShowingPeriod(
+                    startDate = LocalDate.of(2026, 4, 1),
+                    endDate = LocalDate.of(2026, 4, 30),
+                ),
         )
-    )
 
     private val defaultScreen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S))))
 
-    private fun screening(startHour: Int): Screening =
-        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
+    private fun screening(startHour: Int): Screening = Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
 
     @Test
     fun `빈 상태로 시작할 수 있다`() {
@@ -56,9 +57,10 @@ class ReservationsTest {
         val reservation1 = screening(14).reserve(listOf(SeatNumber('A', 1)))
         val reservation2 = screening(16).reserve(listOf(SeatNumber('A', 1)))
 
-        val reservations = Reservations()
-            .addReservation(reservation1)
-            .addReservation(reservation2)
+        val reservations =
+            Reservations()
+                .addReservation(reservation1)
+                .addReservation(reservation2)
 
         assertThat(reservations).hasSize(2)
     }

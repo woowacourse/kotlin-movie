@@ -18,27 +18,29 @@ import java.time.LocalTime
 class ScreeningTest {
     private val date = LocalDate.of(2026, 4, 8)
 
-    private val movie = Movie(
-        title = "스파이더맨",
-        runningTime = RunningTime(120),
-        showingPeriod = ShowingPeriod(
-            startDate = LocalDate.of(2026, 4, 1),
-            endDate = LocalDate.of(2026, 4, 30)
+    private val movie =
+        Movie(
+            title = "스파이더맨",
+            runningTime = RunningTime(120),
+            showingPeriod =
+                ShowingPeriod(
+                    startDate = LocalDate.of(2026, 4, 1),
+                    endDate = LocalDate.of(2026, 4, 30),
+                ),
         )
-    )
 
-    private val defaultSeats = Seats(
-        listOf(
-            Seat(SeatNumber('A', 1), SeatGrade.B),
-            Seat(SeatNumber('A', 2), SeatGrade.B),
-            Seat(SeatNumber('B', 1), SeatGrade.S)
+    private val defaultSeats =
+        Seats(
+            listOf(
+                Seat(SeatNumber('A', 1), SeatGrade.B),
+                Seat(SeatNumber('A', 2), SeatGrade.B),
+                Seat(SeatNumber('B', 1), SeatGrade.S),
+            ),
         )
-    )
 
     private val defaultScreen = Screen("테스트관", defaultSeats)
 
-    private fun screening(startHour: Int): Screening =
-        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
+    private fun screening(startHour: Int): Screening = Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
 
     @Test
     fun `종료 시각은 시작 시각에 영화 상영 길이를 더한 값이다`() {

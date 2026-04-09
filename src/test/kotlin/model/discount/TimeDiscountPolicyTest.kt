@@ -1,15 +1,15 @@
 package model.discount
 
 import model.Money
+import model.Screen
 import model.movie.Movie
 import model.movie.RunningTime
-import model.Screen
+import model.movie.ShowingPeriod
 import model.screening.Screening
 import model.seat.Seat
 import model.seat.SeatGrade
 import model.seat.SeatNumber
 import model.seat.Seats
-import model.movie.ShowingPeriod
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -19,21 +19,26 @@ import java.time.LocalTime
 class TimeDiscountPolicyTest {
     private val date = LocalDate.of(2025, 9, 15)
 
-    private val movie = Movie(
-        title = "테스트 영화",
-        runningTime = RunningTime(120),
-        showingPeriod = ShowingPeriod(
-            startDate = LocalDate.of(2025, 9, 1),
-            endDate = LocalDate.of(2025, 9, 30)
+    private val movie =
+        Movie(
+            title = "테스트 영화",
+            runningTime = RunningTime(120),
+            showingPeriod =
+                ShowingPeriod(
+                    startDate = LocalDate.of(2025, 9, 1),
+                    endDate = LocalDate.of(2025, 9, 30),
+                ),
         )
-    )
 
     private val screen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.B))))
 
-    private fun screeningAt(startHour: Int, startMinute: Int = 0) = Screening(
+    private fun screeningAt(
+        startHour: Int,
+        startMinute: Int = 0,
+    ) = Screening(
         movie = movie,
         startDateTime = LocalDateTime.of(date, LocalTime.of(startHour, startMinute)),
-        screen = screen
+        screen = screen,
     )
 
     @Test

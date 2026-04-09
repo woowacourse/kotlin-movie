@@ -2,7 +2,7 @@ package model.seat
 
 data class SeatNumber(
     val row: Char,
-    val column: Int
+    val column: Int,
 ) {
     init {
         require(row in 'A'..'E') { "행은 알파벳 A~E 사이여야 합니다." }

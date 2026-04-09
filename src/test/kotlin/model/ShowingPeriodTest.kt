@@ -17,7 +17,7 @@ class ShowingPeriodTest {
         assertThrows(IllegalArgumentException::class.java) {
             ShowingPeriod(
                 startDate = startDate,
-                endDate = endDate
+                endDate = endDate,
             )
         }
     }
@@ -25,10 +25,11 @@ class ShowingPeriodTest {
     @Test
     fun `특정 날짜가 상영 가능 기간에 포함되면 true를 반환한다`() {
         // given
-        val showingPeriod = ShowingPeriod(
-            startDate = LocalDate.of(2026, 4, 1),
-            endDate = LocalDate.of(2026, 4, 30)
-        )
+        val showingPeriod =
+            ShowingPeriod(
+                startDate = LocalDate.of(2026, 4, 1),
+                endDate = LocalDate.of(2026, 4, 30),
+            )
 
         // when
         val actual = showingPeriod.isDateInRange(LocalDate.of(2026, 4, 10))
@@ -40,10 +41,11 @@ class ShowingPeriodTest {
     @Test
     fun `특정 날짜가 상영 가능 기간에 포함되지 않으면 false를 반환한다`() {
         // given
-        val showingPeriod = ShowingPeriod(
-            startDate = LocalDate.of(2026, 4, 1),
-            endDate = LocalDate.of(2026, 4, 30)
-        )
+        val showingPeriod =
+            ShowingPeriod(
+                startDate = LocalDate.of(2026, 4, 1),
+                endDate = LocalDate.of(2026, 4, 30),
+            )
 
         // when
         val actual = showingPeriod.isDateInRange(LocalDate.of(2026, 5, 1))

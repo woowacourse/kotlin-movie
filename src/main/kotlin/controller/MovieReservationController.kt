@@ -1,12 +1,12 @@
 package controller
 
+import model.Scheduler
 import model.discount.MovieDayDiscountPolicy
 import model.discount.TimeDiscountPolicy
 import model.movie.Movie
 import model.payment.PaymentSystem
 import model.reservation.Reservation
 import model.reservation.Reservations
-import model.Scheduler
 import model.screening.Screening
 import model.screening.Screenings
 import view.InputView
@@ -66,7 +66,7 @@ class MovieReservationController(
         val selectedScreening = selectScreening(screenings, currentReservations)
         outputView.printSeatMap(
             selectedScreening.screen.seats,
-            selectedScreening.availableSeats()
+            selectedScreening.availableSeats(),
         )
         return retryUntilValid {
             val seatsNumber = inputView.readSeatsNumber()
@@ -83,19 +83,23 @@ class MovieReservationController(
         }
     }
 
+    private fun searchScreenings(movie: Movie): Screenings =
+        retryUntilValid {
+            val date = inputView.readDate()
+            val screenings = scheduler.getScreenings(movie, date)
+            if (screenings.isEmpty()) throw IllegalArgumentException("해당 날짜의 상영 목록이 없습니다.")
+            screenings
+        }
 
-    private fun searchScreenings(movie: Movie): Screenings = retryUntilValid {
-        val date = inputView.readDate()
-        val screenings = scheduler.getScreenings(movie, date)
-        if (screenings.isEmpty()) throw IllegalArgumentException("해당 날짜의 상영 목록이 없습니다.")
-        screenings
-    }
-
-    fun selectScreening(screenings: Screenings, currentReservations: Reservations): Screening =
+    fun selectScreening(
+        screenings: Screenings,
+        currentReservations: Reservations,
+    ): Screening =
         retryUntilValid {
             val index = inputView.readScreeningNumber() - 1
-            val screening = screenings.elementAtOrNull(index)
-                ?: throw IllegalArgumentException("없는 상영 번호입니다.")
+            val screening =
+                screenings.elementAtOrNull(index)
+                    ?: throw IllegalArgumentException("없는 상영 번호입니다.")
             if (currentReservations.isOverlapping(screening)) throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.")
             screening
         }

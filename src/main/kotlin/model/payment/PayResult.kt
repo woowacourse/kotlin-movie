@@ -5,5 +5,5 @@ import model.Point
 
 data class PayResult(
     val finalPrice: Money,
-    val usedPoint: Point
+    val usedPoint: Point,
 )

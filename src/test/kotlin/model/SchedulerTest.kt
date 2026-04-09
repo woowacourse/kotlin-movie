@@ -12,14 +12,16 @@ class SchedulerTest {
 
     @Test
     fun `해당 영화의 Screen이 없으면 빈 Screenings를 반환한다`() {
-        val unknownMovie = Movie(
-            title = "없는 영화",
-            runningTime = RunningTime(120),
-            showingPeriod = ShowingPeriod(
-                startDate = LocalDate.of(2025, 9, 1),
-                endDate = LocalDate.of(2025, 9, 30)
+        val unknownMovie =
+            Movie(
+                title = "없는 영화",
+                runningTime = RunningTime(120),
+                showingPeriod =
+                    ShowingPeriod(
+                        startDate = LocalDate.of(2025, 9, 1),
+                        endDate = LocalDate.of(2025, 9, 30),
+                    ),
             )
-        )
 
         val screenings = scheduler.getScreenings(unknownMovie, LocalDate.of(2025, 9, 20))
 

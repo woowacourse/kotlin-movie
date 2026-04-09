@@ -1,7 +1,6 @@
 package view
 
 import model.Money
-import model.Point
 import model.payment.PayResult
 import model.reservation.Reservation
 import model.reservation.Reservations
@@ -21,7 +20,10 @@ object OutputView {
         }
     }
 
-    fun printSeatMap(defaultSeats: Seats, availableSeats: Seats) {
+    fun printSeatMap(
+        defaultSeats: Seats,
+        availableSeats: Seats,
+    ) {
         println("\n좌석 배치도")
 
         val row = 'A'..'E'
@@ -29,15 +31,17 @@ object OutputView {
 
         println("    " + column.joinToString(separator = "    ") { "$it" })
         row.forEach { row ->
-            val rowString = "$row " + column.joinToString(" ") { col ->
-                val seatNumber = SeatNumber(row, col)
-                if (seatNumber in availableSeats.seatNumbers()) {
-                    val seatsGrade = defaultSeats.findSeat(seatNumber).seatGrade.name
-                    "[ $seatsGrade]"
-                } else {
-                    "[ X]"
-                }
-            }
+            val rowString =
+                "$row " +
+                    column.joinToString(" ") { col ->
+                        val seatNumber = SeatNumber(row, col)
+                        if (seatNumber in availableSeats.seatNumbers()) {
+                            val seatsGrade = defaultSeats.findSeat(seatNumber).seatGrade.name
+                            "[ $seatsGrade]"
+                        } else {
+                            "[ X]"
+                        }
+                    }
             println(rowString)
         }
     }
@@ -65,7 +69,10 @@ object OutputView {
         println("\n$message")
     }
 
-    fun printReceipt(reservations: Reservations, payResult: PayResult) {
+    fun printReceipt(
+        reservations: Reservations,
+        payResult: PayResult,
+    ) {
         println("\n예매 완료")
         println("내역:")
         reservations.forEach { println(formatReservation(it)) }
@@ -82,6 +89,4 @@ object OutputView {
     }
 
     private fun formatMoney(money: Money): String = "%,d".format(money.value)
-
-
 }

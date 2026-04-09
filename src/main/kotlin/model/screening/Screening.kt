@@ -12,7 +12,7 @@ import java.time.LocalTime
 class Screening(
     val movie: Movie,
     val startDateTime: LocalDateTime,
-    val screen: Screen
+    val screen: Screen,
 ) {
     private val reservedSeatNumbers: MutableSet<SeatNumber> = mutableSetOf()
 
@@ -37,6 +37,5 @@ class Screening(
 
     fun availableSeats(): Seats = screen.seats.excludeReserved(reservedSeatNumbers)
 
-    fun isOverlapping(other: Screening): Boolean =
-        startDateTime < other.endDateTime && endDateTime > other.startDateTime
+    fun isOverlapping(other: Screening): Boolean = startDateTime < other.endDateTime && endDateTime > other.startDateTime
 }

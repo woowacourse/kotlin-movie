@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 data class Reservation(
     val screening: Screening,
-    val seats: Seats
+    val seats: Seats,
 ) {
     fun movieTitle(): String = screening.movie.title
 
