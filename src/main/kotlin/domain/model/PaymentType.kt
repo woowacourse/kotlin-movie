@@ -1,4 +1,4 @@
-package domain
+package domain.model
 
 enum class PaymentType(
     val discountRate: Double,

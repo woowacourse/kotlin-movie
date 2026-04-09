@@ -1,4 +1,4 @@
-package domain
+package domain.model
 
 enum class SeatGrade(
     val price: Int,

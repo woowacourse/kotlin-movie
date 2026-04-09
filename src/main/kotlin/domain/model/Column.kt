@@ -1,4 +1,4 @@
-package domain
+package domain.model
 
 @JvmInline
 value class Column(

@@ -1,5 +1,26 @@
 package domain
 
+import domain.model.Column
+import domain.model.DiscountPolicy
+import domain.model.Money
+import domain.model.Movie
+import domain.model.PaymentSystem
+import domain.model.PaymentType
+import domain.model.Point
+import domain.model.Row
+import domain.model.RunningTime
+import domain.model.Screening
+import domain.model.ScreeningPeriod
+import domain.model.ScreeningRoom
+import domain.model.ScreeningRoomName
+import domain.model.Seat
+import domain.model.SeatPosition
+import domain.model.SeatPositions
+import domain.model.Seats
+import domain.model.Ticket
+import domain.model.TicketBucket
+import domain.model.TimeRange
+import domain.model.Title
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test

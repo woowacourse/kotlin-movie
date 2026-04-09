@@ -1,9 +1,21 @@
 package domain
 
+import domain.model.Column
+import domain.model.Movie
+import domain.model.Row
+import domain.model.RunningTime
+import domain.model.Screening
+import domain.model.ScreeningPeriod
+import domain.model.ScreeningRoom
+import domain.model.ScreeningRoomName
+import domain.model.Seat
+import domain.model.SeatPosition
+import domain.model.Seats
+import domain.model.TimeRange
+import domain.model.Title
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

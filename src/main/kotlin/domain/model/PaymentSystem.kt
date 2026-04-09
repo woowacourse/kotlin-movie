@@ -1,4 +1,4 @@
-package domain
+package domain.model
 
 class PaymentSystem(
     private val discountPolicy: DiscountPolicy = DiscountPolicy(),

@@ -1,5 +1,11 @@
 package domain
 
+import domain.model.Column
+import domain.model.ReserveState
+import domain.model.Row
+import domain.model.Seat
+import domain.model.SeatGrade
+import domain.model.SeatPosition
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
