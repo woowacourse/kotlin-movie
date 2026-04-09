@@ -317,4 +317,18 @@ class ReservationControllerTest {
         // then : 예외가 발생한다.
         assertEquals("해당 좌석은 이미 예약되었습니다.", exception.message)
     }
+
+    @Test
+    fun `예약되지 않고 존재하는 좌석이면 해당 좌석을 반환한다`() {
+        // given : 좌석 번호를 입력한다.
+        val input = "B1"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val showing = TestFixtureData.showings.first()
+
+        // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
+        val result = controller.chooseSeat(showing)
+
+        // then : 좌석 리스트가 반환된다.
+        assertEquals(listOf(TestFixtureData.seats[2]), result)
+    }
 }
