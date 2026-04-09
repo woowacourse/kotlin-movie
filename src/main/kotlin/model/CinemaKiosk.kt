@@ -45,7 +45,6 @@ class CinemaKiosk(
                     seat = seat,
                 ),
             )
-            println(reserveResults)
             return result
         }
         return MovieReservationResult.Failed

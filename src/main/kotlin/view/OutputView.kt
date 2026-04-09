@@ -1,5 +1,6 @@
 package view
 
+import model.MovieReservationResult
 import model.schedule.MovieSchedule
 import model.seat.SeatGroup
 
@@ -25,5 +26,16 @@ object OutputView {
             }
             println()
         }
+    }
+
+    fun showShoppingCart(successResults: List<MovieReservationResult.Success>) {
+        println("바구니에 추가됨")
+        successResults
+            .groupBy { it.movie.name to it.screenTime.start }
+            .forEach { (key, results) ->
+                val (movieName, startTime) = key
+                val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+            }
     }
 }

@@ -46,7 +46,7 @@ object InputView {
 
     fun selectSeats(): List<Pair<SeatRow, SeatColumn>> {
         println("예약할 좌석을 입력하세요 (A1, B2):")
-        val rawSeats = readln().split(", ").map { it.trim() }
+        val rawSeats = readln().split(",").map { it.trim() }
         return rawSeats.map { rawSeat ->
             SeatRow(rawSeat[0].toString()) to SeatColumn(rawSeat[1].digitToInt())
         }

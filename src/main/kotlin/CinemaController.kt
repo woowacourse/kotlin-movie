@@ -5,8 +5,6 @@ import model.movie.MovieName
 import model.schedule.MovieNameGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
-import model.seat.SeatColumn
-import model.seat.SeatRow
 import view.InputView
 import view.OutputView
 
@@ -78,7 +76,7 @@ class CinemaController(
         while (true) {
             try {
                 val positions = InputView.selectSeats()
-                val successPositions = mutableListOf<Pair<SeatRow, SeatColumn>>()
+                val successPositions = mutableListOf<MovieReservationResult.Success>()
 
                 for (position in positions) {
                     val result =
@@ -89,12 +87,16 @@ class CinemaController(
                             seatColumn = position.second,
                         )
                     when (result) {
-                        is MovieReservationResult.Success -> successPositions.add(position)
+                        is MovieReservationResult.Success -> successPositions.add(result)
                         is MovieReservationResult.Failed -> {
+                            val successPositions = successPositions.map { it.seat.row to it.seat.column }
                             cinemaKiosk.cancelReservations(movieName, startTime, successPositions)
+                            throw IllegalArgumentException("예약 실패했습니다? 잘 좀 하시죠?")
                         }
                     }
                 }
+                OutputView.showShoppingCart(successPositions)
+                return
             } catch (_: Exception) {
                 println("문제가 생겼으니 알아서 에러를 찾으십쇼?")
             }
