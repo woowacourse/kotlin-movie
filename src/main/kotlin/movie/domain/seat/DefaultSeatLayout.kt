@@ -4,6 +4,7 @@ import movie.domain.seat.number.Column
 import movie.domain.seat.number.Row
 import movie.domain.seat.number.SeatNumber
 import movie.domain.seat.rank.ARank
+import movie.domain.seat.rank.SRank
 
 class DefaultSeatLayout : SeatLayout {
     override fun createSeats(): List<Seat> {
@@ -18,7 +19,7 @@ class DefaultSeatLayout : SeatLayout {
                             row = Row(row),
                             col = Column(col),
                         ),
-                    rank = ARank(),
+                    rank = if (row in 'A'..'B') ARank() else SRank(),
                 )
             }
         }
