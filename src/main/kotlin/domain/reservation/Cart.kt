@@ -1,7 +1,5 @@
 package domain.reservation
 
-import domain.screening.Screening
-
 class Cart(
     private var reservedScreen: List<ReservedScreen> = emptyList()
 ) {
@@ -15,11 +13,4 @@ class Cart(
         }
         return Cart(reservedScreen + screening)
     }
-}
-
-class ReservedScreen(
-    val screen: Screening,
-    val seats: List<Seat>
-) {
-    fun price(): Int = seats.sumOf { it.grade.money }
 }
