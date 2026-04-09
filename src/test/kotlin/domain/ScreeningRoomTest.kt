@@ -1,13 +1,5 @@
 package domain
 
-import domain.model.Column
-import domain.model.Row
-import domain.model.ScreeningRoom
-import domain.model.ScreeningRoomName
-import domain.model.Seat
-import domain.model.SeatPosition
-import domain.model.Seats
-import domain.model.TimeRange
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.time.LocalTime

@@ -1,4 +1,4 @@
-package domain.model
+package domain
 
 data class ScreeningRoom(
     val name: ScreeningRoomName,

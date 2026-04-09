@@ -1,4 +1,4 @@
-package domain.model
+package domain
 
 data class Seat(
     val position: SeatPosition,
@@ -19,7 +19,5 @@ data class SeatPosition(
     val row: Row,
     val column: Column,
 ) {
-    override fun toString(): String {
-        return "$row$column"
-    }
+    override fun toString(): String = "$row$column"
 }

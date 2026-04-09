@@ -1,4 +1,4 @@
-package domain.model
+package domain
 
 import java.time.LocalDateTime
 import java.util.UUID
@@ -21,7 +21,7 @@ class Screening(
     init {
         require(
             screenTimeRange.start.isBefore(room.operatingTime.start).not() &&
-                    screenTimeRange.end.isBefore(room.operatingTime.end),
+                screenTimeRange.end.isBefore(room.operatingTime.end),
         ) {
             "상영 시간이 상영관의 운영시간에 포함되지 않습니다."
         }

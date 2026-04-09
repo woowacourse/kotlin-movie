@@ -1,17 +1,14 @@
 package view
 
+import domain.Money
+import domain.Point
 import domain.ScreeningSchedule
-import domain.model.Money
-import domain.model.PaymentType
-import domain.model.Point
-import domain.model.Seats
-import domain.model.Ticket
-import domain.model.TicketBucket
+import domain.Seats
+import domain.TicketBucket
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object OutputView {
-
     fun createNewReservePrompt() {
         println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
     }
@@ -46,7 +43,12 @@ object OutputView {
     fun displayAddedBucket(bucket: TicketBucket) {
         println("장바구니에 추가됨")
         bucket.tickets.forEach { ticket ->
-            println("- [${ticket.screening.movie.title}] ${ticket.screening.startTime.toUiString()} 좌석: ${ticket.seatPositions.positions.joinToString { "${it.row.value}${it.column.value}" }}")
+            println(
+                "- [${ticket.screening.movie.title}] ${ticket.screening.startTime.toUiString()} 좌석: ${
+                    ticket.seatPositions.positions.joinToString {
+                        "${it.row.value}${it.column.value}"
+                    }}",
+            )
         }
     }
 
@@ -66,37 +68,47 @@ object OutputView {
         println("위 금액으로 결제하시겠습니까? (Y/N)")
     }
 
-    fun displayResult(bucket: TicketBucket, totalPrice: Money, point: Point) {
+    fun displayResult(
+        bucket: TicketBucket,
+        totalPrice: Money,
+        point: Point,
+    ) {
         println("예매 완료\n내역:")
         bucket.tickets.forEach { ticket ->
             println(
                 "- [${ticket.screening.movie.title}] ${ticket.screening.startTime.toUiString()} 좌석: ${
                     ticket.seatPositions.positions.joinToString(
-                        " "
+                        " ",
                     ) { it.toString() }
-                }"
+                }",
             )
         }
         println(
             "결제 금액: ${String.format("%,d", totalPrice.amount)}원 (포인트 ${
                 String.format(
                     "%,d",
-                    point.amount
+                    point.amount,
                 )
-            }원 사용)"
+            }원 사용)",
         )
         println("감사합니다.")
     }
 
     private fun displaySeats(seats: Seats) {
         val grouped = seats.seats.groupBy { it.position.row.value }
-        val columns = seats.seats.map { it.position.column.value }.distinct().sorted()
+        val columns =
+            seats.seats
+                .map { it.position.column.value }
+                .distinct()
+                .sorted()
 
         println("좌석 배치도")
         println(columns.joinToString("") { "%5d".format(it) })
         grouped.entries.sortedBy { it.key }.forEach { (row, rowSeats) ->
-            val rowLine = rowSeats.sortedBy { it.position.column.value }
-                .joinToString("") { " [${it.grade.name}]" }
+            val rowLine =
+                rowSeats
+                    .sortedBy { it.position.column.value }
+                    .joinToString("") { " [${it.grade.name}]" }
             println("$row$rowLine")
         }
     }
@@ -110,7 +122,6 @@ object OutputView {
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     private fun LocalDateTime.toUiString(): String = dateTimeFormatter.format(this)
-
 
     private fun LocalDateTime.toTimeString(): String = timeFormatter.format(this)
 }

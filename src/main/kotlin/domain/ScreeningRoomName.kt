@@ -1,4 +1,4 @@
-package domain.model
+package domain
 
 @JvmInline
 value class ScreeningRoomName(

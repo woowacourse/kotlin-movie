@@ -1,21 +1,5 @@
 package domain
 
-import domain.model.Column
-import domain.model.Movie
-import domain.model.Row
-import domain.model.RunningTime
-import domain.model.Screening
-import domain.model.ScreeningPeriod
-import domain.model.ScreeningRoom
-import domain.model.ScreeningRoomName
-import domain.model.Seat
-import domain.model.SeatPosition
-import domain.model.SeatPositions
-import domain.model.Seats
-import domain.model.Ticket
-import domain.model.TicketBucket
-import domain.model.TimeRange
-import domain.model.Title
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -44,10 +28,11 @@ class TicketBucketTest {
                                 room =
                                     ScreeningRoom(
                                         name = ScreeningRoomName("커피"),
-                                        operatingTime = TimeRange(
-                                            LocalTime.of(10, 0),
-                                            LocalTime.of(18, 0)
-                                        ),
+                                        operatingTime =
+                                            TimeRange(
+                                                LocalTime.of(10, 0),
+                                                LocalTime.of(18, 0),
+                                            ),
                                         seats =
                                             Seats(
                                                 listOf(
@@ -91,10 +76,11 @@ class TicketBucketTest {
                                     room =
                                         ScreeningRoom(
                                             name = ScreeningRoomName("커피"),
-                                            operatingTime = TimeRange(
-                                                LocalTime.of(10, 0),
-                                                LocalTime.of(18, 0)
-                                            ),
+                                            operatingTime =
+                                                TimeRange(
+                                                    LocalTime.of(10, 0),
+                                                    LocalTime.of(18, 0),
+                                                ),
                                             seats =
                                                 Seats(
                                                     listOf(
@@ -110,14 +96,15 @@ class TicketBucketTest {
                                         ),
                                     startTime = LocalDateTime.of(2026, 4, 8, 10, 0),
                                 ),
-                            seatPositions = SeatPositions(
-                                listOf(
-                                    SeatPosition(
-                                        Row("A"),
-                                        Column(1)
-                                    )
-                                )
-                            ),
+                            seatPositions =
+                                SeatPositions(
+                                    listOf(
+                                        SeatPosition(
+                                            Row("A"),
+                                            Column(1),
+                                        ),
+                                    ),
+                                ),
                         ),
                     ),
             )
@@ -141,10 +128,11 @@ class TicketBucketTest {
                                 room =
                                     ScreeningRoom(
                                         name = ScreeningRoomName("커피샵"),
-                                        operatingTime = TimeRange(
-                                            LocalTime.of(10, 0),
-                                            LocalTime.of(18, 0)
-                                        ),
+                                        operatingTime =
+                                            TimeRange(
+                                                LocalTime.of(10, 0),
+                                                LocalTime.of(18, 0),
+                                            ),
                                         seats =
                                             Seats(
                                                 listOf(
@@ -188,10 +176,11 @@ class TicketBucketTest {
                                     room =
                                         ScreeningRoom(
                                             name = ScreeningRoomName("커피"),
-                                            operatingTime = TimeRange(
-                                                LocalTime.of(10, 0),
-                                                LocalTime.of(18, 0)
-                                            ),
+                                            operatingTime =
+                                                TimeRange(
+                                                    LocalTime.of(10, 0),
+                                                    LocalTime.of(18, 0),
+                                                ),
                                             seats =
                                                 Seats(
                                                     listOf(
@@ -207,14 +196,15 @@ class TicketBucketTest {
                                         ),
                                     startTime = LocalDateTime.of(2026, 4, 8, 10, 0),
                                 ),
-                            seatPositions = SeatPositions(
-                                listOf(
-                                    SeatPosition(
-                                        Row("A"),
-                                        Column(1)
-                                    )
-                                )
-                            ),
+                            seatPositions =
+                                SeatPositions(
+                                    listOf(
+                                        SeatPosition(
+                                            Row("A"),
+                                            Column(1),
+                                        ),
+                                    ),
+                                ),
                         ),
                     ),
             )
@@ -237,10 +227,11 @@ class TicketBucketTest {
                             room =
                                 ScreeningRoom(
                                     name = ScreeningRoomName("커피샵"),
-                                    operatingTime = TimeRange(
-                                        LocalTime.of(10, 0),
-                                        LocalTime.of(18, 0)
-                                    ),
+                                    operatingTime =
+                                        TimeRange(
+                                            LocalTime.of(10, 0),
+                                            LocalTime.of(18, 0),
+                                        ),
                                     seats =
                                         Seats(
                                             listOf(

@@ -1,4 +1,4 @@
-package domain.model
+package domain
 
 @JvmInline
 value class Row(
@@ -10,7 +10,5 @@ value class Row(
         }
     }
 
-    override fun toString(): String {
-        return value
-    }
+    override fun toString(): String = value
 }

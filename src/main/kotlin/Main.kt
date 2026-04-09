@@ -1,5 +1,5 @@
 import controller.Controller
 
-fun main(){
+fun main() {
     Controller().run()
 }

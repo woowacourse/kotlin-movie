@@ -1,13 +1,10 @@
 package domain
 
-import domain.model.Movie
-import domain.model.Screening
-import domain.model.TicketBucket
-import domain.model.Title
 import java.time.LocalDate
 
-data class ScreeningSchedule(val screenings: List<Screening>) {
-
+data class ScreeningSchedule(
+    val screenings: List<Screening>,
+) {
     init {
         require(screenings.isNotEmpty()) { "상영 일정이 없습니다. 영화관 문 닫았습니다.. 망했음.." }
         val screeningsByMovie = screenings.groupBy { it.movie }
@@ -21,15 +18,14 @@ data class ScreeningSchedule(val screenings: List<Screening>) {
 
     fun getMovieSchedule(
         title: Title,
-        date: LocalDate
-    ): ScreeningSchedule {
-        return ScreeningSchedule(screenings.filter { it.movie.title == title && it.startTime.toLocalDate() == date })
-    }
+        date: LocalDate,
+    ): ScreeningSchedule = ScreeningSchedule(screenings.filter { it.movie.title == title && it.startTime.toLocalDate() == date })
 
     fun reserve(bucket: TicketBucket) {
         bucket.tickets.forEach { ticket ->
-            val target = screenings.find { screening -> screening.id == ticket.screening.id }
-                ?: throw IllegalArgumentException("존재하지 않는 상영 입니다.")
+            val target =
+                screenings.find { screening -> screening.id == ticket.screening.id }
+                    ?: throw IllegalArgumentException("존재하지 않는 상영 입니다.")
 
             ticket.seatPositions.positions.forEach {
                 target.reserve(it)
