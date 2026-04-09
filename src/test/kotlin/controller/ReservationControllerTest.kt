@@ -10,6 +10,7 @@ import org.junit.jupiter.api.assertThrows
 class ReservationControllerTest {
 
     val controller = ReservationController(TestFixtureData.movieTheater)
+    val flowController = FlowController()
 
     @Test
     fun `생성 여부가 Y,N이 아닐 경우 예외가 발생한다`() {
@@ -19,7 +20,7 @@ class ReservationControllerTest {
 
         // when : 입력 여부를 처리하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.create()
+            flowController.start(input)
         }
 
         // then : 예외가 발생한다.
@@ -33,7 +34,7 @@ class ReservationControllerTest {
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 입력 여부를 처리하면
-        val result = controller.create()
+        val result = flowController.start(input)
 
         // then : true가 반환된다.
         assertEquals(true, result)
