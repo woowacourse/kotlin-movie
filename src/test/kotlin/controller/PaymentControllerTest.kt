@@ -32,6 +32,19 @@ class PaymentController(val cart: Cart, val user: User) {
         }
         return discountPrice.sum()
     }
+
+    fun getPaymentMethod() {
+        println(
+            """
+            결제 수단을 선택하세요:
+            1) 신용카드(5% 할인)
+            2) 현금(2% 할인)
+            """.trimIndent(),
+        )
+        val input = readln()
+
+        require(input.toInt() in 1..2) { "유효하지 않은 결제 수단입니다." }
+    }
 }
 
 class PaymentControllerTest {
@@ -64,5 +77,20 @@ class PaymentControllerTest {
 
         // then : 예외가 발생한다.
         assertEquals("차감액은 전체 포인트보다 작아야 합니다.", exception.message)
+    }
+
+    @Test
+    fun `결제 수단 입력이 유효하지 않으면 예외가 발생한다`() {
+        // given : 3을 입력한다
+        val input = "3"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+
+        // when : 포인트를 처리하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.getPaymentMethod()
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("유효하지 않은 결제 수단입니다.", exception.message)
     }
 }
