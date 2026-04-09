@@ -9,7 +9,7 @@ class Screening(
     val room: ScreeningRoom,
     val startTime: LocalDateTime,
 ) {
-    var seats = room.seats
+    var seats: Seats = room.seats
         private set
 
     val screenTimeRange: TimeRange =
@@ -21,7 +21,7 @@ class Screening(
     init {
         require(
             screenTimeRange.start.isBefore(room.operatingTime.start).not() &&
-                screenTimeRange.end.isBefore(room.operatingTime.end),
+                    screenTimeRange.end.isBefore(room.operatingTime.end),
         ) {
             "상영 시간이 상영관의 운영시간에 포함되지 않습니다."
         }
@@ -29,5 +29,9 @@ class Screening(
 
     fun reserve(position: SeatPosition) {
         seats = seats.updateState(position, ReserveState.RESERVED)
+    }
+
+    fun canReserve(positions: SeatPositions) {
+        require(positions.positions.all { seats.canReserve(it) }) { "이미 예약된 좌석입니다." }
     }
 }

@@ -1,7 +1,7 @@
 package domain.model
 
 data class TicketBucket(
-    val tickets: List<Ticket>,
+    val tickets: List<Ticket> = emptyList(),
 ) {
     val totalPrice get() = calculate()
 
@@ -10,6 +10,7 @@ data class TicketBucket(
             if (!ticket.screening.screenTimeRange.isOverlapping(newTicket.screening.screenTimeRange)) break
 
             require(ticket.screening.id == newTicket.screening.id) { "동일한 시간대의 영화는 예매할 수 없습니다." }
+            require(newTicket.seatPositions.positions.none{it in ticket.seatPositions.positions}){"이미 선택하신 좌석입니다."}
         }
         return TicketBucket(tickets + newTicket)
     }
