@@ -16,7 +16,12 @@ class InputView {
 
     fun inputDate(): LocalDate {
         println(INPUT_DATE_MESSAGE)
-        return LocalDate.parse(readInput())
+        val input = readInput()
+        return try {
+            LocalDate.parse(input)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("날짜 형식이 올바르지 않습니다. (YYYY-MM-DD)")
+        }
     }
 
     fun inputScreeningNumber():Int{
@@ -56,12 +61,15 @@ class InputView {
         return readlnOrNull()?.trim()
             ?: throw IllegalArgumentException("입력이 없습니다.")
     }
-    private fun readYesNo():Boolean{
-        require(readInput().uppercase() == "Y" || readInput().uppercase() == "N") {
+
+    private fun readYesNo(): Boolean {
+        val input = readInput().trim().uppercase()
+        require(input == "Y" || input == "N") {
             "Y 또는 N을 입력해 주세요."
         }
-        return readInput().uppercase() == "Y"
+        return input == "Y"
     }
+
     private fun readInt():Int{
         return readInput().toIntOrNull()
             ?: throw IllegalArgumentException("숫자를 입력해주세요.")

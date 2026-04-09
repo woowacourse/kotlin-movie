@@ -8,15 +8,17 @@ import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.screening.Screenings
 import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.Seat
+import movie.domain.seat.SeatGrade
 import movie.domain.seat.Seats
 import movie.domain.user.User
 import java.time.LocalDate
 import java.time.LocalTime
 
-object TheaterData {
+object MovieData {
 
     fun createMovies(): List<Movie> {
-        val screen = _root_ide_package_.movie.domain.screening.Screen(
+        val screen = Screen(
             1,
             Seats.createDefault()
         )
@@ -43,7 +45,12 @@ object TheaterData {
                     LocalDate.of(2025, 9, 20),
                     LocalTime.of(13, 0),
                     LocalTime.of(15, 0)
-                ), ReservatedSeats(emptyList())
+                ), ReservatedSeats(listOf(
+                    Seat("B", 2, SeatGrade.B),
+                    Seat("B", 3, SeatGrade.B),
+                    Seat("C", 3, SeatGrade.S),
+                    Seat("E", 4, SeatGrade.A),
+                ))
             ),
 
             Screening(
@@ -62,9 +69,9 @@ object TheaterData {
                 ), ReservatedSeats(emptyList())
             ),
         )
-        return _root_ide_package_.movie.domain.movie.Movie(
+        return Movie(
             title = "F1 더 무비",
-            screenings = _root_ide_package_.movie.domain.screening.Screenings(screenings)
+            screenings = Screenings(screenings)
         )
     }
 
@@ -86,9 +93,9 @@ object TheaterData {
                 ), ReservatedSeats(emptyList())
             ),
         )
-        return _root_ide_package_.movie.domain.movie.Movie(
+        return Movie(
             title = "토이 스토리",
-            screenings = _root_ide_package_.movie.domain.screening.Screenings(screenings)
+            screenings = Screenings(screenings)
         )
     }
 
@@ -102,17 +109,18 @@ object TheaterData {
                 ), ReservatedSeats(emptyList())
             ),
         )
-        return _root_ide_package_.movie.domain.movie.Movie(
+        return Movie(
             title = "아이언맨",
-            screenings = _root_ide_package_.movie.domain.screening.Screenings(screenings)
+            screenings = Screenings(screenings)
         )
     }
 
     fun createUser(): User {
-        return _root_ide_package_.movie.domain.user.User(
-            _root_ide_package_.movie.domain.reservation.Reservations(
+        return User(
+            Reservations(
                 emptyList()
-            ), _root_ide_package_.movie.domain.amount.Point(10000)
+            ),
+            Point(10000)
         )
     }
 }

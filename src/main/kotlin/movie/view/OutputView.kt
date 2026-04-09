@@ -64,10 +64,6 @@ class OutputView {
                 usedPoint.value
             )
         )))
-        endMessage()
-    }
-
-    fun endMessage() {
         println(END_MESSAGE)
     }
 
