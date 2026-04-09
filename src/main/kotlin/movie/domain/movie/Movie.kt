@@ -5,6 +5,10 @@ import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class Movie(
-    val id: Uuid = Uuid.random(),
+    private val id: Uuid = Uuid.random(),
     val title: MovieTitle,
-)
+) {
+    fun isSameMovie(target: Movie): Boolean {
+        return id == target.id
+    }
+}
