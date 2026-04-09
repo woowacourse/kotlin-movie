@@ -1,6 +1,6 @@
 package model.movie
 
-import model.DateTimeRange
+import model.CinemaTimeRange
 
 @JvmInline
 value class RunningTime(
@@ -10,5 +10,5 @@ value class RunningTime(
         require(minute > 0) { "상영 시간은 0분 초과이어야 합니다." }
     }
 
-    fun isSameDuration(dateTimeRange: DateTimeRange): Boolean = dateTimeRange.durationMinute == minute
+    fun isSameDuration(cinemaTimeRange: CinemaTimeRange): Boolean = cinemaTimeRange.durationMinute == minute
 }

@@ -6,7 +6,7 @@ import model.seat.Seat
 sealed class MovieReservationResult {
     data class Success(
         val movie: Movie,
-        val screenTime: DateTimeRange,
+        val screenTime: CinemaTimeRange,
         val seat: Seat,
     ) : MovieReservationResult()
 

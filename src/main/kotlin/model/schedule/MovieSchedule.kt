@@ -1,6 +1,6 @@
 package model.schedule
 
-import java.time.LocalDateTime
+import model.CinemaTime
 
 class MovieSchedule(
     movieScreenings: List<MovieScreening>,
@@ -20,7 +20,7 @@ class MovieSchedule(
         return false
     }
 
-    fun getMovieScreening(time: LocalDateTime): MovieScreening = scheduledScreens.first { it.screenTime.start.isEqual(time) }
+    fun getMovieScreening(time: CinemaTime): MovieScreening = scheduledScreens.first { it.screenTime.start.isEqual(time) }
 
     override fun hashCode(): Int = scheduledScreens.hashCode()
 

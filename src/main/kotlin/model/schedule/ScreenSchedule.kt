@@ -1,12 +1,12 @@
 package model.schedule
 
-import model.DateTimeRange
+import model.CinemaTime
+import model.CinemaTimeRange
 import model.movie.Movie
-import java.time.LocalDateTime
 
 class ScreenSchedule(
     private val screenId: String,
-    private val servicePeriod: DateTimeRange,
+    private val servicePeriod: CinemaTimeRange,
     movieScreenings: List<MovieScreening>,
 ) {
     private val movieScreenings = movieScreenings.toList()
@@ -23,7 +23,7 @@ class ScreenSchedule(
         }
     }
 
-    fun isContainServicePeriod(time: LocalDateTime): Boolean = servicePeriod.contains(time)
+    fun isContainServicePeriod(time: CinemaTime): Boolean = servicePeriod.contains(time)
 
     override fun equals(other: Any?): Boolean {
         if (other is ScreenSchedule) {

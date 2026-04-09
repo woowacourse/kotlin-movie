@@ -4,7 +4,6 @@ import model.movie.Movie
 import model.schedule.CinemaSchedule
 import model.seat.SeatColumn
 import model.seat.SeatRow
-import java.time.LocalDateTime
 
 class CinemaKiosk(
     val cinemaSchedule: CinemaSchedule,
@@ -13,7 +12,7 @@ class CinemaKiosk(
 
     fun reserve(
         movie: Movie,
-        startTime: LocalDateTime,
+        startTime: CinemaTime,
         seatRow: SeatRow,
         seatColumn: SeatColumn,
     ): MovieReservationResult {

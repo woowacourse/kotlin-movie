@@ -19,9 +19,10 @@ class MoviePayment(
 
     fun discountMovieDay() {
         reservations.forEach { reservation ->
-            val day = reservation.screenTime.start.dayOfMonth
-            if (day == 10 || day == 20 || day == 30) {
-                currentPrice -= (reservation.seat.price * 0.1).toInt()
+            for (day in listOf(10, 20, 30)) {
+                if (reservation.screenTime.start.isSameDay(day)) {
+                    currentPrice -= (reservation.seat.price * 0.1).toInt()
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 package model.schedule
 
-import model.DateTimeRange
+import model.CinemaTimeRange
 import model.movie.Movie
 import model.seat.Seat
 import model.seat.SeatColumn
@@ -10,7 +10,7 @@ import java.util.Objects
 
 class MovieScreening(
     val movie: Movie,
-    val screenTime: DateTimeRange,
+    val screenTime: CinemaTimeRange,
     val seatGroup: SeatGroup,
 ) {
     init {

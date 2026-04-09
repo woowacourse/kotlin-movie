@@ -1,6 +1,7 @@
 package schedule
 
-import model.DateTimeRange
+import model.CinemaTime
+import model.CinemaTimeRange
 import model.movie.Movie
 import model.movie.RunningTime
 import model.schedule.MovieSchedule
@@ -31,27 +32,27 @@ class MovieScheduleTest {
                         MovieScreening(
                             movie = movieOne,
                             screenTime =
-                                DateTimeRange(
-                                    start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                    end = LocalDateTime.of(2026, 4, 8, 11, 10),
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
                                 ),
                             seatGroup = SeatGroup(emptyList()),
                         ),
                         MovieScreening(
                             movie = movieOne,
                             screenTime =
-                                DateTimeRange(
-                                    start = LocalDateTime.of(2026, 4, 8, 11, 20),
-                                    end = LocalDateTime.of(2026, 4, 8, 11, 30),
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 20)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 30)),
                                 ),
                             seatGroup = SeatGroup(emptyList()),
                         ),
                         MovieScreening(
                             movie = movieTwo,
                             screenTime =
-                                DateTimeRange(
-                                    start = LocalDateTime.of(2026, 4, 8, 11, 40),
-                                    end = LocalDateTime.of(2026, 4, 8, 13, 20),
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 40)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 13, 20)),
                                 ),
                             seatGroup = SeatGroup(emptyList()),
                         ),

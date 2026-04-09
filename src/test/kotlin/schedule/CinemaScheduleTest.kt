@@ -1,6 +1,7 @@
 package schedule
 
-import model.DateTimeRange
+import model.CinemaTime
+import model.CinemaTimeRange
 import model.movie.Movie
 import model.movie.RunningTime
 import model.schedule.CinemaSchedule
@@ -24,10 +25,10 @@ class CinemaScheduleTest {
                 runningTime = RunningTime(minute = 60),
             )
 
-        val dateTimeRange =
-            DateTimeRange(
-                LocalDateTime.of(2026, 4, 7, 21, 50),
-                LocalDateTime.of(2026, 4, 10, 22, 50),
+        val cinemaTimeRange =
+            CinemaTimeRange(
+                CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
             )
 
         val movieScreening =
@@ -35,9 +36,9 @@ class CinemaScheduleTest {
                 MovieScreening(
                     movie = movie,
                     screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 16, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 17, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
                         ),
                     seatGroup = SeatGroup(emptyList()),
                 ),
@@ -48,18 +49,18 @@ class CinemaScheduleTest {
                 MovieScreening(
                     movie = movie,
                     screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 16, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 17, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
                         ),
                     seatGroup = SeatGroup(emptyList()),
                 ),
                 MovieScreening(
                     movie = movie,
                     screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 16, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 17, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
                         ),
                     seatGroup = SeatGroup(emptyList()),
                 ),
@@ -69,12 +70,12 @@ class CinemaScheduleTest {
             listOf(
                 ScreenSchedule(
                     screenId = uuidOne,
-                    servicePeriod = dateTimeRange,
+                    servicePeriod = cinemaTimeRange,
                     movieScreenings = movieScreening,
                 ),
                 ScreenSchedule(
                     screenId = uuidTwo,
-                    servicePeriod = dateTimeRange,
+                    servicePeriod = cinemaTimeRange,
                     movieScreenings = movieScreening,
                 ),
             )
@@ -93,22 +94,22 @@ class CinemaScheduleTest {
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
         Assertions
             .assertThatThrownBy {
-                val dateTimeRange =
-                    DateTimeRange(
-                        LocalDateTime.of(2026, 4, 7, 21, 50),
-                        LocalDateTime.of(2026, 4, 10, 22, 50),
+                val cinemaTimeRange =
+                    CinemaTimeRange(
+                        CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
+                        CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                     )
 
                 val schedules =
                     listOf(
                         ScreenSchedule(
                             screenId = uuidOne,
-                            servicePeriod = dateTimeRange,
+                            servicePeriod = cinemaTimeRange,
                             movieScreenings = emptyList(),
                         ),
                         ScreenSchedule(
                             screenId = uuidOne,
-                            servicePeriod = dateTimeRange,
+                            servicePeriod = cinemaTimeRange,
                             movieScreenings = emptyList(),
                         ),
                     )

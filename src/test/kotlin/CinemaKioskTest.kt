@@ -1,5 +1,6 @@
 import model.CinemaKiosk
-import model.DateTimeRange
+import model.CinemaTime
+import model.CinemaTimeRange
 import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.RunningTime
@@ -48,18 +49,18 @@ class CinemaKioskTest {
                 ScreenSchedule(
                     screenId = "1",
                     servicePeriod =
-                        DateTimeRange(
-                            LocalDateTime.of(1999, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 10, 22, 50),
+                        CinemaTimeRange(
+                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
+                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                         ),
                     movieScreenings =
                         listOf(
                             MovieScreening(
                                 movie = movieOne,
                                 screenTime =
-                                    DateTimeRange(
-                                        start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                        end = LocalDateTime.of(2026, 4, 8, 12, 0),
+                                    CinemaTimeRange(
+                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
                                     ),
                                 seatGroup =
                                     SeatGroup(
@@ -78,18 +79,18 @@ class CinemaKioskTest {
                 ScreenSchedule(
                     screenId = "2",
                     servicePeriod =
-                        DateTimeRange(
-                            LocalDateTime.of(1999, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 10, 22, 50),
+                        CinemaTimeRange(
+                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
+                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                         ),
                     movieScreenings =
                         listOf(
                             MovieScreening(
                                 movie = movieTwo,
                                 screenTime =
-                                    DateTimeRange(
-                                        start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                        end = LocalDateTime.of(2026, 4, 8, 12, 40),
+                                    CinemaTimeRange(
+                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 40)),
                                     ),
                                 seatGroup =
                                     SeatGroup(
@@ -117,7 +118,7 @@ class CinemaKioskTest {
 
         cinemaKiosk.reserve(
             movie = movieOne,
-            startTime = LocalDateTime.of(2026, 4, 8, 11, 0),
+            startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
             seatRow = SeatRow("A"),
             seatColumn = SeatColumn(2),
         )
@@ -125,7 +126,7 @@ class CinemaKioskTest {
         assertThat(
             cinemaKiosk.reserve(
                 movie = movieTwo,
-                startTime = LocalDateTime.of(2026, 4, 8, 11, 0),
+                startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                 seatRow = SeatRow("A"),
                 seatColumn = SeatColumn(2),
             ),
@@ -139,18 +140,18 @@ class CinemaKioskTest {
                 ScreenSchedule(
                     screenId = idOne,
                     servicePeriod =
-                        DateTimeRange(
-                            LocalDateTime.of(1999, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 10, 22, 50),
+                        CinemaTimeRange(
+                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
+                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                         ),
                     movieScreenings =
                         listOf(
                             MovieScreening(
                                 movie = movieOne,
                                 screenTime =
-                                    DateTimeRange(
-                                        start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                        end = LocalDateTime.of(2026, 4, 8, 12, 0),
+                                    CinemaTimeRange(
+                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
                                     ),
                                 seatGroup =
                                     SeatGroup(
@@ -184,7 +185,7 @@ class CinemaKioskTest {
 
         cinemaKiosk.reserve(
             movie = movieOne,
-            startTime = LocalDateTime.of(2026, 4, 8, 11, 0),
+            startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
             seatRow = SeatRow("A"),
             seatColumn = SeatColumn(1),
         )
@@ -192,7 +193,7 @@ class CinemaKioskTest {
         assertThat(
             cinemaKiosk.reserve(
                 movie = movieOne,
-                startTime = LocalDateTime.of(2026, 4, 8, 11, 0),
+                startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                 seatRow = SeatRow("A"),
                 seatColumn = SeatColumn(2),
             ),

@@ -1,6 +1,7 @@
 package schedule
 
-import model.DateTimeRange
+import model.CinemaTime
+import model.CinemaTimeRange
 import model.movie.Movie
 import model.movie.RunningTime
 import model.schedule.MovieSchedule
@@ -20,22 +21,22 @@ class ScreenScheduleTest {
 
     @Test
     fun `운영 기간이 같더라도 id가 다르면 다른 상영관 일정으로 판단한다`() {
-        val dateTimeRange =
-            DateTimeRange(
-                LocalDateTime.of(2026, 4, 7, 21, 50),
-                LocalDateTime.of(2026, 4, 7, 22, 50),
+        val cinemaTimeRange =
+            CinemaTimeRange(
+                CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
+                CinemaTime(LocalDateTime.of(2026, 4, 7, 22, 50)),
             )
         Assertions
             .assertThat(
                 ScreenSchedule(
                     screenId = idOne,
-                    servicePeriod = dateTimeRange,
+                    servicePeriod = cinemaTimeRange,
                     movieScreenings = emptyList(),
                 ),
             ).isNotEqualTo(
                 ScreenSchedule(
                     screenId = idTwo,
-                    servicePeriod = dateTimeRange,
+                    servicePeriod = cinemaTimeRange,
                     movieScreenings = emptyList(),
                 ),
             )
@@ -48,9 +49,9 @@ class ScreenScheduleTest {
                 ScreenSchedule(
                     screenId = idOne,
                     servicePeriod =
-                        DateTimeRange(
-                            LocalDateTime.of(2026, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 7, 22, 50),
+                        CinemaTimeRange(
+                            CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
+                            CinemaTime(LocalDateTime.of(2026, 4, 7, 22, 50)),
                         ),
                     movieScreenings = emptyList(),
                 ),
@@ -58,9 +59,9 @@ class ScreenScheduleTest {
                 ScreenSchedule(
                     screenId = idOne,
                     servicePeriod =
-                        DateTimeRange(
-                            LocalDateTime.of(1999, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 7, 22, 50),
+                        CinemaTimeRange(
+                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
+                            CinemaTime(LocalDateTime.of(2026, 4, 7, 22, 50)),
                         ),
                     movieScreenings = emptyList(),
                 ),
@@ -74,9 +75,9 @@ class ScreenScheduleTest {
                 ScreenSchedule(
                     screenId = idOne,
                     servicePeriod =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 7, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 8, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 7, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 8, 0)),
                         ),
                     movieScreenings =
                         listOf(
@@ -87,9 +88,9 @@ class ScreenScheduleTest {
                                         runningTime = RunningTime(minute = 60),
                                     ),
                                 screenTime =
-                                    DateTimeRange(
-                                        start = LocalDateTime.of(2026, 4, 8, 6, 0),
-                                        end = LocalDateTime.of(2026, 4, 8, 7, 0),
+                                    CinemaTimeRange(
+                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 6, 0)),
+                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 7, 0)),
                                     ),
                                 seatGroup = SeatGroup(emptyList()),
                             ),
@@ -105,9 +106,9 @@ class ScreenScheduleTest {
                 ScreenSchedule(
                     screenId = idOne,
                     servicePeriod =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 7, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 8, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 7, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 8, 0)),
                         ),
                     movieScreenings =
                         listOf(
@@ -118,9 +119,9 @@ class ScreenScheduleTest {
                                         runningTime = RunningTime(minute = 60),
                                     ),
                                 screenTime =
-                                    DateTimeRange(
-                                        start = LocalDateTime.of(2026, 4, 8, 7, 30),
-                                        end = LocalDateTime.of(2026, 4, 8, 8, 30),
+                                    CinemaTimeRange(
+                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 7, 30)),
+                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 8, 30)),
                                     ),
                                 seatGroup = SeatGroup(emptyList()),
                             ),
@@ -142,17 +143,17 @@ class ScreenScheduleTest {
                 ScreenSchedule(
                     screenId = idOne,
                     servicePeriod =
-                        DateTimeRange(
-                            LocalDateTime.of(1999, 4, 7, 21, 50),
-                            LocalDateTime.of(2026, 4, 10, 22, 50),
+                        CinemaTimeRange(
+                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
+                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                         ),
                     listOf(
                         MovieScreening(
                             movie = movieOne,
                             screenTime =
-                                DateTimeRange(
-                                    start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                    end = LocalDateTime.of(2026, 4, 8, 11, 10),
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
                                 ),
                             seatGroup = SeatGroup(emptyList()),
                         ),
@@ -164,9 +165,9 @@ class ScreenScheduleTest {
                         MovieScreening(
                             movie = movieOne,
                             screenTime =
-                                DateTimeRange(
-                                    start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                    end = LocalDateTime.of(2026, 4, 8, 11, 10),
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
                                 ),
                             seatGroup = SeatGroup(emptyList()),
                         ),
@@ -182,18 +183,18 @@ class ScreenScheduleTest {
             ScreenSchedule(
                 screenId = idOne,
                 servicePeriod =
-                    DateTimeRange(
-                        LocalDateTime.of(1999, 4, 7, 21, 50),
-                        LocalDateTime.of(2026, 4, 10, 22, 50),
+                    CinemaTimeRange(
+                        CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
+                        CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                     ),
                 listOf(
                     movieScreening,
                     MovieScreening(
                         movie = movieOne,
                         screenTime =
-                            DateTimeRange(
-                                start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                                end = LocalDateTime.of(2026, 4, 8, 12, 0),
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
                             ),
                         seatGroup = SeatGroup(emptyList()),
                     ),
@@ -216,9 +217,9 @@ class ScreenScheduleTest {
                     MovieScreening(
                         movie = movieOne,
                         screenTime =
-                            DateTimeRange(
-                                start = LocalDateTime.of(2026, 4, 8, 10, 0),
-                                end = LocalDateTime.of(2026, 4, 8, 11, 0),
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 10, 0)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                             ),
                         seatGroup = SeatGroup(emptyList()),
                     ),
@@ -227,9 +228,9 @@ class ScreenScheduleTest {
                     MovieScreening(
                         movie = movieOne,
                         screenTime =
-                            DateTimeRange(
-                                start = LocalDateTime.of(2026, 4, 8, 12, 0),
-                                end = LocalDateTime.of(2026, 4, 8, 13, 0),
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 13, 0)),
                             ),
                         seatGroup = SeatGroup(emptyList()),
                     ),
@@ -238,9 +239,9 @@ class ScreenScheduleTest {
                     MovieScreening(
                         movie = movieOne,
                         screenTime =
-                            DateTimeRange(
-                                start = LocalDateTime.of(2026, 4, 8, 11, 30),
-                                end = LocalDateTime.of(2026, 4, 8, 12, 30),
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 30)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 30)),
                             ),
                         seatGroup = SeatGroup(emptyList()),
                     ),
@@ -249,9 +250,9 @@ class ScreenScheduleTest {
                     MovieScreening(
                         movie = movieOne,
                         screenTime =
-                            DateTimeRange(
-                                start = LocalDateTime.of(2026, 4, 8, 10, 30),
-                                end = LocalDateTime.of(2026, 4, 8, 11, 30),
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 10, 30)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 30)),
                             ),
                         seatGroup = SeatGroup(emptyList()),
                     ),

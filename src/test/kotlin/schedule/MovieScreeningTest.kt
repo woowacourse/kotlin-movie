@@ -1,6 +1,7 @@
 package schedule
 
-import model.DateTimeRange
+import model.CinemaTime
+import model.CinemaTimeRange
 import model.movie.Movie
 import model.movie.RunningTime
 import model.schedule.MovieScreening
@@ -40,9 +41,9 @@ class MovieScreeningTest {
                             runningTime = RunningTime(minute = 60),
                         ),
                     screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 16, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 18, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 18, 0)),
                         ),
                     seatGroup = SeatGroup(emptyList()),
                 )
@@ -60,9 +61,9 @@ class MovieScreeningTest {
                             runningTime = RunningTime(minute = 60),
                         ),
                     screenTime =
-                        DateTimeRange(
-                            start = LocalDateTime.of(2026, 4, 8, 16, 0),
-                            end = LocalDateTime.of(2026, 4, 8, 17, 0),
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
                         ),
                     seatGroup = SeatGroup(emptyList()),
                 )
@@ -84,14 +85,14 @@ class MovieScreeningTest {
             )
 
         private val twoHourScreenTime =
-            DateTimeRange(
-                start = LocalDateTime.of(2026, 4, 8, 10, 0),
-                end = LocalDateTime.of(2026, 4, 8, 12, 0),
+            CinemaTimeRange(
+                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 10, 0)),
+                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
             )
         private val oneHourScreenTime =
-            DateTimeRange(
-                start = LocalDateTime.of(2026, 4, 8, 11, 0),
-                end = LocalDateTime.of(2026, 4, 8, 12, 0),
+            CinemaTimeRange(
+                start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
             )
 
         @JvmStatic
