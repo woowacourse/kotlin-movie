@@ -1,0 +1,43 @@
+package view
+
+import domain.Screen
+import domain.Showing
+
+object OutputView {
+    fun printShowing(showings: List<Showing>) {
+        println("해당 날짜의 상영 목록")
+
+        showings.forEachIndexed { index, showing ->
+            println("[${index + 1}] ${showing.startTime.time}")
+        }
+    }
+
+    fun printSeats(screen: Screen) {
+        val maxRow = Screen.MAX_ROW
+        val maxColumn = Screen.MAX_COLUMN
+
+        println("좌석 배치도")
+        val header = " ".repeat(3) + (1..maxColumn).joinToString("    ")
+        println(header)
+
+        ('A' until 'A' + maxRow).forEach { row ->
+            val line = "$row" + (1..maxColumn).joinToString("") { col ->
+                val seat = screen.seats.find { it.row == row && it.column == col }
+                " [${seat?.grade?.name ?: " "}]"
+            }
+            println(line)
+        }
+    }
+
+    fun printCart(cart: List<String>) {
+        println("장바구니")
+        cart.forEach {
+            println(it)
+        }
+    }
+
+    fun printTotalPrice(price: Int) {
+        println("가격 계산")
+        println("최종 결제 금액: ${price}원")
+    }
+}

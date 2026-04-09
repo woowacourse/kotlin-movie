@@ -1,4 +1,5 @@
 import controller.CartController
+import controller.FlowController
 import controller.PaymentController
 import controller.ReservationController
 import domain.Cart
@@ -10,6 +11,7 @@ import domain.SeatGrade
 import domain.Showing
 import domain.User
 import kotlinx.datetime.LocalDateTime
+import view.InputView
 
 fun main() {
     val movies = listOf(
@@ -48,7 +50,10 @@ fun main() {
 
     lateinit var cart: Cart
     val cartController = CartController()
-    while (true) {
+    val flowController = FlowController()
+
+    var input = InputView.startTicketing()
+    while (flowController.start(input).not()) {
         val reservationController = ReservationController(
             movieTheater = movieTheater,
         )
@@ -59,9 +64,7 @@ fun main() {
             seats = pair.second,
         )
 
-        println("다른 영화를 추가하시겠습니까? (Y/N)")
-        val input = readln()
-        if (input != "Y") break
+        input = InputView.continueTicketing()
     }
 
     val paymentController = PaymentController(

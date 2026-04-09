@@ -4,6 +4,8 @@ import domain.Calculator
 import domain.Cart
 import domain.PaymentMethod
 import domain.User
+import view.InputView
+import view.OutputView
 
 class PaymentController(val cart: Cart, val user: User) {
     fun run(): Int {
@@ -11,19 +13,15 @@ class PaymentController(val cart: Cart, val user: User) {
         price = getUserPoint(price)
         price = getPaymentMethod(price)
 
-        println("가격 계산")
-        println("최종 결제 금액: ${price}원")
+        OutputView.printTotalPrice(price)
 
-        println("위 금액으로 결제하시겠습니까? (Y/N)")
-        val input = readln()
+        val input = InputView.readPurchaseConfirm()
 
         return price
     }
 
     fun getUserPoint(totalPrice: Int): Int {
-        println("사용할 포인트를 입력하세요 (없으면 0):")
-        val input = readln()
-
+        val input = InputView.readPoint()
         user.discountPoint(input.toLong())
 
         val finalPrice = totalPrice - input.toInt()
@@ -42,14 +40,7 @@ class PaymentController(val cart: Cart, val user: User) {
     }
 
     fun getPaymentMethod(price: Int): Int {
-        println(
-            """
-            결제 수단을 선택하세요:
-            1) 신용카드(5% 할인)
-            2) 현금(2% 할인)
-            """.trimIndent(),
-        )
-        val input = readln()
+        val input = InputView.readPaymentMethod()
 
         require(input.toInt() in 1..2) { "유효하지 않은 결제 수단입니다." }
 

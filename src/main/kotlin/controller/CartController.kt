@@ -4,6 +4,7 @@ import domain.Cart
 import domain.ReservationInfo
 import domain.Seat
 import domain.Showing
+import view.OutputView
 
 class CartController {
     var cart: Cart = Cart(
@@ -46,9 +47,6 @@ class CartController {
     }
 
     fun showCart() {
-        println("장바구니")
-        getAllReservationInfo().forEach {
-            println(it)
-        }
+        OutputView.printCart(getAllReservationInfo())
     }
 }
