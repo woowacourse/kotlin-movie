@@ -37,7 +37,7 @@ object OutputView {
     }
 
     fun addExtraMoviePrompt() {
-        println("다른 영화를 추가하시겠습니까? (Y/N")
+        println("다른 영화를 추가하시겠습니까? (Y/N)")
     }
 
     fun displayAddedBucket(bucket: TicketBucket) {
