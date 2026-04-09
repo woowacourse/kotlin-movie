@@ -9,11 +9,14 @@ import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class Theater(
-    val id: Uuid = Uuid.random(),
+    private val id: Uuid = Uuid.random(),
     val seats: Seats = Seats(),
     val openTime: LocalTime,
     val closeTime: LocalTime,
 ) {
+    fun sameTheater(target: Theater): Boolean {
+        return id == target.id
+    }
     fun validateSeat(seatNumber: SeatNumber): Boolean {
         return seats.contains(seatNumber)
     }
