@@ -34,23 +34,19 @@ object Reservation {
 
     fun makeReservation(
         movieTheater: MovieTheater,
-        userId: Int,
         showing: Showing,
     ) {
-        checkReservationHistory(movieTheater.reservationInfos, userId, showing)
     }
 
     fun checkReservationHistory(
         reservationInfos: List<ReservationInfo>,
-        userId: Int,
         showing: Showing,
     ) {
         val history = reservationInfos.filter {
-            it.user.id == userId &&
-                (showing.startTime >= it.showing.startTime && showing.startTime <= it.showing.endTime)
+            showing.startTime >= it.showing.startTime && showing.startTime <= it.showing.endTime
         }
 
-        require(history.isEmpty()) { "동일한 시간대에 예매한 내역이 존재합니다." }
+        require(history.isEmpty()) { "선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요." }
     }
 
     fun checkSeatFormat(seat: String) {

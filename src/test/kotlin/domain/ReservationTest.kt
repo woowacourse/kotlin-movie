@@ -81,10 +81,10 @@ class ReservationTest {
 
         // when : 사용자가 해당 시간에 예약하려고 할 때
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.checkReservationHistory(TestFixtureData.movieTheater.reservationInfos, userId, showing)
+            Reservation.checkReservationHistory(TestFixtureData.movieTheater.reservationInfos, showing)
         }
         // then : 예외가 발생한다.
-        assertEquals("동일한 시간대에 예매한 내역이 존재합니다.", exception.message)
+        assertEquals("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.", exception.message)
     }
 
     @Test

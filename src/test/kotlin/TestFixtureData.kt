@@ -43,8 +43,8 @@ object TestFixtureData {
     )
 
     val reservationInfos = listOf(
-        ReservationInfo(showings[0], seats[0], users[0]),
-        ReservationInfo(showings[1], seats[2], users[1]),
+        ReservationInfo(showings[0], seats[0]),
+        ReservationInfo(showings[1], seats[2]),
     )
 
     val movieTheater = MovieTheater(

@@ -2,6 +2,7 @@ package controller
 
 import domain.Movie
 import domain.MovieTheater
+import domain.Reservation
 import domain.Showing
 import java.io.ByteArrayInputStream
 import kotlinx.datetime.LocalDate
@@ -63,6 +64,8 @@ class ReservationController(val movieTheater: MovieTheater) {
         val input = readln()
 
         require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "선택하신 상영 번호는 없는 상영 번호입니다." }
+
+        Reservation.checkReservationHistory(movieTheater.reservationInfos, showings[input.toInt() - 1])
 
         return showings[input.toInt() - 1]
     }
@@ -176,9 +179,9 @@ class ReservationControllerTest {
     }
 
     @Test
-    fun `해당 날짜에 상영이 있으면 상영 리스트를 반환한다`() {
+    fun `해당 날짜에 상영이 있으면 해당 상영을 반환한다`() {
         // given : 특정 영화를 선택한 상태에서 상영일자가 존재하는 날짜를 입력한다
-        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val movie: Movie = TestFixtureData.movieTheater.movies[2]
         val date = LocalDate(2026, 4, 10)
 
         // when : 상영을 처리하고 1번을 입력하면
@@ -187,7 +190,7 @@ class ReservationControllerTest {
         val result = controller.chooseShowingTime(movie, date)
 
         // then : 특정 상영이 반환된다.
-        assertEquals(TestFixtureData.movieTheater.showings.first(), result)
+        assertEquals(TestFixtureData.movieTheater.showings[2], result)
     }
 
     @Test
@@ -205,5 +208,22 @@ class ReservationControllerTest {
 
         // then : 예외가 발생한다.
         assertEquals("선택하신 상영 번호는 없는 상영 번호입니다.", exception.message)
+    }
+
+    @Test
+    fun `선택한 상영 시간이 장바구니의 기존 예매와 겹치면 예외가 발생한다`() {
+        // given : 상영번호에 대해 시간이 겹치는 시간대를 예매한다.
+        val input = "1"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val date = LocalDate(2026, 4, 10)
+
+        // when : 상영을 확인한 뒤 상영 번호를 입력하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseShowingTime(movie, date)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.", exception.message)
     }
 }
