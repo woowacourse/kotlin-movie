@@ -19,4 +19,6 @@ class TimeTable(
     }
 
     fun countSchedule(): Int = schedules.size
+
+    fun getSchedule(): List<ScreeningSchedule> = schedules
 }

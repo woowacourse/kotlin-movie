@@ -19,4 +19,8 @@ class ScreenTime(
     fun isScreeningAt(date: LocalDate): Boolean = screeningDate == date
 
     fun screeningDayOfMonth(): Int = screeningDate.dayOfMonth
+
+    fun startTimeToString() = startTime.toString()
+
+    fun screeningDateToString() = screeningDate.toString()
 }

@@ -17,4 +17,8 @@ class Seat(
     }
 
     fun getPrice(): Money = seatGrade.price
+
+    fun getSeatNumber(): String {
+        return rowNumber.getRow() + columnNumber.getColum()
+    }
 }

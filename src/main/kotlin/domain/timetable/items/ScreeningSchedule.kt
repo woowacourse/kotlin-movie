@@ -17,4 +17,6 @@ class ScreeningSchedule(
     fun isReservedSeat(seatNumber: String) = reservedSeat.any { it.isExist(seatNumber) }
 
     fun reserveSeat(seat: Seat) = reservedSeat.add(seat)
+
+    fun getStartTime() = screenTime.startTimeToString()
 }
