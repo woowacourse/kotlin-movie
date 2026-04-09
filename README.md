@@ -56,13 +56,13 @@
   * [x] 예매 목록(Reservation)을 가진다.
   * [x] 총 결제 금액을 가진다.
 
+### DiscountCondition
+* [x] DiscountCondition 도메인을 구현한다.
+  * [x] 무비데이 할인 정책 여부를 판단한다.
+  * [x] 시간 할인 정책 여부를 판단한다.
+
 ### DiscountPolicy
 * [] DiscountPolicy을 구현한다.
-  * [] 무비데이 할인 정책 여부를 판단한다.
-  * [] 시간 할인 정책 여부를 판단한다.
-
-### DiscountCondition
-* [] DiscountCondition 도메인을 구현한다.
   * [] 할인 정책에 따라 계산된 금액을 반환한다.
 
 ### PointCondition
