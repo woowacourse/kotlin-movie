@@ -10,7 +10,14 @@ class CartController {
         reservationInfos = listOf(),
     )
 
-    fun run() {}
+    fun run(
+        showing: Showing,
+        seats: List<Seat>,
+    ): Cart {
+        addAllReservationInfo(showing, seats)
+        showCart()
+        return cart
+    }
 
     fun addAllReservationInfo(
         showing: Showing,

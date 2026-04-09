@@ -53,7 +53,7 @@ class PaymentController(val cart: Cart, val user: User) {
 
         require(input.toInt() in 1..2) { "유효하지 않은 결제 수단입니다." }
 
-        val method = PaymentMethod.entries.first { it.ordinal == input.toInt() }
+        val method = PaymentMethod.entries.first { (it.ordinal + 1) == input.toInt() }
 
         return Calculator.applyPaymentDiscount(price, method)
     }

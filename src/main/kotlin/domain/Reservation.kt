@@ -22,16 +22,6 @@ object Reservation {
         return showings
     }
 
-    fun findUser(
-        movieTheater: MovieTheater,
-        id: Int,
-    ): User {
-        val userIndex = movieTheater.users.indexOfFirst { it.id == id }
-
-        require(userIndex != -1) { "존재하지 않는 사용자입니다." }
-        return movieTheater.users[userIndex]
-    }
-
     fun makeReservation(
         movieTheater: MovieTheater,
         showing: Showing,

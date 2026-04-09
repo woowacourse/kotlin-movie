@@ -9,7 +9,14 @@ import domain.Showing
 import kotlinx.datetime.LocalDate
 
 class ReservationController(val movieTheater: MovieTheater) {
-    fun run() {
+    fun run(): Pair<Showing, List<Seat>> {
+        create()
+        val movie = chooseMovie()
+        val date = chooseDate(movie)
+        val showing = chooseShowingTime(movie, date)
+        val seats = chooseSeat(showing)
+
+        return showing to seats
     }
 
     fun create(): Boolean {
