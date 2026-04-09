@@ -1,3 +1,4 @@
+import model.CinemaTime
 import model.movie.MovieName
 import model.schedule.CinemaSchedule
 import model.schedule.MovieNameGroup
@@ -17,6 +18,7 @@ class CinemaController(
     fun run() {
         if (startMovieReservation().not()) return
         val movieSchedule = getMovieSchedule()
+        val date = inputDate()
     }
 
     fun startMovieReservation(): Boolean {
@@ -36,6 +38,16 @@ class CinemaController(
             if (movieName != null) {
                 val movieSchedule = cinemaSchedule.getMovieSchedule(movieName)
                 if (movieSchedule.isEmpty().not()) return movieSchedule
+            }
+        }
+    }
+
+    fun inputDate(): CinemaTime {
+        while (true) {
+            try {
+                return InputView.inputDate()
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
             }
         }
     }
