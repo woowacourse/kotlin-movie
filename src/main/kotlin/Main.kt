@@ -1,3 +1,4 @@
+import model.CinemaKiosk
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
@@ -6,7 +7,12 @@ import model.movie.RunningTime
 import model.schedule.CinemaSchedule
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
+import model.seat.Seat
+import model.seat.SeatColumn
+import model.seat.SeatGrade
 import model.seat.SeatGroup
+import model.seat.SeatRow
+import model.seat.SeatState
 import java.time.LocalDateTime
 
 fun main() {
@@ -95,7 +101,35 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 15, 20)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 20)),
                                 ),
-                            seatGroup = SeatGroup(emptyList()),
+                            seatGroup =
+                                SeatGroup(
+                                    listOf(
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                    ),
+                                ),
                         ),
                     ),
             ),
@@ -105,5 +139,5 @@ fun main() {
         CinemaSchedule(
             screenSchedules = screenSchedules,
         )
-    CinemaController(cinemaSchedule = cinemaSchedule).run()
+    CinemaController(cinemaKiosk = CinemaKiosk(cinemaSchedule)).run()
 }

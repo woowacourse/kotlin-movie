@@ -15,5 +15,7 @@ data class CinemaTimeRange(
         return time.isAfter(start) && time.isBefore(end)
     }
 
+    fun isEqual(cinemaTimeRange: CinemaTimeRange): Boolean = start.isEqual(cinemaTimeRange.start) && end.isEqual(cinemaTimeRange.end)
+
     fun overlaps(other: CinemaTimeRange): Boolean = !start.isAfter(other.end) && !other.start.isAfter(end)
 }

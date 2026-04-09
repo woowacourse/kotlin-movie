@@ -3,6 +3,8 @@ package view
 import model.CinemaTime
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
+import model.seat.SeatColumn
+import model.seat.SeatRow
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -40,5 +42,13 @@ object InputView {
         val index = input.toInt() - 1
         require(index in (0..<movieSchedule.size)) { "올바르지 않은 번호입니다." }
         return movieSchedule[index]
+    }
+
+    fun selectSeats(): List<Pair<SeatRow, SeatColumn>> {
+        println("예약할 좌석을 입력하세요 (A1, B2):")
+        val rawSeats = readln().split(", ").map { it.trim() }
+        return rawSeats.map { rawSeat ->
+            SeatRow(rawSeat[0].toString()) to SeatColumn(rawSeat[1].digitToInt())
+        }
     }
 }

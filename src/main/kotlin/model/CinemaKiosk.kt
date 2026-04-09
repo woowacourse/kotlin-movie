@@ -1,8 +1,6 @@
 package model
 
-import model.movie.Movie
 import model.movie.MovieName
-import model.movie.RunningTime
 import model.schedule.CinemaSchedule
 import model.seat.SeatColumn
 import model.seat.SeatRow
@@ -10,7 +8,7 @@ import model.seat.SeatRow
 class CinemaKiosk(
     val cinemaSchedule: CinemaSchedule,
 ) {
-    private var reserveResults: MutableList<MovieReservationResult.Success> = mutableListOf()
+    var reserveResults: MutableList<MovieReservationResult.Success> = mutableListOf()
 
     fun reserve(
         movieName: MovieName,
@@ -22,33 +20,46 @@ class CinemaKiosk(
         val movieScreening = movieSchedule.getMovieScreening(startTime)
         val seat = movieScreening.getSeat(seatRow, seatColumn)
 
-        if (reserveResults.any { it.screenTime.overlaps(movieScreening.screenTime) }) {
+        if (reserveResults.any {
+                it.screenTime
+                    .isEqual(
+                        movieScreening.screenTime,
+                    ).not() &&
+                    it.screenTime.overlaps(movieScreening.screenTime)
+            }
+        ) {
             return MovieReservationResult.Failed
         }
 
         if (seat.reserve()) {
+            val result =
+                MovieReservationResult.Success(
+                    movie = movieScreening.movie,
+                    screenTime = movieScreening.screenTime,
+                    seat = seat,
+                )
             reserveResults.add(
                 MovieReservationResult.Success(
-                    movie =
-                        Movie(
-                            name = movieName,
-                            runningTime = RunningTime(10),
-                        ),
+                    movie = movieScreening.movie,
                     screenTime = movieScreening.screenTime,
                     seat = seat,
                 ),
             )
             println(reserveResults)
-            return MovieReservationResult.Success(
-                movie =
-                    Movie(
-                        name = movieName,
-                        runningTime = RunningTime(10),
-                    ),
-                screenTime = movieScreening.screenTime,
-                seat = seat,
-            )
+            return result
         }
         return MovieReservationResult.Failed
+    }
+
+    fun cancelReservations(
+        movieName: MovieName,
+        startTime: CinemaTime,
+        positions: List<Pair<SeatRow, SeatColumn>>,
+    ) {
+        val movieSchedule = cinemaSchedule.getMovieSchedule(movieName)
+        val movieScreening = movieSchedule.getMovieScreening(startTime)
+        positions.forEach { (seatRow, seatColumn) ->
+            movieScreening.getSeat(seatRow, seatColumn).cancelReservation()
+        }
     }
 }

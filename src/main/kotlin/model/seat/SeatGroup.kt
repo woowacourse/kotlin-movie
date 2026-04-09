@@ -2,7 +2,7 @@ package model.seat
 
 class SeatGroup(
     seats: List<Seat>,
-) {
+) : Iterable<Seat> {
     private val seats = seats.toList()
 
     init {
@@ -16,4 +16,6 @@ class SeatGroup(
         val seat = seats.first { it.isSameSeat(row, column) }
         return seat
     }
+
+    override fun iterator(): Iterator<Seat> = seats.iterator()
 }

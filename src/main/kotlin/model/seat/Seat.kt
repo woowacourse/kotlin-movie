@@ -3,11 +3,11 @@ package model.seat
 import java.util.Objects
 
 class Seat(
-    private val row: SeatRow,
-    private val column: SeatColumn,
+    val row: SeatRow,
+    val column: SeatColumn,
     private var state: SeatState,
-    grade: SeatGrade,
-) {
+    val grade: SeatGrade,
+) : Comparable<Seat> {
     val price: Int =
         when (grade) {
             SeatGrade.S -> 18_000
@@ -23,6 +23,12 @@ class Seat(
         return false
     }
 
+    fun cancelReservation() {
+        if (state == SeatState.RESERVED) {
+            state = SeatState.AVAILABLE
+        }
+    }
+
     fun isSameSeat(
         row: SeatRow,
         column: SeatColumn,
@@ -36,4 +42,10 @@ class Seat(
     }
 
     override fun hashCode(): Int = Objects.hash(row, column)
+
+    override fun compareTo(other: Seat): Int {
+        val rowCompare = row.compareTo(other.row)
+        if (rowCompare != 0) return rowCompare
+        return column.compareTo(other.column)
+    }
 }
