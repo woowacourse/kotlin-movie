@@ -1,0 +1,7 @@
+package domain
+
+data class Money(val amount: Int) {
+    init {
+        require(amount >= 0) { "돈은 음수일 수 없습니다." }
+    }
+}
