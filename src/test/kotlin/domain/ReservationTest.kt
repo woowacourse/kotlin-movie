@@ -1,5 +1,7 @@
 package domain
 
+import domain.cinema.Showing
+import domain.reservation.Reservation
 import kotlinx.datetime.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

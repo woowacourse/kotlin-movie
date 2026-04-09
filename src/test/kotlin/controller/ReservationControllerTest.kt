@@ -1,6 +1,6 @@
 package controller
 
-import domain.Movie
+import domain.cinema.Movie
 import java.io.ByteArrayInputStream
 import kotlinx.datetime.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals

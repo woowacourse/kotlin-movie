@@ -1,4 +1,4 @@
-package domain
+package domain.cinema
 
 import kotlin.time.Duration.Companion.minutes
 import kotlinx.datetime.LocalDateTime

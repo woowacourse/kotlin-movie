@@ -1,4 +1,7 @@
-package domain
+package domain.reservation
+
+import domain.cinema.Showing
+import domain.seat.Seat
 
 class ReservationInfo(val showing: Showing, val seat: Seat) {
     companion object {

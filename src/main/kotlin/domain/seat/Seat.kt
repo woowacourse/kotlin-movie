@@ -1,4 +1,4 @@
-package domain
+package domain.seat
 
 class Seat(val row: Char, val column: Int, val grade: SeatGrade, val isReserved: Boolean) {
     init {

@@ -1,7 +1,7 @@
 package view
 
-import domain.Screen
-import domain.Showing
+import domain.cinema.Screen
+import domain.cinema.Showing
 
 object OutputView {
     fun printShowing(showings: List<Showing>) {

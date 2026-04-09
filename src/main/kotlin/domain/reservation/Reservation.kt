@@ -1,5 +1,9 @@
-package domain
+package domain.reservation
 
+import domain.cinema.Movie
+import domain.cinema.MovieTheater
+import domain.cinema.Showing
+import domain.seat.Seat
 import kotlinx.datetime.LocalDate
 
 object Reservation {

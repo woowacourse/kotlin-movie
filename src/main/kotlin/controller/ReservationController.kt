@@ -1,10 +1,10 @@
 package controller
 
-import domain.Movie
-import domain.MovieTheater
-import domain.Reservation
-import domain.Seat
-import domain.Showing
+import domain.cinema.Movie
+import domain.cinema.MovieTheater
+import domain.cinema.Showing
+import domain.reservation.Reservation
+import domain.seat.Seat
 import kotlinx.datetime.LocalDate
 import view.InputView
 import view.OutputView

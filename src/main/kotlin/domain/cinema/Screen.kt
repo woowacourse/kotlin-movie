@@ -1,4 +1,6 @@
-package domain
+package domain.cinema
+
+import domain.seat.Seat
 
 class Screen(val seats: List<Seat>, val id: Int) {
     companion object {

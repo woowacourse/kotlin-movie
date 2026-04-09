@@ -1,9 +1,9 @@
 package controller
 
-import domain.Cart
-import domain.ReservationInfo
-import domain.Seat
-import domain.Showing
+import domain.cinema.Showing
+import domain.reservation.Cart
+import domain.reservation.ReservationInfo
+import domain.seat.Seat
 import view.OutputView
 
 class CartController {

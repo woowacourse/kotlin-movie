@@ -1,4 +1,5 @@
-package domain
+package domain.user
+
 class User(val id: Int) {
     var point: Long = 2000
 

@@ -1,5 +1,6 @@
+package domain.cinema
 
-package domain
+import domain.reservation.ReservationInfo
 
 class MovieTheater(
     val screens: List<Screen>,

@@ -1,5 +1,7 @@
 package domain
 
+import domain.seat.Seat
+import domain.seat.SeatGrade
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull

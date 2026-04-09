@@ -1,5 +1,6 @@
-package domain
+package domain.purchase
 
+import domain.user.User
 import kotlinx.datetime.LocalDateTime
 
 object Calculator {

@@ -1,6 +1,7 @@
 package domain
 
-import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date
+import domain.purchase.DiscountPolicy
+import domain.purchase.PaymentMethod
 import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

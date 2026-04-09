@@ -1,12 +1,12 @@
-import domain.Cart
-import domain.Movie
-import domain.MovieTheater
-import domain.ReservationInfo
-import domain.Screen
-import domain.Seat
-import domain.SeatGrade
-import domain.Showing
-import domain.User
+import domain.cinema.Movie
+import domain.cinema.MovieTheater
+import domain.cinema.Screen
+import domain.cinema.Showing
+import domain.reservation.Cart
+import domain.reservation.ReservationInfo
+import domain.seat.Seat
+import domain.seat.SeatGrade
+import domain.user.User
 import kotlinx.datetime.LocalDateTime
 
 object TestFixtureData {

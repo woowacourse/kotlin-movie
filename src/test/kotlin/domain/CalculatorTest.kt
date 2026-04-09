@@ -1,5 +1,8 @@
 package domain
 
+import domain.purchase.Calculator
+import domain.purchase.PaymentMethod
+import domain.user.User
 import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

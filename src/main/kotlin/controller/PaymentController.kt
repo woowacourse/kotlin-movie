@@ -1,9 +1,9 @@
 package controller
 
-import domain.Calculator
-import domain.Cart
-import domain.PaymentMethod
-import domain.User
+import domain.purchase.Calculator
+import domain.purchase.PaymentMethod
+import domain.reservation.Cart
+import domain.user.User
 import view.InputView
 import view.OutputView
 
