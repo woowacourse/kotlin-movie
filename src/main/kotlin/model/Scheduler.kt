@@ -22,7 +22,7 @@ class Scheduler {
         date: LocalDate,
     ): Screenings = screenings.findBy(movie, date)
 
-    fun getMovies(): Movies = Movies(listOf(F1_THE_MOVIE, TOY_STORY, IRON_MAN))
+    fun getMovies(): Movies = Movies(listOf(F1_THE_MOVIE, TOY_STORY, IRON_MAN, ROBOT_DREAM))
 
     companion object {
         private val F1_THE_MOVIE =
@@ -58,6 +58,16 @@ class Scheduler {
                     ),
             )
 
+        private val ROBOT_DREAM =
+            Movie(
+                title = "로봇 드림",
+                runningTime = RunningTime(110),
+                showingPeriod = ShowingPeriod(
+                    startDate = LocalDate.of(2023, 12, 6),
+                    endDate = LocalDate.of(2100, 12, 31)
+                )
+            )
+
         private val BASE_DATE: LocalDate = LocalDate.of(2025, 9, 20)
 
         private fun defaultSeats(): Seats =
@@ -70,22 +80,22 @@ class Scheduler {
                         )
                     }
                 } +
-                    ('C'..'D').flatMap { row ->
-                        (1..4).map { col ->
-                            Seat(
-                                SeatNumber(row, col),
-                                SeatGrade.S,
-                            )
-                        }
-                    } +
-                    ('E'..'E').flatMap { row ->
-                        (1..4).map { col ->
-                            Seat(
-                                SeatNumber(row, col),
-                                SeatGrade.A,
-                            )
-                        }
-                    },
+                        ('C'..'D').flatMap { row ->
+                            (1..4).map { col ->
+                                Seat(
+                                    SeatNumber(row, col),
+                                    SeatGrade.S,
+                                )
+                            }
+                        } +
+                        ('E'..'E').flatMap { row ->
+                            (1..4).map { col ->
+                                Seat(
+                                    SeatNumber(row, col),
+                                    SeatGrade.A,
+                                )
+                            }
+                        },
             )
 
         private fun createScreenings(): List<Screening> {
@@ -129,6 +139,11 @@ class Scheduler {
                     LocalDateTime.of(BASE_DATE, LocalTime.of(9, 50)),
                     screen3,
                 ),
+                Screening(
+                    ROBOT_DREAM,
+                    LocalDateTime.of(BASE_DATE, LocalTime.of(21, 0)),
+                    screen3
+                )
             )
         }
     }
