@@ -8,24 +8,26 @@ import view.InputView
 import view.OutputView
 
 class PaymentController(val cart: Cart, val user: User) {
-    fun run(): Int {
+    fun run(): Pair<Int, Int> {
         var price = discountPerSeat()
-        price = getUserPoint(price)
+        val pair = getUserPoint(price)
+        price = pair.first
+
         price = getPaymentMethod(price)
 
         OutputView.printTotalPrice(price)
 
         val input = InputView.readPurchaseConfirm()
 
-        return price
+        return price to pair.second
     }
 
-    fun getUserPoint(totalPrice: Int): Int {
+    fun getUserPoint(totalPrice: Int): Pair<Int, Int> {
         val input = InputView.readPoint()
         user.discountPoint(input.toLong())
 
         val finalPrice = totalPrice - input.toInt()
-        return finalPrice
+        return finalPrice to input.toInt()
     }
 
     fun discountPerSeat(): Int {

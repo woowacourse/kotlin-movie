@@ -12,6 +12,7 @@ import domain.Showing
 import domain.User
 import kotlinx.datetime.LocalDateTime
 import view.InputView
+import view.OutputView
 
 fun main() {
     val movies = listOf(
@@ -90,5 +91,6 @@ fun main() {
         user = User(1),
     )
 
-    paymentController.run()
+    val total = paymentController.run()
+    OutputView.printTotal(cartController.getAllReservationInfo(), total.first, total.second)
 }

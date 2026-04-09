@@ -40,7 +40,26 @@ object OutputView {
 
     fun printTotalPrice(price: Int) {
         println("가격 계산")
-        println("최종 결제 금액: ${price}원")
+        println("최종 결제 금액: ${printByDecimalFormat(price)}원")
         println()
+    }
+
+    fun printByDecimalFormat(price: Int): String {
+        return String.format("%,d", price)
+    }
+
+    fun printTotal(
+        totalHistory: List<String>,
+        totalPrice: Int,
+        usedPoint: Int,
+    ) {
+        println("예매완료")
+        println("내역:")
+        printCart(totalHistory)
+
+        println("결제 금액: ${printByDecimalFormat(totalPrice)}원 (포인트 ${printByDecimalFormat(usedPoint)})")
+
+        println()
+        println("감사합니다.")
     }
 }
