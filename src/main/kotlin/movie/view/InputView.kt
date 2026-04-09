@@ -57,6 +57,9 @@ class InputView {
             ?: throw IllegalArgumentException("입력이 없습니다.")
     }
     private fun readYesNo():Boolean{
+        require(readInput().uppercase() == "Y" || readInput().uppercase() == "N") {
+            "Y 또는 N을 입력해 주세요."
+        }
         return readInput().uppercase() == "Y"
     }
     private fun readInt():Int{

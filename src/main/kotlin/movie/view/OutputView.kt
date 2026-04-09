@@ -64,7 +64,17 @@ class OutputView {
                 usedPoint.value
             )
         )))
+        endMessage()
+    }
+
+    fun endMessage() {
         println(END_MESSAGE)
+    }
+
+    fun printErrorMessage(errorMessage: String) {
+        println()
+        println(errorMessage)
+        println()
     }
 
     private fun printReservationItem(reservation: Reservation) {
