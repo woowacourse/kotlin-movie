@@ -17,7 +17,7 @@ class DiscountPolicyTest {
     @Test
     fun `카드 결제 시 할인 금액을 반환한다`() {
         val given = Money(10000)
-        val result = DiscountPolicy.cardDiscount(given)
+        val result = DiscountPolicy().cardDiscount(given)
 
         assertThat(result).isEqualTo(Money(500))
     }
@@ -25,7 +25,7 @@ class DiscountPolicyTest {
     @Test
     fun `현금 결제 시 할인 금액을 반환한다`() {
         val given = Money(10000)
-        val result = DiscountPolicy.cashDiscount(given)
+        val result = DiscountPolicy().cashDiscount(given)
 
         assertThat(result).isEqualTo(Money(200))
     }
@@ -33,7 +33,7 @@ class DiscountPolicyTest {
     @Test
     fun `무비데이 조건에 해당하는 경우 할인 금액을 반환한다`() {
         val given = Money(10000)
-        val result = DiscountPolicy.movieDayDiscount(
+        val result = DiscountPolicy().movieDayDiscount(
             money = given,
             date = LocalDate.of(2026, 4, 10)
         )
@@ -44,7 +44,7 @@ class DiscountPolicyTest {
     @Test
     fun `특정 시간대 조건에 해당하는 경우 할인 금액을 반환한다`() {
         val given = Money(10000)
-        val result = DiscountPolicy.timeDiscount(
+        val result = DiscountPolicy().timeDiscount(
             money = given,
             time = LocalTime.of(10, 0)
         )
