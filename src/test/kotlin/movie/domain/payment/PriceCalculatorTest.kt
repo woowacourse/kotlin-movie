@@ -21,50 +21,56 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class PriceCalculatorTest {
-
     @Test
     fun `할인 정책, 포인트 차감, 결제 수단 할인 순서로 결제를 진행한다`() {
         // given
-        val screening = Screening(
-            title = "토이 스토리",
-            screen = Screen(1, Seats.createDefault()),
-            screeningDateTime = ScreeningDateTime(
-                LocalDate.of(2026, 1, 10),
-                LocalTime.of(10, 0),
-                LocalTime.of(12, 0),
-            ),
-            reservatedSeats = ReservatedSeats(
+        val screening =
+            Screening(
+                title = "토이 스토리",
+                screen = Screen(1, Seats.createDefault()),
+                screeningDateTime =
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 10),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
+                reservatedSeats =
+                    ReservatedSeats(
+                        listOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                        ),
+                    ),
+            )
+
+        val selectedSeats =
+            SelectedSeats(
                 listOf(
                     Seat("C", 1, SeatGrade.S),
-                    Seat("C", 2, SeatGrade.S),
-                )
+                ),
             )
-        )
 
-        val selectedSeats = SelectedSeats(
-            listOf(
-                Seat("C", 1, SeatGrade.S),
+        val reservations =
+            Reservations(
+                listOf(
+                    Reservation(screening, selectedSeats),
+                ),
             )
-        )
 
-        val reservations = Reservations(
-            listOf(
-                Reservation(screening, selectedSeats)
+        val priceCalculator =
+            PriceCalculator(
+                DiscountPolicies(
+                    listOf(MovieDayDiscount()),
+                    listOf(TimeDiscount()),
+                ),
             )
-        )
 
-        val priceCalculator = PriceCalculator(
-            DiscountPolicies(
-                listOf(MovieDayDiscount()),
-                listOf(TimeDiscount()),
+        val result =
+            priceCalculator.calculate(
+                reservations,
+                Point(1000),
+                CreditCard(),
             )
-        )
-
-        val result = priceCalculator.calculate(
-            reservations,
-            Point(1000),
-            CreditCard(),
-        )
 
         assertThat(result.totalPrice).isEqualTo(Money(12540))
         assertThat(result.usedPoint).isEqualTo(Point(1000))

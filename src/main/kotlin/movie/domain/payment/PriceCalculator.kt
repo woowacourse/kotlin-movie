@@ -17,10 +17,11 @@ class PriceCalculator(
         var totalPrice = Money(0)
 
         reservations.forEach { reservation ->
-            val discounted = discountPolicies.applyDiscount(
-                reservation.calculatePrice(),
-                reservation.getScreening().screeningDateTime
-            )
+            val discounted =
+                discountPolicies.applyDiscount(
+                    reservation.calculatePrice(),
+                    reservation.getScreening().screeningDateTime,
+                )
             totalPrice += discounted
         }
 
@@ -30,7 +31,7 @@ class PriceCalculator(
 
         return PaymentResult(
             totalPrice = totalPrice,
-            usedPoint = usagePoint
+            usedPoint = usagePoint,
         )
     }
 }

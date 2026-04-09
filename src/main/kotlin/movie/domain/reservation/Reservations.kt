@@ -1,7 +1,6 @@
 package movie.domain.reservation
 
 import movie.domain.amount.Money
-import movie.domain.screening.Screening
 
 class Reservations(
     private val reservations: List<Reservation>,
@@ -14,9 +13,7 @@ class Reservations(
 
     fun totalPrice(): Money = reservations.map { it.calculatePrice() }.reduce { acc, money -> acc + money }
 
-    fun display(): String {
-        return reservations.joinToString("\n") { it.display() }
-    }
+    fun display(): String = reservations.joinToString("\n") { it.display() }
 
     fun forEach(action: (Reservation) -> Unit) {
         reservations.forEach(action)

@@ -9,7 +9,6 @@ import movie.domain.screening.Screening
 import movie.domain.seat.ReservatedSeats
 
 class OutputView {
-
     fun printScreeningList(screenings: List<Screening>) {
         println(SCREENING_LIST_HEADER)
         screenings.forEachIndexed { index, screening ->
@@ -21,7 +20,10 @@ class OutputView {
         println(SCREENING_TIME_OVERLAP_MESSAGE)
     }
 
-    fun printSeatLayout(screen: Screen, reservedSeats: ReservatedSeats) {
+    fun printSeatLayout(
+        screen: Screen,
+        reservedSeats: ReservatedSeats,
+    ) {
         println(SEAT_LAYOUT_HEADER)
         println("    1    2    3    4")
         val rows = listOf("A", "B", "C", "D", "E")
@@ -52,18 +54,26 @@ class OutputView {
     fun printFinalPrice(price: Money) {
         println(PRICE_CALCULATION_HEADER)
         println(FINAL_PRICE_FORMAT.format(formatMoney(price)))
-
     }
 
-    fun printComplete(reservations: Reservations, price: Money, usedPoint:Point) {
+    fun printComplete(
+        reservations: Reservations,
+        price: Money,
+        usedPoint: Point,
+    ) {
         println(RESERVATION_COMPLETE_HEADER)
         println(RESERVATION_DETAIL_HEADER)
         println(reservations.display())
-        println(PAYMENT_AMOUNT_FORMAT.format(formatMoney(price), formatMoney(
-            Money(
-                usedPoint.value
-            )
-        )))
+        println(
+            PAYMENT_AMOUNT_FORMAT.format(
+                formatMoney(price),
+                formatMoney(
+                    Money(
+                        usedPoint.value,
+                    ),
+                ),
+            ),
+        )
         println(END_MESSAGE)
     }
 
@@ -77,11 +87,9 @@ class OutputView {
         println(reservation.display())
     }
 
-    private fun formatMoney(money: Money): String {
-        return String.format("%,d", money.value)
-    }
+    private fun formatMoney(money: Money): String = String.format("%,d", money.value)
 
-    companion object{
+    companion object {
         private const val SCREENING_LIST_HEADER = "해당 날짜의 상영 목록"
         private const val SCREENING_TIME_OVERLAP_MESSAGE = "선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요."
 

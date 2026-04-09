@@ -1,7 +1,6 @@
 package movie.controller
 
 import movie.data.MovieData
-import movie.domain.amount.Money
 import movie.domain.amount.PaymentResult
 import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
@@ -10,7 +9,6 @@ import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
 import movie.domain.payment.Cash
 import movie.domain.payment.CreditCard
-import movie.domain.payment.Payment
 import movie.domain.payment.PaymentMethod
 import movie.domain.payment.PriceCalculator
 import movie.domain.reservation.Reservation
@@ -29,14 +27,15 @@ class MovieController(
     private val outputView: OutputView = OutputView(),
     private val movies: List<Movie> = MovieData.createMovies(),
     private val user: User = MovieData.createUser(),
-    private val priceCalculator: PriceCalculator = PriceCalculator(
-        DiscountPolicies(
-            percentagePolicies = listOf(MovieDayDiscount()),
-            fixedPolicies = listOf(TimeDiscount())
-        )
-    ),
+    private val priceCalculator: PriceCalculator =
+        PriceCalculator(
+            DiscountPolicies(
+                percentagePolicies = listOf(MovieDayDiscount()),
+                fixedPolicies = listOf(TimeDiscount()),
+            ),
+        ),
 ) {
-    fun run(){
+    fun run() {
         if (!askStartReservation()) return
 
         val reservations = collectReservations()
@@ -48,7 +47,7 @@ class MovieController(
         confirmAndComplete(reservations, paymentResult)
     }
 
-    //메인 로직
+    // 메인 로직
     private fun processPayment(reservations: Reservations): PaymentResult {
         val point = inputPoint()
         val paymentMethod = selectPaymentMethod()
@@ -61,7 +60,7 @@ class MovieController(
 
     private fun confirmAndComplete(
         reservations: Reservations,
-        paymentResult: PaymentResult
+        paymentResult: PaymentResult,
     ) {
         val confirm = executeWithRetry { inputView.confirmPayment() }
 
@@ -69,7 +68,7 @@ class MovieController(
             outputView.printComplete(
                 reservations,
                 paymentResult.totalPrice,
-                paymentResult.usedPoint
+                paymentResult.usedPoint,
             )
         }
     }
@@ -78,14 +77,13 @@ class MovieController(
         outputView.printCart(reservations)
     }
 
-    //결제 상세 로직
-    private fun inputPoint(): Point {
-        return executeWithRetry {
+    // 결제 상세 로직
+    private fun inputPoint(): Point =
+        executeWithRetry {
             val input = inputView.inputPoint()
             require(input <= user.point.value) { "보유 포인트를 초과할 수 없습니다." }
             Point(input)
         }
-    }
 
     private fun selectPaymentMethod(): PaymentMethod {
         val input = executeWithRetry { inputView.inputPayment() }
@@ -97,8 +95,7 @@ class MovieController(
         }
     }
 
-
-    //예매 로직
+    // 예매 로직
     private fun collectReservations(): Reservations {
         val reservationList = mutableListOf<Reservation>()
         do {
@@ -120,7 +117,7 @@ class MovieController(
         return reservation
     }
 
-    //예매 상세 로직
+    // 예매 상세 로직
     private fun selectMovie(): Movie =
         executeWithRetry {
             val title = inputView.inputMovieTitle()
@@ -150,9 +147,10 @@ class MovieController(
 
             val selected = screenings[number - 1]
 
-            val hasOverlap = existingReservations.any {
-                it.isTimeOverlapping(selected)
-            }
+            val hasOverlap =
+                existingReservations.any {
+                    it.isTimeOverlapping(selected)
+                }
 
             if (hasOverlap) {
                 outputView.printTimeOverlapMessage()
@@ -170,25 +168,27 @@ class MovieController(
             reserveAvailableSeats
         }
 
-    private fun parseSeatInput(input: String, screen: Screen): List<Seat> {
-        return input.split(",")
+    private fun parseSeatInput(
+        input: String,
+        screen: Screen,
+    ): List<Seat> =
+        input
+            .split(",")
             .map { it.trim() }
             .map { seatInput ->
                 val row = seatInput.substring(0, 1).uppercase()
-                val column = seatInput.substring(1).toIntOrNull()
-                    ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
+                val column =
+                    seatInput.substring(1).toIntOrNull()
+                        ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
                 screen.seats.findSeat(row, column)
             }
-    }
 
-    //입력 로직
-    private fun askStartReservation(): Boolean =
-        executeWithRetry { inputView.startMessage() }
+    // 입력 로직
+    private fun askStartReservation(): Boolean = executeWithRetry { inputView.startMessage() }
 
-    private fun askAddMore(): Boolean =
-        executeWithRetry { inputView.addMoreMovie() }
+    private fun askAddMore(): Boolean = executeWithRetry { inputView.addMoreMovie() }
 
-    //유틸
+    // 유틸
     private fun <T> executeWithRetry(block: () -> T): T {
         while (true) {
             try {

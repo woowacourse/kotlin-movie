@@ -2,7 +2,6 @@ package movie.domain.user
 
 import movie.domain.amount.Point
 import movie.domain.reservation.ReservationData
-
 import movie.domain.reservation.Reservations
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

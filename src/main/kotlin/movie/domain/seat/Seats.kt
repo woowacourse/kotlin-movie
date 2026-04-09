@@ -11,11 +11,12 @@ class Seats(
 
     fun size(): Int = seats.size
 
-    fun findSeat(row: String, column: Int): Seat {
-        return seats.find { it.row == row && it.column == column }
+    fun findSeat(
+        row: String,
+        column: Int,
+    ): Seat =
+        seats.find { it.row == row && it.column == column }
             ?: throw IllegalArgumentException("존재하지 않는 좌석입니다.")
-    }
-
 
     companion object {
         fun createDefault(): Seats {

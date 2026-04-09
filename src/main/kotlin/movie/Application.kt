@@ -2,8 +2,7 @@ package movie
 
 import movie.controller.MovieController
 
-fun main(){
+fun main() {
     val controller = MovieController()
     controller.run()
 }
-

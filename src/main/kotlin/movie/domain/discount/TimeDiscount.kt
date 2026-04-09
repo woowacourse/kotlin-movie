@@ -5,7 +5,7 @@ import movie.domain.screening.ScreeningDateTime
 
 class TimeDiscount : DiscountPolicy {
     override fun applyDiscount(
-        price:Money,
+        price: Money,
         dateTime: ScreeningDateTime,
     ): Money {
         if (dateTime.isTimeDiscountTarget()) {

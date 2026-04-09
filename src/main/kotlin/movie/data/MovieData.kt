@@ -16,12 +16,12 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object MovieData {
-
     fun createMovies(): List<Movie> {
-        val screen = Screen(
-            1,
-            Seats.createDefault()
-        )
+        val screen =
+            Screen(
+                1,
+                Seats.createDefault(),
+            )
 
         return listOf(
             createF1Movie(screen),
@@ -31,96 +31,117 @@ object MovieData {
     }
 
     private fun createF1Movie(screen: Screen): Movie {
-        val screenings = listOf(
-            Screening(
-                "F1 더 무비", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(10, 20),
-                    LocalTime.of(12, 20)
-                ), ReservatedSeats(emptyList())
-            ),
-
-            Screening(
-                "F1 더 무비", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(13, 0),
-                    LocalTime.of(15, 0)
-                ), ReservatedSeats(listOf(
-                    Seat("B", 2, SeatGrade.B),
-                    Seat("B", 3, SeatGrade.B),
-                    Seat("C", 3, SeatGrade.S),
-                    Seat("E", 4, SeatGrade.A),
-                ))
-            ),
-
-            Screening(
-                "F1 더 무비", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(15, 40),
-                    LocalTime.of(17, 40)
-                ), ReservatedSeats(emptyList())
-            ),
-
-            Screening(
-                "F1 더 무비", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(20, 10),
-                    LocalTime.of(22, 10)
-                ), ReservatedSeats(emptyList())
-            ),
-        )
+        val screenings =
+            listOf(
+                Screening(
+                    "F1 더 무비",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(10, 20),
+                        LocalTime.of(12, 20),
+                    ),
+                    ReservatedSeats(emptyList()),
+                ),
+                Screening(
+                    "F1 더 무비",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(13, 0),
+                        LocalTime.of(15, 0),
+                    ),
+                    ReservatedSeats(
+                        listOf(
+                            Seat("B", 2, SeatGrade.B),
+                            Seat("B", 3, SeatGrade.B),
+                            Seat("C", 3, SeatGrade.S),
+                            Seat("E", 4, SeatGrade.A),
+                        ),
+                    ),
+                ),
+                Screening(
+                    "F1 더 무비",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(15, 40),
+                        LocalTime.of(17, 40),
+                    ),
+                    ReservatedSeats(emptyList()),
+                ),
+                Screening(
+                    "F1 더 무비",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(20, 10),
+                        LocalTime.of(22, 10),
+                    ),
+                    ReservatedSeats(emptyList()),
+                ),
+            )
         return Movie(
             title = "F1 더 무비",
-            screenings = Screenings(screenings)
+            screenings = Screenings(screenings),
         )
     }
 
     private fun createToyStory(screen: Screen): Movie {
-        val screenings = listOf(
-            Screening(
-                "토이 스토리", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(13, 30),
-                    LocalTime.of(15, 30)
-                ), ReservatedSeats(emptyList())
-            ),
-
-            Screening(
-                "토이 스토리", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(16, 0),
-                    LocalTime.of(18, 0)
-                ), ReservatedSeats(emptyList())
-            ),
-        )
+        val screenings =
+            listOf(
+                Screening(
+                    "토이 스토리",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(13, 30),
+                        LocalTime.of(15, 30),
+                    ),
+                    ReservatedSeats(emptyList()),
+                ),
+                Screening(
+                    "토이 스토리",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(16, 0),
+                        LocalTime.of(18, 0),
+                    ),
+                    ReservatedSeats(emptyList()),
+                ),
+            )
         return Movie(
             title = "토이 스토리",
-            screenings = Screenings(screenings)
+            screenings = Screenings(screenings),
         )
     }
 
     private fun createIronMan(screen: Screen): Movie {
-        val screenings = listOf(
-            Screening(
-                "아이언맨", screen, ScreeningDateTime(
-                    LocalDate.of(2025, 9, 20),
-                    LocalTime.of(9, 50),
-                    LocalTime.of(11, 50)
-                ), ReservatedSeats(emptyList())
-            ),
-        )
+        val screenings =
+            listOf(
+                Screening(
+                    "아이언맨",
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2025, 9, 20),
+                        LocalTime.of(9, 50),
+                        LocalTime.of(11, 50),
+                    ),
+                    ReservatedSeats(emptyList()),
+                ),
+            )
         return Movie(
             title = "아이언맨",
-            screenings = Screenings(screenings)
+            screenings = Screenings(screenings),
         )
     }
 
-    fun createUser(): User {
-        return User(
+    fun createUser(): User =
+        User(
             Reservations(
-                emptyList()
+                emptyList(),
             ),
-            Point(10000)
+            Point(10000),
         )
-    }
 }
