@@ -38,7 +38,35 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 10, 0)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                                 ),
-                            seatGroup = SeatGroup(emptyList()),
+                            seatGroup =
+                                SeatGroup(
+                                    listOf(
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                    ),
+                                ),
                         ),
                         MovieScreening(
                             movie =
@@ -51,7 +79,35 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 10)),
                                 ),
-                            seatGroup = SeatGroup(emptyList()),
+                            seatGroup =
+                                SeatGroup(
+                                    listOf(
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                    ),
+                                ),
                         ),
                         MovieScreening(
                             movie =
@@ -64,7 +120,35 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 30)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 30)),
                                 ),
-                            seatGroup = SeatGroup(emptyList()),
+                            seatGroup =
+                                SeatGroup(
+                                    listOf(
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                    ),
+                                ),
                         ),
                     ),
             ),
@@ -88,7 +172,35 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 14, 10)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 15, 10)),
                                 ),
-                            seatGroup = SeatGroup(emptyList()),
+                            seatGroup =
+                                SeatGroup(
+                                    listOf(
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("B"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(2),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.B,
+                                        ),
+                                        Seat(
+                                            row = SeatRow("A"),
+                                            column = SeatColumn(1),
+                                            state = SeatState.AVAILABLE,
+                                            grade = SeatGrade.S,
+                                        ),
+                                    ),
+                                ),
                         ),
                         MovieScreening(
                             movie =

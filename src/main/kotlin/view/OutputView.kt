@@ -28,8 +28,19 @@ object OutputView {
         }
     }
 
-    fun showShoppingCart(successResults: List<MovieReservationResult.Success>) {
+    fun showReservationInfo(successResults: List<MovieReservationResult.Success>) {
         println("바구니에 추가됨")
+        successResults
+            .groupBy { it.movie.name to it.screenTime.start }
+            .forEach { (key, results) ->
+                val (movieName, startTime) = key
+                val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+            }
+    }
+
+    fun showShoppingCart(successResults: List<MovieReservationResult.Success>) {
+        println("장바구니")
         successResults
             .groupBy { it.movie.name to it.screenTime.start }
             .forEach { (key, results) ->

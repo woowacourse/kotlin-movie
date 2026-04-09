@@ -15,6 +15,7 @@ class CinemaController(
         MovieNameGroup(
             listOf(
                 MovieName("혼자사는남자", id = "1"),
+                MovieName("F4 꽃보다 남자", id = "2"),
             ),
         )
 
@@ -28,6 +29,7 @@ class CinemaController(
             OutputView.showSeatGroup(movieScreening.seatGroup)
             reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
         } while (inputContinue())
+        OutputView.showShoppingCart(cinemaKiosk.reserveResults)
     }
 
     private fun startMovieReservation(): Boolean {
@@ -97,7 +99,7 @@ class CinemaController(
                         }
                     }
                 }
-                OutputView.showShoppingCart(successPositions)
+                OutputView.showReservationInfo(successPositions)
                 return
             } catch (_: Exception) {
                 println("문제가 생겼으니 알아서 에러를 찾으십쇼?")
