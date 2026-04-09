@@ -1,15 +1,15 @@
 package domain.payment
 
 import domain.account.Account
-import domain.screening.ReservedScreening
+import domain.reservation.Cart
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class PaymentTest {
     private val discountPolicy = DiscountPolicy()
-    private val reservedScreening = ReservedScreening(emptyList())
+    private val cart = Cart(emptyList())
     private val payment = Payment(
-        reservedScreening = reservedScreening,
+        cart = cart,
         discountPolicy = discountPolicy,
     )
 

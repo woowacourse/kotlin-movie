@@ -1,10 +1,10 @@
 package domain.payment
 
 import domain.account.Account
-import domain.screening.ReservedScreening
+import domain.reservation.Cart
 
 class Payment(
-    val reservedScreening: ReservedScreening,
+    val cart: Cart,
     val discountPolicy: DiscountPolicy,
 ) {
     fun pay(
@@ -18,7 +18,7 @@ class Payment(
             val paidAmount = selectPaymentMethod(amountAfterPoint, selectedPaymentMethod)
 
             PayResult.Success(
-                reservedScreening = reservedScreening,
+                cart = cart,
                 paidAmount = paidAmount,
                 usedPoint = pointAmount,
                 paymentMethod = selectedPaymentMethod,
@@ -41,15 +41,14 @@ class Payment(
         paymentMethod.calculateDiscount(amount)
 
     fun discountedTotalAmount(): Int =
-        reservedScreening.items.sumOf { screening ->
-            val amount = screening.price()
-            discountPolicy.discount(screening.startTime, amount)
+        cart.items.sumOf { reserved ->
+            discountPolicy.discount(reserved.screen.startTime, reserved.price())
         }
 }
 
 sealed interface PayResult {
     data class Success(
-        val reservedScreening: ReservedScreening,
+        val cart: Cart,
         val paidAmount: Int,
         val usedPoint: Int,
         val paymentMethod: PaymentMethod,
