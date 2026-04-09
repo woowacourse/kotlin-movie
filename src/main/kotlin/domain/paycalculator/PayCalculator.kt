@@ -18,7 +18,14 @@ class PayCalculator(
     private val cashDiscountPolicy = CashDiscountPolicy()
 
     init {
-        calculateTotalPrice()
+        calculateInitPrice()
+    }
+
+    fun calculateInitPrice() {
+        for (reservation in reservations) {
+            val info = reservation.getReservationInfo()
+            totalPrice = info.price
+        }
     }
 
     fun calculateTotalPrice() {
@@ -29,16 +36,16 @@ class PayCalculator(
     }
 
     fun usePoint(point: Int) {
-        totalPrice - Money(point)
+        totalPrice -= Money(point)
     }
 
-    fun pay(payMethod: PayMethod): Money {
+    fun pay(payMethod: PayMethod) {
         totalPrice =
             when (payMethod) {
                 PayMethod.CARD -> cardDiscountPolicy.applyDiscount(totalPrice)
                 PayMethod.CASH -> cashDiscountPolicy.applyDiscount(totalPrice)
             }
-
-        return totalPrice
     }
+
+    fun getTotalPrice(): Money = totalPrice
 }
