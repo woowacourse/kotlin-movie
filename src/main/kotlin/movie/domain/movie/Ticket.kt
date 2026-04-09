@@ -12,6 +12,7 @@ class Ticket(
     fun resetSeat() {
         reservations.reset()
     }
+
     fun addReservation(
         screeningMovie: ScreeningMovie,
         seatNumbers: List<SeatNumber>,
