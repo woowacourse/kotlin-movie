@@ -15,6 +15,6 @@ class UserTest {
             point = Point(1000)
         )
 
-        assertThat(user1.userId).isNotEqualTo(user2.userId)
+        assertThat(user1.sameUser(user2)).isFalse
     }
 }

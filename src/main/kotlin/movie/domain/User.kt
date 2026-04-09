@@ -5,10 +5,14 @@ import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class User(
-    val userId: Uuid = Uuid.random(),
+    private val id: Uuid = Uuid.random(),
     private var point: Point = Point(0)
 ) {
     fun useUserPoint(usePoint: Point) {
         point = point.use(usePoint)
+    }
+
+    fun sameUser(target: User): Boolean {
+        return id == target.id
     }
 }
