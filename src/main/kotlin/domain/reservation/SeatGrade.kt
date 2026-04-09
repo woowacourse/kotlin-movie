@@ -1,7 +1,5 @@
 package domain.reservation
 
-import sun.awt.shell.ShellFolder.COLUMN_SIZE
-
 enum class SeatGrade(val money: Int) {
     S(money = 18_000),
     A(money = 15_000),
