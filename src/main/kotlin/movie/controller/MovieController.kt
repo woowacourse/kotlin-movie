@@ -29,6 +29,12 @@ class MovieController(
     private val outputView: OutputView = OutputView(),
     private val movies: List<Movie> = MovieData.createMovies(),
     private val user: User = MovieData.createUser(),
+    private val priceCalculator: PriceCalculator = PriceCalculator(
+        DiscountPolicies(
+            percentagePolicies = listOf(MovieDayDiscount()),
+            fixedPolicies = listOf(TimeDiscount())
+        )
+    ),
 ) {
     fun run(){
         if (!askStartReservation()) return
@@ -43,14 +49,13 @@ class MovieController(
     }
 
     //메인 로직
-    private fun processPayment(reservations: Reservations): PaymentResult{
+    private fun processPayment(reservations: Reservations): PaymentResult {
         val point = inputPoint()
         val paymentMethod = selectPaymentMethod()
 
-        val paymentResult = calculatePayment(reservations, point, paymentMethod)
+        val paymentResult = priceCalculator.calculate(reservations, point, paymentMethod)
 
         outputView.printFinalPrice(paymentResult.totalPrice)
-
         return paymentResult
     }
 
@@ -92,44 +97,6 @@ class MovieController(
         }
     }
 
-    private fun calculatePayment(
-        reservations: Reservations,
-        point: Point,
-        paymentMethod: PaymentMethod
-    ): PaymentResult {
-
-        val policies = createDiscountPolicies()
-
-        var totalPrice = Money(0)
-
-        reservations.forEach { reservation ->
-            val screening = reservation.getScreening()
-
-            val discounted = policies.applyDiscount(
-                reservation.calculatePrice(),
-                screening.screeningDateTime
-            )
-
-            totalPrice += discounted
-        }
-
-        val usablePoint = point.usableAmount(totalPrice)
-        totalPrice = totalPrice.minus(Money(usablePoint.value))
-
-        totalPrice = paymentMethod.applyDiscount(totalPrice)
-
-        return PaymentResult(
-            totalPrice = totalPrice,
-            usedPoint = usablePoint
-        )
-    }
-
-    private fun createDiscountPolicies(): DiscountPolicies {
-        return DiscountPolicies(
-            percentagePolicies = listOf(MovieDayDiscount()),
-            fixedPolicies = listOf(TimeDiscount())
-        )
-    }
 
     //예매 로직
     private fun collectReservations(): Reservations {

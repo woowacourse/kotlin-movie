@@ -1,23 +1,36 @@
 package movie.domain.payment
 
 import movie.domain.amount.Money
+import movie.domain.amount.PaymentResult
 import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
-import movie.domain.screening.ScreeningDateTime
+import movie.domain.reservation.Reservations
 
 class PriceCalculator(
-    private val ticketPrice: Money,
-    private val screenDateTime: ScreeningDateTime,
     private val discountPolicies: DiscountPolicies,
-    private val point: Point,
-    private val paymentMethod: PaymentMethod,
 ) {
-    fun calculate():Payment {
-        var result = ticketPrice
-        result = discountPolicies.applyDiscount(result, screenDateTime)
-        val usagePoint = point.usableAmount(result)
-        result = result.minus(Money(usagePoint.value))
-        result = paymentMethod.applyDiscount(result)
-        return Payment(result, usagePoint)
+    fun calculate(
+        reservations: Reservations,
+        point: Point,
+        paymentMethod: PaymentMethod,
+    ): PaymentResult {
+        var totalPrice = Money(0)
+
+        reservations.forEach { reservation ->
+            val discounted = discountPolicies.applyDiscount(
+                reservation.calculatePrice(),
+                reservation.getScreening().screeningDateTime
+            )
+            totalPrice += discounted
+        }
+
+        val usagePoint = point.usableAmount(totalPrice)
+        totalPrice = totalPrice.minus(Money(usagePoint.value))
+        totalPrice = paymentMethod.applyDiscount(totalPrice)
+
+        return PaymentResult(
+            totalPrice = totalPrice,
+            usedPoint = usagePoint
+        )
     }
 }
