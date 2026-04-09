@@ -56,7 +56,7 @@ object Reservation {
     fun checkSeat(
         seats: List<Seat>,
         input: String,
-    ) {
+    ): Seat {
         checkSeatFormat(input)
         val row = input[0]
         val column = input.substring(1).toInt()
@@ -64,5 +64,7 @@ object Reservation {
         val seat = seats.filter { it.row == row && it.column == column }
         require(seat.isNotEmpty()) { "해당 상영관에는 해당 좌석이 존재하지 않습니다." }
         require(!seat.first().isReserved) { "해당 좌석은 이미 예약되었습니다." }
+
+        return seat.first()
     }
 }

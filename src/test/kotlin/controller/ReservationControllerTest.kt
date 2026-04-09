@@ -4,6 +4,7 @@ import domain.Movie
 import domain.MovieTheater
 import domain.Reservation
 import domain.Screen
+import domain.Seat
 import domain.Showing
 import java.io.ByteArrayInputStream
 import kotlinx.datetime.LocalDate
@@ -71,7 +72,7 @@ class ReservationController(val movieTheater: MovieTheater) {
         return showings[input.toInt() - 1]
     }
 
-    fun chooseSeat(showing: Showing) {
+    fun chooseSeat(showing: Showing): List<Seat> {
         println("좌석 배치도")
         val screen = showing.screen
         val maxRow = Screen.MAX_ROW
@@ -90,7 +91,12 @@ class ReservationController(val movieTheater: MovieTheater) {
         println("예약할 좌석을 입력하세요 (A1, B2):")
         val input = readln()
 
-        Reservation.checkSeat(screen.seats, input)
+        val seatInputs = input.split(',').map { it.trim() }
+
+        val seats = seatInputs.map { seat ->
+            Reservation.checkSeat(screen.seats, seat)
+        }
+        return seats
     }
 }
 
@@ -273,12 +279,26 @@ class ReservationControllerTest {
         System.setIn(ByteArrayInputStream(input.toByteArray()))
         val showing = TestFixtureData.showings.first()
 
-        // when : 상영을 확인한 뒤 상영 번호를 입력하면
+        // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
         val exception = assertThrows<IllegalArgumentException> {
             controller.chooseSeat(showing)
         }
 
         // then : 예외가 발생한다.
         assertEquals("해당 상영관에는 해당 좌석이 존재하지 않습니다.", exception.message)
+    }
+
+    @Test
+    fun `쉼표로 구분된 여러 좌석을 파싱하면 좌석 리스트를 반환한다`() {
+        // given : ,로 구분된 좌석 번호들을 입력한다
+        val input = "B1,B2"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val showing = TestFixtureData.showings.first()
+
+        // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
+        val result = controller.chooseSeat(showing)
+
+        // then : 좌석 리스트가 반환된다.
+        assertEquals(listOf(TestFixtureData.seats[2], TestFixtureData.seats[3]), result)
     }
 }
