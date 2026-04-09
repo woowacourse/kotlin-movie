@@ -13,10 +13,10 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class Scheduler {
-    private val screens: Screens = Screens(createScreens())
+    private val screenings = Screenings(createScreenings())
 
     fun getScreenings(movie: Movie, date: LocalDate): Screenings =
-        screens.findScreenings(movie, date)
+        screenings.findBy(movie, date)
 
     fun getMovies(): Movies = Movies(listOf(F1_THE_MOVIE, TOY_STORY, IRON_MAN))
 
@@ -77,43 +77,19 @@ class Scheduler {
                     }
         )
 
-        private fun createScreens(): List<Screen> {
-            val seats1 = defaultSeats()
-            val seats2 = defaultSeats()
-            val seats3 = defaultSeats()
+        private fun createScreenings(): List<Screening> {
+            val screen1 = Screen("1관", defaultSeats())
+            val screen2 = Screen("2관", defaultSeats())
+            val screen3 = Screen("3관", defaultSeats())
 
             return listOf(
-                Screen(
-                    screenName = "1관",
-                    seats = seats1,
-                    screenings = Screenings(
-                        listOf(
-                            Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(10, 20)), seats1),
-                            Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(13, 0)), seats1),
-                            Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(15, 40)), seats1),
-                            Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(20, 10)), seats1)
-                        )
-                    )
-                ),
-                Screen(
-                    screenName = "2관",
-                    seats = seats2,
-                    screenings = Screenings(
-                        listOf(
-                            Screening(TOY_STORY, LocalDateTime.of(BASE_DATE, LocalTime.of(13, 30)), seats2),
-                            Screening(TOY_STORY, LocalDateTime.of(BASE_DATE, LocalTime.of(16, 0)), seats2)
-                        )
-                    )
-                ),
-                Screen(
-                    screenName = "3관",
-                    seats = seats3,
-                    screenings = Screenings(
-                        listOf(
-                            Screening(IRON_MAN, LocalDateTime.of(BASE_DATE, LocalTime.of(9, 50)), seats3)
-                        )
-                    )
-                )
+                Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(10, 20)), screen1),
+                Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(13, 0)), screen1),
+                Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(15, 40)), screen1),
+                Screening(F1_THE_MOVIE, LocalDateTime.of(BASE_DATE, LocalTime.of(20, 10)), screen1),
+                Screening(TOY_STORY, LocalDateTime.of(BASE_DATE, LocalTime.of(13, 30)), screen2),
+                Screening(TOY_STORY, LocalDateTime.of(BASE_DATE, LocalTime.of(16, 0)), screen2),
+                Screening(IRON_MAN, LocalDateTime.of(BASE_DATE, LocalTime.of(9, 50)), screen3)
             )
         }
     }

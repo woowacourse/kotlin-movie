@@ -5,6 +5,7 @@ import domain.movie.Movie
 import domain.Point
 import domain.reservation.Reservations
 import domain.movie.RunningTime
+import domain.screening.Screen
 import domain.screening.Screening
 import domain.seat.Seat
 import domain.seat.SeatGrade
@@ -29,16 +30,18 @@ class PaymentSystemTest {
         )
     )
 
+    private val screen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S))))
+
     private fun bothDiscountScreening() = Screening(
         movie = movie,
         startDateTime = LocalDateTime.of(LocalDate.of(2025, 9, 20), LocalTime.of(10, 0)),
-        seats = Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S)))
+        screen = screen
     )
 
     private fun normalScreening() = Screening(
         movie = movie,
         startDateTime = LocalDateTime.of(LocalDate.of(2025, 9, 15), LocalTime.of(14, 0)),
-        seats = Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S)))
+        screen = screen
     )
 
     @Test

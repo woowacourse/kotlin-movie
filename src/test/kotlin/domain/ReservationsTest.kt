@@ -4,6 +4,7 @@ import domain.movie.Movie
 import domain.movie.RunningTime
 import domain.movie.ShowingPeriod
 import domain.reservation.Reservations
+import domain.screening.Screen
 import domain.screening.Screening
 import domain.seat.Seat
 import domain.seat.SeatGrade
@@ -28,10 +29,10 @@ class ReservationsTest {
         )
     )
 
-    private val defaultSeats = Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S)))
+    private val defaultScreen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S))))
 
     private fun screening(startHour: Int): Screening =
-        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultSeats)
+        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
 
     @Test
     fun `빈 상태로 시작할 수 있다`() {

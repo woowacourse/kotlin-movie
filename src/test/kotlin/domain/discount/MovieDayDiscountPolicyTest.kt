@@ -3,6 +3,7 @@ package domain.discount
 import domain.Money
 import domain.movie.Movie
 import domain.movie.RunningTime
+import domain.screening.Screen
 import domain.screening.Screening
 import domain.seat.Seat
 import domain.seat.SeatGrade
@@ -25,12 +26,12 @@ class MovieDayDiscountPolicyTest {
         )
     )
 
-    private val seats = Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.B)))
+    private val screen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.B))))
 
     private fun screeningOn(day: Int) = Screening(
         movie = movie,
         startDateTime = LocalDateTime.of(LocalDate.of(2025, 9, day), LocalTime.of(14, 0)),
-        seats = seats
+        screen = screen
     )
 
     @Test

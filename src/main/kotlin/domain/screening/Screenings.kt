@@ -1,7 +1,13 @@
 package domain.screening
 
+import domain.movie.Movie
+import java.time.LocalDate
+
 class Screenings(private val value: List<Screening>) : Iterable<Screening> {
     override fun iterator(): Iterator<Screening> = value.iterator()
 
     fun isEmpty(): Boolean = value.isEmpty()
+
+    fun findBy(movie: Movie, date: LocalDate): Screenings =
+        Screenings(value.filter { it.movie == movie && it.showDate == date })
 }

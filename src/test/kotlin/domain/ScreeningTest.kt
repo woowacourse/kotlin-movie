@@ -3,6 +3,7 @@ package domain
 import domain.movie.Movie
 import domain.movie.RunningTime
 import domain.movie.ShowingPeriod
+import domain.screening.Screen
 import domain.screening.Screening
 import domain.seat.Seat
 import domain.seat.SeatGrade
@@ -35,8 +36,10 @@ class ScreeningTest {
         )
     )
 
+    private val defaultScreen = Screen("테스트관", defaultSeats)
+
     private fun screening(startHour: Int): Screening =
-        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultSeats)
+        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
 
     @Test
     fun `종료 시각은 시작 시각에 영화 상영 길이를 더한 값이다`() {

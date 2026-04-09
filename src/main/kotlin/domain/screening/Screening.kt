@@ -11,7 +11,7 @@ import java.time.LocalTime
 class Screening(
     val movie: Movie,
     val startDateTime: LocalDateTime,
-    private val seats: Seats
+    val screen: Screen
 ) {
     private val reservedSeatNumbers: MutableSet<SeatNumber> = mutableSetOf()
 
@@ -29,12 +29,12 @@ class Screening(
         seatNumbers.forEach {
             require(!reservedSeatNumbers.contains(it)) { "이미 예약된 좌석입니다." }
         }
-        val selectedSeats = seatNumbers.map { seats.findSeat(it) }
+        val selectedSeats = seatNumbers.map { screen.seats.findSeat(it) }
         reservedSeatNumbers.addAll(seatNumbers)
         return Reservation(this, Seats(selectedSeats))
     }
 
-    fun availableSeats(): Seats = seats.excludeReserved(reservedSeatNumbers)
+    fun availableSeats(): Seats = screen.seats.excludeReserved(reservedSeatNumbers)
 
     fun isOverlapping(other: Screening): Boolean =
         startDateTime < other.endDateTime && endDateTime > other.startDateTime
