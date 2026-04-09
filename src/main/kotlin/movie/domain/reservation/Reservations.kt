@@ -18,6 +18,10 @@ class Reservations(
         return reservations.joinToString("\n") { it.display() }
     }
 
+    fun forEach(action: (Reservation) -> Unit) {
+        reservations.forEach(action)
+    }
+
     private fun validateNoOverlapping() {
         reservations.forEachIndexed { index, reservation ->
             val hasOverlap =

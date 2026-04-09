@@ -1,7 +1,18 @@
 package movie.controller
 
 import movie.data.MovieData
+import movie.domain.amount.Money
+import movie.domain.amount.PaymentResult
+import movie.domain.amount.Point
+import movie.domain.discount.DiscountPolicies
+import movie.domain.discount.MovieDayDiscount
+import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
+import movie.domain.payment.Cash
+import movie.domain.payment.CreditCard
+import movie.domain.payment.Payment
+import movie.domain.payment.PaymentMethod
+import movie.domain.payment.PriceCalculator
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
@@ -20,18 +31,104 @@ class MovieController(
     private val user: User = MovieData.createUser(),
 ) {
     fun run(){
-        //예매 여부 확인
         if (!askStartReservation()) return
 
-        //예매하기
         val reservations = collectReservations()
-        //장바구니 담기
+
+        showCart(reservations)
+
+        val paymentResult = processPayment(reservations)
+
+        confirmAndComplete(reservations, paymentResult)
+    }
+
+    //메인 로직
+    private fun processPayment(reservations: Reservations): PaymentResult{
+        val point = inputPoint()
+        val paymentMethod = selectPaymentMethod()
+
+        val paymentResult = calculatePayment(reservations, point, paymentMethod)
+
+        outputView.printFinalPrice(paymentResult.totalPrice)
+
+        return paymentResult
+    }
+
+    private fun confirmAndComplete(
+        reservations: Reservations,
+        paymentResult: PaymentResult
+    ) {
+        val confirm = executeWithRetry { inputView.confirmPayment() }
+
+        if (confirm) {
+            outputView.printComplete(
+                reservations,
+                paymentResult.totalPrice,
+                paymentResult.usedPoint
+            )
+        }
+    }
+
+    private fun showCart(reservations: Reservations) {
         outputView.printCart(reservations)
     }
 
-    private fun askStartReservation(): Boolean =
-        executeWithRetry { inputView.startMessage() }
+    //결제 상세 로직
+    private fun inputPoint(): Point {
+        val input = executeWithRetry { inputView.inputPoint() }
+        return Point(input)
+    }
 
+    private fun selectPaymentMethod(): PaymentMethod {
+        val input = executeWithRetry { inputView.inputPayment() }
+
+        return when (input) {
+            1 -> CreditCard()
+            2 -> Cash()
+            else -> throw IllegalArgumentException("유효하지 않은 결제 수단입니다.")
+        }
+    }
+
+    private fun calculatePayment(
+        reservations: Reservations,
+        point: Point,
+        paymentMethod: PaymentMethod
+    ): PaymentResult {
+
+        val policies = createDiscountPolicies()
+
+        var totalPrice = Money(0)
+
+        reservations.forEach { reservation ->
+            val screening = reservation.getScreening()
+
+            val discounted = policies.applyDiscount(
+                reservation.calculatePrice(),
+                screening.screeningDateTime
+            )
+
+            totalPrice += discounted
+        }
+
+        val usablePoint = point.usableAmount(totalPrice)
+        totalPrice = totalPrice.minus(Money(usablePoint.value))
+
+        totalPrice = paymentMethod.applyDiscount(totalPrice)
+
+        return PaymentResult(
+            totalPrice = totalPrice,
+            usedPoint = usablePoint
+        )
+    }
+
+    private fun createDiscountPolicies(): DiscountPolicies {
+        return DiscountPolicies(
+            percentagePolicies = listOf(MovieDayDiscount()),
+            fixedPolicies = listOf(TimeDiscount())
+        )
+    }
+
+    //예매 로직
     private fun collectReservations(): Reservations {
         val reservationList = mutableListOf<Reservation>()
         do {
@@ -41,8 +138,6 @@ class MovieController(
 
         return Reservations(reservationList)
     }
-    private fun askAddMore(): Boolean =
-        executeWithRetry { inputView.addMoreMovie() }
 
     private fun selectMovieAndSeats(existingReservations: List<Reservation>): Reservation {
         val movie = selectMovie()
@@ -55,6 +150,7 @@ class MovieController(
         return reservation
     }
 
+    //예매 상세 로직
     private fun selectMovie(): Movie =
         executeWithRetry {
             val title = inputView.inputMovieTitle()
@@ -115,6 +211,14 @@ class MovieController(
             }
     }
 
+    //입력 로직
+    private fun askStartReservation(): Boolean =
+        executeWithRetry { inputView.startMessage() }
+
+    private fun askAddMore(): Boolean =
+        executeWithRetry { inputView.addMoreMovie() }
+
+    //유틸
     private fun <T> executeWithRetry(block: () -> T): T {
         while (true) {
             try {

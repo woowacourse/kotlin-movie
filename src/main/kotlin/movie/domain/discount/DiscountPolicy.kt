@@ -5,7 +5,7 @@ import movie.domain.screening.ScreeningDateTime
 
 interface DiscountPolicy {
     fun applyDiscount(
-        price: movie.domain.amount.Money,
-        dateTime: movie.domain.screening.ScreeningDateTime,
-    ): movie.domain.amount.Money
+        price: Money,
+        dateTime: ScreeningDateTime,
+    ): Money
 }
