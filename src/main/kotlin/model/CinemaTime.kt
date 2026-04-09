@@ -2,11 +2,12 @@ package model
 
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @JvmInline
 value class CinemaTime(
-    val time: LocalDateTime,
-) {
+    private val time: LocalDateTime,
+) : Comparable<CinemaTime> {
     fun isBefore(other: CinemaTime): Boolean = time.isBefore(other.time)
 
     fun isAfter(other: CinemaTime): Boolean = time.isAfter(other.time)
@@ -17,5 +18,9 @@ value class CinemaTime(
 
     fun toLocalTime() = time.toLocalTime()
 
+    fun format(pattern: String): String = time.format(DateTimeFormatter.ofPattern(pattern))
+
     fun minuteUntil(other: CinemaTime): Int = Duration.between(time, other.time).toMinutes().toInt()
+
+    override fun compareTo(other: CinemaTime): Int = time.compareTo(other.time)
 }

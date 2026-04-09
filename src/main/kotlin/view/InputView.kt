@@ -1,6 +1,8 @@
 package view
 
 import model.CinemaTime
+import model.schedule.MovieSchedule
+import model.schedule.MovieScreening
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -30,5 +32,13 @@ object InputView {
                 throw IllegalArgumentException("날짜 형식이 올바르지 않습니다. (YYYY-MM-DD)")
             }
         return CinemaTime(date.atStartOfDay())
+    }
+
+    fun selectMovieScreening(movieSchedule: MovieSchedule): MovieScreening {
+        val input = readln()
+        require(input.all { it.isDigit() }) { "숫자만 가능합니다" }
+        val index = input.toInt() - 1
+        require(index in (0..<movieSchedule.size)) { "올바르지 않은 번호입니다." }
+        return movieSchedule[index]
     }
 }
