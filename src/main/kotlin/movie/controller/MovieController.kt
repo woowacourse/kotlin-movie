@@ -55,6 +55,15 @@ class MovieController {
                     movieTime = movieTime,
                     theater = theaterList[0],
                 ),
+                ScreeningMovie(
+                    movie = movie,
+                    movieTime = MovieTime(
+                        date = LocalDate.of(2026, 4, 9),
+                        startTime = LocalTime.of(20, 30, 0),
+                        endTime = LocalTime.of(23, 30, 0),
+                    ),
+                    theater = theaterList[1],
+                ),
             ),
         )
 
