@@ -31,9 +31,9 @@ object TestFixtureData {
     )
 
     val screens = listOf(
-        Screen(seats.subList(0, 2), 1),
-        Screen(seats.subList(2, 4), 2),
-        Screen(seats.subList(4, 6), 3),
+        Screen(seats, 1),
+        Screen(seats, 2),
+        Screen(seats, 3),
     )
 
     val showings = listOf(

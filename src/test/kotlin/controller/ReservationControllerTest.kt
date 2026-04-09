@@ -3,6 +3,7 @@ package controller
 import domain.Movie
 import domain.MovieTheater
 import domain.Reservation
+import domain.Screen
 import domain.Showing
 import java.io.ByteArrayInputStream
 import kotlinx.datetime.LocalDate
@@ -68,6 +69,28 @@ class ReservationController(val movieTheater: MovieTheater) {
         Reservation.checkReservationHistory(movieTheater.reservationInfos, showings[input.toInt() - 1])
 
         return showings[input.toInt() - 1]
+    }
+
+    fun chooseSeat(showing: Showing) {
+        println("좌석 배치도")
+        val screen = showing.screen
+        val maxRow = Screen.maxRow
+        val maxColumn = Screen.maxColumn
+
+        val header = " ".repeat(3) + (1..maxColumn).joinToString("    ")
+        println(header)
+
+        ('A' until 'A' + maxRow).forEach { row ->
+            val line = "$row" + (1..maxColumn).joinToString("") { col ->
+                val seat = screen.seats.find { it.row == row && it.column == col }
+                " [${seat?.grade?.name ?: " "}]"
+            }
+            println(line)
+        }
+        println("예약할 좌석을 입력하세요 (A1, B2):")
+        val input = readln()
+
+        Reservation.checkSeat(screen.seats, input)
     }
 }
 
@@ -225,5 +248,21 @@ class ReservationControllerTest {
 
         // then : 예외가 발생한다.
         assertEquals("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.", exception.message)
+    }
+
+    @Test
+    fun `좌석 입력 형식이 올바르지 않으면 예외가 발생한다`() {
+        // given : 좌석을 입력받는다.
+        val input = "F//10"
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        val showing = TestFixtureData.showings.first()
+
+        // when : 상영을 확인한 뒤 상영 번호를 입력하면
+        val exception = assertThrows<IllegalArgumentException> {
+            controller.chooseSeat(showing)
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("입력된 값이 유효하지 않습니다.", exception.message)
     }
 }
