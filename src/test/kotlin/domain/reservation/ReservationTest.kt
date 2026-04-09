@@ -28,7 +28,7 @@ class ReservationTest {
 
         val screening =
             Screening(
-                1,
+                "F1 더 무비",
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),

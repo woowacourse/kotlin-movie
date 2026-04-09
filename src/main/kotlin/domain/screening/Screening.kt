@@ -6,7 +6,7 @@ import domain.seat.Seat
 import domain.seat.SelectedSeats
 
 class Screening(
-    val id: Int,
+    val title: String,
     val screen: Screen,
     val screeningDateTime: ScreeningDateTime,
     val reservatedSeats: ReservatedSeats,

@@ -27,25 +27,25 @@ object TheaterData {
 
     private fun createF1Movie(screen: Screen): Movie {
         val screenings = listOf(
-            Screening(1, screen, ScreeningDateTime(
+            Screening("F1 더 무비", screen, ScreeningDateTime(
                 LocalDate.of(2025, 9, 20),
                 LocalTime.of(10, 20),
                 LocalTime.of(12, 20)
             ), ReservatedSeats(emptyList())),
 
-            Screening(1, screen, ScreeningDateTime(
+            Screening("F1 더 무비", screen, ScreeningDateTime(
                 LocalDate.of(2025, 9, 20),
                 LocalTime.of(13, 0),
                 LocalTime.of(15, 0)
             ), ReservatedSeats(emptyList())),
 
-            Screening(1, screen, ScreeningDateTime(
+            Screening("F1 더 무비", screen, ScreeningDateTime(
                 LocalDate.of(2025, 9, 20),
                 LocalTime.of(15, 40),
                 LocalTime.of(17, 40)
             ), ReservatedSeats(emptyList())),
 
-            Screening(1, screen, ScreeningDateTime(
+            Screening("F1 더 무비", screen, ScreeningDateTime(
                 LocalDate.of(2025, 9, 20),
                 LocalTime.of(20, 10),
                 LocalTime.of(22, 10)
@@ -57,14 +57,14 @@ object TheaterData {
     private fun createToyStory(screen: Screen): Movie {
         val screenings = listOf(
             Screening(
-                2, screen, ScreeningDateTime(
+                "토이 스토리", screen, ScreeningDateTime(
                     LocalDate.of(2025, 9, 20),
                     LocalTime.of(13, 30),
                     LocalTime.of(15, 30)
                 ), ReservatedSeats(emptyList())
             ),
 
-            Screening(2, screen, ScreeningDateTime(
+            Screening("토이 스토리", screen, ScreeningDateTime(
                 LocalDate.of(2025, 9, 20),
                 LocalTime.of(16, 0),
                 LocalTime.of(18, 0)
@@ -75,7 +75,7 @@ object TheaterData {
 
     private fun createIronMan(screen: Screen): Movie {
         val screenings = listOf(
-            Screening(3, screen, ScreeningDateTime(
+            Screening("아이언맨", screen, ScreeningDateTime(
                 LocalDate.of(2025, 9, 20),
                 LocalTime.of(9, 50),
                 LocalTime.of(11, 50)

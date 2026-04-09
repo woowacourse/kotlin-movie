@@ -24,7 +24,7 @@ object ReservationData {
 
     private val screening1 =
         Screening(
-            1,
+            "토이 스토리",
             screen,
             ScreeningDateTime(
                 LocalDate.of(2026, 1, 1),
@@ -36,7 +36,7 @@ object ReservationData {
 
     private val screening2 =
         Screening(
-            2,
+            "F1 더 무비",
             screen,
             ScreeningDateTime(
                 LocalDate.of(2026, 1, 1),
