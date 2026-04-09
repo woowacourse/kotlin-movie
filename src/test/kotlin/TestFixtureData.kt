@@ -1,3 +1,4 @@
+import domain.Cart
 import domain.Movie
 import domain.MovieTheater
 import domain.ReservationInfo
@@ -53,5 +54,9 @@ object TestFixtureData {
         showings,
         reservationInfos,
         users,
+    )
+
+    val cart: Cart = Cart(
+        reservationInfos = reservationInfos,
     )
 }
