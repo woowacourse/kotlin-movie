@@ -17,8 +17,6 @@ class PaymentController(val cart: Cart, val user: User) {
 
         OutputView.printTotalPrice(price)
 
-        val input = InputView.readPurchaseConfirm()
-
         return price to pair.second
     }
 

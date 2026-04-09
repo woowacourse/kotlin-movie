@@ -92,5 +92,8 @@ fun main() {
     )
 
     val total = paymentController.run()
+    val confirm = InputView.readPurchaseConfirm()
+    if (confirm != "Y") return
+
     OutputView.printTotal(cartController.getAllReservationInfo(), total.first, total.second)
 }
