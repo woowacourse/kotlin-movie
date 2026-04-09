@@ -53,7 +53,6 @@ object TestFixtureData {
         movies,
         showings,
         reservationInfos,
-        users,
     )
 
     val cart: Cart = Cart(

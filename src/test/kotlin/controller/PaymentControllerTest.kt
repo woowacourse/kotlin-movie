@@ -57,14 +57,14 @@ class PaymentControllerTest {
     fun `결제 수단 할인(신용카드 5%, 현금 2%)이 적용된다`() {
         // given : 결제 수단으로 신용카드가 제시된다.
         val input = "1"
-        val price = 27_700
+        val price = 10_000
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 결제 수단을 적용하면
         val result = controller.getPaymentMethod(price)
 
         // then : 할인된 금액이 반환된다.
-        assertEquals(27146, result)
+        assertEquals(9_500, result)
     }
 
     @Test
@@ -77,6 +77,6 @@ class PaymentControllerTest {
         val result = controller.run()
 
         // then : 할인된 총 금액이 반환된다.
-        assertEquals(25186, result)
+        assertEquals(24_415, result)
     }
 }
