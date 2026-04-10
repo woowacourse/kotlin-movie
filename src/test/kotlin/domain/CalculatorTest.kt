@@ -3,6 +3,7 @@ package domain
 import domain.Id
 import domain.purchase.Calculator
 import domain.purchase.PaymentMethod
+import domain.purchase.Price
 import domain.user.User
 import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -64,19 +65,16 @@ class CalculatorTest {
     @Test
     fun `포인트가 예매 금액에서 직접 차감된다`() {
         // given : user는 2000 포인트를 가지고 있다.
-        val user = User(Id(1))
-        val price = 16_000
+        val user = User(Id(2))
+        val price = Price(16_000)
 
         // when : 사용 포인트가 2000이면
-        val result = Calculator.subtractUserPoint(
-            price = price,
-            user = user,
-            subtractPoint = 2000,
-        )
+        val result = price.subtractPrice(2000)
+        val resultUser = user.discountPoint(2000)
 
         // then : user의 포인트는 0이 되고 15_000원이 반환된다.
-        assertEquals(14_000, result)
-        assertEquals(0, user.point.value)
+        assertEquals(14_000, result.price)
+        assertEquals(0, resultUser.point.value)
     }
 
     @Test

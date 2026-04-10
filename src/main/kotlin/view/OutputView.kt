@@ -33,9 +33,9 @@ object OutputView {
         println()
     }
 
-    fun printCart(cart: Cart) {
+    fun printCart(items: List<String>) {
         println("장바구니")
-        println(cart.showItems())
+        println(items)
         println()
     }
 
@@ -56,7 +56,7 @@ object OutputView {
     ) {
         println("예매완료")
         println("내역:")
-        printCart(cart)
+        printCart(cart.showItems())
 
         println("결제 금액: ${printByDecimalFormat(totalPrice)}원 (포인트 ${printByDecimalFormat(usedPoint)})")
 

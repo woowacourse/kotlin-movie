@@ -1,18 +1,8 @@
 package domain.purchase
 
-import domain.user.User
 import kotlinx.datetime.LocalDateTime
 
 object Calculator {
-
-    fun subtractUserPoint(
-        price: Int,
-        user: User,
-        subtractPoint: Int,
-    ): Int {
-        user.discountPoint(subtractPoint)
-        return price - subtractPoint
-    }
 
     fun calculateByMovie(
         price: Int,

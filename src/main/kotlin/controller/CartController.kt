@@ -18,7 +18,7 @@ class CartController {
                 seats = seats,
             ),
         )
-        OutputView.printCart(cart)
+        OutputView.printCart(cart.showItems())
         return cart
     }
 }

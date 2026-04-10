@@ -1,6 +1,7 @@
 package domain
 
 import domain.Id
+import domain.user.Point
 import domain.user.User
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -31,13 +32,13 @@ class UserTest {
     @Test
     fun `포인트 사용 시 포인트가 차감된다`() {
         // given : User 객체가 주어진다
-        val result = User(Id(1))
+        val user = User(Id(1), Point(2000))
 
         // when : discountPoint로 500을 입력했을 때
-        result.discountPoint(500)
+        val result = user.discountPoint(1000)
 
-        // then : 전체 포인트 값이 500이 된다.
-        assertEquals(1500, result.point.value)
+        // then : 전체 포인트 값이 1500이 된다.
+        assertEquals(1000, result.point.value)
     }
 
     @Test
