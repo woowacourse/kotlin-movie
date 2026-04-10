@@ -33,12 +33,11 @@ class ScreeningMovies(
     ): List<ScreeningMovie> {
         val screeningMovies = value.filter { it.movie.title == title && it.movieTime.date == date }
 
-        if (screeningMovies.isEmpty()) {
-            throw IllegalArgumentException("날짜가 올바르지 않습니다.")
-        }
+        require(!screeningMovies.isEmpty()) { throw IllegalArgumentException("날짜가 올바르지 않습니다.") }
 
         return screeningMovies
     }
 
-    fun containsMovieTitle(movieTitle: MovieTitle): Boolean = value.any { it.movie.title == movieTitle }
+    fun containsMovieTitle(movieTitle: MovieTitle): Boolean =
+        value.any { it.movie.title == movieTitle }
 }

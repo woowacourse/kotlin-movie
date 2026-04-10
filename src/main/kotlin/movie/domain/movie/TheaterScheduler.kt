@@ -32,9 +32,12 @@ class TheaterScheduler(
         movie: Movie,
         movieTime: MovieTime,
     ) {
-        if (checkDuplicateTime(theater = theater, movieTime = movieTime)) {
-            throw IllegalArgumentException("시간 중복으로 영화를 추가할 수 없습니다.")
-        }
+        require(
+            !checkDuplicateTime(
+                theater = theater,
+                movieTime = movieTime
+            )
+        ) { throw IllegalArgumentException("시간 중복으로 영화를 추가할 수 없습니다.") }
 
         val newMovie =
             createScreeningMovie(

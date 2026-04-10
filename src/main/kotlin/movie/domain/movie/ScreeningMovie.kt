@@ -32,9 +32,7 @@ class ScreeningMovie(
     fun reserveCheck(seatNumber: SeatNumber) {
         require(theater.validateSeat(seatNumber)) { "존재하지 않는 좌석입니다." }
 
-        if (value.contains(seatNumber)) {
-            throw IllegalArgumentException("이미 예약된 좌석입니다.")
-        }
+        require(!value.contains(seatNumber)) { throw IllegalArgumentException("이미 예약된 좌석입니다.") }
     }
 
     fun calculatePrice(targetSeatNumbers: List<SeatNumber>): Price =
@@ -46,5 +44,6 @@ class ScreeningMovie(
 
     fun isReserved(seatNumber: SeatNumber) = value.contains(seatNumber)
 
-    fun isAbleReservation(seatNumbers: List<SeatNumber>): Boolean = seatNumbers.any { value.contains(it) }
+    fun isAbleReservation(seatNumbers: List<SeatNumber>): Boolean =
+        seatNumbers.any { value.contains(it) }
 }

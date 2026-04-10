@@ -28,7 +28,7 @@ class DiscountPolicy {
         totalPrice: Price,
         date: LocalDate,
     ): Price {
-        if (discountCondition.isMovieDay(date = date)) {
+        require(!discountCondition.isMovieDay(date = date)) {
             val discountPrice = Price((totalPrice.value * 0.1).toInt())
 
             return totalPrice.minusPrice(discountPrice)

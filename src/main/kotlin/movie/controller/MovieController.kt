@@ -59,7 +59,7 @@ class MovieController {
                     movie = movie,
                     movieTime =
                         MovieTime(
-                            date = LocalDate.of(2026, 4, 9),
+                            date = LocalDate.of(2026, 4, 10),
                             startTime = LocalTime.of(20, 30, 0),
                             endTime = LocalTime.of(23, 30, 0),
                         ),
@@ -86,9 +86,7 @@ class MovieController {
     fun run() {
         val isStart = getReservationStart()
 
-        if (!isStart) {
-            return
-        }
+        require(isStart) { return }
 
         val ticket = Ticket()
 
@@ -101,13 +99,15 @@ class MovieController {
             OutputView.printSeats(screeningMovie = screeningMovie)
             val selectedSeatNumbers = getSeatNumbers(screeningMovie = screeningMovie)
 
-            val reservation = ticket.addReservation(screeningMovie = screeningMovie, seatNumbers = selectedSeatNumbers)
+            val reservation = ticket.addReservation(
+                screeningMovie = screeningMovie,
+                seatNumbers = selectedSeatNumbers
+            )
 
             OutputView.printReservationAddMessage(reservation = reservation)
 
-            if (!getContinueReservation()) {
-                break
-            }
+            require(getContinueReservation()) { break }
+
         }
 
         OutputView.printCart(ticket = ticket)
@@ -134,9 +134,7 @@ class MovieController {
 
         val isPayment = getUserPayment()
 
-        if (!isPayment) {
-            ticket.resetSeat()
-        }
+        require(isPayment) { ticket.resetSeat() }
 
         OutputView.printReceipt(
             ticket = ticket,
@@ -168,9 +166,7 @@ class MovieController {
 
             val movieTitle = InputParser.parseMovieTitle(input)
 
-            if (!scheduler.containsMovieTitle(movieTitle)) {
-                throw IllegalArgumentException("상영 중인 영화가 아닙니다.")
-            }
+            require(scheduler.containsMovieTitle(movieTitle)) { "상영 중인 영화가 아닙니다." }
 
             movieTitle
         }
@@ -194,9 +190,7 @@ class MovieController {
             val index = InputParser.parseIndex(input = input, size = screeningMovies.size)
             val selectedMovie = screeningMovies[index]
 
-            if (ticket.isDupTime(selectedMovie.movieTime)) {
-                throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.")
-            }
+            require(!ticket.isDupTime(selectedMovie.movieTime)) { throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.") }
 
             selectedMovie
         }
@@ -208,8 +202,10 @@ class MovieController {
 
             val seatNumbers = InputParser.parseSeatNumbers(input)
 
-            if (screeningMovie.isAbleReservation(seatNumbers)) {
-                throw IllegalArgumentException("이미 예약된 좌석입니다.")
+            require(!screeningMovie.isAbleReservation(seatNumbers)) {
+                throw IllegalArgumentException(
+                    "이미 예약된 좌석입니다."
+                )
             }
 
             seatNumbers
