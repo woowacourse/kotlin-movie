@@ -8,12 +8,7 @@ import domain.screening.Screening
 import java.time.format.DateTimeFormatter
 
 class OutputView {
-    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-
-    fun printStartMessage() {
-        println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
-    }
 
     fun printScreenings(screenings: List<Screening>) {
         println("해당 날짜의 상영 목록")
@@ -65,18 +60,47 @@ class OutputView {
         }
     }
 
+    fun printTotalCost(totalCost: Int) {
+        println("가격 계산")
+        println("최종 결제 금액: ${"%,d".format(totalCost)}원")
+    }
+
+    fun printEndTicketing() {
+        println("예매를 종료합니다.")
+    }
+
+    fun printCancelPay() {
+        println("결제가 취소되었습니다.")
+    }
+
+    fun printFinishReservationMessage() {
+        println("예매 완료")
+        println("내역:")
+    }
+
+    fun printTicketReservationInformation(seatsInfos: List<Seat>, screeningInfo: Screening) {
+        println(formatSeatsAndScreeningInfo(seatsInfos, screeningInfo))
+    }
+
     fun printPaymentResult(
         amount: Int,
         usedPoint: Int,
     ) {
-        println("예매 완료")
-        println("내역:")
         println("결제 금액: ${"%,d".format(amount)}원  (포인트 ${"%,d".format(usedPoint)}원 사용)")
         println()
         println("감사합니다.")
     }
 
-    fun printMessage(message: String) {
+    fun printErrorMessage(message: String) {
         println(message)
+    }
+
+    private fun formatSeatsAndScreeningInfo(seats: List<Seat>, screeningInfos: Screening): String {
+        val seats = seats.joinToString(", ") { it.seatNumber }
+        val screeningInfo = "- [${screeningInfos.movie.title.value}]" +
+                " ${screeningInfos.startTime.value.toLocalDate()} " +
+                "${screeningInfos.startTime.value.toLocalTime()}"
+
+        return screeningInfo +"좌석: "+ seats
     }
 }

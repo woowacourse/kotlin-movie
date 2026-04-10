@@ -1,17 +1,17 @@
 import controller.CinemaController
 import controller.ScreeningMockData
-import repository.CinemaRepository
+import repository.Screenings
 import view.InputView
 import view.OutputView
 
 fun main() {
     val repository =
-        CinemaRepository(
+        Screenings(
             screenings = ScreeningMockData.screenings(),
         )
     val controller =
         CinemaController(
-            repository = repository,
+            screenings = repository,
             inputView = InputView(),
             outputView = OutputView(),
         )

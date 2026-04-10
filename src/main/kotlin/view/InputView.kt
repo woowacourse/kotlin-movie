@@ -1,8 +1,18 @@
 package view
 
 class InputView {
-    fun readYesOrNo(message: String): String {
-        println(message)
+    fun readConfirmTicketingStart(): String {
+        println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
+        return readln().trim()
+    }
+
+    fun readConfirmAddOtherMovie(): String {
+        println("다른 영화를 추가하시겠습니까? (Y/N)")
+        return readln().trim()
+    }
+
+    fun readConfirmPay(): String {
+        println("위 금액으로 결제하시겠습니까? (Y/N)")
         return readln().trim()
     }
 

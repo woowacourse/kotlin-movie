@@ -26,10 +26,8 @@ class CinemaController(
     private var cart: Cart = Cart()
 
     fun run() {
-        outputView.printStartMessage()
-
         if (!isReservationStarted()) {
-            outputView.printMessage("예매를 종료합니다.")
+            outputView.printEndTicketing()
             return
         }
 
@@ -37,7 +35,7 @@ class CinemaController(
         proceedPayment()
     }
 
-    private fun isReservationStarted(): Boolean = inputView.readYesOrNo("").uppercase() == "Y"
+    private fun isReservationStarted(): Boolean = inputView.readConfirmTicketingStart().uppercase() == CONFIRM_INPUT
 
     private fun reserveMovies() {
         do {
@@ -45,7 +43,7 @@ class CinemaController(
         } while (askToAddMoreMovie())
     }
 
-    private fun askToAddMoreMovie(): Boolean = inputView.readYesOrNo("다른 영화를 추가하시겠습니까? (Y/N)").uppercase() == "Y"
+    private fun askToAddMoreMovie(): Boolean = inputView.readConfirmAddOtherMovie().uppercase() == CONFIRM_INPUT
 
     private fun reserveOneMovie() {
         val title = inputView.readMovieTitle()
@@ -114,24 +112,22 @@ class CinemaController(
         val paymentMethod = retryPrompt { PaymentMethod.validate(inputView.readPaymentMethod()) }
         val payment = Payment(cart, DiscountPolicy())
 
-        outputView.printMessage("가격 계산")
-
         when (val result = payment.pay(point, account, paymentMethod)) {
             is PayResult.Success -> confirmPayment(result)
-            is PayResult.Failure -> outputView.printMessage(result.message)
+            is PayResult.Failure -> outputView.printErrorMessage(result.message)
         }
     }
 
     private fun confirmPayment(result: PayResult.Success) {
-        outputView.printMessage("최종 결제 금액: ${"%,d".format(result.paidAmount)}원")
+        outputView.printTotalCost(result.paidAmount)
 
-        val confirm = inputView.readYesOrNo("위 금액으로 결제하시겠습니까? (Y/N)").uppercase()
-        if (confirm == "Y") {
+        val confirm = inputView.readConfirmPay().uppercase()
+        if (confirm == CONFIRM_INPUT) {
             printReservationHistory(result)
             return
         }
 
-        outputView.printMessage("결제가 취소되었습니다.")
+        outputView.printCancelPay()
     }
 
     private fun validateScreeningOverlap(target: Screening) {
@@ -168,25 +164,13 @@ class CinemaController(
     }
 
     private fun printReservationHistory(result: PayResult.Success) {
-        outputView.printMessage("예매 완료")
-        outputView.printMessage("내역:")
+        outputView.printFinishReservationMessage()
 
         result.cart.items.forEach {
-            val seats = it.seats.joinToString(", ") { seat -> seat.seatNumber }
-            outputView.printMessage(
-                "- [${it.screen.movie.title.value}] " +
-                    "${it.screen.startTime.value.toLocalDate()} " +
-                    "${it.screen.startTime.value.toLocalTime()} " +
-                    "좌석: $seats",
-            )
+            outputView.printTicketReservationInformation(it.seats, it.screen)
         }
 
-        outputView.printMessage(
-            "결제 금액: ${"%,d".format(result.paidAmount)}원  " +
-                "(포인트 ${"%,d".format(result.usedPoint)}원 사용)",
-        )
-        outputView.printMessage("")
-        outputView.printMessage("감사합니다.")
+        outputView.printPaymentResult(result.paidAmount, result.usedPoint)
     }
 
     private fun selectedScreeningReservedSeats(screening: Screening): List<Seat> {
@@ -218,7 +202,7 @@ class CinemaController(
             try {
                 return action()
             } catch (e: Exception) {
-                println(e.message)
+                outputView.printErrorMessage(e.message ?: "")
             }
         }
     }
