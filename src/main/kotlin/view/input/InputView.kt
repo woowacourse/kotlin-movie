@@ -12,6 +12,11 @@ object InputView {
         }
     }
 
+    fun readStartReserve(): Boolean {
+        println(LABEL.START_RESERVE_LABEL)
+        return readYesOrNo()
+    }
+
     fun readMovieTitle(): String {
         println(LABEL.INPUT_TITLE_LABEL)
         val value = inputTrim() ?: ""
@@ -79,6 +84,7 @@ object InputView {
     fun inputTrim() = readlnOrNull()?.trim()
 
     object LABEL {
+        const val START_RESERVE_LABEL = "영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)"
         const val YES_OR_NO_ERROR = "Y 또는 N을 입력해 주세요."
         const val INPUT_TITLE_LABEL = "예매할 영화 제목을 입력하세요:"
         const val BLANK_ERROR = "공백은 입력할 수 없습니다."
