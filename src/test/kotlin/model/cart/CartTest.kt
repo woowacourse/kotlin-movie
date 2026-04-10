@@ -15,7 +15,7 @@ class CartTest {
     fun `장바구니에 예매 항목을 추가할 수 있다`() {
         val cart = Cart()
 
-        val newCart = cart.addItem(createScreening(), listOf("A1"))
+        val newCart = cart.addItem(CartItem(createScreening(), listOf("A1")))
 
         assertThat(newCart.items).hasSize(1)
     }
@@ -26,8 +26,20 @@ class CartTest {
 
         val newCart =
             cart
-                .addItem(createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 10, 0)), listOf("A1"))
-                .addItem(createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)), listOf("B2"))
+                .addItem(
+                    CartItem(
+                        createScreening(
+                            startDateTime = LocalDateTime.of(2026, 4, 11, 10, 0)
+                        ), listOf("A1")
+                    )
+                )
+                .addItem(
+                    CartItem(
+                        createScreening(
+                            startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)
+                        ), listOf("B2")
+                    )
+                )
 
         assertThat(newCart.items).hasSize(2)
     }
@@ -36,8 +48,10 @@ class CartTest {
     fun `장바구니에 담긴 모든 항목의 총 금액을 계산할 수 있다`() {
         val cart =
             Cart().addItem(
-                createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)),
-                listOf("A1"),
+                CartItem(
+                    createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)),
+                    listOf("A1"),
+                )
             )
 
         val totalPrice =
@@ -55,11 +69,15 @@ class CartTest {
         val cart =
             Cart()
                 .addItem(
-                    createScreening(startDateTime = LocalDateTime.of(2026, 4, 10, 10, 0)),
-                    listOf("A1"),
+                    CartItem(
+                        createScreening(startDateTime = LocalDateTime.of(2026, 4, 10, 10, 0)),
+                        listOf("A1"),
+                    )
                 ).addItem(
-                    createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)),
-                    listOf("C1"),
+                    CartItem(
+                        createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)),
+                        listOf("C1"),
+                    )
                 )
 
         val totalPrice =
@@ -77,8 +95,8 @@ class CartTest {
         val screening = createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0))
         val cart =
             Cart()
-                .addItem(screening, listOf("A1"))
-                .addItem(screening, listOf("A2"))
+                .addItem(CartItem(screening, listOf("A1")))
+                .addItem(CartItem(screening, listOf("A2")))
 
         val totalPrice =
             cart.calculateTotalPrice(
@@ -94,8 +112,10 @@ class CartTest {
     fun `총 금액 계산 시 결제 수단 할인은 포인트 할인 후 금액에 적용된다`() {
         val cart =
             Cart().addItem(
-                createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)),
-                listOf("A1"),
+                CartItem(
+                    createScreening(startDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)),
+                    listOf("A1"),
+                )
             )
 
         val totalPrice =
@@ -108,7 +128,15 @@ class CartTest {
         assertThat(totalPrice).isEqualTo(9_500)
     }
 
-    private fun createScreening(startDateTime: LocalDateTime = LocalDateTime.of(2026, 4, 11, 13, 0)): Screening =
+    private fun createScreening(
+        startDateTime: LocalDateTime = LocalDateTime.of(
+            2026,
+            4,
+            11,
+            13,
+            0
+        )
+    ): Screening =
         Screening(
             movie =
                 Movie(
