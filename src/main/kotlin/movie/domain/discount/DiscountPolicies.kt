@@ -4,8 +4,8 @@ import movie.domain.amount.Price
 import java.time.LocalDateTime
 
 class DiscountPolicies(
-    private val percentagePolicies: List<DiscountPolicy>,
-    private val fixedPolicies: List<DiscountPolicy>,
+    private val percentagePolicies: List<PercentageDiscountPolicy>,
+    private val fixedPolicies: List<FixedAmountDiscountPolicy>,
 ) {
     fun applyDiscount(
         price: Price,

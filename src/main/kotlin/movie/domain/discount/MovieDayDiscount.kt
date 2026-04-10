@@ -3,7 +3,7 @@ package movie.domain.discount
 import movie.domain.amount.Price
 import java.time.LocalDateTime
 
-class MovieDayDiscount : DiscountPolicy {
+class MovieDayDiscount : PercentageDiscountPolicy {
     override fun applyDiscount(
         price: Price,
         localDateTime: LocalDateTime,

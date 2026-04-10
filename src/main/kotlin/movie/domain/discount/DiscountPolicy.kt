@@ -9,3 +9,7 @@ interface DiscountPolicy {
         localDateTime: LocalDateTime,
     ): Price
 }
+
+interface PercentageDiscountPolicy : DiscountPolicy
+
+interface FixedAmountDiscountPolicy : DiscountPolicy

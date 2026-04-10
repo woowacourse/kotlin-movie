@@ -4,7 +4,7 @@ import movie.domain.amount.Price
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class TimeDiscount : DiscountPolicy {
+class TimeDiscount : FixedAmountDiscountPolicy {
     override fun applyDiscount(
         price: Price,
         localDateTime: LocalDateTime,
