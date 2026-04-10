@@ -114,7 +114,7 @@ class MovieController(
         val screening = selectScreening(movie, date, existingReservations)
         val seats = selectSeats(screening)
         val updatedScreening = screening.reserve(seats)
-        val reservation = Reservation(updatedScreening, SelectedSeats(seats))
+        val reservation = Reservation(movie, updatedScreening, SelectedSeats(seats))
         outputView.printAddedToCart(reservation)
         return reservation
     }

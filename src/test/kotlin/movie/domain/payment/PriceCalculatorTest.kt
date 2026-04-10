@@ -5,11 +5,13 @@ import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
+import movie.domain.movie.Movie
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
+import movie.domain.screening.Screenings
 import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
@@ -26,7 +28,6 @@ class PriceCalculatorTest {
         // given
         val screening =
             Screening(
-                title = "토이 스토리",
                 screen = Screen(1, Seats.createDefault()),
                 screeningDateTime =
                     ScreeningDateTime(
@@ -49,11 +50,13 @@ class PriceCalculatorTest {
                     Seat("C", 1, SeatGrade.S),
                 ),
             )
+        val movie = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening)))
 
+        // when
         val reservations =
             Reservations(
                 listOf(
-                    Reservation(screening, selectedSeats),
+                    Reservation(movie, screening, selectedSeats),
                 ),
             )
 

@@ -20,7 +20,6 @@ class ScreeningTest {
 
         val screening =
             Screening(
-                "토이 스토리",
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
@@ -54,7 +53,6 @@ class ScreeningTest {
 
         val screening =
             Screening(
-                "토이 스토리",
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
@@ -85,7 +83,6 @@ class ScreeningTest {
 
         val screening =
             Screening(
-                "토이 스토리",
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),

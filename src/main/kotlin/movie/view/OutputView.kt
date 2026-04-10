@@ -2,6 +2,7 @@ package movie.view
 
 import movie.domain.amount.Money
 import movie.domain.amount.Point
+import movie.domain.movie.Movie
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
@@ -93,13 +94,16 @@ class OutputView {
     private fun Reservations.toDisplayText(): String = getReservations().joinToString("\n") { it.toDisplayText() }
 
     private fun Reservation.toDisplayText(): String {
+        val movie = getMovie()
         val screening = getScreening()
         val selectedSeats = getSelectedSeats()
-        return "- [${getScreening().title}]" +
+        return movie.toDisplayTitle() +
             " ${screening.screeningDateTime.date} " +
             "${screening.screeningDateTime.startTime}  " +
             "좌석: ${selectedSeats.toDisplayText()}"
     }
+
+    private fun Movie.toDisplayTitle(): String = "- [$title]"
 
     private fun SelectedSeats.toDisplayText(): String = getSeats().joinToString(", ") { "${it.row}${it.column}" }
 

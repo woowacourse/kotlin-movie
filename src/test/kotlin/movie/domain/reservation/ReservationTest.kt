@@ -1,9 +1,11 @@
 package movie.domain.reservation
 
 import movie.domain.amount.Money
+import movie.domain.movie.Movie
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
+import movie.domain.screening.Screenings
 import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
@@ -28,7 +30,6 @@ class ReservationTest {
 
         val screening =
             Screening(
-                "F1 더 무비",
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
@@ -43,7 +44,8 @@ class ReservationTest {
                     ),
                 ),
             )
-        val reservation = Reservation(screening, selectedSeats)
+        val movie = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening)))
+        val reservation = Reservation(movie, screening, selectedSeats)
 
         // when
         val price = reservation.calculatePrice()

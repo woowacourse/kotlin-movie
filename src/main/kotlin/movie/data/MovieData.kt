@@ -34,7 +34,6 @@ object MovieData {
         val screenings =
             listOf(
                 Screening(
-                    "F1 더 무비",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -44,7 +43,6 @@ object MovieData {
                     ReservedSeats(emptySet()),
                 ),
                 Screening(
-                    "F1 더 무비",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -61,7 +59,6 @@ object MovieData {
                     ),
                 ),
                 Screening(
-                    "F1 더 무비",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -71,7 +68,6 @@ object MovieData {
                     ReservedSeats(emptySet()),
                 ),
                 Screening(
-                    "F1 더 무비",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -91,7 +87,6 @@ object MovieData {
         val screenings =
             listOf(
                 Screening(
-                    "토이 스토리",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -101,7 +96,6 @@ object MovieData {
                     ReservedSeats(emptySet()),
                 ),
                 Screening(
-                    "토이 스토리",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -121,7 +115,6 @@ object MovieData {
         val screenings =
             listOf(
                 Screening(
-                    "아이언맨",
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),

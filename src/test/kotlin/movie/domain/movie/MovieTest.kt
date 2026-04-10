@@ -21,7 +21,6 @@ class MovieTest {
             Screenings(
                 listOf(
                     Screening(
-                        title = "F1 더 무비",
                         screen = Screen(1, Seats.createDefault()),
                         screeningDateTime =
                             ScreeningDateTime(
