@@ -24,7 +24,8 @@ class Seat(
             when (row) {
                 "A", "B" -> GradeB()
                 "C", "D" -> GradeS()
-                else -> GradeA()
+                "E" -> GradeA()
+                else -> throw IllegalArgumentException("존재하지 않는 좌석입니다.")
             }
     }
 
