@@ -79,7 +79,7 @@ fun main() {
         ReservationInfos(emptyList()),
     )
 
-    lateinit var cart: Cart
+    var cart = Cart(ReservationInfos(emptyList()))
     val cartController = CartController()
     val flowController = FlowController()
 

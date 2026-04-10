@@ -1,8 +1,6 @@
 package controller
 
 import domain.cart.Cart
-import domain.discount.MovieDayDiscount
-import domain.discount.TimeDiscount
 import domain.purchase.PaymentMethod
 import domain.purchase.PaymentResult
 import domain.purchase.Price
@@ -34,21 +32,8 @@ class PaymentController(val cart: Cart, val user: User) {
 
     fun discountPerSeat(): Price {
         val discountPrice =
-            cart.reservationInfos.infos.map {
-                var initPrice = it.seats.getAllPrice()
-
-                val movieDayDiscount = MovieDayDiscount()
-                if (movieDayDiscount.isApplicable(it.showing.startTime)) {
-                    initPrice = movieDayDiscount.discountApply(initPrice)
-                }
-
-                val timeDiscount = TimeDiscount()
-                if (timeDiscount.isApplicable(it.showing.startTime)) {
-                    initPrice = timeDiscount.discountApply(initPrice)
-                }
-                initPrice.price
-            }
-        return Price(discountPrice.sum())
+            cart.getDiscountedItems()
+        return Price(discountPrice)
     }
 
     fun getPaymentMethod(price: Price): Price {

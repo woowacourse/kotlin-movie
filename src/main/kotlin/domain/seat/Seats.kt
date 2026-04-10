@@ -8,7 +8,7 @@ class Seats(val seats: List<Seat>) {
     }
 
     fun getAllPrice(): Price {
-        return Price(seats.sumOf { it.grade.price })
+        return Price(seats.sumOf { it.getSeatPrice() })
     }
 
     fun checkSeat(input: String): Seat {

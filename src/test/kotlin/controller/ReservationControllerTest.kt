@@ -108,7 +108,8 @@ class ReservationControllerTest {
 
         // when : 상영을 확인하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.chooseDate(movie)
+            val date = controller.chooseDate(movie)
+            controller.chooseShowingTime(movie, date)
         }
 
         // then : 예외가 발생한다.

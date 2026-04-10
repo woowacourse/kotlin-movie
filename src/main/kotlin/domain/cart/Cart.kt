@@ -23,4 +23,8 @@ class Cart(val reservationInfos: ReservationInfos) {
     fun showItems(): List<String> {
         return reservationInfos.getAllInfos()
     }
+
+    fun getDiscountedItems(): Int {
+        return reservationInfos.applyDiscount()
+    }
 }
