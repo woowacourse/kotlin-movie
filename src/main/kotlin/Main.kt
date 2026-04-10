@@ -22,6 +22,8 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 fun main() {
+    val movieId1 = Uuid.generateV7()
+    val movieId2 = Uuid.generateV7()
     val screenSchedules =
         listOf(
             ScreenSchedule(
@@ -37,7 +39,7 @@ fun main() {
                             movie =
                                 Movie(
                                     name = MovieName(name = "혼자사는남자"),
-                                    id = MovieId(Uuid.generateV7()),
+                                    id = MovieId(movieId1),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -79,7 +81,7 @@ fun main() {
                             movie =
                                 Movie(
                                     name = MovieName(name = "혼자사는남자"),
-                                    id = MovieId(Uuid.generateV7()),
+                                    id = MovieId(movieId1),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -121,7 +123,7 @@ fun main() {
                             movie =
                                 Movie(
                                     name = MovieName(name = "혼자사는남자"),
-                                    id = MovieId(Uuid.generateV7()),
+                                    id = MovieId(movieId1),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -163,7 +165,7 @@ fun main() {
                             movie =
                                 Movie(
                                     name = MovieName(name = "F4 꽃보다 남자"),
-                                    id = MovieId(Uuid.generateV7()),
+                                    id = MovieId(movieId2),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -216,7 +218,7 @@ fun main() {
                             movie =
                                 Movie(
                                     name = MovieName(name = "F4 꽃보다 남자"),
-                                    id = MovieId(Uuid.generateV7()),
+                                    id = MovieId(movieId2),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -258,7 +260,7 @@ fun main() {
                             movie =
                                 Movie(
                                     name = MovieName(name = "혼자사는남자"),
-                                    id = MovieId(Uuid.generateV7()),
+                                    id = MovieId(movieId2),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -310,7 +312,7 @@ fun main() {
             movies = listOf(
                 Movie(
                     name = MovieName(name = "혼자사는남자"),
-                    id = MovieId(Uuid.generateV7()),
+                    id = MovieId(movieId1),
                     runningTime = RunningTime(minute = 60),
                 )
             )
