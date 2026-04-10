@@ -5,6 +5,6 @@ import domain.reservation.ReservationInfos
 class MovieTheater(
 //    val screens: List<Screen>,
     val movies: Movies,
-    val showings: List<Showing>,
+    val showings: Showings,
     val reservationInfos: ReservationInfos,
 )

@@ -1,7 +1,6 @@
 package domain
 
 import domain.cinema.Showing
-import domain.reservation.Reservation
 import kotlinx.datetime.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -41,10 +40,10 @@ class ReservationTest {
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
         val movie = TestFixtureData.movieTheater.movies.findMovieById(movieId)
-        val result = Reservation.findShowing(TestFixtureData.movieTheater, movie, date)
+        val result = TestFixtureData.movieTheater.showings.findByMovieAndDate(movie, date)
 
         // then : 해당하는 상영 일정을 반환한다.
-        assertEquals(listOf<Showing>(TestFixtureData.showings.first()), result)
+        assertEquals(listOf<Showing>(TestFixtureData.showings.first()), result.showings)
     }
 
     @Test
@@ -56,7 +55,7 @@ class ReservationTest {
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
         val movie = TestFixtureData.movieTheater.movies.findMovieById(movieId)
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.findShowing(TestFixtureData.movieTheater, movie, date)
+            TestFixtureData.movieTheater.showings.findByMovieAndDate(movie, date)
         }
         // then : 예외가 발생한다.
         assertEquals("해당 영화는 해당 날짜에 상영되지 않습니다.", exception.message)
@@ -83,7 +82,7 @@ class ReservationTest {
 
         // when : 사용자가 해당 좌석을 예약하려고 할 때
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.checkSeatFormat(seat)
+            TestFixtureData.screens.first().seats.checkSeat(seat)
         }
         // then : 예외가 발생한다.
         assertEquals("입력된 값이 유효하지 않습니다.", exception.message)
@@ -96,7 +95,7 @@ class ReservationTest {
 
         // when : 사용자가 해당 좌석을 예약하려고 할 때
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.checkSeat(TestFixtureData.seats, seat)
+            TestFixtureData.screens.first().seats.checkSeat(seat)
         }
         // then : 예외가 발생한다.
         assertEquals("해당 상영관에는 해당 좌석이 존재하지 않습니다.", exception.message)
@@ -109,7 +108,7 @@ class ReservationTest {
 
         // when : 사용자가 해당 좌석을 예약하려고 할 때
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.checkSeat(TestFixtureData.seats, seat)
+            TestFixtureData.screens.first().seats.checkSeat(seat)
         }
         // then : 예외가 발생한다.
         assertEquals("해당 좌석은 이미 예약되었습니다.", exception.message)

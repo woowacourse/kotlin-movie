@@ -2,15 +2,15 @@ package view
 
 import domain.cart.Cart
 import domain.cinema.Screen
-import domain.cinema.Showing
+import domain.cinema.Showings
 import domain.purchase.Price
 import domain.user.Point
 
 object OutputView {
-    fun printShowing(showings: List<Showing>) {
+    fun printShowing(showings: Showings) {
         println("해당 날짜의 상영 목록")
 
-        showings.forEachIndexed { index, showing ->
+        showings.showings.forEachIndexed { index, showing ->
             println("[${index + 1}] ${showing.startTime.time}")
         }
     }

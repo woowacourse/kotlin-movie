@@ -112,7 +112,7 @@ class ReservationControllerTest {
         }
 
         // then : 예외가 발생한다.
-        assertEquals("해당 날짜에 선택한 영화의 상영이 없습니다.", exception.message)
+        assertEquals("해당 영화는 해당 날짜에 상영되지 않습니다.", exception.message)
     }
 
     @Test
@@ -173,7 +173,7 @@ class ReservationControllerTest {
 
         // when : 상영을 확인한 뒤 상영 번호를 입력하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.chooseSeat(showing)
+            TestFixtureData.screens.first().seats.checkSeat(input)
         }
 
         // then : 예외가 발생한다.

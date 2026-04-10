@@ -3,7 +3,6 @@ package controller
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Showing
-import domain.reservation.Reservation
 import domain.seat.Seats
 import kotlinx.datetime.LocalDate
 import view.InputView
@@ -33,8 +32,7 @@ class ReservationController(val movieTheater: MovieTheater) {
         val date = runCatching { LocalDate.parse(input) }.getOrNull()
         require(date != null) { "올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)" }
 
-        val showings = movieTheater.showings.filter { it.movie == movie && it.startTime.date == date }
-        require(showings.isNotEmpty()) { "해당 날짜에 선택한 영화의 상영이 없습니다." }
+        movieTheater.showings.findByMovieAndDate(movie, date)
 
         return date
     }
@@ -43,16 +41,17 @@ class ReservationController(val movieTheater: MovieTheater) {
         movie: Movie,
         date: LocalDate,
     ): Showing {
-        val showings = movieTheater.showings.filter { it.movie == movie && it.startTime.date == date }
+        val showings = movieTheater.showings.findByMovieAndDate(movie, date)
 
         OutputView.printShowing(showings)
         val input = InputView.readShowingNumber()
 
         require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "선택하신 상영 번호는 없는 상영 번호입니다." }
 
-        movieTheater.reservationInfos.checkReservationHistory(showings[input.toInt() - 1])
+        val selected = showings[input.toInt() - 1]
+        movieTheater.reservationInfos.checkReservationHistory(selected)
 
-        return showings[input.toInt() - 1]
+        return selected
     }
 
     fun chooseSeat(showing: Showing): Seats {
@@ -63,11 +62,13 @@ class ReservationController(val movieTheater: MovieTheater) {
 
         val input = InputView.readSeat()
 
-        val seatInputs = input.split(',').map { it.trim() }
+        val seatInputs =
+            input.split(',')
+                .map { it.trim() }
 
         val seats = Seats(
-            seatInputs.map { seat ->
-                Reservation.checkSeat(screen.seats, seat)
+            seatInputs.map { seatInput ->
+                screen.seats.checkSeat(seatInput)
             },
         )
         return seats
