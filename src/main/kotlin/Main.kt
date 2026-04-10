@@ -1,5 +1,4 @@
 import controller.CartController
-import controller.FlowController
 import controller.PaymentController
 import controller.ReservationController
 import domain.Id
@@ -83,10 +82,9 @@ fun main() {
     var cart = Cart(ReservationInfos(emptyList()))
     val user = User(Id(1))
     val cartController = CartController()
-    val flowController = FlowController()
 
-    var input = InputView.startTicketing()
-    while (flowController.start(input)) {
+    var answer = InputView.startTicketing()
+    while (answer.isYes()) {
         val reservationController = ReservationController(
             movieTheater = movieTheater,
         )
@@ -94,7 +92,7 @@ fun main() {
 
         cart = cartController.run(cart, info)
 
-        input = InputView.continueTicketing()
+        answer = InputView.continueTicketing()
     }
 
     val paymentController = PaymentController(
@@ -103,8 +101,7 @@ fun main() {
     )
     val payment = Payment(cart, user)
     val total = paymentController.run(payment)
-    val confirm = InputView.readPurchaseConfirm()
-    if (confirm != "Y") return
+    if (!InputView.readPurchaseConfirm().isYes()) return
 
     OutputView.printTotal(
         cart = cart,

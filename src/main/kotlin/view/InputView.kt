@@ -7,16 +7,14 @@ object InputView {
         return input
     }
 
-    fun startTicketing(): String {
+    fun startTicketing(): YesNo {
         println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
-        val input = readLine()
-        return input
+        return YesNo.from(readLine())
     }
 
-    fun continueTicketing(): String {
+    fun continueTicketing(): YesNo {
         println("다른 영화를 추가하시겠습니까? (Y/N)")
-        val input = readLine()
-        return input
+        return YesNo.from(readLine())
     }
 
     fun readMovieTitle(): String {
@@ -43,10 +41,9 @@ object InputView {
         return input
     }
 
-    fun readPurchaseConfirm(): String {
+    fun readPurchaseConfirm(): YesNo {
         println("위 금액으로 결제하시겠습니까? (Y/N)")
-        val input = readLine()
-        return input
+        return YesNo.from(readLine())
     }
 
     fun readPoint(): String {

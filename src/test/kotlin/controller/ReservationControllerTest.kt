@@ -10,35 +10,6 @@ import org.junit.jupiter.api.assertThrows
 class ReservationControllerTest {
 
     val controller = ReservationController(TestFixtureData.movieTheater)
-    val flowController = FlowController()
-
-    @Test
-    fun `생성 여부가 Y,N이 아닐 경우 예외가 발생한다`() {
-        // given : 생성 여부가 X로 입력된다.
-        val input = "X"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-
-        // when : 입력 여부를 처리하면
-        val exception = assertThrows<IllegalArgumentException> {
-            flowController.start(input)
-        }
-
-        // then : 예외가 발생한다.
-        assertEquals("입력값은 Y 혹은 N이어야 합니다.", exception.message)
-    }
-
-    @Test
-    fun `생성 여부가 Y일 경우 true를 반환한다`() {
-        // given : 생성 여부가 Y로 입력된다.
-        val input = "Y"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-
-        // when : 입력 여부를 처리하면
-        val result = flowController.start(input)
-
-        // then : true가 반환된다.
-        assertEquals(true, result)
-    }
 
     @Test
     fun `존재하지 않는 영화 제목이면 예외가 발생한다`() {
