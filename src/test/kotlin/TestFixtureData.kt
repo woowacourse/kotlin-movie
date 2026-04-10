@@ -1,14 +1,16 @@
 import domain.Id
+import domain.cart.Cart
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Screen
 import domain.cinema.Showing
-import domain.reservation.Cart
 import domain.reservation.ReservationInfo
+import domain.reservation.ReservationInfos
 import domain.seat.Seat
 import domain.seat.SeatCoordinate
 import domain.seat.SeatGrade
 import domain.seat.SeatState
+import domain.seat.Seats
 import domain.user.User
 import kotlinx.datetime.LocalDateTime
 
@@ -25,15 +27,16 @@ object TestFixtureData {
         Movie("기생충", Id(3), 132),
     )
 
-    val seats = listOf(
-        Seat(SeatCoordinate('A', 1), SeatGrade.S, SeatState.RESERVED),
-        Seat(SeatCoordinate('A', 2), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('B', 1), SeatGrade.A, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('B', 2), SeatGrade.A, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('C', 1), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('C', 2), SeatGrade.B, SeatState.AVAILABLE),
+    val seats = Seats(
+        listOf(
+            Seat(SeatCoordinate('A', 1), SeatGrade.S, SeatState.RESERVED),
+            Seat(SeatCoordinate('A', 2), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('B', 1), SeatGrade.A, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('B', 2), SeatGrade.A, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('C', 1), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('C', 2), SeatGrade.B, SeatState.AVAILABLE),
+        ),
     )
-
     val screens = listOf(
         Screen(seats, Id(1)),
         Screen(seats, Id(2)),
@@ -46,9 +49,11 @@ object TestFixtureData {
         Showing(LocalDateTime(2026, 4, 10, 21, 0), screens[2], movies[2]),
     )
 
-    val reservationInfos = listOf(
-        ReservationInfo(showings[0], seats[0]),
-        ReservationInfo(showings[1], seats[2]),
+    val reservationInfos = ReservationInfos(
+        listOf(
+            ReservationInfo(showings[0], Seats(listOf(seats.seats[0]))),
+            ReservationInfo(showings[1], Seats(listOf(seats.seats[2]))),
+        ),
     )
 
     val movieTheater = MovieTheater(

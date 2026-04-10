@@ -1,7 +1,10 @@
 package view
 
+import domain.cart.Cart
 import domain.cinema.Screen
 import domain.cinema.Showing
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 object OutputView {
     fun printShowing(showings: List<Showing>) {
@@ -22,7 +25,7 @@ object OutputView {
 
         ('A' until 'A' + maxRow).forEach { row ->
             val line = "$row" + (1..maxColumn).joinToString("") { col ->
-                val seat = screen.seats.find { it.coordinate.row == row && it.coordinate.column == col }
+                val seat = screen.seats.seats.find { it.coordinate.row == row && it.coordinate.column == col }
                 " [ ${seat?.grade?.name ?: " "}]"
             }
             println(line)
@@ -30,11 +33,9 @@ object OutputView {
         println()
     }
 
-    fun printCart(cart: List<String>) {
+    fun printCart(cart: Cart) {
         println("장바구니")
-        cart.forEach {
-            println(it)
-        }
+        println(cart.showItems())
         println()
     }
 
@@ -49,13 +50,13 @@ object OutputView {
     }
 
     fun printTotal(
-        totalHistory: List<String>,
+        cart: Cart,
         totalPrice: Int,
         usedPoint: Int,
     ) {
         println("예매완료")
         println("내역:")
-        printCart(totalHistory)
+        printCart(cart)
 
         println("결제 금액: ${printByDecimalFormat(totalPrice)}원 (포인트 ${printByDecimalFormat(usedPoint)})")
 

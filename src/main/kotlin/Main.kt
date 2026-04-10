@@ -3,15 +3,17 @@ import controller.FlowController
 import controller.PaymentController
 import controller.ReservationController
 import domain.Id
+import domain.cart.Cart
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Screen
 import domain.cinema.Showing
-import domain.reservation.Cart
+import domain.reservation.ReservationInfos
 import domain.seat.Seat
 import domain.seat.SeatCoordinate
 import domain.seat.SeatGrade
 import domain.seat.SeatState
+import domain.seat.Seats
 import domain.user.User
 import kotlinx.datetime.LocalDateTime
 import view.InputView
@@ -24,27 +26,29 @@ fun main() {
         Movie("아이언맨", Id(3), 126),
     )
 
-    val seats = listOf(
-        Seat(SeatCoordinate('A', 1), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('A', 2), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('A', 3), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('A', 4), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('B', 1), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('B', 2), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('B', 3), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('B', 4), SeatGrade.B, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('C', 1), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('C', 2), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('C', 3), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('C', 4), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('D', 1), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('D', 2), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('D', 3), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('D', 4), SeatGrade.S, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('E', 1), SeatGrade.A, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('E', 2), SeatGrade.A, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('E', 3), SeatGrade.A, SeatState.AVAILABLE),
-        Seat(SeatCoordinate('E', 4), SeatGrade.A, SeatState.AVAILABLE),
+    val seats = Seats(
+        listOf(
+            Seat(SeatCoordinate('A', 1), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('A', 2), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('A', 3), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('A', 4), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('B', 1), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('B', 2), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('B', 3), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('B', 4), SeatGrade.B, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('C', 1), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('C', 2), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('C', 3), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('C', 4), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('D', 1), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('D', 2), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('D', 3), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('D', 4), SeatGrade.S, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('E', 1), SeatGrade.A, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('E', 2), SeatGrade.A, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('E', 3), SeatGrade.A, SeatState.AVAILABLE),
+            Seat(SeatCoordinate('E', 4), SeatGrade.A, SeatState.AVAILABLE),
+        ),
     )
 
     val screens = listOf(
@@ -66,7 +70,7 @@ fun main() {
     val movieTheater = MovieTheater(
         movies,
         showings,
-        emptyList(),
+        ReservationInfos(emptyList()),
     )
 
     lateinit var cart: Cart
@@ -81,6 +85,7 @@ fun main() {
         val pair = reservationController.run()
 
         cart = cartController.run(
+            cart,
             showing = pair.first,
             seats = pair.second,
         )
@@ -99,5 +104,9 @@ fun main() {
     val confirm = InputView.readPurchaseConfirm()
     if (confirm != "Y") return
 
-    OutputView.printTotal(cartController.getAllReservationInfo(), total.first, total.second)
+    OutputView.printTotal(
+        cart = cart,
+        totalPrice = total.first,
+        usedPoint = total.second,
+    )
 }

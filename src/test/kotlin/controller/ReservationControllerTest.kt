@@ -207,7 +207,7 @@ class ReservationControllerTest {
         val result = controller.chooseSeat(showing)
 
         // then : 좌석 리스트가 반환된다.
-        assertEquals(listOf(TestFixtureData.seats[2], TestFixtureData.seats[3]), result)
+        assertEquals(listOf(TestFixtureData.seats.seats[2], TestFixtureData.seats.seats[3]), result.seats)
     }
 
     @Test
@@ -237,6 +237,6 @@ class ReservationControllerTest {
         val result = controller.chooseSeat(showing)
 
         // then : 좌석 리스트가 반환된다.
-        assertEquals(listOf(TestFixtureData.seats[2]), result)
+        assertEquals(listOf(TestFixtureData.seats.seats[2]), result.seats)
     }
 }

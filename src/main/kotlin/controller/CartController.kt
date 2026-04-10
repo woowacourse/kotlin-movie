@@ -1,52 +1,33 @@
 package controller
 
+import domain.cart.Cart
 import domain.cinema.Showing
-import domain.reservation.Cart
 import domain.reservation.ReservationInfo
-import domain.seat.Seat
+import domain.seat.Seats
 import view.OutputView
 
 class CartController {
-    var cart: Cart = Cart(
-        reservationInfos = listOf(),
-    )
-
     fun run(
+        cart: Cart,
         showing: Showing,
-        seats: List<Seat>,
+        seats: Seats,
     ): Cart {
-        addAllReservationInfo(showing, seats)
-        showCart()
+        addReservationInfo(cart, showing, seats)
+        OutputView.printCart(cart)
         return cart
     }
 
-    fun addAllReservationInfo(
+    fun addReservationInfo(
+        cart: Cart,
         showing: Showing,
-        seats: List<Seat>,
-    ) {
-        seats.forEach { seat ->
-            addReservationInfo(ReservationInfo(showing, seat))
-        }
-    }
+        seats: Seats,
+    ): Cart {
 
-    fun addReservationInfo(reservationInfo: ReservationInfo) {
-        cart = cart.addInfo(reservationInfo)
-    }
-
-    fun getAllReservationInfo(): List<String> {
-        val carts = cart.reservationInfos.groupBy { it.showing }
-            .map { (key, group) ->
-                val showing = key
-                val seats = group.joinToString(", ") { "${it.seat.coordinate.row}${it.seat.coordinate.column}" }
-                "- [${showing.movie.title}] ${
-                    showing.startTime.toString().replace("T", " ").substring(0, 16)
-                } 좌석: $seats"
-            }
-
-        return carts
-    }
-
-    fun showCart() {
-        OutputView.printCart(getAllReservationInfo())
+        return cart.addInfos(
+            ReservationInfo(
+                showing = showing,
+                seats = seats,
+            ),
+        )
     }
 }

@@ -257,3 +257,10 @@
 - SeatCoordinate, SeatState, Id 객체 타입에 변경에 따른 호출 코드 일괄 적용
 - Main.kt에서 예시 입출력에 맞는 케이스에 따라 임시 변수들 작성
 - 현 프로젝트 상태 검증 및 리팩토링 방향성 확인
+
+
+## 기능 목록
+`Movie`, `Schedule`, ...
+- [ ] `Schedule`은 시작 시간과 종료 시각이 있다.
+- [ ] `Movie`는 제목, 상영 시간, `Schedule`s가 있다.
+- [ ] ..  

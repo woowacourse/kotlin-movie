@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class CalculatorTest {
     @Test
-    fun `무비데이에 상영되는 영화는 10% 할인이 적용된다`() {
+    fun `무비데이에 상영되는 영화는 10퍼센트 할인이 적용된다`() {
         // given : 날짜가 10일이고, 영화가 16_000원이다.
         val price = 16_000
         val date = LocalDateTime(2026, 4, 10, 14, 0)

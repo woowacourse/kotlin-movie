@@ -13,7 +13,7 @@ class PaymentControllerTest {
     )
 
     @Test
-    fun `좌석 별로 무비데이 할인(10%)과 시간 할인(2,000원)이 적용된다`() {
+    fun `좌석 별로 무비데이 할인(10퍼센트)과 시간 할인(2,000원)이 적용된다`() {
         // given & when : 무비데이 할인과 시간 할인을 적용한다.
         val result = controller.discountPerSeat()
 
@@ -54,7 +54,7 @@ class PaymentControllerTest {
     }
 
     @Test
-    fun `결제 수단 할인(신용카드 5%, 현금 2%)이 적용된다`() {
+    fun `결제 수단 할인(신용카드 5퍼센트, 현금 2퍼센트)이 적용된다`() {
         // given : 결제 수단으로 신용카드가 제시된다.
         val input = "1"
         val price = 10_000

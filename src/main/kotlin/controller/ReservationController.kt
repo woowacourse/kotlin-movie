@@ -4,13 +4,13 @@ import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Showing
 import domain.reservation.Reservation
-import domain.seat.Seat
+import domain.seat.Seats
 import kotlinx.datetime.LocalDate
 import view.InputView
 import view.OutputView
 
 class ReservationController(val movieTheater: MovieTheater) {
-    fun run(): Pair<Showing, List<Seat>> {
+    fun run(): Pair<Showing, Seats> {
         val movie = chooseMovie()
         val date = chooseDate(movie)
         val showing = chooseShowingTime(movie, date)
@@ -57,7 +57,7 @@ class ReservationController(val movieTheater: MovieTheater) {
         return showings[input.toInt() - 1]
     }
 
-    fun chooseSeat(showing: Showing): List<Seat> {
+    fun chooseSeat(showing: Showing): Seats {
 
         val screen = showing.screen
 
@@ -67,9 +67,11 @@ class ReservationController(val movieTheater: MovieTheater) {
 
         val seatInputs = input.split(',').map { it.trim() }
 
-        val seats = seatInputs.map { seat ->
-            Reservation.checkSeat(screen.seats, seat)
-        }
+        val seats = Seats(
+            seatInputs.map { seat ->
+                Reservation.checkSeat(screen.seats, seat)
+            },
+        )
         return seats
     }
 }

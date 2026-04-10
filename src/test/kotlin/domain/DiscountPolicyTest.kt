@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class DiscountPolicyTest {
     @Test
-    fun `매월 10일에 상영되는 영화는 10% 할인된다`() {
+    fun `매월 10일에 상영되는 영화는 10퍼센트 할인된다`() {
         // given : 날짜가 10일이다.
         val date = LocalDateTime(2026, 4, 10, 14, 0)
 
@@ -20,7 +20,7 @@ class DiscountPolicyTest {
     }
 
     @Test
-    fun `매월 20일에 상영되는 영화는 10% 할인된다`() {
+    fun `매월 20일에 상영되는 영화는 10퍼센트 할인된다`() {
         // given : 날짜가 20일이다.
         val date = LocalDateTime(2026, 4, 20, 14, 0)
 
@@ -32,7 +32,7 @@ class DiscountPolicyTest {
     }
 
     @Test
-    fun `매월 30일에 상영되는 영화는 10% 할인된다`() {
+    fun `매월 30일에 상영되는 영화는 10퍼센트 할인된다`() {
         // given : 날짜가 30일이다.
         val date = LocalDateTime(2026, 4, 30, 14, 0)
 
@@ -92,7 +92,7 @@ class DiscountPolicyTest {
     }
 
     @Test
-    fun `신용카드 결제 시 5% 할인된다`() {
+    fun `신용카드 결제 시 5퍼센트 할인된다`() {
         // given : 결제수단으로 신용카드가 제시된다
         val method = PaymentMethod.CARD
 
@@ -104,7 +104,7 @@ class DiscountPolicyTest {
     }
 
     @Test
-    fun `현금 결제 시 2% 할인된다`() {
+    fun `현금 결제 시 2퍼센트 할인된다`() {
         // given : 결제수단으로 현금이 제시된다
         val method = PaymentMethod.CASH
 
