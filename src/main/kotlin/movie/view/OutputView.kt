@@ -7,6 +7,7 @@ import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.SelectedSeats
 
 class OutputView {
     fun printScreeningList(screenings: List<Screening>) {
@@ -48,7 +49,7 @@ class OutputView {
 
     fun printCart(reservations: Reservations) {
         println(CART_HEADER)
-        println(reservations.display())
+        println(reservations.toDisplayText())
     }
 
     fun printFinalPrice(price: Money) {
@@ -63,7 +64,7 @@ class OutputView {
     ) {
         println(RESERVATION_COMPLETE_HEADER)
         println(RESERVATION_DETAIL_HEADER)
-        println(reservations.display())
+        println(reservations.toDisplayText())
         println(
             PAYMENT_AMOUNT_FORMAT.format(
                 formatMoney(price),
@@ -84,10 +85,23 @@ class OutputView {
     }
 
     private fun printReservationItem(reservation: Reservation) {
-        println(reservation.display())
+        println(reservation.toDisplayText())
     }
 
     private fun formatMoney(money: Money): String = String.format("%,d", money.value)
+
+    private fun Reservations.toDisplayText(): String = getReservations().joinToString("\n") { it.toDisplayText() }
+
+    private fun Reservation.toDisplayText(): String {
+        val screening = getScreening()
+        val selectedSeats = getSelectedSeats()
+        return "- [${getScreening().title}]" +
+            " ${screening.screeningDateTime.date} " +
+            "${screening.screeningDateTime.startTime}  " +
+            "좌석: ${selectedSeats.toDisplayText()}"
+    }
+
+    private fun SelectedSeats.toDisplayText(): String = getSeats().joinToString(", ") { "${it.row}${it.column}" }
 
     companion object {
         private const val SCREENING_LIST_HEADER = "해당 날짜의 상영 목록"

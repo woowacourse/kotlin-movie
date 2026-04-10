@@ -13,11 +13,11 @@ class Reservations(
 
     fun totalPrice(): Money = reservations.map { it.calculatePrice() }.reduce { acc, money -> acc + money }
 
-    fun display(): String = reservations.joinToString("\n") { it.display() }
-
     fun forEach(action: (Reservation) -> Unit) {
         reservations.forEach(action)
     }
+
+    fun getReservations(): List<Reservation> = reservations
 
     private fun validateNoOverlapping() {
         reservations.forEachIndexed { index, reservation ->

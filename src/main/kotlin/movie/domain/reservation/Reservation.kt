@@ -12,8 +12,7 @@ class Reservation(
 
     fun calculatePrice(): Money = Money(selectedSeats.totalPrice)
 
-    fun display(): String =
-        "- [${screening.title}] ${screening.screeningDateTime.date} ${screening.screeningDateTime.startTime}  좌석: ${selectedSeats.display()}"
-
     fun getScreening(): Screening = screening
+
+    fun getSelectedSeats(): SelectedSeats = selectedSeats
 }

@@ -11,5 +11,5 @@ class SelectedSeats(
     val totalPrice: Int
         get() = seats.sumOf { it.grade.price }
 
-    fun display(): String = seats.joinToString(", ") { "${it.row}${it.column}" }
+    fun getSeats(): List<Seat> = seats
 }
