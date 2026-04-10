@@ -21,7 +21,7 @@ class MovieTest {
             Screenings(
                 listOf(
                     Screening(
-                        title = "F1 더 무비",
+                        title = MovieTitle("F1 더 무비"),
                         screen = Screen(1, Seats.createDefault()),
                         screeningDateTime =
                             ScreeningDateTime(
@@ -35,7 +35,7 @@ class MovieTest {
             )
 
         // when
-        val movie = Movie(id, "F1 더 무비", screenings)
+        val movie = Movie(id, MovieTitle("F1 더 무비"), screenings)
 
         // then
         assertThat(id).isEqualTo(id)

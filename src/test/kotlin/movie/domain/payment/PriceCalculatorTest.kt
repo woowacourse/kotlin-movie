@@ -5,6 +5,7 @@ import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
+import movie.domain.movie.MovieTitle
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
@@ -26,7 +27,7 @@ class PriceCalculatorTest {
         // given
         val screening =
             Screening(
-                title = "토이 스토리",
+                title = MovieTitle("토이 스토리"),
                 screen = Screen(1, Seats.createDefault()),
                 screeningDateTime =
                     ScreeningDateTime(

@@ -1,6 +1,7 @@
 package movie.domain.reservation
 
 import movie.domain.amount.Money
+import movie.domain.movie.MovieTitle
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
@@ -30,7 +31,7 @@ class ReservationsTest {
 
         val screening =
             Screening(
-                "토이 스토리",
+                MovieTitle("토이 스토리"),
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
@@ -68,7 +69,7 @@ class ReservationsTest {
 
         val screening =
             Screening(
-                "토이 스토리",
+                MovieTitle("토이 스토리"),
                 Screen(1, Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),

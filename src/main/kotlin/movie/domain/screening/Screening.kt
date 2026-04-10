@@ -1,12 +1,13 @@
 package movie.domain.screening
 
+import movie.domain.movie.MovieTitle
 import movie.domain.reservation.Reservation
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SelectedSeats
 
 class Screening(
-    val title: String,
+    val title: MovieTitle,
     val screen: Screen,
     val screeningDateTime: ScreeningDateTime,
     val reservatedSeats: ReservatedSeats,

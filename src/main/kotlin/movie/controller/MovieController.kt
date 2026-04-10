@@ -1,5 +1,6 @@
 package movie.controller
 
+import jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle
 import movie.data.MovieData
 import movie.domain.payment.PaymentResult
 import movie.domain.amount.Point
@@ -7,6 +8,8 @@ import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
+import movie.domain.movie.MovieTitle
+import movie.domain.movie.Movies
 import movie.domain.payment.Cash
 import movie.domain.payment.CreditCard
 import movie.domain.payment.PaymentMethod
@@ -25,7 +28,7 @@ import java.time.LocalDate
 class MovieController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val movies: List<Movie> = MovieData.createMovies(),
+    private val movies: Movies = MovieData.createMovies(),
     private val user: User = MovieData.createUser(),
     private val priceCalculator: PriceCalculator =
         PriceCalculator(
@@ -121,8 +124,7 @@ class MovieController(
     private fun selectMovie(): Movie =
         executeWithRetry {
             val title = inputView.inputMovieTitle()
-            movies.find { it.title == title }
-                ?: throw IllegalArgumentException("존재하지 않는 영화입니다.")
+            movies.findMovie(title)
         }
 
     private fun selectDate(movie: Movie): LocalDate =

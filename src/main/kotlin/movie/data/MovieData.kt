@@ -2,6 +2,8 @@ package movie.data
 
 import movie.domain.amount.Point
 import movie.domain.movie.Movie
+import movie.domain.movie.MovieTitle
+import movie.domain.movie.Movies
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
@@ -16,25 +18,25 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object MovieData {
-    fun createMovies(): List<Movie> {
+    fun createMovies(): Movies {
         val screen =
             Screen(
                 1,
                 Seats.createDefault(),
             )
 
-        return listOf(
+        return Movies(listOf(
             createF1Movie(screen),
             createToyStory(screen),
             createIronMan(screen),
-        )
+        ))
     }
 
     private fun createF1Movie(screen: Screen): Movie {
         val screenings =
             listOf(
                 Screening(
-                    "F1 더 무비",
+                    MovieTitle("F1 더 무비"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -44,7 +46,7 @@ object MovieData {
                     ReservatedSeats(emptyList()),
                 ),
                 Screening(
-                    "F1 더 무비",
+                    MovieTitle("F1 더 무비"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -61,7 +63,7 @@ object MovieData {
                     ),
                 ),
                 Screening(
-                    "F1 더 무비",
+                    MovieTitle("F1 더 무비"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -71,7 +73,7 @@ object MovieData {
                     ReservatedSeats(emptyList()),
                 ),
                 Screening(
-                    "F1 더 무비",
+                    MovieTitle("F1 더 무비"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -82,7 +84,7 @@ object MovieData {
                 ),
             )
         return Movie(
-            title = "F1 더 무비",
+            title = MovieTitle("F1 더 무비"),
             screenings = Screenings(screenings),
         )
     }
@@ -91,7 +93,7 @@ object MovieData {
         val screenings =
             listOf(
                 Screening(
-                    "토이 스토리",
+                    MovieTitle("토이 스토리"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -101,7 +103,7 @@ object MovieData {
                     ReservatedSeats(emptyList()),
                 ),
                 Screening(
-                    "토이 스토리",
+                    MovieTitle("토이 스토리"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -112,7 +114,7 @@ object MovieData {
                 ),
             )
         return Movie(
-            title = "토이 스토리",
+            title =  MovieTitle("토이 스토리"),
             screenings = Screenings(screenings),
         )
     }
@@ -121,7 +123,7 @@ object MovieData {
         val screenings =
             listOf(
                 Screening(
-                    "아이언맨",
+                    MovieTitle("아이언맨"),
                     screen,
                     ScreeningDateTime(
                         LocalDate.of(2025, 9, 20),
@@ -132,7 +134,7 @@ object MovieData {
                 ),
             )
         return Movie(
-            title = "아이언맨",
+            title =  MovieTitle("아이언맨"),
             screenings = Screenings(screenings),
         )
     }
