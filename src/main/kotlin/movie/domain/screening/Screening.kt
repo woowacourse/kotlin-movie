@@ -24,7 +24,7 @@ class Screening(
         val finalSeats = reservatedSeats.add(selectedSeats)
         return Reservation(
             this,
-            SelectedSeats(finalSeats),
+            SelectedSeats(finalSeats.getSeats()),
         )
     }
 
