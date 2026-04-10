@@ -11,5 +11,10 @@ class CinemaSchedule(
         require(screenSchedules.distinct().size == screenSchedules.size)
     }
 
-    fun getMovieSchedule(movieId: MovieId): MovieSchedule = MovieSchedule(screenSchedules.flatMap { it.getMovieSchedule(movieId) })
+    fun getMovieScreenings(movieId: MovieId): List<MovieScreening> = screenSchedules.flatMap { it.screeningOf(movieId) }
+
+    fun getMovieSchedule(movieId: MovieId): MovieSchedule =
+        MovieSchedule(
+            movieScreenings = screenSchedules.flatMap { it.getMovieSchedule(movieId) },
+        )
 }

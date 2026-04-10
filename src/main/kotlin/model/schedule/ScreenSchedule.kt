@@ -23,6 +23,11 @@ class ScreenSchedule(
         }
     }
 
+    fun screeningOf(movieId: MovieId): List<MovieScreening> =
+        movieScreenings.filter {
+            it.movie.isEqualId(movieId)
+        }
+
     fun isContainServicePeriod(time: CinemaTime): Boolean = servicePeriod.contains(time)
 
     fun getMovieSchedule(movieId: MovieId): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie.isEqualId(movieId) })

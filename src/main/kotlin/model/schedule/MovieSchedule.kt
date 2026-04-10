@@ -16,11 +16,12 @@ class MovieSchedule(
 
     operator fun get(index: Int): MovieScreening = scheduledScreens[index]
 
-    fun getMovieSchedule(time: CinemaTime): MovieSchedule =
+    fun filterByDate(time: CinemaTime): MovieSchedule =
         MovieSchedule(
-            scheduledScreens.filter { screen ->
-                screen.screenTime.start.isEqualDate(time)
-            },
+            movieScreenings =
+                scheduledScreens.filter { screen ->
+                    screen.screenTime.start.isEqualDate(time)
+                },
         )
 
     fun getMovieScreening(time: CinemaTime): MovieScreening = scheduledScreens.first { it.screenTime.start == time }

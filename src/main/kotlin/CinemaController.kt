@@ -2,6 +2,8 @@ import model.CinemaKiosk
 import model.CinemaTime
 import model.movie.Movie
 import model.movie.MovieCatalog
+import model.schedule.MovieScreening
+import model.schedule.onDate
 import view.InputView
 import view.OutputView
 
@@ -13,7 +15,10 @@ class CinemaController(
         // 영화 예매
         if (startReservation().not()) return
         val selectedMovie = selectMovie(movieCatalog)
+        val movieSchedule = getMovieSchedule(selectedMovie)
         val selectedDate = selectDate()
+        val onDateMovieSchedule = movieSchedule.onDate(selectedDate)
+        OutputView.showMovieScreenings(onDateMovieSchedule)
         // 결제
     }
 
@@ -27,6 +32,8 @@ class CinemaController(
             OutputView.showInvalidMovieName()
         }
     }
+
+    private fun getMovieSchedule(movie: Movie): List<MovieScreening> = cinemaKiosk.cinemaSchedule.getMovieScreenings(movie.id)
 
     private fun selectDate(): CinemaTime {
         while (true) {
