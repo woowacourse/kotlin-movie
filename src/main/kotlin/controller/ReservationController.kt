@@ -22,11 +22,9 @@ class ReservationController(val movieTheater: MovieTheater) {
     fun chooseMovie(): Movie {
         val input = InputView.readMovieTitle()
 
-        val movieIndex = movieTheater.movies.indexOfFirst { it.title == input }
+        val movie = movieTheater.movies.findMovieByTitle(input)
 
-        require(movieIndex != -1) { "존재하지 않는 영화입니다." }
-
-        return movieTheater.movies[movieIndex]
+        return movie
     }
 
     fun chooseDate(movie: Movie): LocalDate {

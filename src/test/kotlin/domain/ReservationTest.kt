@@ -15,7 +15,7 @@ class ReservationTest {
 
         // when : 전체 영화 리스트에서 영화를 확인하면
         val exception = assertThrows<IllegalArgumentException> {
-            Reservation.findMovieById(TestFixtureData.movieTheater, movieId)
+            TestFixtureData.movieTheater.movies.findMovieById(movieId)
         }
         // then : 예외가 발생한다.
         assertEquals("해당 영화는 존재하지 않습니다.", exception.message)
@@ -27,10 +27,10 @@ class ReservationTest {
         val movieId = Id(1)
 
         // when : 영화를 찾으면
-        val result = Reservation.findMovieById(TestFixtureData.movieTheater, movieId)
+        val result = TestFixtureData.movieTheater.movies.findMovieById(movieId)
 
         // then : 해당 영화가 반환된다.
-        assertEquals(TestFixtureData.movies.first(), result)
+        assertEquals(TestFixtureData.movies.movies.first(), result)
     }
 
     @Test
@@ -40,7 +40,7 @@ class ReservationTest {
         val date = LocalDate(2026, 4, 10)
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
-        val movie = Reservation.findMovieById(TestFixtureData.movieTheater, movieId)
+        val movie = TestFixtureData.movieTheater.movies.findMovieById(movieId)
         val result = Reservation.findShowing(TestFixtureData.movieTheater, movie, date)
 
         // then : 해당하는 상영 일정을 반환한다.
@@ -54,7 +54,7 @@ class ReservationTest {
         val date = LocalDate(2026, 4, 11)
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
-        val movie = Reservation.findMovieById(TestFixtureData.movieTheater, movieId)
+        val movie = TestFixtureData.movieTheater.movies.findMovieById(movieId)
         val exception = assertThrows<IllegalArgumentException> {
             Reservation.findShowing(TestFixtureData.movieTheater, movie, date)
         }

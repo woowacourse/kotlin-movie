@@ -1,6 +1,5 @@
 package domain.reservation
 
-import domain.Id
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Showing
@@ -10,15 +9,6 @@ import domain.seat.Seats
 import kotlinx.datetime.LocalDate
 
 object Reservation {
-    fun findMovieById(
-        movieTheater: MovieTheater,
-        id: Id,
-    ): Movie {
-        val movieIndex = movieTheater.movies.indexOfFirst { it.id.value == id.value }
-        require(movieIndex != -1) { "해당 영화는 존재하지 않습니다." }
-        return movieTheater.movies[movieIndex]
-    }
-
     fun findShowing(
         movieTheater: MovieTheater,
         movie: Movie,

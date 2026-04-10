@@ -65,14 +65,14 @@ class ReservationControllerTest {
         val result = controller.chooseMovie()
 
         // then : 영화가 반환된다.
-        assertEquals(TestFixtureData.movieTheater.movies.first(), result)
+        assertEquals(TestFixtureData.movieTheater.movies.movies.first(), result)
     }
 
     @Test
     fun `날짜 형식이 YYYY-MM-DD가 아니면 예외가 발생한다`() {
         // given : 2026_04_08이 입력된다.
         val input = "2026_04_08"
-        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val movie: Movie = TestFixtureData.movieTheater.movies.movies.first()
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 날짜를 처리하면
@@ -88,7 +88,7 @@ class ReservationControllerTest {
     fun `날짜 형식이 YYYY-MM-DD이면 Date를 반환한다`() {
         // given : 2026-04-10이 입력된다.
         val input = "2026-04-10"
-        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val movie: Movie = TestFixtureData.movieTheater.movies.movies.first()
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         // when : 날짜를 처리하면
@@ -102,7 +102,7 @@ class ReservationControllerTest {
     fun `해당 날짜에 선택한 영화의 상영이 없으면 예외가 발생한다`() {
         // given : 특정 영화를 선택한 상태에서 상영일자가 존재하지 않는 날짜를 입력한다
         val input = "2026-04-08"
-        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val movie: Movie = TestFixtureData.movieTheater.movies.movies.first()
 
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
@@ -118,7 +118,7 @@ class ReservationControllerTest {
     @Test
     fun `해당 날짜에 상영이 있으면 해당 상영을 반환한다`() {
         // given : 특정 영화를 선택한 상태에서 상영일자가 존재하는 날짜를 입력한다
-        val movie: Movie = TestFixtureData.movieTheater.movies[2]
+        val movie: Movie = TestFixtureData.movieTheater.movies.movies[2]
         val date = LocalDate(2026, 4, 10)
 
         // when : 상영을 처리하고 1번을 입력하면
@@ -135,7 +135,7 @@ class ReservationControllerTest {
         // given : 상영번호에 대해 유효 범위 밖 값을 입력한다
         val input = "2"
         System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val movie: Movie = TestFixtureData.movieTheater.movies.movies.first()
         val date = LocalDate(2026, 4, 10)
 
         // when : 상영을 확인한 뒤 상영 번호를 입력하면
@@ -152,7 +152,7 @@ class ReservationControllerTest {
         // given : 상영번호에 대해 시간이 겹치는 시간대를 예매한다.
         val input = "1"
         System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val movie: Movie = TestFixtureData.movieTheater.movies.first()
+        val movie: Movie = TestFixtureData.movieTheater.movies.movies.first()
         val date = LocalDate(2026, 4, 10)
 
         // when : 상영을 확인한 뒤 상영 번호를 입력하면

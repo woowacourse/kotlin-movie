@@ -6,6 +6,7 @@ import domain.Id
 import domain.cart.Cart
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
+import domain.cinema.Movies
 import domain.cinema.Screen
 import domain.cinema.Showing
 import domain.reservation.ReservationInfos
@@ -20,10 +21,12 @@ import view.InputView
 import view.OutputView
 
 fun main() {
-    val movies = listOf(
-        Movie("F1 더 무비", Id(1), 130),
-        Movie("토이 스토리", Id(2), 100),
-        Movie("아이언맨", Id(3), 126),
+    val movies = Movies(
+        listOf(
+            Movie("F1 더 무비", Id(1), 130),
+            Movie("토이 스토리", Id(2), 100),
+            Movie("아이언맨", Id(3), 126),
+        ),
     )
 
     val seats = Seats(
@@ -58,13 +61,13 @@ fun main() {
     )
 
     val showings = listOf(
-        Showing(LocalDateTime(2025, 9, 20, 10, 20), screens[0], movies[0]),
-        Showing(LocalDateTime(2025, 9, 20, 13, 0), screens[0], movies[0]),
-        Showing(LocalDateTime(2025, 9, 20, 15, 40), screens[0], movies[0]),
-        Showing(LocalDateTime(2025, 9, 20, 20, 10), screens[0], movies[0]),
-        Showing(LocalDateTime(2025, 9, 20, 13, 30), screens[1], movies[1]),
-        Showing(LocalDateTime(2025, 9, 20, 16, 0), screens[1], movies[1]),
-        Showing(LocalDateTime(2025, 9, 20, 9, 50), screens[2], movies[2]),
+        Showing(LocalDateTime(2025, 9, 20, 10, 20), screens[0], movies.movies[0]),
+        Showing(LocalDateTime(2025, 9, 20, 13, 0), screens[0], movies.movies[0]),
+        Showing(LocalDateTime(2025, 9, 20, 15, 40), screens[0], movies.movies[0]),
+        Showing(LocalDateTime(2025, 9, 20, 20, 10), screens[0], movies.movies[0]),
+        Showing(LocalDateTime(2025, 9, 20, 13, 30), screens[1], movies.movies[1]),
+        Showing(LocalDateTime(2025, 9, 20, 16, 0), screens[1], movies.movies[1]),
+        Showing(LocalDateTime(2025, 9, 20, 9, 50), screens[2], movies.movies[2]),
     )
 
     val movieTheater = MovieTheater(
