@@ -29,7 +29,7 @@ class MovieTest {
                                 LocalTime.of(10, 20),
                                 LocalTime.of(13, 0),
                             ),
-                        reservedSeats = ReservedSeats(listOf()),
+                        reservedSeats = ReservedSeats(setOf()),
                     ),
                 ),
             )

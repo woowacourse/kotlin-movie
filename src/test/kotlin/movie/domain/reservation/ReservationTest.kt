@@ -20,7 +20,7 @@ class ReservationTest {
         // given
         val selectedSeats =
             SelectedSeats(
-                listOf(
+                setOf(
                     Seat("A", 1, SeatGrade.B),
                     Seat("C", 1, SeatGrade.S),
                 ),
@@ -36,7 +36,7 @@ class ReservationTest {
                     LocalTime.of(12, 0),
                 ),
                 ReservedSeats(
-                    listOf(
+                    setOf(
                         Seat("C", 1, SeatGrade.S),
                         Seat("C", 2, SeatGrade.S),
                         Seat("E", 1, SeatGrade.A),

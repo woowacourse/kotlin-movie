@@ -1,7 +1,7 @@
 package movie.domain.seat
 
 class Seats(
-    private val seats: List<Seat>,
+    private val seats: Set<Seat>,
 ) {
     init {
         require(seats.isNotEmpty()) { "좌석 목록은 비어 있을 수 없습니다." }
@@ -20,7 +20,7 @@ class Seats(
 
     companion object {
         fun createDefault(): Seats {
-            val seats = mutableListOf<Seat>()
+            val seats = mutableSetOf<Seat>()
             val layout =
                 mapOf(
                     "A" to SeatGrade.B,

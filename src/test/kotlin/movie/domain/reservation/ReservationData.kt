@@ -16,7 +16,7 @@ object ReservationData {
 
     private val selectedSeats =
         SelectedSeats(
-            listOf(
+            setOf(
                 Seat("A", 1, SeatGrade.B),
                 Seat("C", 1, SeatGrade.S),
             ),
@@ -31,7 +31,7 @@ object ReservationData {
                 LocalTime.of(10, 0),
                 LocalTime.of(12, 0),
             ),
-            ReservedSeats(emptyList()),
+            ReservedSeats(emptySet()),
         )
 
     private val screening2 =
@@ -43,7 +43,7 @@ object ReservationData {
                 LocalTime.of(14, 0),
                 LocalTime.of(16, 0),
             ),
-            ReservedSeats(emptyList()),
+            ReservedSeats(emptySet()),
         )
 
     val reservations =

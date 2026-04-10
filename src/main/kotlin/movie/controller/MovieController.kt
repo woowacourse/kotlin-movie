@@ -160,7 +160,7 @@ class MovieController(
             selected
         }
 
-    private fun selectSeats(screening: Screening): List<Seat> =
+    private fun selectSeats(screening: Screening): Set<Seat> =
         executeWithRetry {
             outputView.printSeatLayout(screening.screen, screening.reservedSeats)
             val input = inputView.inputSeat()
@@ -171,7 +171,7 @@ class MovieController(
     private fun parseSeatInput(
         input: String,
         screen: Screen,
-    ): List<Seat> =
+    ): Set<Seat> =
         input
             .split(",")
             .map { it.trim() }
@@ -181,7 +181,7 @@ class MovieController(
                     seatInput.substring(1).toIntOrNull()
                         ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
                 screen.seats.findSeat(row, column)
-            }
+            }.toSet()
 
     // 입력 로직
     private fun askStartReservation(): Boolean = executeWithRetry { inputView.startMessage() }

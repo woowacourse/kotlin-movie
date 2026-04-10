@@ -11,16 +11,16 @@ data class Screening(
 ) {
     fun isTimeOverlapping(other: Screening): Boolean = screeningDateTime.isOverlapping(other.screeningDateTime)
 
-    fun reserve(selectedSeats: List<Seat>): Screening {
+    fun reserve(selectedSeats: Set<Seat>): Screening {
         validateReserveAvailable(selectedSeats)
         val finalSeats = reservedSeats.add(selectedSeats)
         return this.copy(reservedSeats = finalSeats)
     }
 
-    private fun validateReserveAvailable(selectedSeats: List<Seat>) {
+    private fun validateReserveAvailable(selectedSeats: Set<Seat>) {
         require(isValidSeats(selectedSeats)) { "존재하지 않는 좌석입니다." }
         require(selectedSeats.all { reservedSeats.isAvailable(it) }) { "이미 예약된 좌석입니다." }
     }
 
-    private fun isValidSeats(selectedSeats: List<Seat>): Boolean = selectedSeats.all { screen.seats.hasSeat(it) }
+    private fun isValidSeats(selectedSeats: Set<Seat>): Boolean = selectedSeats.all { screen.seats.hasSeat(it) }
 }

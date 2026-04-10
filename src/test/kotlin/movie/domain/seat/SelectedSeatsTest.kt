@@ -9,7 +9,7 @@ class SelectedSeatsTest {
         // given
         val selectedSeats =
             SelectedSeats(
-                listOf(
+                setOf(
                     Seat("C", 1, SeatGrade.S),
                     Seat("C", 2, SeatGrade.S),
                     Seat("E", 1, SeatGrade.A),
@@ -24,23 +24,8 @@ class SelectedSeatsTest {
     fun `좌석 목록은 비어 있을 수 없다`() {
         val exception =
             assertThrows<IllegalArgumentException> {
-                SelectedSeats(listOf())
+                SelectedSeats(setOf())
             }
         assert(exception.message == "좌석 목록은 비어 있을 수 없습니다.")
-    }
-
-    @Test
-    fun `중복된 좌석을 선택할 수 없다`() {
-        val exception =
-            assertThrows<IllegalArgumentException> {
-                SelectedSeats(
-                    listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 1, SeatGrade.S),
-                    ),
-                )
-            }
-
-        assert(exception.message == "중복된 좌석을 선택할 수 없습니다.")
     }
 }

@@ -36,7 +36,7 @@ class PriceCalculatorTest {
                     ),
                 reservedSeats =
                     ReservedSeats(
-                        listOf(
+                        setOf(
                             Seat("C", 1, SeatGrade.S),
                             Seat("C", 2, SeatGrade.S),
                         ),
@@ -45,7 +45,7 @@ class PriceCalculatorTest {
 
         val selectedSeats =
             SelectedSeats(
-                listOf(
+                setOf(
                     Seat("C", 1, SeatGrade.S),
                 ),
             )

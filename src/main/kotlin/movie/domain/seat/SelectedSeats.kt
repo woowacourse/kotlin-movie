@@ -1,7 +1,7 @@
 package movie.domain.seat
 
 class SelectedSeats(
-    private val seats: List<Seat>,
+    private val seats: Set<Seat>,
 ) {
     init {
         require(seats.isNotEmpty()) { "좌석 목록은 비어 있을 수 없습니다." }
@@ -11,5 +11,5 @@ class SelectedSeats(
     val totalPrice: Int
         get() = seats.sumOf { it.grade.price }
 
-    fun getSeats(): List<Seat> = seats
+    fun getSeats(): Set<Seat> = seats
 }

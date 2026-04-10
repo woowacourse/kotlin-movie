@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class ReservatedSeatsTest {
     private val seats =
-        listOf(
+        setOf(
             Seat("C", 1, SeatGrade.S),
             Seat("C", 2, SeatGrade.S),
             Seat("E", 1, SeatGrade.A),
@@ -41,7 +41,7 @@ class ReservatedSeatsTest {
         val reservedSeats = ReservedSeats(seats)
 
         // when
-        val newReservatedSeats = reservedSeats.add(listOf(Seat("A", 1, SeatGrade.B)))
+        val newReservatedSeats = reservedSeats.add(setOf(Seat("A", 1, SeatGrade.B)))
         val result = ReservedSeats(newReservatedSeats.getSeats()).isAvailable(Seat("A", 1, SeatGrade.B))
 
         // then
