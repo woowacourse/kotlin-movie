@@ -35,7 +35,11 @@ class ScheduleTest {
     fun `일정은 좌석들을 갖고 있다`() {
         val schedule = createSchedule()
 
-        assertThat(schedule.screenings.first().seatInventory.seats).isNotEmpty
+        assertThat(
+            schedule.screenings
+                .first()
+                .seatInventory.seats,
+        ).isNotEmpty
     }
 
     private fun createSchedule(
@@ -44,9 +48,7 @@ class ScheduleTest {
         screenings: List<Screening> = listOf(createScreening()),
     ): Schedule = Schedule(openTime, closeTime, screenings)
 
-    private fun createScreening(
-        startDateTime: LocalDateTime = LocalDateTime.of(2026, 4, 10, 10, 0),
-    ): Screening =
+    private fun createScreening(startDateTime: LocalDateTime = LocalDateTime.of(2026, 4, 10, 10, 0)): Screening =
         Screening(
             movie =
                 Movie(

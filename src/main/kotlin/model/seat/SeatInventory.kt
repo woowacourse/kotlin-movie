@@ -20,13 +20,14 @@ data class SeatInventory(
         val targetSeats = seatNames.map { findSeat(it) }
 
         return copy(
-            seats = seats.map { seat ->
-                if (targetSeats.contains(seat)) {
-                    seat.reserve()
-                } else {
-                    seat
-                }
-            },
+            seats =
+                seats.map { seat ->
+                    if (targetSeats.contains(seat)) {
+                        seat.reserve()
+                    } else {
+                        seat
+                    }
+                },
         )
     }
 

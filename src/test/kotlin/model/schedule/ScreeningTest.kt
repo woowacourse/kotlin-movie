@@ -36,16 +36,16 @@ class ScreeningTest {
         assertThat(screening1.isOverlapping(screening2)).isFalse
     }
 
-    private fun createScreening(
-        startDateTime: LocalDateTime = LocalDateTime.of(2026, 4, 10, 10, 0),
-    ): Screening = Screening(
-        movie = Movie(
-            movieTitle = "인터스텔라",
-            movieRunningTime = 130,
-            startDate = LocalDate.of(2026, 4, 1),
-            endDate = LocalDate.of(2026, 4, 30),
-        ),
-        startDateTime = startDateTime,
-        seatInventory = SeatInventory.createDefaultSeatInventory(),
-    )
+    private fun createScreening(startDateTime: LocalDateTime = LocalDateTime.of(2026, 4, 10, 10, 0)): Screening =
+        Screening(
+            movie =
+                Movie(
+                    movieTitle = "인터스텔라",
+                    movieRunningTime = 130,
+                    startDate = LocalDate.of(2026, 4, 1),
+                    endDate = LocalDate.of(2026, 4, 30),
+                ),
+            startDateTime = startDateTime,
+            seatInventory = SeatInventory.createDefaultSeatInventory(),
+        )
 }

@@ -29,7 +29,8 @@ class Schedule(
         )
 
     // 제목과 일치하는 영화의 상영 목록을 반환하는 함수
-    fun getScreeningsByMovie(movie: Movie): List<Screening> = screenings.filter { it.movie == movie }
+    fun getScreeningsByMovie(movie: Movie): List<Screening> =
+        screenings.filter { it.movie == movie }
 
     companion object {
         // 2026년 4월 10일의 영화 상영 시간표

@@ -20,22 +20,20 @@ class Cart(
         paymentMethod: PaymentMethod,
     ): Int {
         // 각 항목별로 무비데이 + 시간 할인 적용 후 합산
-        val subtotal =
-            items.sumOf { item ->
-                var price = item.screening.calculatePrice(item.seatNames)
-                price = discountBenefits.movieDay(price, item.screening.startDateTime.toLocalDate())
-                price = discountBenefits.timeDiscount(price, item.screening.startDateTime.toLocalTime())
-                price
-            }
+        val subtotal = items.sumOf { item ->
+            var price = item.screening.calculatePrice(item.seatNames)
+            price = discountBenefits.movieDay(price, item.screening.startDateTime.toLocalDate())
+            price = discountBenefits.timeDiscount(price, item.screening.startDateTime.toLocalTime())
+            price
+        }
 
         // 합산 금액에 포인트 + 결제 방식 할인 적용
         var total = discountBenefits.pointDiscount(price = subtotal, usePoint = usePoint)
 
-        total =
-            when (paymentMethod) {
-                PaymentMethod.CARD -> discountBenefits.cardDiscount(total)
-                PaymentMethod.CASH -> discountBenefits.cashDiscount(total)
-            }
+        total = when (paymentMethod) {
+            PaymentMethod.CARD -> discountBenefits.cardDiscount(total)
+            PaymentMethod.CASH -> discountBenefits.cashDiscount(total)
+        }
         return total
     }
 }

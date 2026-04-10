@@ -12,7 +12,12 @@ data class Screening(
     val seatInventory: SeatInventory,
 ) {
     init {
-        require(Duration.between(startDateTime, endDateTime) >= Duration.ofMinutes(movie.movieRunningTime)) { "상영 시간이 영화 러닝타임보다 짧습니다" }
+        require(
+            Duration.between(
+                startDateTime,
+                endDateTime
+            ) >= Duration.ofMinutes(movie.movieRunningTime)
+        ) { "상영 시간이 영화 러닝타임보다 짧습니다" }
     }
 
     // 좌석을 예약하는 함수
@@ -27,5 +32,6 @@ data class Screening(
     fun calculatePrice(seatNames: List<String>): Int = seatInventory.calculatePrice(seatNames)
 
     // 시간표 겹침을 검사하는 함수
-    fun isOverlapping(screening: Screening): Boolean = startDateTime < screening.endDateTime && endDateTime > screening.startDateTime
+    fun isOverlapping(screening: Screening): Boolean =
+        startDateTime < screening.endDateTime && endDateTime > screening.startDateTime
 }

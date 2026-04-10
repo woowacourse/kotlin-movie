@@ -58,10 +58,11 @@ class DiscountBenefitsTest {
         val earlyTime = LocalTime.of(10, 0)
         val discountBenefits = DiscountBenefits()
 
-        val result = discountBenefits.timeDiscount(
-            discountBenefits.movieDay(price, movieDayDate),
-            earlyTime,
-        )
+        val result =
+            discountBenefits.timeDiscount(
+                discountBenefits.movieDay(price, movieDayDate),
+                earlyTime,
+            )
 
         assertThat(result).isEqualTo(14_200)
     }
@@ -73,15 +74,17 @@ class DiscountBenefitsTest {
         val earlyTime = LocalTime.of(10, 0)
         val discountBenefits = DiscountBenefits()
 
-        val percentFirst = discountBenefits.timeDiscount(
-            discountBenefits.movieDay(price, movieDayDate),
-            earlyTime,
-        )
+        val percentFirst =
+            discountBenefits.timeDiscount(
+                discountBenefits.movieDay(price, movieDayDate),
+                earlyTime,
+            )
 
-        val fixedFirst = discountBenefits.movieDay(
-            discountBenefits.timeDiscount(price, earlyTime),
-            movieDayDate,
-        )
+        val fixedFirst =
+            discountBenefits.movieDay(
+                discountBenefits.timeDiscount(price, earlyTime),
+                movieDayDate,
+            )
 
         assertThat(percentFirst).isEqualTo(14_200)
         assertThat(fixedFirst).isEqualTo(14_400)
@@ -136,14 +139,16 @@ class DiscountBenefitsTest {
         val usePoint = 4_000
         val discountBenefits = DiscountBenefits()
 
-        val pointFirst = discountBenefits.cardDiscount(
-            discountBenefits.pointDiscount(price, usePoint),
-        )
+        val pointFirst =
+            discountBenefits.cardDiscount(
+                discountBenefits.pointDiscount(price, usePoint),
+            )
 
-        val cardFirst = discountBenefits.pointDiscount(
-            discountBenefits.cardDiscount(price),
-            usePoint,
-        )
+        val cardFirst =
+            discountBenefits.pointDiscount(
+                discountBenefits.cardDiscount(price),
+                usePoint,
+            )
 
         assertThat(pointFirst).isEqualTo(19_000)
         assertThat(cardFirst).isEqualTo(18_800)
