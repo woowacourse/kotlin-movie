@@ -10,9 +10,8 @@ class Cart(
 ) {
     // 장바구니에 영화를 담는 함수
     fun addItem(
-        screening: Screening,
-        seatNames: List<String>,
-    ): Cart = Cart(items + CartItem(screening, seatNames))
+        cartItem: CartItem
+    ): Cart = Cart(items + cartItem)
 
     fun calculateTotalPrice(
         discountBenefits: DiscountBenefits,

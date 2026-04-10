@@ -51,7 +51,7 @@ class Schedule(
                     movie =
                         Movie(
                             movieTitle = "남은 인생 10년",
-                            movieRunningTime = 130,
+                            movieRunningTime = 120,
                             startDate = LocalDate.of(2026, 4, 1),
                             endDate = LocalDate.of(2026, 4, 30),
                         ),
@@ -62,7 +62,7 @@ class Schedule(
                     movie =
                         Movie(
                             movieTitle = "오늘 밤 이세상에서 사랑이 사라진다 해도",
-                            movieRunningTime = 130,
+                            movieRunningTime = 100,
                             startDate = LocalDate.of(2026, 4, 1),
                             endDate = LocalDate.of(2026, 4, 30),
                         ),
@@ -84,7 +84,7 @@ class Schedule(
                     movie =
                         Movie(
                             movieTitle = "호퍼스",
-                            movieRunningTime = 130,
+                            movieRunningTime = 100,
                             startDate = LocalDate.of(2026, 4, 1),
                             endDate = LocalDate.of(2026, 4, 30),
                         ),

@@ -83,6 +83,21 @@ class MovieController {
         }
     }
 
+    fun getScreeningsOfDateAndTitle(): Screening {
+        // 영화 선택
+        val movie = searchMovie()
+        var screenings: List<Screening>
+
+        while (true) {
+            // 날짜 선택 후 해당 영화의 상영 목록 조회
+            val date = inputDate()
+            screenings = getScreenings(movie = movie, date = date)
+            if (screenings.isNotEmpty()) {
+                return selectMovieTime(screenings)
+            }
+        }
+    }
+
     // 상영관을 받아오는 함수
     fun getScreenings(
         movie: Movie,
@@ -111,7 +126,7 @@ class MovieController {
 
             if (selectedScreenings.any {
                     it.movie.movieTitle != selectedScreening.movie.movieTitle &&
-                        it.isOverlapping(selectedScreening)
+                            it.isOverlapping(selectedScreening)
                 }
             ) {
                 throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.")
@@ -135,6 +150,32 @@ class MovieController {
             outputView.printErrorMessage(e.message.toString())
             inputSeats()
         }
+    }
+
+    fun reservedScreening(selectedScreening: Screening): CartItem {
+        var seatNames: List<String>
+        var reservedScreening: Screening
+        while (true) {
+            try {
+                // 입력한 좌석
+                seatNames = inputSeats()
+                // 장바구니에 추가
+                reservedScreening = getReservedScreening(selectedScreening, seatNames)
+                break
+            } catch (e: IllegalArgumentException) {
+                outputView.printErrorMessage(e.message.toString())
+            }
+        }
+        schedule =
+            schedule.updateScreening(
+                selectedScreening,
+                reservedScreening,
+            )
+
+        return CartItem(
+            reservedScreening,
+            seatNames,
+        )
     }
 
     // 장바구니에 추가
@@ -188,53 +229,17 @@ class MovieController {
         var cart = Cart()
 
         do {
-            // 영화 선택
-            val movie = searchMovie()
-
-            var screenings: List<Screening>
-            var selectedScreening: Screening
-
-            // 상영 번호 선택 (겹치면 재입력)
-            while (true) {
-                // 날짜 선택 후 해당 영화의 상영 목록 조회
-                val date = inputDate()
-                screenings = getScreenings(movie = movie, date = date)
-                if (screenings.isNotEmpty()) {
-                    selectedScreening = selectMovieTime(screenings)
-                    break
-                }
-            }
-
+            // 제목과 날짜를 받아 영화 리스트를 받아온다
+            val selectedScreening: Screening = getScreeningsOfDateAndTitle()
             selectedScreenings.add(selectedScreening)
 
             // 좌석 배치도 출력 후 좌석 선택
             outputView.printSeatInventory(selectedScreening.seatInventory)
 
-            var seatNames: List<String>
-            var reservedScreening: Screening
-            while (true) {
-                try {
-                    // 입력한 좌석
-                    seatNames = inputSeats()
-                    // 장바구니에 추가
-                    reservedScreening = getReservedScreening(selectedScreening, seatNames)
-                    break
-                } catch (e: IllegalArgumentException) {
-                    outputView.printErrorMessage(e.message.toString())
-                }
-            }
-            schedule =
-                schedule.updateScreening(
-                    selectedScreening,
-                    reservedScreening,
-                )
+            // 좌석을 고른 후에 장바구니에 담는다
+            val cartItem = reservedScreening(selectedScreening)
+            cart = cart.addItem(cartItem)
 
-            val cartItem =
-                CartItem(
-                    reservedScreening,
-                    seatNames,
-                )
-            cart = cart.addItem(reservedScreening, seatNames)
             outputView.printCartItemAdded(cartItem)
         } while (checkMovieAdd())
 
