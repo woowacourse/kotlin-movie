@@ -35,10 +35,11 @@ object InputView {
         }
     }
 
-    fun readScreeningNumber(): Int {
+    fun readScreeningNumber(movieCount: Int): Int {
         println(LABEL.INPUT_SCREENING_NUMBER_LABEL)
         val value = inputTrim()?.toIntOrNull() ?: 0
         require(value != 0) { LABEL.BLANK_ERROR }
+        require(value in 1..movieCount) { LABEL.INVALID_INPUT_SCREENING_NUMBER }
         return value
     }
 
@@ -46,7 +47,7 @@ object InputView {
         println(LABEL.INPUT_SEAT_LABEL)
         val value = inputTrim() ?: ""
         require(value.isNotBlank()) { LABEL.BLANK_ERROR }
-        val numbers = value.split(",")
+        val numbers = value.split(",").map { it.trim() }
         numbers.forEach {
             require(it.matches(Regex("^[A-Z][0-9]+$"))) { LABEL.INVALID_SEAT_NUMBER_FORMAT_ERROR }
         }
@@ -92,11 +93,13 @@ object InputView {
         const val INVALID_DATE_FORMAT_ERROR = "올바른 날짜 형식(YYYY-MM-DD)이 아닙니다."
         const val INVALID_TYPE_ERROR = "날자에는 숫자만 입력할 수 있습니다."
         const val INPUT_SCREENING_NUMBER_LABEL = "상영 번호를 선택하세요:"
+        const val INVALID_INPUT_SCREENING_NUMBER = "표시된 상영번호 중 선택해주세요"
         const val INPUT_SEAT_LABEL = "예약할 좌석을 입력하세요 (A1, B2):"
         const val INVALID_SEAT_NUMBER_FORMAT_ERROR = "좌석 번호는 '대문자+숫자' 형태여야 합니다."
         const val CONTINUE_LABEL = "다른 영화를 추가하시겠습니까? (Y/N)"
         const val USE_POINT_LABEL = "사용할 포인트를 입력하세요 (없으면 0):"
-        const val CHOSE_PAY_METHOD_LABEL = "결제 수단을 선택하세요:\n" +
+        const val CHOSE_PAY_METHOD_LABEL =
+            "결제 수단을 선택하세요:\n" +
                 "1) 신용카드(5% 할인)\n" +
                 "2) 현금(2% 할인)"
         const val INVALID_PAY_METHOD_NUMBER_ERROR = "결제 수단은 1번과 2번 중 선택해주세요"
