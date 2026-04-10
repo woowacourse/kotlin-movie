@@ -3,22 +3,15 @@ package model
 import model.movie.Movie
 import model.movie.Movies
 import model.movie.RunningTime
-import model.movie.ShowingPeriod
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
 
 class MoviesTest {
     private val movie1 =
         Movie(
             title = "스파이더맨",
             runningTime = RunningTime(120L),
-            showingPeriod =
-                ShowingPeriod(
-                    startDate = LocalDate.of(2026, 4, 1),
-                    endDate = LocalDate.of(2026, 4, 8),
-                ),
         )
 
     @Test
@@ -41,11 +34,6 @@ class MoviesTest {
             Movie(
                 title = "스파이더맨2",
                 runningTime = RunningTime(120L),
-                showingPeriod =
-                    ShowingPeriod(
-                        startDate = LocalDate.of(2026, 4, 1),
-                        endDate = LocalDate.of(2026, 4, 8),
-                    ),
             )
         val movies = Movies(listOf(movie1))
 

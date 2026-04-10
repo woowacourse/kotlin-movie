@@ -2,7 +2,6 @@ package model
 
 import model.movie.Movie
 import model.movie.RunningTime
-import model.movie.ShowingPeriod
 import model.reservation.Reservations
 import model.screening.Screening
 import model.seat.Seat
@@ -23,16 +22,12 @@ class ReservationsTest {
         Movie(
             title = "스파이더맨",
             runningTime = RunningTime(120),
-            showingPeriod =
-                ShowingPeriod(
-                    startDate = LocalDate.of(2026, 4, 1),
-                    endDate = LocalDate.of(2026, 4, 30),
-                ),
         )
 
     private val defaultScreen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S))))
 
-    private fun screening(startHour: Int): Screening = Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
+    private fun screening(startHour: Int): Screening =
+        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
 
     @Test
     fun `빈 상태로 시작할 수 있다`() {

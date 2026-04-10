@@ -22,11 +22,6 @@ class ScreeningTest {
         Movie(
             title = "스파이더맨",
             runningTime = RunningTime(120),
-            showingPeriod =
-                ShowingPeriod(
-                    startDate = LocalDate.of(2026, 4, 1),
-                    endDate = LocalDate.of(2026, 4, 30),
-                ),
         )
 
     private val defaultSeats =
@@ -108,7 +103,7 @@ class ScreeningTest {
 
         val available = screening.availableSeats()
 
-        assertThat(available.seatNumbers()).doesNotContain(SeatNumber('A', 1))
+        assertThat(available.seatNumbers).doesNotContain(SeatNumber('A', 1))
     }
 
     @Test

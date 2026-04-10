@@ -6,7 +6,7 @@
 - [ ] `PaymentSystem`에서 할인 계산 로직을 분리하여 새로운 할인 전담 객체로 이동 (단일 책임 원칙)
 - [ ] `Screening` 내의 컴파일 타임 의존성을 인터페이스 기반으로 수정 (결합도 낮추기)
 - [ ] `Screening`에서 예약 생성 책임을 분리
-- [ ] `Scheduler`와 영화 도메인 모델(data)의 역할 분리
+- [x] `Scheduler`와 영화 도메인 모델(data)의 역할 분리
 
 ### 가독성 및 네이밍
 - [ ] `Reservations`: 중복 예약 확인 메서드명을 `hasOverlappingWith`로 변경

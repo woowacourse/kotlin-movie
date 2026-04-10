@@ -2,7 +2,6 @@ package model
 
 import model.movie.Movie
 import model.movie.RunningTime
-import model.movie.ShowingPeriod
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -16,11 +15,6 @@ class SchedulerTest {
             Movie(
                 title = "없는 영화",
                 runningTime = RunningTime(120),
-                showingPeriod =
-                    ShowingPeriod(
-                        startDate = LocalDate.of(2025, 9, 1),
-                        endDate = LocalDate.of(2025, 9, 30),
-                    ),
             )
 
         val screenings = scheduler.getScreenings(unknownMovie, LocalDate.of(2025, 9, 20))
