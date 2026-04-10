@@ -4,7 +4,7 @@ import movie.domain.amount.Money
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
-import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
 import movie.domain.seat.Seats
@@ -35,7 +35,7 @@ class ReservationTest {
                     LocalTime.of(10, 0),
                     LocalTime.of(12, 0),
                 ),
-                ReservatedSeats(
+                ReservedSeats(
                     listOf(
                         Seat("C", 1, SeatGrade.S),
                         Seat("C", 2, SeatGrade.S),

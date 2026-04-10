@@ -3,7 +3,7 @@ package movie.domain.reservation
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
-import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
 import movie.domain.seat.Seats
@@ -31,7 +31,7 @@ object ReservationData {
                 LocalTime.of(10, 0),
                 LocalTime.of(12, 0),
             ),
-            ReservatedSeats(emptyList()),
+            ReservedSeats(emptyList()),
         )
 
     private val screening2 =
@@ -43,7 +43,7 @@ object ReservationData {
                 LocalTime.of(14, 0),
                 LocalTime.of(16, 0),
             ),
-            ReservatedSeats(emptyList()),
+            ReservedSeats(emptyList()),
         )
 
     val reservations =

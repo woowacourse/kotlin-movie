@@ -162,7 +162,7 @@ class MovieController(
 
     private fun selectSeats(screening: Screening): List<Seat> =
         executeWithRetry {
-            outputView.printSeatLayout(screening.screen, screening.reservatedSeats)
+            outputView.printSeatLayout(screening.screen, screening.reservedSeats)
             val input = inputView.inputSeat()
             val seats = parseSeatInput(input, screening.screen)
             seats

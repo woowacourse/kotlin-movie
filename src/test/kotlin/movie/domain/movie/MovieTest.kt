@@ -4,7 +4,7 @@ import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.screening.Screenings
-import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -29,7 +29,7 @@ class MovieTest {
                                 LocalTime.of(10, 20),
                                 LocalTime.of(13, 0),
                             ),
-                        reservatedSeats = ReservatedSeats(listOf()),
+                        reservedSeats = ReservedSeats(listOf()),
                     ),
                 ),
             )

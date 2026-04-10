@@ -6,7 +6,7 @@ import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
-import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.ReservedSeats
 import movie.domain.seat.SelectedSeats
 
 class OutputView {
@@ -23,7 +23,7 @@ class OutputView {
 
     fun printSeatLayout(
         screen: Screen,
-        reservedSeats: ReservatedSeats,
+        reservedSeats: ReservedSeats,
     ) {
         println(SEAT_LAYOUT_HEADER)
         println("    1    2    3    4")

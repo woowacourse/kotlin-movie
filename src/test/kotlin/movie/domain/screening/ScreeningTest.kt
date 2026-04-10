@@ -1,6 +1,6 @@
 package movie.domain.screening
 
-import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
 import movie.domain.seat.Seats
@@ -27,7 +27,7 @@ class ScreeningTest {
                     LocalTime.of(10, 0),
                     LocalTime.of(12, 0),
                 ),
-                ReservatedSeats(
+                ReservedSeats(
                     listOf(
                         Seat("C", 1, SeatGrade.S),
                         Seat("C", 2, SeatGrade.S),
@@ -61,7 +61,7 @@ class ScreeningTest {
                     LocalTime.of(10, 0),
                     LocalTime.of(12, 0),
                 ),
-                ReservatedSeats(
+                ReservedSeats(
                     listOf(
                         Seat("C", 1, SeatGrade.S),
                         Seat("C", 2, SeatGrade.S),
@@ -92,7 +92,7 @@ class ScreeningTest {
                     LocalTime.of(10, 0),
                     LocalTime.of(12, 0),
                 ),
-                ReservatedSeats(
+                ReservedSeats(
                     listOf(
                         Seat("C", 1, SeatGrade.S),
                         Seat("C", 2, SeatGrade.S),
@@ -102,6 +102,6 @@ class ScreeningTest {
             )
 
         val result = screening.reserve(selectedSeats)
-        assertThat(result.reservatedSeats.getSeats()).containsAll(selectedSeats + screening.reservatedSeats.getSeats())
+        assertThat(result.reservedSeats.getSeats()).containsAll(selectedSeats + screening.reservedSeats.getSeats())
     }
 }

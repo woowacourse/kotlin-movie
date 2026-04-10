@@ -7,7 +7,7 @@ import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.screening.Screenings
-import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
 import movie.domain.seat.Seats
@@ -41,7 +41,7 @@ object MovieData {
                         LocalTime.of(10, 20),
                         LocalTime.of(12, 20),
                     ),
-                    ReservatedSeats(emptyList()),
+                    ReservedSeats(emptyList()),
                 ),
                 Screening(
                     "F1 더 무비",
@@ -51,7 +51,7 @@ object MovieData {
                         LocalTime.of(13, 0),
                         LocalTime.of(15, 0),
                     ),
-                    ReservatedSeats(
+                    ReservedSeats(
                         listOf(
                             Seat("B", 2, SeatGrade.B),
                             Seat("B", 3, SeatGrade.B),
@@ -68,7 +68,7 @@ object MovieData {
                         LocalTime.of(15, 40),
                         LocalTime.of(17, 40),
                     ),
-                    ReservatedSeats(emptyList()),
+                    ReservedSeats(emptyList()),
                 ),
                 Screening(
                     "F1 더 무비",
@@ -78,7 +78,7 @@ object MovieData {
                         LocalTime.of(20, 10),
                         LocalTime.of(22, 10),
                     ),
-                    ReservatedSeats(emptyList()),
+                    ReservedSeats(emptyList()),
                 ),
             )
         return Movie(
@@ -98,7 +98,7 @@ object MovieData {
                         LocalTime.of(13, 30),
                         LocalTime.of(15, 30),
                     ),
-                    ReservatedSeats(emptyList()),
+                    ReservedSeats(emptyList()),
                 ),
                 Screening(
                     "토이 스토리",
@@ -108,7 +108,7 @@ object MovieData {
                         LocalTime.of(16, 0),
                         LocalTime.of(18, 0),
                     ),
-                    ReservatedSeats(emptyList()),
+                    ReservedSeats(emptyList()),
                 ),
             )
         return Movie(
@@ -128,7 +128,7 @@ object MovieData {
                         LocalTime.of(9, 50),
                         LocalTime.of(11, 50),
                     ),
-                    ReservatedSeats(emptyList()),
+                    ReservedSeats(emptyList()),
                 ),
             )
         return Movie(
