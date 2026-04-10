@@ -1,7 +1,7 @@
 package movie.controller
 
 import movie.data.MovieData
-import movie.domain.amount.PaymentResult
+import movie.domain.payment.PaymentResult
 import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount

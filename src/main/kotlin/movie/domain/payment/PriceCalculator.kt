@@ -1,7 +1,6 @@
 package movie.domain.payment
 
 import movie.domain.amount.Money
-import movie.domain.amount.PaymentResult
 import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
 import movie.domain.reservation.Reservations
