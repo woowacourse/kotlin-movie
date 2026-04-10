@@ -1,6 +1,5 @@
 package domain
 
-import domain.Id
 import domain.user.Point
 import domain.user.User
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -38,7 +37,7 @@ class UserTest {
         val result = user.discountPoint(1000)
 
         // then : 전체 포인트 값이 1500이 된다.
-        assertEquals(1000, result.point.value)
+        assertEquals(1000, result.point.point)
     }
 
     @Test

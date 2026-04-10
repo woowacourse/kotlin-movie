@@ -3,8 +3,8 @@ package view
 import domain.cart.Cart
 import domain.cinema.Screen
 import domain.cinema.Showing
-import kotlin.collections.component1
-import kotlin.collections.component2
+import domain.purchase.Price
+import domain.user.Point
 
 object OutputView {
     fun printShowing(showings: List<Showing>) {
@@ -51,14 +51,14 @@ object OutputView {
 
     fun printTotal(
         cart: Cart,
-        totalPrice: Int,
-        usedPoint: Int,
+        totalPrice: Price,
+        usedPoint: Point,
     ) {
         println("예매완료")
         println("내역:")
         printCart(cart.showItems())
 
-        println("결제 금액: ${printByDecimalFormat(totalPrice)}원 (포인트 ${printByDecimalFormat(usedPoint)})")
+        println("결제 금액: ${printByDecimalFormat(totalPrice.price)}원 (포인트 ${printByDecimalFormat(usedPoint.point)})")
 
         println()
         println("감사합니다.")
