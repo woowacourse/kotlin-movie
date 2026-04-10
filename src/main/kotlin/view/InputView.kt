@@ -10,7 +10,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 object InputView {
-    fun startMovieReservation(text: String): Boolean {
+    fun askStartReservation(): Boolean = inputYesOrNo(Message.START_RESERVATION)
+
+    private fun inputYesOrNo(text: String): Boolean {
         println(text)
         val input = readln()
         InputValidator.validateYesOrNo(input)

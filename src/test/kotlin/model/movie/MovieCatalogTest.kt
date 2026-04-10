@@ -1,4 +1,4 @@
-package movie
+package model.movie
 
 import model.movie.Movie
 import model.movie.MovieCatalog

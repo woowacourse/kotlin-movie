@@ -1,4 +1,4 @@
-package payment
+package model.payment
 
 import model.CinemaTime
 import model.CinemaTimeRange

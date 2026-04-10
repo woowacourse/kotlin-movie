@@ -1,4 +1,4 @@
-package seat
+package model.seat
 
 import model.seat.SeatColumn
 import org.assertj.core.api.Assertions.assertThatCode

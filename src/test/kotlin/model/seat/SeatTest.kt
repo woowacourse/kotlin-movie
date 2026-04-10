@@ -1,4 +1,4 @@
-package seat
+package model.seat
 
 import model.seat.Seat
 import model.seat.SeatColumn

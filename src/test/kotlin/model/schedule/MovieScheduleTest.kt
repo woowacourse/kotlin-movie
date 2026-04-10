@@ -1,4 +1,4 @@
-package schedule
+package model.schedule
 
 import model.CinemaTime
 import model.CinemaTimeRange

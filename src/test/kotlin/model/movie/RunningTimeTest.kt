@@ -1,4 +1,4 @@
-package movie
+package model.movie
 
 import model.movie.RunningTime
 import org.assertj.core.api.Assertions.assertThat
