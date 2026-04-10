@@ -19,4 +19,8 @@ class ScreeningSchedule(
     fun reserveSeat(seat: Seat) = reservedSeat.add(seat)
 
     fun getStartTime() = screenTime.startTimeToString()
+
+    fun getMovie() = movie
+
+    fun getScreenTime() = screenTime
 }
