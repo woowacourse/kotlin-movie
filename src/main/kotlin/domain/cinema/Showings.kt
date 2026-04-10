@@ -1,10 +1,9 @@
 package domain.cinema
 
+import domain.reservation.ReservationInfos
 import kotlinx.datetime.LocalDate
 
 class Showings(val showings: List<Showing>) {
-    val size: Int get() = showings.size
-
     operator fun get(index: Int): Showing = showings[index]
 
     fun first(): Showing = showings.first()
@@ -21,5 +20,18 @@ class Showings(val showings: List<Showing>) {
     fun findByIndex(input: String): Showing {
         require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "선택하신 상영 번호는 없는 상영 번호입니다." }
         return showings[input.toInt() - 1]
+    }
+
+    fun findAvailableShowing(
+        movie: Movie,
+        date: LocalDate,
+        number: String,
+        reservationInfos: ReservationInfos,
+    ): Showing {
+        val showings = findByMovieAndDate(movie, date)
+        val selected = showings.findByIndex(number)
+        reservationInfos.checkReservationHistory(selected)
+
+        return selected
     }
 }

@@ -12,7 +12,7 @@ import view.OutputView
 class ReservationController(val movieTheater: MovieTheater) {
     fun run(): ReservationInfo {
         val movie = chooseMovie()
-        val date = chooseDate(movie)
+        val date = chooseDate()
         val showing = chooseShowingTime(movie, date)
         val seats = chooseSeat(showing)
 
@@ -25,7 +25,7 @@ class ReservationController(val movieTheater: MovieTheater) {
         return movie
     }
 
-    fun chooseDate(movie: Movie): LocalDate {
+    fun chooseDate(): LocalDate {
         val input = InputView.readDate()
         val date = runCatching { LocalDate.parse(input) }.getOrNull()
         require(date != null) { "올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)" }
@@ -37,16 +37,12 @@ class ReservationController(val movieTheater: MovieTheater) {
         movie: Movie,
         date: LocalDate,
     ): Showing {
-        val showings = movieTheater.showings.findByMovieAndDate(movie, date)
-
-        OutputView.printShowing(showings)
+        OutputView.printShowing(
+            movieTheater.showings.findByMovieAndDate(movie, date),
+        )
 
         val input = InputView.readShowingNumber()
-        val selected = showings.findByIndex(input)
-
-        movieTheater.reservationInfos.checkReservationHistory(selected)
-
-        return selected
+        return movieTheater.showings.findAvailableShowing(movie, date, input, movieTheater.reservationInfos)
     }
 
     fun chooseSeat(showing: Showing): Seats {
