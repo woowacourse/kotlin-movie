@@ -2,6 +2,7 @@ package controller
 
 import model.Scheduler
 import model.movie.Movie
+import model.payment.PayResult
 import model.payment.PaymentSystem
 import model.policy.DiscountSystem
 import model.reservation.Reservation
@@ -17,27 +18,16 @@ class MovieReservationController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        // 예매 시작
+        // 예매 시작 후 볼 영화 모두 고르기
         val isStartReservation = retryUntilValid { inputView.readStartReservation() }
         if (!isStartReservation) return
-        val reservations = makeCart(scheduler)
+        val reservations = makeCart()
 
         // 장바구니 전체 출력
         outputView.printCart(reservations)
 
-        // 포인트 입력
-        val point = retryUntilValid { inputView.readPoint() }
-
-        // 결제 수단 선택
-        val paymentMethod = retryUntilValid { inputView.readPaymentMethod() }
-
-        // 할인 시스템 가동
-        val discountSystem = DiscountSystem()
-        val discountedPrice = discountSystem.discountPrice(reservations)
-
-        // 결제 시스템 가동
-        val paymentSystem = PaymentSystem(paymentMethod)
-        val payResult = paymentSystem.pay(discountedPrice, point)
+        // 구매 단계
+        val payResult = purchase(reservations)
 
         // 최종 결제 금액 출력
         outputView.printFinalPrice(payResult.finalPrice)
@@ -50,7 +40,7 @@ class MovieReservationController(
         outputView.printReceipt(reservations, payResult)
     }
 
-    private fun makeCart(scheduler: Scheduler): Reservations {
+    private fun makeCart(): Reservations {
         var reservations = Reservations()
 
         do {
@@ -61,6 +51,18 @@ class MovieReservationController(
         } while (inputView.readAddMoreMovie())
 
         return reservations
+    }
+
+    private fun purchase(reservations: Reservations): PayResult {
+        val point = retryUntilValid { inputView.readPoint() }
+
+        val paymentMethod = retryUntilValid { inputView.readPaymentMethod() }
+
+        val discountSystem = DiscountSystem()
+        val discountedPrice = discountSystem.discountPrice(reservations)
+
+        val paymentSystem = PaymentSystem(paymentMethod)
+        return paymentSystem.pay(discountedPrice, point)
     }
 
     private fun makeReservation(currentReservations: Reservations): Reservation {
