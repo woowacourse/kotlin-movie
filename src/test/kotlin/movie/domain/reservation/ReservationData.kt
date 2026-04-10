@@ -2,6 +2,7 @@ package movie.domain.reservation
 
 import movie.domain.movie.MovieTitle
 import movie.domain.screening.Screen
+import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.seat.ReservatedSeats
@@ -15,7 +16,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object ReservationData {
-    private val screen = Screen(1, Seats.createDefault())
+    private val screen = Screen(ScreenId(1), Seats.createDefault())
 
     private val selectedSeats =
         SelectedSeats(

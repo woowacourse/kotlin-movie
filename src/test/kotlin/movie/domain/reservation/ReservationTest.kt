@@ -3,6 +3,7 @@ package movie.domain.reservation
 import movie.domain.amount.Money
 import movie.domain.movie.MovieTitle
 import movie.domain.screening.Screen
+import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.seat.ReservatedSeats
@@ -32,7 +33,7 @@ class ReservationTest {
         val screening =
             Screening(
                 MovieTitle("F1 더 무비"),
-                Screen(1, Seats.createDefault()),
+                Screen(ScreenId(1), Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),

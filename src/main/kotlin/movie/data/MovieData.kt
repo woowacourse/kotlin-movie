@@ -6,6 +6,7 @@ import movie.domain.movie.MovieTitle
 import movie.domain.movie.Movies
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
+import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.screening.Screenings
@@ -23,7 +24,7 @@ object MovieData {
     fun createMovies(): Movies {
         val screen =
             Screen(
-                1,
+                ScreenId(1),
                 Seats.createDefault(),
             )
 

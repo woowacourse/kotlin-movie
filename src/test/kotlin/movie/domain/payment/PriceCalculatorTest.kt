@@ -9,6 +9,7 @@ import movie.domain.movie.MovieTitle
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
+import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.seat.ReservatedSeats
@@ -30,7 +31,7 @@ class PriceCalculatorTest {
         val screening =
             Screening(
                 title = MovieTitle("토이 스토리"),
-                screen = Screen(1, Seats.createDefault()),
+                screen = Screen(ScreenId(1), Seats.createDefault()),
                 screeningDateTime =
                     ScreeningDateTime(
                         LocalDate.of(2026, 1, 10),

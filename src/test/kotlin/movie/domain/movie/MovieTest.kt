@@ -1,6 +1,7 @@
 package movie.domain.movie
 
 import movie.domain.screening.Screen
+import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.screening.Screenings
@@ -22,7 +23,7 @@ class MovieTest {
                 listOf(
                     Screening(
                         title = MovieTitle("F1 더 무비"),
-                        screen = Screen(1, Seats.createDefault()),
+                        screen = Screen(ScreenId(1), Seats.createDefault()),
                         screeningDateTime =
                             ScreeningDateTime(
                                 LocalDate.of(2026, 4, 9),

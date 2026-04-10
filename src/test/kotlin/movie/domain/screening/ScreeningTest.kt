@@ -24,7 +24,7 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(1, Seats.createDefault()),
+                Screen(ScreenId(1), Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
@@ -56,7 +56,7 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(1, Seats.createDefault()),
+                Screen(ScreenId(1), Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
@@ -88,7 +88,7 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(1, Seats.createDefault()),
+                Screen(ScreenId(1), Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
@@ -119,7 +119,7 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(1, Seats.createDefault()),
+                Screen(ScreenId(1), Seats.createDefault()),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
