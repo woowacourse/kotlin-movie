@@ -8,13 +8,6 @@ class Seat(
     private var state: SeatState,
     val grade: SeatGrade,
 ) : Comparable<Seat> {
-    val price: Int =
-        when (grade) {
-            SeatGrade.S -> 18_000
-            SeatGrade.A -> 15_000
-            SeatGrade.B -> 12_000
-        }
-
     fun reserve(): Boolean {
         if (state == SeatState.AVAILABLE) {
             state = SeatState.RESERVED

@@ -4,6 +4,7 @@ import model.MovieReservationResult
 import model.movie.MovieName
 import model.payment.MoviePayment
 import model.payment.PayType
+import model.payment.Point
 import model.schedule.MovieNameGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
@@ -33,7 +34,7 @@ class CinemaController(
             reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
         } while (inputContinue())
         OutputView.showShoppingCart(cinemaKiosk.reserveResults)
-        val point = inputPoint()
+        val point = Point(inputPoint())
         val payType = inputPayType()
         val payment =
             MoviePayment(

@@ -5,11 +5,17 @@ import java.time.LocalTime
 
 class MoviePayment(
     val reservations: List<MovieReservationResult.Success>,
-    val calculateTotalPrice: Int = reservations.sumOf { it.seat.price },
-    var currentPrice: Int = calculateTotalPrice,
+    val totalPrice: Money =
+        Money(
+            reservations.sumOf {
+                it.seat.grade.price
+                    .toInt()
+            },
+        ),
+    var currentPrice: Money = totalPrice,
 ) {
     init {
-        if (currentPrice < 0) currentPrice = 0
+        if (currentPrice < 0) currentPrice = Money(0)
     }
 
     fun discount() {
@@ -21,7 +27,7 @@ class MoviePayment(
         reservations.forEach { reservation ->
             for (day in listOf(10, 20, 30)) {
                 if (reservation.screenTime.start.isSameDay(day)) {
-                    currentPrice -= (reservation.seat.price * 0.1).toInt()
+                    currentPrice -= reservation.seat.grade.price applyRate 0.1
                 }
             }
         }
@@ -33,24 +39,24 @@ class MoviePayment(
             if (!time.isAfter(LocalTime.of(11, 0)) ||
                 !time.isBefore(LocalTime.of(20, 0))
             ) {
-                currentPrice -= 2000
+                currentPrice -= Money(2000)
             }
         }
     }
 
-    fun pay(payType: PayType): Int =
+    fun pay(payType: PayType): Money =
         when (payType) {
             PayType.CREDIT_CARD -> {
-                currentPrice = (currentPrice * 0.95).toInt()
+                currentPrice = currentPrice applyRate 0.95
                 currentPrice
             }
             PayType.CASH -> {
-                currentPrice = (currentPrice * 0.98).toInt()
+                currentPrice = currentPrice applyRate 0.98
                 currentPrice
             }
         }
 
-    fun applyPoint(point: Int) {
-        currentPrice -= point
+    fun applyPoint(point: Point) {
+        currentPrice -= point.toMoney()
     }
 }

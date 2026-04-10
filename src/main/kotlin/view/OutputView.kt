@@ -1,6 +1,8 @@
 package view
 
 import model.MovieReservationResult
+import model.payment.Money
+import model.payment.Point
 import model.schedule.MovieSchedule
 import model.seat.SeatGroup
 import kotlin.collections.component1
@@ -54,8 +56,8 @@ object OutputView {
 
     fun totalReservation(
         successResults: List<MovieReservationResult.Success>,
-        price: Int,
-        point: Int,
+        price: Money,
+        point: Point,
     ) {
         println("예매 완료")
         println("내역:")
@@ -69,10 +71,10 @@ object OutputView {
         println("결제 금액: %,d원 (포인트: %,d원 사용)".format(price, point))
     }
 
-    fun printTotalPrice(price: Int) {
+    fun printTotalPrice(price: Money) {
         println(Message.TOTAL_PRICE_TITLE)
         print(Message.TOTAL_PRICE)
-        println("${"%,d".format(price)}원")
+        println("${"%,d".format(price.toInt())}원")
     }
 
     fun end() {

@@ -6,8 +6,10 @@ import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
+import model.payment.Money
 import model.payment.MoviePayment
 import model.payment.PayType
+import model.payment.Point
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
@@ -60,8 +62,8 @@ class MoviePaymentTest {
                                     ),
                             ),
                         ),
-                ).calculateTotalPrice,
-            ).isEqualTo(33_000)
+                ).totalPrice,
+            ).isEqualTo(Money(33_000))
     }
 
     @Test
@@ -104,7 +106,7 @@ class MoviePaymentTest {
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
-            ).isEqualTo(29_700)
+            ).isEqualTo(Money(29_700))
     }
 
     @Test
@@ -136,7 +138,7 @@ class MoviePaymentTest {
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
-            ).isEqualTo(15_000 - 2_000)
+            ).isEqualTo(Money(15_000) - Money(2_000))
     }
 
     @Test
@@ -168,7 +170,7 @@ class MoviePaymentTest {
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
-            ).isEqualTo(15_000 - 2_000)
+            ).isEqualTo(Money(15_000) - Money(2_000))
     }
 
     @Test
@@ -200,7 +202,7 @@ class MoviePaymentTest {
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
-            ).isEqualTo(11_500)
+            ).isEqualTo(Money(11_500))
     }
 
     @Test
@@ -228,11 +230,11 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyPoint(5000)
+        moviePayment.applyPoint(Point(5000))
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
-            ).isEqualTo(10_000)
+            ).isEqualTo(Money(10_000))
     }
 
     @Test
@@ -260,11 +262,11 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyPoint(5000)
+        moviePayment.applyPoint(Point(5000))
         Assertions
             .assertThat(
                 moviePayment.pay(PayType.CREDIT_CARD),
-            ).isEqualTo(9_500)
+            ).isEqualTo(Money(9_500))
     }
 
     @Test
@@ -292,11 +294,11 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyPoint(5000)
+        moviePayment.applyPoint(Point(5000))
         Assertions
             .assertThat(
                 moviePayment.pay(PayType.CASH),
-            ).isEqualTo(9_800)
+            ).isEqualTo(Money(9_800))
     }
 
     @Test
@@ -325,10 +327,10 @@ class MoviePaymentTest {
                     ),
             )
         moviePayment.discount()
-        moviePayment.applyPoint(0)
+        moviePayment.applyPoint(Point(0))
         Assertions
             .assertThat(
-                moviePayment.calculateTotalPrice,
+                moviePayment.totalPrice,
             ).isEqualTo(moviePayment.currentPrice)
     }
 }
