@@ -43,7 +43,7 @@ class MoviePayment(
     private fun applyMovieDayDiscount() {
         reservations.forEach { reservation ->
             for (day in MOVIE_DAYS) {
-                if (reservation.screenTime.start.isSameDay(day)) {
+                if (reservation.screenTime.start.isSameDayOfMonth(day)) {
                     currentPrice -= (reservation.seat.price * MOVIE_DAY_DISCOUNT_RATE).toInt()
                 }
             }
@@ -52,9 +52,9 @@ class MoviePayment(
 
     private fun applyEarlyAndLateDiscount() {
         reservations.forEach { reservation ->
-            val time = reservation.screenTime.start.toLocalTime()
-            if (!time.isAfter(EARLY_DISCOUNT_END) ||
-                !time.isBefore(LATE_DISCOUNT_START)
+            val time = reservation.screenTime.start
+            if (time.isTimeOfDayAtOrBefore(EARLY_DISCOUNT_END) ||
+                time.isTimeOfDayAtOrAfter(LATE_DISCOUNT_START)
             ) {
                 currentPrice -= EARLY_AND_LATE_DISCOUNT_AMOUNT
             }

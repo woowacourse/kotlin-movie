@@ -11,11 +11,11 @@ data class CinemaTimeRange(
     val durationMinute = start.minuteUntil(end)
 
     fun contains(time: CinemaTime): Boolean {
-        if (time.isEqual(start) || time.isEqual(end)) return true
+        if (time == start || time == end) return true
         return time.isAfter(start) && time.isBefore(end)
     }
 
-    fun isEqual(cinemaTimeRange: CinemaTimeRange): Boolean = start.isEqual(cinemaTimeRange.start) && end.isEqual(cinemaTimeRange.end)
+    fun isEqual(cinemaTimeRange: CinemaTimeRange): Boolean = start == cinemaTimeRange.start && end == cinemaTimeRange.end
 
     fun overlaps(other: CinemaTimeRange): Boolean = !start.isAfter(other.end) && !other.start.isAfter(end)
 }
