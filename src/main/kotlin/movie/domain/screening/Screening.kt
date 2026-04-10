@@ -1,11 +1,9 @@
 package movie.domain.screening
 
-import movie.domain.reservation.Reservation
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
-import movie.domain.seat.SelectedSeats
 
-class Screening(
+data class Screening(
     val title: String,
     val screen: Screen,
     val screeningDateTime: ScreeningDateTime,
@@ -13,19 +11,15 @@ class Screening(
 ) {
     fun isTimeOverlapping(other: Screening): Boolean = screeningDateTime.isOverlapping(other.screeningDateTime)
 
-    fun isReserveAvailable(selectedSeats: List<Seat>): List<Seat> {
-        require(isValidSeats(selectedSeats)) { "존재하지 않는 좌석입니다." }
-        require(selectedSeats.all { reservatedSeats.isAvailable(it) }) { "이미 예약된 좌석입니다." }
-
-        return selectedSeats
+    fun reserve(selectedSeats: List<Seat>): Screening {
+        validateReserveAvailable(selectedSeats)
+        val finalSeats = reservatedSeats.add(selectedSeats)
+        return this.copy(reservatedSeats = finalSeats)
     }
 
-    fun reserve(selectedSeats: List<Seat>): Reservation {
-        val finalSeats = reservatedSeats.add(selectedSeats)
-        return Reservation(
-            this,
-            SelectedSeats(finalSeats.getSeats()),
-        )
+    private fun validateReserveAvailable(selectedSeats: List<Seat>) {
+        require(isValidSeats(selectedSeats)) { "존재하지 않는 좌석입니다." }
+        require(selectedSeats.all { reservatedSeats.isAvailable(it) }) { "이미 예약된 좌석입니다." }
     }
 
     private fun isValidSeats(selectedSeats: List<Seat>): Boolean = selectedSeats.all { screen.seats.hasSeat(it) }

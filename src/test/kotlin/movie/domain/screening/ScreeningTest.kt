@@ -38,39 +38,9 @@ class ScreeningTest {
 
         val exception =
             assertThrows<IllegalArgumentException> {
-                screening.isReserveAvailable(selectedSeats)
+                screening.reserve(selectedSeats)
             }
         assert(exception.message == "존재하지 않는 좌석입니다.")
-    }
-
-    @Test
-    fun `예약되지 않은 좌석은 예약할 수 있다`() {
-        val selectedSeats =
-            listOf(
-                Seat("A", 1, SeatGrade.B),
-            )
-
-        val screening =
-            Screening(
-                "토이 스토리",
-                Screen(1, Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
-                ),
-                ReservatedSeats(
-                    listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
-                    ),
-                ),
-            )
-
-        val result = screening.isReserveAvailable(selectedSeats)
-
-        assertThat(result).isEqualTo(selectedSeats)
     }
 
     @Test
@@ -101,16 +71,16 @@ class ScreeningTest {
             )
         val exception =
             assertThrows<IllegalArgumentException> {
-                screening.isReserveAvailable(selectedSeats)
+                screening.reserve(selectedSeats)
             }
         assert(exception.message == "이미 예약된 좌석입니다.")
     }
 
     @Test
-    fun `예약 검증 후 true일 경우 예약이 생성된다`() {
+    fun `존재하는 좌석이며 예약이 되지 않은 좌석은 예약이 가능하다`() {
         val selectedSeats =
             listOf(
-                Seat("A", 1, SeatGrade.S),
+                Seat("A", 1, SeatGrade.B),
             )
 
         val screening =
@@ -132,6 +102,6 @@ class ScreeningTest {
             )
 
         val result = screening.reserve(selectedSeats)
-        assertThat(result).isNotNull()
+        assertThat(result.reservatedSeats.getSeats()).containsAll(selectedSeats + screening.reservatedSeats.getSeats())
     }
 }
