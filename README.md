@@ -41,8 +41,9 @@
 
 ### controller
 - [ ] Controller 책임 분리
-  - [ ] View 책임 분리
+  - [x] View 책임 분리
   - [ ] Domain 책임 분리
+- [x] 에러 메세지 상수 분리
 
 ### domain
   - [ ] DiscountPolicy 인터페이스 분리

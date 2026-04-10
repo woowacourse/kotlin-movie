@@ -1,5 +1,7 @@
 package domain.reservation
 
+import constants.ErrorMessages
+
 enum class SeatGrade(
     val money: Int,
 ) {
@@ -16,14 +18,14 @@ enum class SeatGrade(
             rowIndex: Int,
             columnIndex: Int,
         ): SeatGrade {
-            require(rowIndex in 0 until ROW_SIZE) { "유효하지 않은 행 인덱스입니다." }
-            require(columnIndex in 0 until COLUMN_SIZE) { "유효하지 않은 열 인덱스입니다." }
+            require(rowIndex in 0 until ROW_SIZE) { ErrorMessages.INVALID_ROW.message }
+            require(columnIndex in 0 until COLUMN_SIZE) { ErrorMessages.INVALID_COL.message }
 
             return when (rowIndex) {
                 0, 1 -> B
                 2, 3 -> S
                 4 -> A
-                else -> throw IllegalArgumentException("유효하지 않은 좌석 위치입니다.")
+                else -> throw IllegalArgumentException(ErrorMessages.INVALID_SEAT.message)
             }
         }
     }

@@ -1,5 +1,6 @@
 package domain.screening
 
+import constants.ErrorMessages
 import domain.reservation.Seat
 import java.time.LocalDateTime
 
@@ -24,7 +25,7 @@ class Screening private constructor(
     fun isReserved(seat: Seat): Boolean = reservedSeats.contains(seat)
 
     fun reserve(seats: List<Seat>): Screening {
-        require(seats.none { isReserved(it) }) { "이미 예약된 좌석은 다시 선택할 수 없습니다." }
+        require(seats.none { isReserved(it) }) { ErrorMessages.SELECTED_RESERVED_SEAT.message }
         return Screening(
             movie = movie,
             startTime = startTime,

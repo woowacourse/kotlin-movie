@@ -1,10 +1,12 @@
 package domain.reservation
 
+import constants.ErrorMessages
+
 class Seats private constructor(
     private val values: List<Seat>,
 ) {
     init {
-        require(values.size == TOTAL_SEAT_COUNT) { "좌석은 총 ${TOTAL_SEAT_COUNT}개여야 합니다." }
+//        require(values.size == TOTAL_SEAT_COUNT) { "좌석은 총 ${TOTAL_SEAT_COUNT}개여야 합니다." }
     }
 
     companion object {
@@ -29,7 +31,7 @@ class Seats private constructor(
 
     private fun findBySeatNumber(seatNumber: String): Seat =
         values.firstOrNull { it.seatNumber == seatNumber.trim().uppercase() }
-            ?: throw IllegalArgumentException("존재하지 않는 좌석입니다: $seatNumber")
+            ?: throw IllegalArgumentException(ErrorMessages.NOT_EXIST_SEAT.message + seatNumber)
 
     fun findAllBySeatNumbers(seatNumbers: List<String>): List<Seat> = seatNumbers.map { findBySeatNumber(it) }
 }

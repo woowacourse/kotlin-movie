@@ -1,5 +1,6 @@
 package controller
 
+import constants.ErrorMessages
 import domain.account.Account
 import domain.payment.DiscountPolicy
 import domain.payment.PayResult
@@ -10,14 +11,14 @@ import domain.reservation.ReservedScreen
 import domain.reservation.Seat
 import domain.reservation.Seats
 import domain.screening.Screening
-import repository.CinemaRepository
+import repository.Screenings
 import view.InputView
 import view.OutputView
 import java.lang.Exception
 import java.time.LocalDate
 
 class CinemaController(
-    private val repository: CinemaRepository,
+    private val screenings: Screenings,
     private val inputView: InputView,
     private val outputView: OutputView,
     private val account: Account = Account(),
@@ -66,15 +67,15 @@ class CinemaController(
         try {
             LocalDate.parse(inputView.readDate())
         } catch (e: Exception) {
-            throw IllegalArgumentException("날짜 형식이 올바르지 않습니다. (YYYY-MM-DD)")
+            throw IllegalArgumentException(ErrorMessages.INVALID_DATE_FORMAT.message)
         }
 
     private fun findAvailableScreenings(
         title: String,
         date: LocalDate,
     ): List<Screening> {
-        val screenings = repository.findByMovieTitleAndDate(title, date)
-        require(screenings.isNotEmpty()) { "해당 조건의 상영이 없습니다." }
+        val screenings = screenings.findByMovieTitleAndDate(title, date)
+        require(screenings.isNotEmpty()) { ErrorMessages.SCREENING_DOES_NOT_EXIST.message }
         return screenings
     }
 
@@ -84,7 +85,7 @@ class CinemaController(
 
             val selectedNumber = inputView.readScreeningNumber()
             require(selectedNumber in 1..availableScreenings.size) {
-                "올바른 상영 번호를 선택해 주세요."
+                ErrorMessages.INCORRECT_SCREENING_NUMBER.message
             }
 
             val selectedScreening = availableScreenings[selectedNumber - 1]
@@ -133,22 +134,22 @@ class CinemaController(
     private fun validateScreeningOverlap(target: Screening) {
         cart.items.forEach {
             require(!it.screen.overlaps(target)) {
-                "선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요."
+                ErrorMessages.OVERLAP_MOVIE_TIME.message
             }
         }
     }
 
     private fun readSeats(): List<Seat> {
         val input = inputView.readSeatNumbers()
-        require(!input.isNullOrBlank()) { "올바른 좌석 번호를 입력해주세요." }
+        require(input.isNotBlank()) { ErrorMessages.INCORRECT_SEAT_NUMBER.message }
         val seatNumbers =
             input
-                .split(",")
+                .split(SEAT_NUMBER_PARSER)
                 .map { it.trim().uppercase() }
                 .filter { it.isNotBlank() }
 
         require(seatNumbers.toSet().size == seatNumbers.size) {
-            "동일 좌석을 중복 예약할 수 없습니다."
+            ErrorMessages.SELECT_SAME_SEAT.message
         }
 
         return allSeats.findAllBySeatNumbers(seatNumbers)
@@ -159,7 +160,7 @@ class CinemaController(
         seats: List<Seat>,
     ) {
         require(seats.none { screening.isReserved(it) }) {
-            "이미 예약된 좌석은 다시 선택할 수 없습니다."
+            ErrorMessages.SELECTED_RESERVED_SEAT.message
         }
     }
 
@@ -175,7 +176,7 @@ class CinemaController(
 
     private fun selectedScreeningReservedSeats(screening: Screening): List<Seat> {
         val sameScreen =
-            repository.screenings.firstOrNull {
+            this@CinemaController.screenings.screenings.firstOrNull {
                 it.movie == screening.movie && it.startTime == screening.startTime
             } ?: screening
 
@@ -186,8 +187,8 @@ class CinemaController(
         screening: Screening,
         selectedSeats: List<Seat>,
     ) {
-        repository.updateScreening(
-            repository.screenings.map {
+        screenings.updateScreening(
+            this@CinemaController.screenings.screenings.map {
                 if (it.movie == screening.movie && it.startTime == screening.startTime) {
                     it.reserve(selectedSeats)
                 } else {
@@ -205,5 +206,10 @@ class CinemaController(
                 outputView.printErrorMessage(e.message ?: "")
             }
         }
+    }
+
+    companion object {
+        private const val CONFIRM_INPUT = "Y"
+        private const val SEAT_NUMBER_PARSER = ","
     }
 }

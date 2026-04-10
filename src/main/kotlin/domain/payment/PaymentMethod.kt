@@ -1,5 +1,7 @@
 package domain.payment
 
+import constants.ErrorMessages
+
 enum class PaymentMethod(
     val discountRate: Double,
 ) {
@@ -12,7 +14,7 @@ enum class PaymentMethod(
             when (number) {
                 1 -> CREDIT_CARD
                 2 -> CASH
-                else -> throw IllegalArgumentException("올바른 결제 수단을 선택해 주세요.")
+                else -> throw IllegalArgumentException(ErrorMessages.INVALID_PAYMENT_METHOD.message)
             }
     }
 

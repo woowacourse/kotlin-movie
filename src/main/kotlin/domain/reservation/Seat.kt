@@ -1,5 +1,7 @@
 package domain.reservation
 
+import constants.ErrorMessages
+
 data class Seat(
     val row: SeatRow,
     val column: SeatColumn,
@@ -31,7 +33,7 @@ value class SeatRow(
 ) {
     companion object {
         fun setRow(rowIndex: Int): SeatRow {
-            require(rowIndex in 0..4) { "유효하지 않은 행 인덱스입니다." }
+            require(rowIndex in 0..4) { ErrorMessages.INVALID_ROW.message }
             return SeatRow(('A' + rowIndex).toString())
         }
     }
@@ -43,7 +45,7 @@ value class SeatColumn(
 ) {
     companion object {
         fun setCol(columnIndex: Int): SeatColumn {
-            require(columnIndex in 0..3) { "유효하지 않은 열 인덱스입니다." }
+            require(columnIndex in 0..3) { ErrorMessages.INVALID_COL.message }
             return SeatColumn(columnIndex + 1)
         }
     }
