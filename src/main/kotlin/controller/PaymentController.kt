@@ -4,6 +4,7 @@ import domain.cart.Cart
 import domain.discount.MovieDayDiscount
 import domain.discount.TimeDiscount
 import domain.purchase.PaymentMethod
+import domain.purchase.PaymentResult
 import domain.purchase.Price
 import domain.user.Point
 import domain.user.User
@@ -11,24 +12,24 @@ import view.InputView
 import view.OutputView
 
 class PaymentController(val cart: Cart, val user: User) {
-    fun run(): Pair<Price, Point> {
+    fun run(): PaymentResult {
         var price = discountPerSeat()
-        val pair = getUserPoint(price)
-        price = pair.first
+        val pointResult = getUserPoint(price)
+        price = pointResult.totalPrice
 
         price = getPaymentMethod(price)
 
         OutputView.printTotalPrice(price.price)
 
-        return price to pair.second
+        return PaymentResult(price, pointResult.usedPoint)
     }
 
-    fun getUserPoint(totalPrice: Price): Pair<Price, Point> {
+    fun getUserPoint(totalPrice: Price): PaymentResult {
         val input = InputView.readPoint()
         user.discountPoint(input.toInt())
 
         val finalPrice = totalPrice.subtractPrice(input.toInt())
-        return finalPrice to Point(input.toInt())
+        return PaymentResult(finalPrice, Point(input.toInt()))
     }
 
     fun discountPerSeat(): Price {
@@ -52,11 +53,9 @@ class PaymentController(val cart: Cart, val user: User) {
 
     fun getPaymentMethod(price: Price): Price {
         val input = InputView.readPaymentMethod()
-
         require(input.toInt() in 1..2) { "유효하지 않은 결제 수단입니다." }
 
-        val method = PaymentMethod.entries.first { (it.ordinal + 1) == input.toInt() }
-
+        val method = PaymentMethod.from(input.toInt())
         return method.discountApply(price)
     }
 }

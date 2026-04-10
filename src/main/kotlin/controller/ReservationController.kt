@@ -3,19 +3,20 @@ package controller
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Showing
+import domain.reservation.ReservationInfo
 import domain.seat.Seats
 import kotlinx.datetime.LocalDate
 import view.InputView
 import view.OutputView
 
 class ReservationController(val movieTheater: MovieTheater) {
-    fun run(): Pair<Showing, Seats> {
+    fun run(): ReservationInfo {
         val movie = chooseMovie()
         val date = chooseDate(movie)
         val showing = chooseShowingTime(movie, date)
         val seats = chooseSeat(showing)
 
-        return showing to seats
+        return ReservationInfo(showing, seats)
     }
 
     fun chooseMovie(): Movie {

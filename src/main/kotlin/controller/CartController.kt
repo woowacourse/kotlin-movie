@@ -1,23 +1,15 @@
 package controller
 
 import domain.cart.Cart
-import domain.cinema.Showing
 import domain.reservation.ReservationInfo
-import domain.seat.Seats
 import view.OutputView
 
 class CartController {
     fun run(
         cart: Cart,
-        showing: Showing,
-        seats: Seats,
+        info: ReservationInfo,
     ): Cart {
-        cart.addInfos(
-            ReservationInfo(
-                showing = showing,
-                seats = seats,
-            ),
-        )
+        cart.addInfos(info)
         OutputView.printCart(cart.showItems())
         return cart
     }

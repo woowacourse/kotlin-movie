@@ -78,6 +78,7 @@ class PaymentControllerTest {
         val result = controller.run()
 
         // then : 할인된 총 금액이 반환된다.
-        assertEquals(24_415 to 2000, result.first.price to result.second.point)
+        assertEquals(24_415, result.totalPrice.price)
+        assertEquals(2000, result.usedPoint.point)
     }
 }

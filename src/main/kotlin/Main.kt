@@ -88,13 +88,9 @@ fun main() {
         val reservationController = ReservationController(
             movieTheater = movieTheater,
         )
-        val pair = reservationController.run()
+        val info = reservationController.run()
 
-        cart = cartController.run(
-            cart,
-            showing = pair.first,
-            seats = pair.second,
-        )
+        cart = cartController.run(cart, info)
 
         input = InputView.continueTicketing()
     }
@@ -112,7 +108,7 @@ fun main() {
 
     OutputView.printTotal(
         cart = cart,
-        totalPrice = total.first,
-        usedPoint = total.second,
+        totalPrice = total.totalPrice,
+        usedPoint = total.usedPoint,
     )
 }

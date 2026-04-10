@@ -15,5 +15,8 @@ enum class PaymentMethod {
     companion object {
         const val CARD_DISCOUNT_PERCENT = 0.05
         const val CASH_DISCOUNT_PERCENT = 0.02
+        fun from(index: Int): PaymentMethod {
+            return PaymentMethod.entries.first { (it.ordinal + 1) == index }
+        }
     }
 }
