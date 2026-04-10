@@ -5,23 +5,23 @@ import movie.domain.Price
 class Reservations(
     reservations: List<Reservation> = emptyList(),
 ) {
-    private val value = reservations.toMutableList()
+    private val reservations = reservations.toMutableList()
 
-    fun getReservations() = value.toList()
+    fun getReservations() = reservations.toList()
 
     fun addReservation(reservation: Reservation) {
-        value.add(reservation)
+        reservations.add(reservation)
     }
 
     fun getTotalPrice(): Price =
-        value
+        reservations
             .map { it.getTotalPrice() }
             .fold(Price(0)) { total, price ->
                 total.sumPrice(price)
             }
 
     fun isDupTime(movieTime: MovieTime): Boolean =
-        value.any {
+        reservations.any {
             val srcMovieTime = it.screeningMovie.movieTime
             srcMovieTime.date == movieTime.date &&
                 srcMovieTime.startTime in movieTime.startTime..movieTime.endTime &&
@@ -29,7 +29,7 @@ class Reservations(
         }
 
     fun reset() {
-        value.forEach {
+        reservations.forEach {
             it.screeningMovie.deleteReservedSeats(it.seatNumbers)
         }
     }

@@ -3,11 +3,11 @@ package movie.domain.movie
 class Theaters(
     theaters: List<Theater>,
 ) {
-    private val value = theaters.toMutableList()
+    private val theaters = theaters.toMutableList()
 
     fun addTheater(
         newTheater: Theater
     ) {
-        value.add(newTheater)
+        theaters.add(newTheater)
     }
 }
