@@ -12,22 +12,13 @@ class CartController {
         showing: Showing,
         seats: Seats,
     ): Cart {
-        addReservationInfo(cart, showing, seats)
-        OutputView.printCart(cart)
-        return cart
-    }
-
-    fun addReservationInfo(
-        cart: Cart,
-        showing: Showing,
-        seats: Seats,
-    ): Cart {
-
-        return cart.addInfos(
+        cart.addInfos(
             ReservationInfo(
                 showing = showing,
                 seats = seats,
             ),
         )
+        OutputView.printCart(cart)
+        return cart
     }
 }
