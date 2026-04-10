@@ -9,7 +9,7 @@ class PayMethodPolicyMethodTest {
     val cashDiscountPolicy = CashDiscountPolicy()
 
     @Test
-    fun `카드 결제를 선택하면 5% 할인이 적용된다` () {
+    fun `카드 결제를 선택하면 5% 할인이 적용된다`() {
         val amount = Money(10000)
 
         assertThat(cardDiscountPolicy.applyDiscount(amount)).isEqualTo(Money(9500))
