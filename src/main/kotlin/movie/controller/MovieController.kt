@@ -1,11 +1,7 @@
 package movie.controller
 
-import movie.data.MovieData
 import movie.domain.amount.PaymentResult
 import movie.domain.amount.Point
-import movie.domain.discount.DiscountPolicies
-import movie.domain.discount.MovieDayDiscount
-import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
 import movie.domain.payment.Cash
 import movie.domain.payment.CreditCard
@@ -23,17 +19,11 @@ import movie.view.OutputView
 import java.time.LocalDate
 
 class MovieController(
-    private val inputView: InputView = InputView(),
-    private val outputView: OutputView = OutputView(),
-    private val movies: List<Movie> = MovieData.createMovies(),
-    private val user: User = MovieData.createUser(),
-    private val priceCalculator: PriceCalculator =
-        PriceCalculator(
-            DiscountPolicies(
-                percentagePolicies = listOf(MovieDayDiscount()),
-                fixedPolicies = listOf(TimeDiscount()),
-            ),
-        ),
+    private val inputView: InputView,
+    private val outputView: OutputView,
+    private val movies: List<Movie>,
+    private val user: User,
+    private val priceCalculator: PriceCalculator,
 ) {
     fun run() {
         if (!askStartReservation()) return
