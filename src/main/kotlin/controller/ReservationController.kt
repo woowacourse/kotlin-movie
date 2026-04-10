@@ -50,7 +50,7 @@ class ReservationController(val movieTheater: MovieTheater) {
 
         require(input.toIntOrNull() != null && input.toInt() <= showings.size) { "선택하신 상영 번호는 없는 상영 번호입니다." }
 
-        Reservation.checkReservationHistory(movieTheater.reservationInfos, showings[input.toInt() - 1])
+        movieTheater.reservationInfos.checkReservationHistory(showings[input.toInt() - 1])
 
         return showings[input.toInt() - 1]
     }

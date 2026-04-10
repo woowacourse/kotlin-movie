@@ -1,41 +1,10 @@
 package domain.reservation
 
-import domain.cinema.Movie
-import domain.cinema.MovieTheater
-import domain.cinema.Showing
 import domain.seat.Seat
 import domain.seat.SeatState
 import domain.seat.Seats
-import kotlinx.datetime.LocalDate
 
 object Reservation {
-    fun findShowing(
-        movieTheater: MovieTheater,
-        movie: Movie,
-        date: LocalDate,
-    ): List<Showing> {
-        val showings = movieTheater.showings.filter { it.movie == movie && it.startTime.date == date }
-        require(showings.isNotEmpty()) { "해당 영화는 해당 날짜에 상영되지 않습니다." }
-        return showings
-    }
-
-    fun makeReservation(
-        movieTheater: MovieTheater,
-        showing: Showing,
-    ) {
-    }
-
-    fun checkReservationHistory(
-        reservationInfos: ReservationInfos,
-        showing: Showing,
-    ) {
-        val history = reservationInfos.infos.filter {
-            showing.startTime >= it.showing.startTime && showing.startTime <= it.showing.endTime
-        }
-
-        require(history.isEmpty()) { "선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요." }
-    }
-
     fun checkSeatFormat(seat: String) {
         require(Regex("^[A-Z][0-9]+$").matches(seat)) { "입력된 값이 유효하지 않습니다." }
     }
