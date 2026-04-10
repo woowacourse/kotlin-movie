@@ -1,6 +1,6 @@
 package movie.domain.payment
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,9 +11,9 @@ class CashTest {
         val cash = Cash()
 
         // when
-        val result = cash.applyDiscount(Money(10000))
+        val result = cash.applyDiscount(Price(10000))
 
         // then
-        assertThat(result).isEqualTo(Money(9800))
+        assertThat(result).isEqualTo(Price(9800))
     }
 }

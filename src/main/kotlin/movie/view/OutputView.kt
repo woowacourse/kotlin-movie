@@ -1,7 +1,7 @@
 package movie.view
 
-import movie.domain.amount.Money
 import movie.domain.amount.Point
+import movie.domain.amount.Price
 import movie.domain.movie.Movie
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
@@ -53,14 +53,14 @@ class OutputView {
         println(reservations.toDisplayText())
     }
 
-    fun printFinalPrice(price: Money) {
+    fun printFinalPrice(price: Price) {
         println(PRICE_CALCULATION_HEADER)
         println(FINAL_PRICE_FORMAT.format(formatMoney(price)))
     }
 
     fun printComplete(
         reservations: Reservations,
-        price: Money,
+        price: Price,
         usedPoint: Point,
     ) {
         println(RESERVATION_COMPLETE_HEADER)
@@ -70,7 +70,7 @@ class OutputView {
             PAYMENT_AMOUNT_FORMAT.format(
                 formatMoney(price),
                 formatMoney(
-                    Money(
+                    Price(
                         usedPoint.value,
                     ),
                 ),
@@ -89,7 +89,7 @@ class OutputView {
         println(reservation.toDisplayText())
     }
 
-    private fun formatMoney(money: Money): String = String.format("%,d", money.value)
+    private fun formatMoney(price: Price): String = String.format("%,d", price.value)
 
     private fun Reservations.toDisplayText(): String = getReservations().joinToString("\n") { it.toDisplayText() }
 

@@ -1,7 +1,7 @@
 package movie.domain.payment
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 
 interface PaymentMethod {
-    fun applyDiscount(price: Money): Money
+    fun applyDiscount(price: Price): Price
 }

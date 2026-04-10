@@ -1,7 +1,7 @@
 package movie.domain.payment
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 
 class CreditCard : PaymentMethod {
-    override fun applyDiscount(price: Money): Money = price.percentOf(95)
+    override fun applyDiscount(price: Price): Price = price.percentOf(95)
 }

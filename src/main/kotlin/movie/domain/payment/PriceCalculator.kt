@@ -1,8 +1,8 @@
 package movie.domain.payment
 
-import movie.domain.amount.Money
 import movie.domain.amount.PaymentResult
 import movie.domain.amount.Point
+import movie.domain.amount.Price
 import movie.domain.discount.DiscountPolicies
 import movie.domain.reservation.Reservations
 
@@ -13,7 +13,7 @@ class PriceCalculator {
         point: Point,
         paymentMethod: PaymentMethod,
     ): PaymentResult {
-        var totalPrice = Money(0)
+        var totalPrice = Price(0)
 
         reservations.forEach { reservation ->
             val screeningDateTime = reservation.getScreening().screeningDateTime
@@ -26,7 +26,7 @@ class PriceCalculator {
         }
 
         val usagePoint = point.usableAmount(totalPrice)
-        totalPrice = totalPrice.minus(Money(usagePoint.value))
+        totalPrice = totalPrice.minus(Price(usagePoint.value))
         totalPrice = paymentMethod.applyDiscount(totalPrice)
 
         return PaymentResult(

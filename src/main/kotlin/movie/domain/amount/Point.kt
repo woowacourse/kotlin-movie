@@ -8,7 +8,7 @@ value class Point(
         require(value >= 0) { "포인트는 0원 이상이어야 합니다." }
     }
 
-    fun usableAmount(price: movie.domain.amount.Money): Point {
+    fun usableAmount(price: movie.domain.amount.Price): Point {
         if (value >= price.value) {
             return Point(price.value)
         }

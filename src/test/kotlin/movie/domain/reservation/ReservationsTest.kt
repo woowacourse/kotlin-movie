@@ -1,6 +1,6 @@
 package movie.domain.reservation
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 import movie.domain.movie.Movie
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
@@ -102,6 +102,6 @@ class ReservationsTest {
         val reservations = Reservations(reservationData)
 
         // then
-        assert(reservations.totalPrice() == Money(60000))
+        assert(reservations.totalPrice() == Price(60000))
     }
 }

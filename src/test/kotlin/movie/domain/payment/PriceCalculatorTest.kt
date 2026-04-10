@@ -1,7 +1,7 @@
 package movie.domain.payment
 
-import movie.domain.amount.Money
 import movie.domain.amount.Point
+import movie.domain.amount.Price
 import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
@@ -76,7 +76,7 @@ class PriceCalculatorTest {
                 CreditCard(),
             )
 
-        assertThat(result.totalPrice).isEqualTo(Money(12540))
+        assertThat(result.totalPrice).isEqualTo(Price(12540))
         assertThat(result.usedPoint).isEqualTo(Point(1000))
     }
 }

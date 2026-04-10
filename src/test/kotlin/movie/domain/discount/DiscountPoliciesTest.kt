@@ -1,6 +1,6 @@
 package movie.domain.discount
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -16,11 +16,11 @@ class DiscountPoliciesTest {
         // when
         val result =
             discountPolicies.applyDiscount(
-                Money(10000),
+                Price(10000),
                 LocalDateTime.of(2026, 1, 10, 10, 0),
             )
 
         // then
-        assertThat(result).isEqualTo(Money(7000))
+        assertThat(result).isEqualTo(Price(7000))
     }
 }

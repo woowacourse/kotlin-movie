@@ -1,11 +1,11 @@
 package movie.domain.discount
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 import java.time.LocalDateTime
 
 interface DiscountPolicy {
     fun applyDiscount(
-        price: Money,
+        price: Price,
         localDateTime: LocalDateTime,
-    ): Money
+    ): Price
 }

@@ -1,6 +1,6 @@
 package movie.domain.reservation
 
-import movie.domain.amount.Money
+import movie.domain.amount.Price
 
 class Reservations(
     private val reservations: List<Reservation>,
@@ -11,7 +11,7 @@ class Reservations(
 
     fun add(reservation: Reservation): List<Reservation> = Reservations(reservations + reservation).reservations
 
-    fun totalPrice(): Money = reservations.map { it.calculatePrice() }.reduce { acc, money -> acc + money }
+    fun totalPrice(): Price = reservations.map { it.calculatePrice() }.reduce { acc, money -> acc + money }
 
     fun forEach(action: (Reservation) -> Unit) {
         reservations.forEach(action)

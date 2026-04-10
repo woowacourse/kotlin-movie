@@ -1,5 +1,6 @@
 package movie.domain.seat
 
+import movie.domain.amount.Price
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -17,7 +18,7 @@ class SelectedSeatsTest {
             )
 
         // then
-        assert(selectedSeats.totalPrice == 51000)
+        assert(selectedSeats.totalPrice == Price(51000))
     }
 
     @Test
