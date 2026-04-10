@@ -5,13 +5,29 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
+class FakePercentageDiscount : PercentageDiscountPolicy {
+    override fun applyDiscount(
+        price: Price,
+        localDateTime: LocalDateTime,
+    ): Price = price.percentOf(90)
+}
+
+class FakeFixedAmountDiscount : FixedAmountDiscountPolicy {
+    override fun applyDiscount(
+        price: Price,
+        localDateTime: LocalDateTime,
+    ): Price = price.minus(Price(2000))
+}
+
 class DiscountPoliciesTest {
     @Test
-    fun `무비데이와 시간 할인이 동시에 적용되면 무비데이 할인(비율)이 먼저 적용되고, 이어서 시간 조건 할인(정액)이 적용된다`() {
+    fun `비율 할인 정책이 먼저 적용된 후 정액 할인 정책이 적용된다`() {
         // given
-        val movieDayDiscount = MovieDayDiscount()
-        val timeDiscount = TimeDiscount()
-        val discountPolicies = DiscountPolicies(listOf(movieDayDiscount), listOf(timeDiscount))
+        val discountPolicies =
+            DiscountPolicies(
+                listOf(FakePercentageDiscount()),
+                listOf(FakeFixedAmountDiscount()),
+            )
 
         // when
         val result =
