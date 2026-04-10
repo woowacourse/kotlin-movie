@@ -1,15 +1,13 @@
 package view.output
 
-import domain.reservations.Reservations
 import domain.reservations.items.Reservation
-import domain.timetable.TimeTable
 import domain.timetable.items.ScreeningSchedule
 
 object OutputView {
     fun printScreeningMovieTime(schedules: List<ScreeningSchedule>) {
         println(Label.SCREENING_LIST_LABEL)
         schedules.forEachIndexed { index, schedule ->
-            println("[$index] ${schedule.getStartTime()}")
+            println("[${index + 1}] ${schedule.getStartTime()}")
         }
     }
 
@@ -41,7 +39,10 @@ object OutputView {
         println("${Label.CALCULATE_PRICE_LABEL} $price ${Label.WON}")
     }
 
-    fun printReceipt(reservations: List<Reservation>, price: Int) {
+    fun printReceipt(
+        reservations: List<Reservation>,
+        price: Int,
+    ) {
         println(Label.SUCCESS_RESERVE_LABEL)
         println(Label.HISTORY_LABEL)
         reservations.forEach {
