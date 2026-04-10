@@ -10,7 +10,7 @@
 
 ### 가독성 및 네이밍
 - [x] `Reservations`: 중복 예약 확인 메서드명을 `hasOverlappingWith`로 변경
-- [ ] `OutputView`: Early Return 패턴 적용을 통해 `else` 제거 및 들여쓰기 정리
+- [x] `OutputView`: Early Return 패턴 적용을 통해 `else` 제거 및 들여쓰기 정리
 
 ## 🚀 2단계 - 영화 예매(콘솔)
 

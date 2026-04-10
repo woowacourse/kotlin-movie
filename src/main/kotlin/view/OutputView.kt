@@ -26,22 +26,15 @@ object OutputView {
     ) {
         println("\n좌석 배치도")
 
-        val row = 'A'..'E'
-        val column = 1..4
+        val rows = 'A'..'E'
+        val columns = 1..4
 
-        println("    " + column.joinToString(separator = "    ") { "$it" })
-        row.forEach { row ->
-            val rowString =
-                "$row " +
-                    column.joinToString(" ") { col ->
-                        val seatNumber = SeatNumber(row, col)
-                        if (seatNumber in availableSeats.seatNumbers) {
-                            val seatsGrade = defaultSeats.findSeat(seatNumber).seatGrade.name
-                            "[ $seatsGrade]"
-                        } else {
-                            "[ X]"
-                        }
-                    }
+        println("    " + columns.joinToString(separator = "    ") { "$it" })
+        rows.forEach { row ->
+            val rowString = "$row " + columns.joinToString(" ") { col ->
+                val seatNumber = SeatNumber(row, col)
+                printSeatMarker(seatNumber, defaultSeats, availableSeats)
+            }
             println(rowString)
         }
     }
@@ -79,6 +72,18 @@ object OutputView {
         val pointString = "(포인트 ${formatMoney(payResult.usedPoint.convertToMoney())}원 사용)"
         println("결제 금액: ${formatMoney(payResult.finalPrice)}원 $pointString")
         println("\n감사합니다.")
+    }
+
+    private fun printSeatMarker(
+        seatNumber: SeatNumber,
+        defaultSeats: Seats,
+        availableSeats: Seats,
+    ): String {
+        if (seatNumber in availableSeats.seatNumbers) {
+            val seatsGrade = defaultSeats.findSeat(seatNumber).seatGrade.name
+            return "[ $seatsGrade]"
+        }
+        return "[ X]"
     }
 
     private fun formatReservation(reservation: Reservation): String {
