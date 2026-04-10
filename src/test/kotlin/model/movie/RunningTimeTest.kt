@@ -1,14 +1,15 @@
-package model
+@file:Suppress("NonAsciiCharacters")
 
-import model.movie.RunningTime
-import org.junit.jupiter.api.Assertions.assertThrows
+package model.movie
+
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class RunningTimeTest {
     @Test
     fun `상영 길이가 0 이하이면 예외가 발생한다`() {
         // given & when & then
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             RunningTime(0)
         }
     }

@@ -29,30 +29,33 @@ class Scheduler {
     companion object {
         private val BASE_DATE: LocalDate = LocalDate.of(2025, 9, 20)
 
-        private fun defaultSeats(): Seats = Seats(
-            ('A'..'B').flatMap { row ->
-                (1..4).map { col ->
-                    Seat(
-                        SeatNumber(row, col),
-                        SeatGrade.B,
-                    )
-                }
-            } + ('C'..'D').flatMap { row ->
-                (1..4).map { col ->
-                    Seat(
-                        SeatNumber(row, col),
-                        SeatGrade.S,
-                    )
-                }
-            } + ('E'..'E').flatMap { row ->
-                (1..4).map { col ->
-                    Seat(
-                        SeatNumber(row, col),
-                        SeatGrade.A,
-                    )
-                }
-            },
-        )
+        private fun defaultSeats(): Seats =
+            Seats(
+                ('A'..'B').flatMap { row ->
+                    (1..4).map { col ->
+                        Seat(
+                            SeatNumber(row, col),
+                            SeatGrade.B,
+                        )
+                    }
+                } +
+                    ('C'..'D').flatMap { row ->
+                        (1..4).map { col ->
+                            Seat(
+                                SeatNumber(row, col),
+                                SeatGrade.S,
+                            )
+                        }
+                    } +
+                    ('E'..'E').flatMap { row ->
+                        (1..4).map { col ->
+                            Seat(
+                                SeatNumber(row, col),
+                                SeatGrade.A,
+                            )
+                        }
+                    },
+            )
 
         private fun createScreenings(): List<Screening> {
             val screen1 = Screen("1관", defaultSeats())
@@ -64,35 +67,42 @@ class Scheduler {
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(10, 20)),
                     screen1,
-                ), Screening(
+                ),
+                Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(13, 0)),
                     screen1,
-                ), Screening(
+                ),
+                Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(15, 40)),
                     screen1,
-                ), Screening(
+                ),
+                Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(20, 10)),
                     screen1,
-                ), Screening(
+                ),
+                Screening(
                     TOY_STORY,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(13, 30)),
                     screen2,
-                ), Screening(
+                ),
+                Screening(
                     TOY_STORY,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(16, 0)),
                     screen2,
-                ), Screening(
+                ),
+                Screening(
                     IRON_MAN,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(9, 50)),
                     screen3,
-                ), Screening(
+                ),
+                Screening(
                     ROBOT_DREAM,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(21, 0)),
-                    screen3
-                )
+                    screen3,
+                ),
             )
         }
     }

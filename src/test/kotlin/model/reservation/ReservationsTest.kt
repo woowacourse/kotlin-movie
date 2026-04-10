@@ -1,15 +1,16 @@
-package model
+@file:Suppress("NonAsciiCharacters")
 
+package model.reservation
+
+import model.Screen
 import model.movie.Movie
 import model.movie.RunningTime
-import model.reservation.Reservations
 import model.screening.Screening
 import model.seat.Seat
 import model.seat.SeatGrade
 import model.seat.SeatNumber
 import model.seat.Seats
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -26,14 +27,13 @@ class ReservationsTest {
 
     private val defaultScreen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S))))
 
-    private fun screening(startHour: Int): Screening =
-        Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
+    private fun screening(startHour: Int): Screening = Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
 
     @Test
     fun `빈 상태로 시작할 수 있다`() {
         val reservations = Reservations()
 
-        assertThat(reservations.isEmpty()).isTrue()
+        Assertions.assertThat(reservations.isEmpty()).isTrue()
     }
 
     @Test
@@ -41,7 +41,7 @@ class ReservationsTest {
         val reservation1 = screening(14).reserve(listOf(SeatNumber('A', 1)))
         val reservations = Reservations().addReservation(reservation1)
 
-        assertThrows(IllegalArgumentException::class.java) {
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
             val reservation2 = screening(15).reserve(listOf(SeatNumber('A', 1)))
             reservations.addReservation(reservation2)
         }
@@ -57,6 +57,6 @@ class ReservationsTest {
                 .addReservation(reservation1)
                 .addReservation(reservation2)
 
-        assertThat(reservations).hasSize(2)
+        Assertions.assertThat(reservations).hasSize(2)
     }
 }

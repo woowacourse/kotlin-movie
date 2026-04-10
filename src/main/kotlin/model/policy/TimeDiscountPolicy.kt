@@ -11,9 +11,11 @@ object TimeDiscountPolicy : DiscountPolicy {
 
     override fun getDiscountEffect(screening: Screening): DiscountEffect {
         val startTime = screening.startShowTime
-        if (startTime <= MORNING_CUTOFF || startTime >= EVENING_CUTOFF) return AmountDiscountEffect(
-            DISCOUNT_AMOUNT
-        )
+        if (startTime <= MORNING_CUTOFF || startTime >= EVENING_CUTOFF) {
+            return AmountDiscountEffect(
+                DISCOUNT_AMOUNT,
+            )
+        }
         return NoDiscountEffect
     }
 }

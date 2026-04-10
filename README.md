@@ -9,7 +9,7 @@
 - [x] `Scheduler`와 영화 도메인 모델(data)의 역할 분리
 
 ### 가독성 및 네이밍
-- [ ] `Reservations`: 중복 예약 확인 메서드명을 `hasOverlappingWith`로 변경
+- [x] `Reservations`: 중복 예약 확인 메서드명을 `hasOverlappingWith`로 변경
 - [ ] `OutputView`: Early Return 패턴 적용을 통해 `else` 제거 및 들여쓰기 정리
 
 ## 🚀 2단계 - 영화 예매(콘솔)

@@ -1,15 +1,16 @@
-package model
+@file:Suppress("NonAsciiCharacters")
 
+package model.screening
+
+import model.Money
+import model.Screen
 import model.movie.Movie
 import model.movie.RunningTime
-import model.movie.ShowingPeriod
-import model.screening.Screening
 import model.seat.Seat
 import model.seat.SeatGrade
 import model.seat.SeatNumber
 import model.seat.Seats
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -41,15 +42,17 @@ class ScreeningTest {
     fun `종료 시각은 시작 시각에 영화 상영 길이를 더한 값이다`() {
         val screening = screening(14)
 
-        assertThat(screening.endDateTime).isEqualTo(LocalDateTime.of(date, LocalTime.of(16, 0)))
+        Assertions
+            .assertThat(screening.endDateTime)
+            .isEqualTo(LocalDateTime.of(date, LocalTime.of(16, 0)))
     }
 
     @Test
     fun `시작 시각과 상영 날짜가 올바르게 반환된다`() {
         val screening = screening(14)
 
-        assertThat(screening.startShowTime).isEqualTo(LocalTime.of(14, 0))
-        assertThat(screening.showDate).isEqualTo(date)
+        Assertions.assertThat(screening.startShowTime).isEqualTo(LocalTime.of(14, 0))
+        Assertions.assertThat(screening.showDate).isEqualTo(date)
     }
 
     @Test
@@ -57,7 +60,7 @@ class ScreeningTest {
         val screening1 = screening(14)
         val screening2 = screening(16)
 
-        assertThat(screening1.isOverlapping(screening2)).isFalse()
+        Assertions.assertThat(screening1.hasOverlappingWith(screening2)).isFalse()
     }
 
     @Test
@@ -65,7 +68,7 @@ class ScreeningTest {
         val screening1 = screening(14)
         val screening2 = screening(15)
 
-        assertThat(screening1.isOverlapping(screening2)).isTrue()
+        Assertions.assertThat(screening1.hasOverlappingWith(screening2)).isTrue()
     }
 
     @Test
@@ -73,7 +76,7 @@ class ScreeningTest {
         val screening = screening(14)
         screening.reserve(listOf(SeatNumber('A', 1)))
 
-        assertThrows(IllegalArgumentException::class.java) {
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
             screening.reserve(listOf(SeatNumber('A', 1)))
         }
     }
@@ -82,7 +85,7 @@ class ScreeningTest {
     fun `한 예약 요청 내에서 중복된 좌석을 선택하면 예외가 발생한다`() {
         val screening = screening(14)
 
-        assertThrows(IllegalArgumentException::class.java) {
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
             screening.reserve(listOf(SeatNumber('A', 1), SeatNumber('A', 1)))
         }
     }
@@ -91,7 +94,7 @@ class ScreeningTest {
     fun `존재하지 않는 좌석을 예약하면 예외가 발생한다`() {
         val screening = screening(14)
 
-        assertThrows(IllegalArgumentException::class.java) {
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
             screening.reserve(listOf(SeatNumber('E', 4)))
         }
     }
@@ -103,7 +106,7 @@ class ScreeningTest {
 
         val available = screening.availableSeats()
 
-        assertThat(available.seatNumbers).doesNotContain(SeatNumber('A', 1))
+        Assertions.assertThat(available.seatNumbers).doesNotContain(SeatNumber('A', 1))
     }
 
     @Test
@@ -111,6 +114,6 @@ class ScreeningTest {
         val screening = screening(14)
         val reservation = screening.reserve(listOf(SeatNumber('A', 1), SeatNumber('B', 1)))
 
-        assertThat(reservation.calculateBasePrice()).isEqualTo(Money(12_000 + 18_000))
+        Assertions.assertThat(reservation.calculateBasePrice()).isEqualTo(Money(12_000 + 18_000))
     }
 }

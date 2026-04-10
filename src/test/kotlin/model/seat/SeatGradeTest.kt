@@ -1,6 +1,8 @@
-package model
+@file:Suppress("NonAsciiCharacters")
 
-import model.seat.SeatGrade
+package model.seat
+
+import model.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

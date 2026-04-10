@@ -1,3 +1,5 @@
+@file:Suppress("NonAsciiCharacters")
+
 package model.policy
 
 import model.Screen
@@ -31,7 +33,7 @@ class MovieDayDiscountPolicyTest {
         )
 
     @Test
-    fun `10일에 10% 할인이 적용된다`() {
+    fun `10일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(10))
 
         assertThat(discountEffect).isInstanceOf(RateDiscountEffect::class.java)
@@ -40,7 +42,7 @@ class MovieDayDiscountPolicyTest {
     }
 
     @Test
-    fun `20일에 10% 할인이 적용된다`() {
+    fun `20일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(20))
 
         assertThat(discountEffect).isInstanceOf(RateDiscountEffect::class.java)
@@ -49,7 +51,7 @@ class MovieDayDiscountPolicyTest {
     }
 
     @Test
-    fun `30일에 10% 할인이 적용된다`() {
+    fun `30일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(30))
 
         assertThat(discountEffect).isInstanceOf(RateDiscountEffect::class.java)

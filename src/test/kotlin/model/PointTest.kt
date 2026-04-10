@@ -1,3 +1,5 @@
+@file:Suppress("NonAsciiCharacters")
+
 package model
 
 import org.assertj.core.api.Assertions.assertThat

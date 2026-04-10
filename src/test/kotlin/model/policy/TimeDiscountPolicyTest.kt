@@ -1,3 +1,5 @@
+@file:Suppress("NonAsciiCharacters")
+
 package model.policy
 
 import model.Money

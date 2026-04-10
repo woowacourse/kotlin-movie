@@ -37,5 +37,5 @@ class Screening(
 
     fun availableSeats(): Seats = screen.seats.excludeReserved(reservedSeatNumbers)
 
-    fun isOverlapping(other: Screening): Boolean = startDateTime < other.endDateTime && endDateTime > other.startDateTime
+    fun hasOverlappingWith(other: Screening): Boolean = startDateTime < other.endDateTime && endDateTime > other.startDateTime
 }

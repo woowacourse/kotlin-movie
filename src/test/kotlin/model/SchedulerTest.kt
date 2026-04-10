@@ -1,3 +1,5 @@
+@file:Suppress("NonAsciiCharacters")
+
 package model
 
 import model.movie.Movie

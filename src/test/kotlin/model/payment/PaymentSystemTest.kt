@@ -1,44 +1,13 @@
+@file:Suppress("NonAsciiCharacters")
+
 package model.payment
 
 import model.Money
 import model.Point
-import model.Screen
-import model.movie.Movie
-import model.movie.RunningTime
-import model.screening.Screening
-import model.seat.Seat
-import model.seat.SeatGrade
-import model.seat.SeatNumber
-import model.seat.Seats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class PaymentSystemTest {
-    private val movie =
-        Movie(
-            title = "테스트 영화",
-            runningTime = RunningTime(120),
-        )
-
-    private val screen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.S))))
-
-    private fun bothDiscountScreening() =
-        Screening(
-            movie = movie,
-            startDateTime = LocalDateTime.of(LocalDate.of(2025, 9, 20), LocalTime.of(10, 0)),
-            screen = screen,
-        )
-
-    private fun normalScreening() =
-        Screening(
-            movie = movie,
-            startDateTime = LocalDateTime.of(LocalDate.of(2025, 9, 15), LocalTime.of(14, 0)),
-            screen = screen,
-        )
-
     @Test
     fun `포인트가 예매 금액에서 올바르게 차감된다`() {
         // 할인 적용된 금액 18,000 → 포인트 2,000 차감 → 16,000 → 현금 2% → 15,680
@@ -60,7 +29,7 @@ class PaymentSystemTest {
     }
 
     @Test
-    fun `신용카드 결제 시 5% 추가 할인이 적용된다`() {
+    fun `신용카드 결제 시 5퍼센트 추가 할인이 적용된다`() {
         // 할인 적용된 금액 18,000 → 카드 5% → 17,100
         val paymentSystem = PaymentSystem(paymentMethod = Card)
 
@@ -70,7 +39,7 @@ class PaymentSystemTest {
     }
 
     @Test
-    fun `현금 결제 시 2% 추가 할인이 적용된다`() {
+    fun `현금 결제 시 2퍼센트 추가 할인이 적용된다`() {
         // 할인 적용된 금액 18,000 → 현금 2% → 17,640
         val paymentSystem = PaymentSystem(paymentMethod = Cash)
 
