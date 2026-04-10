@@ -4,7 +4,7 @@ import domain.timetable.items.ScreeningSchedule
 import java.time.LocalDate
 
 class TimeTable(
-    private val schedules: List<ScreeningSchedule>,
+    private val schedules: List<ScreeningSchedule> = emptyList(),
 ) {
     fun getMovieSchedulesWithTitle(title: String): TimeTable {
         val findedSchedules = schedules.filter { it.isScreeningMovieTitle(title) }
@@ -20,5 +20,7 @@ class TimeTable(
 
     fun countSchedule(): Int = schedules.size
 
-    fun getSchedule(): List<ScreeningSchedule> = schedules
+    fun getSchedules(): List<ScreeningSchedule> = schedules
+
+    fun getScheduleWithIndex(index: Int): ScreeningSchedule = schedules[index]
 }
