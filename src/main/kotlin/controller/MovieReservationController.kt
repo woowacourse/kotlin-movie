@@ -20,7 +20,7 @@ class MovieReservationController(
         // 예매 시작
         val isStartReservation = retryUntilValid { inputView.readStartReservation() }
         if (!isStartReservation) return
-        val reservations = makeCart()
+        val reservations = makeCart(scheduler)
 
         // 장바구니 전체 출력
         outputView.printCart(reservations)
@@ -50,11 +50,12 @@ class MovieReservationController(
         outputView.printReceipt(reservations, payResult)
     }
 
-    private fun makeCart(): Reservations {
+    private fun makeCart(scheduler: Scheduler): Reservations {
         var reservations = Reservations()
 
         do {
             val reservation = makeReservation(reservations)
+            scheduler.update(reservation.screening)
             reservations = reservations.addReservation(reservation)
             outputView.printCartItem(reservation)
         } while (inputView.readAddMoreMovie())
@@ -68,12 +69,12 @@ class MovieReservationController(
         outputView.printScreenings(screenings)
         val selectedScreening = selectScreening(screenings, currentReservations)
         outputView.printSeatMap(
-            selectedScreening.screen.seats,
-            selectedScreening.availableSeats(),
+            selectedScreening.seatMap.screen.seats,
+            selectedScreening.seatMap.getAvailableSeats(),
         )
         return retryUntilValid {
-            val seatsNumber = inputView.readSeatsNumber()
-            selectedScreening.reserve(seatsNumber)
+            val seatNumbers = inputView.readSeatsNumber()
+            selectedScreening.reserve(seatNumbers)
         }
     }
 

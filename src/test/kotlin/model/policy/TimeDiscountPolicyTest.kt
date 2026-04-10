@@ -7,6 +7,7 @@ import model.Screen
 import model.movie.Movie
 import model.movie.RunningTime
 import model.screening.Screening
+import model.screening.ScreeningSeatMap
 import model.seat.Seat
 import model.seat.SeatGrade
 import model.seat.SeatNumber
@@ -34,7 +35,7 @@ class TimeDiscountPolicyTest {
     ) = Screening(
         movie = movie,
         startDateTime = LocalDateTime.of(date, LocalTime.of(startHour, startMinute)),
-        screen = screen,
+        seatMap = ScreeningSeatMap(screen),
     )
 
     @Test

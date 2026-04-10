@@ -3,12 +3,8 @@ package model.seat
 import model.Money
 
 class Seats(
-    private val value: List<Seat>,
+    val value: List<Seat>,
 ) {
-    init {
-        require(value.isNotEmpty()) { "좌석 목록이 비어있으면 안됩니다." }
-    }
-
     val seatCount: Int = value.size
     val seatNumbers: List<SeatNumber> = value.map { it.seatNumber }
 

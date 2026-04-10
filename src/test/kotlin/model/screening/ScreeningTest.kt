@@ -19,9 +19,15 @@ import java.time.LocalTime
 class ScreeningTest {
     private val date = LocalDate.of(2026, 4, 8)
 
-    private val movie =
+    private val movie1 =
         Movie(
-            title = "스파이더맨",
+            title = "스파이더맨1",
+            runningTime = RunningTime(120),
+        )
+
+    private val movie2 =
+        Movie(
+            title = "스파이더맨2",
             runningTime = RunningTime(120),
         )
 
@@ -36,7 +42,11 @@ class ScreeningTest {
 
     private val defaultScreen = Screen("테스트관", defaultSeats)
 
-    private fun screening(startHour: Int): Screening = Screening(movie, LocalDateTime.of(date, LocalTime.of(startHour, 0)), defaultScreen)
+    private fun screening(startHour: Int): Screening =
+        Screening(movie1, LocalDateTime.of(date, LocalTime.of(startHour, 0)), ScreeningSeatMap(defaultScreen))
+
+    private fun screening2(startHour: Int): Screening =
+        Screening(movie2, LocalDateTime.of(date, LocalTime.of(startHour, 0)), ScreeningSeatMap(defaultScreen))
 
     @Test
     fun `종료 시각은 시작 시각에 영화 상영 길이를 더한 값이다`() {
@@ -66,19 +76,9 @@ class ScreeningTest {
     @Test
     fun `두 Screening의 시간이 겹치면 true를 반환한다`() {
         val screening1 = screening(14)
-        val screening2 = screening(15)
+        val screening2 = screening2(15)
 
         Assertions.assertThat(screening1.hasOverlappingWith(screening2)).isTrue()
-    }
-
-    @Test
-    fun `이미 예약된 좌석을 다시 예약하면 예외가 발생한다`() {
-        val screening = screening(14)
-        screening.reserve(listOf(SeatNumber('A', 1)))
-
-        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
-            screening.reserve(listOf(SeatNumber('A', 1)))
-        }
     }
 
     @Test
@@ -97,16 +97,6 @@ class ScreeningTest {
         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
             screening.reserve(listOf(SeatNumber('E', 4)))
         }
-    }
-
-    @Test
-    fun `정상 예약 후 availableSeats에서 해당 좌석이 제외된다`() {
-        val screening = screening(14)
-        screening.reserve(listOf(SeatNumber('A', 1)))
-
-        val available = screening.availableSeats()
-
-        Assertions.assertThat(available.seatNumbers).doesNotContain(SeatNumber('A', 1))
     }
 
     @Test

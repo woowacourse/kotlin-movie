@@ -1,6 +1,5 @@
 package model.screening
 
-import model.Screen
 import model.movie.Movie
 import model.reservation.Reservation
 import model.seat.SeatNumber
@@ -9,13 +8,11 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class Screening(
+data class Screening(
     val movie: Movie,
     val startDateTime: LocalDateTime,
-    val screen: Screen,
+    val seatMap: ScreeningSeatMap,
 ) {
-    private val reservedSeatNumbers: MutableSet<SeatNumber> = mutableSetOf()
-
     val endDateTime: LocalDateTime
         get() = startDateTime.plusMinutes(movie.runningTime.minute)
 
@@ -26,16 +23,18 @@ class Screening(
         get() = startDateTime.toLocalTime()
 
     fun reserve(seatNumbers: List<SeatNumber>): Reservation {
-        require(seatNumbers.distinct().size == seatNumbers.size) { "중복된 좌석은 선택할 수 없습니다." }
-        seatNumbers.forEach {
-            require(!reservedSeatNumbers.contains(it)) { "이미 예약된 좌석입니다." }
-        }
-        val selectedSeats = seatNumbers.map { screen.seats.findSeat(it) }
-        reservedSeatNumbers.addAll(seatNumbers)
-        return Reservation(this, Seats(selectedSeats))
+        val newSeatMap = seatMap.reserve(seatNumbers)
+        val seats = seatNumbers.map { seatMap.screen.seats.findSeat(it) }
+
+        return Reservation(this.copy(seatMap = newSeatMap), Seats(seats))
     }
 
-    fun availableSeats(): Seats = screen.seats.excludeReserved(reservedSeatNumbers)
+    fun hasOverlappingWith(other: Screening): Boolean {
+        if (movie == other.movie) return false
+        return startDateTime < other.endDateTime && endDateTime > other.startDateTime
+    }
 
-    fun hasOverlappingWith(other: Screening): Boolean = startDateTime < other.endDateTime && endDateTime > other.startDateTime
+    fun isSameScreening(other: Screening): Boolean =
+        this.movie == other.movie &&
+            this.startDateTime == other.startDateTime
 }

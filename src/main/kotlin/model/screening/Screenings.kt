@@ -14,4 +14,12 @@ class Screenings(
         movie: Movie,
         date: LocalDate,
     ): Screenings = Screenings(value.filter { it.movie == movie && it.showDate == date })
+
+    fun update(newScreening: Screening): Screenings {
+        val updatedList =
+            value.map {
+                if (it.isSameScreening(newScreening)) newScreening else it
+            }
+        return Screenings(updatedList)
+    }
 }

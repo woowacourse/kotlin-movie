@@ -7,6 +7,7 @@ import data.MovieRepository.TOY_STORY
 import model.movie.Movie
 import model.movie.Movies
 import model.screening.Screening
+import model.screening.ScreeningSeatMap
 import model.screening.Screenings
 import model.seat.Seat
 import model.seat.SeatGrade
@@ -17,7 +18,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class Scheduler {
-    private val screenings = Screenings(createScreenings())
+    private var screenings = Screenings(createScreenings())
 
     fun getScreenings(
         movie: Movie,
@@ -25,6 +26,10 @@ class Scheduler {
     ): Screenings = screenings.findBy(movie, date)
 
     fun getMovies(): Movies = Movies(listOf(F1_THE_MOVIE, TOY_STORY, IRON_MAN, ROBOT_DREAM))
+
+    fun update(newScreening: Screening) {
+        screenings = screenings.update(newScreening)
+    }
 
     companion object {
         private val BASE_DATE: LocalDate = LocalDate.of(2025, 9, 20)
@@ -66,42 +71,42 @@ class Scheduler {
                 Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(10, 20)),
-                    screen1,
+                    ScreeningSeatMap(screen1),
                 ),
                 Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(13, 0)),
-                    screen1,
+                    ScreeningSeatMap(screen1),
                 ),
                 Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(15, 40)),
-                    screen1,
+                    ScreeningSeatMap(screen1),
                 ),
                 Screening(
                     F1_THE_MOVIE,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(20, 10)),
-                    screen1,
+                    ScreeningSeatMap(screen1),
                 ),
                 Screening(
                     TOY_STORY,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(13, 30)),
-                    screen2,
+                    ScreeningSeatMap(screen2),
                 ),
                 Screening(
                     TOY_STORY,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(16, 0)),
-                    screen2,
+                    ScreeningSeatMap(screen2),
                 ),
                 Screening(
                     IRON_MAN,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(9, 50)),
-                    screen3,
+                    ScreeningSeatMap(screen3),
                 ),
                 Screening(
                     ROBOT_DREAM,
                     LocalDateTime.of(BASE_DATE, LocalTime.of(21, 0)),
-                    screen3,
+                    ScreeningSeatMap(screen3),
                 ),
             )
         }
