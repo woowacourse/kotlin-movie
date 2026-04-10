@@ -1,6 +1,8 @@
 package movie.domain.movie
 
+import jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle
 import java.time.LocalDate
+import java.time.LocalTime
 import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)
@@ -8,6 +10,23 @@ class TheaterScheduler(
     private val theaters: Theaters,
     private val screeningMovies: ScreeningMovies = ScreeningMovies(),
 ) {
+
+    fun addTheater(theater: Theater) {
+        val newTheater = createTheater(
+            openTime = theater.openTime,
+            closeTime = theater.closeTime,
+        )
+        theaters.addTheater(newTheater)
+    }
+
+    fun createTheater(
+        openTime: LocalTime,
+        closeTime: LocalTime
+    ): Theater = Theater(
+        openTime = openTime,
+        closeTime = closeTime
+    )
+
     fun addMovie(
         theater: Theater,
         movie: Movie,
@@ -47,7 +66,8 @@ class TheaterScheduler(
             movieTime = movieTime,
         )
 
-    fun containsMovieTitle(movieTitle: MovieTitle): Boolean = screeningMovies.containsMovieTitle(movieTitle)
+    fun containsMovieTitle(movieTitle: MovieTitle): Boolean =
+        screeningMovies.containsMovieTitle(movieTitle)
 
     fun getMovies(
         title: MovieTitle,
