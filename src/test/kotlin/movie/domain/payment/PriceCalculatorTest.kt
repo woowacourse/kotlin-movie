@@ -57,16 +57,17 @@ class PriceCalculatorTest {
                 ),
             )
 
-        val priceCalculator =
-            PriceCalculator(
-                DiscountPolicies(
-                    listOf(MovieDayDiscount()),
-                    listOf(TimeDiscount()),
-                ),
+        val discountPolicies =
+            DiscountPolicies(
+                percentagePolicies = listOf(MovieDayDiscount()),
+                fixedPolicies = listOf(TimeDiscount()),
             )
+
+        val priceCalculator = PriceCalculator()
 
         val result =
             priceCalculator.calculate(
+                discountPolicies,
                 reservations,
                 Point(1000),
                 CreditCard(),

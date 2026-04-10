@@ -6,10 +6,9 @@ import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicies
 import movie.domain.reservation.Reservations
 
-class PriceCalculator(
-    private val discountPolicies: DiscountPolicies,
-) {
+class PriceCalculator {
     fun calculate(
+        discountPolicies: DiscountPolicies,
         reservations: Reservations,
         point: Point,
         paymentMethod: PaymentMethod,
