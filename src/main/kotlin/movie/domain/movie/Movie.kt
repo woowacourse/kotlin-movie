@@ -4,7 +4,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
-class Movie(
+data class Movie(
     private val id: Uuid = Uuid.random(),
     val title: MovieTitle,
 ) {
