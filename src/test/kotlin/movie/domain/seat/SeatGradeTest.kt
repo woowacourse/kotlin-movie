@@ -1,5 +1,6 @@
 package movie.domain.seat
 
+import movie.domain.amount.Money
 import org.junit.jupiter.api.Test
 
 class SeatGradeTest {
@@ -12,7 +13,7 @@ class SeatGradeTest {
         val price = seatGrade.price
 
         // then
-        assert(price == 18000)
+        assert(price == Money(18000))
     }
 
     @Test
@@ -24,7 +25,7 @@ class SeatGradeTest {
         val price = seatGrade.price
 
         // then
-        assert(price == 15000)
+        assert(price == Money(15000))
     }
 
     @Test
@@ -36,6 +37,6 @@ class SeatGradeTest {
         val price = seatGrade.price
 
         // then
-        assert(price == 12000)
+        assert(price == Money(12000))
     }
 }

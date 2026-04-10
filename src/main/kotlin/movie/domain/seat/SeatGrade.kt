@@ -1,9 +1,11 @@
 package movie.domain.seat
 
+import movie.domain.amount.Money
+
 enum class SeatGrade(
-    val price: Int,
+    val price: Money,
 ) {
-    S(18000),
-    A(15000),
-    B(12000),
+    S(Money(18000)),
+    A(Money(15000)),
+    B(Money(12000)),
 }

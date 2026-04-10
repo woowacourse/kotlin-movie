@@ -1,5 +1,7 @@
 package movie.domain.seat
 
+import movie.domain.amount.Money
+
 class SelectedSeats(
     private val seats: List<Seat>,
 ) {
@@ -8,8 +10,8 @@ class SelectedSeats(
         require(seats.distinct().size == seats.size) { "중복된 좌석을 선택할 수 없습니다." }
     }
 
-    val totalPrice: Int
-        get() = seats.sumOf { it.grade.price }
+    val totalPrice: Money
+        get() = Money(seats.sumOf { it.grade.price.value })
 
     fun display(): String = seats.joinToString(", ") { "${it.row}${it.column}" }
 }
