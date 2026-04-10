@@ -35,7 +35,7 @@ object OutputView {
                 "$row " +
                     column.joinToString(" ") { col ->
                         val seatNumber = SeatNumber(row, col)
-                        if (seatNumber in availableSeats.seatNumbers()) {
+                        if (seatNumber in availableSeats.seatNumbers) {
                             val seatsGrade = defaultSeats.findSeat(seatNumber).seatGrade.name
                             "[ $seatsGrade]"
                         } else {
@@ -84,7 +84,7 @@ object OutputView {
     private fun formatReservation(reservation: Reservation): String {
         val movieTitle = reservation.movieTitle()
         val startDateTime = reservation.startDateTime().format(dateTimeFormatter)
-        val seatNumbers = reservation.seats.seatNumbers().joinToString(", ")
+        val seatNumbers = reservation.seats.seatNumbers.joinToString(", ")
         return "- [$movieTitle] $startDateTime  좌석: $seatNumbers"
     }
 
