@@ -41,10 +41,11 @@
 ### 2. ScreenTime
 
 1. ScreeningTime
+
 - [x] 입력받은 시간이 startTime과 endTime 사이에 있다면 true를 반환한다.
     1. startTime
-       - [x] 입력된 시간이 소유하고 있는 시간과 같다면 true를 반환한다.
-       - [x] 입력받은 시간이 소유하고 있는 시간과 다르다면 false를 반환하다.
+        - [x] 입력된 시간이 소유하고 있는 시간과 같다면 true를 반환한다.
+        - [x] 입력받은 시간이 소유하고 있는 시간과 다르다면 false를 반환하다.
     2. endTime
 
 2. ScreeningDate
@@ -59,25 +60,39 @@
 - [x] 입력된 상영 일자가 소유하고 있는 영화 상영 일자와 다르다면 false를 반환받는다.
 - [x] 입력된 좌석 번호가 reservedSeats에 있다면 true를 반환한다.
 - [x] 입력된 좌석 번호가 reservedSeats에 없다면 false를 반환한다.
+- [ ] 영화, 시간, 예약 좌석을 바탕으로 예매 정보를 제공한다
 
-### 4. timetable
+### 4. reserved seats
+
+- [ ] 입력된 좌석 번호가 reserved seats에 있다면 true를 반환한다.
+- [ ] 입력된 좌석 번호가 reserved seats에 없다면 false를 반환한다.
+
+### 5. timetable
+
 - [x] 영화 제목을 입력받아 입력값과 같은 영화 제목을 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다.
 - [x] 입력받은 영화 제목이 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다.
 - [x] 상영 일자를 입력받아 입력값과 같은 상영 일자를 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다.
-- [x] 입력받은 상영 일자가 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다. 
+- [x] 입력받은 상영 일자가 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다.
 
-### 5. screen
+### 6. screen
 
 - [x] 입력된 좌석 번호가 상영관에 존재하는 좌석이면 true를 반환받는다.
 - [x] 입력된 좌석 번호가 상영관에 존재하지 않는 좌석이면 false를 반환받는다.
 
-### 6. seat
+### 7. seats
 
-- [x] 입력된 좌석 번호가 저장된 좌석 번호와 일치하면 true를 반환한다.
-- [x] 입력된 좌석 번호가 저장된 좌석 번호와 일치하지 않으면 false를 반환한다
-- [x] 좌석의 등급에 따라 다른 가격을 반환한다.
+- [ ] 입력된 좌석 번호가 상영관에 존재하는 좌석이면 true를 반환한다
+- [ ] 입력된 좌석 번호가 상영관에 존재하지 않는 좌석이면 false를 반환한다
+- [ ] 입력된 좌석 번호의 상영관에 존재하는 좌석이면 좌석을 반환한다
+- [ ] 입력된 좌석 번호의 상영관에 존재하지 않는 좌석이면 예외를 발생시킨다
 
-1. SeatNumber
+### 8. seat
+
+- [ ] 좌석의 등급에 따라 다른 가격을 반환한다.
+
+1. SeatPosition
+    - [ ] 입력된 좌석 번호가 저장된 좌석 번호와 일치하면 true를 반환한다.
+    - [ ] 입력된 좌석 번호가 저장된 좌석 번호와 일치하지 않으면 false를 반환한다
     1. RowNumber
         - [x] 입력된 행 번호가 자신의 번호와 같다면 true를 반환한다.
         - [x] 입력된 행 번호가 자신의 번호와 같지 않다면 false를 반환한다.
@@ -87,40 +102,50 @@
 2. SeatGrade
     - [x] 지정된 랭크에 따라 좌석의 가격을 반환한다.
 
-### 7. reservation
+### 9. reservation
+
 - [x] 입력된 상영 일자가 screenTime의 screeningDate과 같다면 true를 반환받는다.
 - [x] 입력된 상영 시간이 screenTime의 ScreeningTime과 같다면 true를 반환받는다.
+- [ ] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속한다면 true를 반환한다.
+- [ ] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속하지 않는다면 false를 반환한다.
+- [ ] 예약된 좌석 가격의 합을 Money로 반환한다.
 
-### 8. reservations
+### 10. reservations
 
 - [x] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 있다면 true를 반환받는다.
 - [x] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 없다면 false를 반환받는다.
 - [x] reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 있다면 true를 반환받는다.
 - [x] reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 없다면 false를 반환받는다.
 
-### 9. point
+### 11. point
 
 - [x] 포인트 초기값이 0보다 작으면 예외가 발생한다.
 - [x] 사용할 포인트를 입력 받을 때 입력받은 값이 0보다 작으면 에러 메시지를 생성한다.
 - [x] 사용할 포인트를 입력 받을 때 입력받은 값이 잔여 포인트보다 많으면 에러 메시지를 생성한다.
+- [ ] 사용할 포인트 값을 Money로 변환(환전)한다
 - [x] 입력받은 값이 0보다 크고 잔여 포인트보다 작으면 잔여 포인트에서 입력값 만큼 차감한다.
 
-### 10. pay calculator
+### 12. pay calculator
 
 - [ ] 입력받은 reservation 목록에 시간 관련 할인 정책을 적용한 결제 금액을 반환 받는다.
 - [ ] 포인트 사용을 적용한 결제 금액을 반환한 받는다.
 - [ ] 결제 수단 관련 할인 정책을 적용한 결제 금액을 반환 받는다.
 
-### 11. discount policy
+### 13. discount policy
 
 1. timeDiscountPolicy
-   - [ ] 예약 시간이 오전 11이전 또는 오후 8시 이후라면 2,000 할인한 금액을 반환한다.
+    - [ ] 예약 시간이 오전 11이전 또는 오후 8시 이후라면 2,000 할인한 금액을 반환한다.
+    - [ ] 시간에 해당하지 않는 다면 받은 금액을 반환한다
 2. movieDayDiscountPolicy
-   - [ ] 예약 날짜가 10, 20, 30일 중 하나라면 10% 할인한 금액을 반환한다.
+    - [ ] 예약 날짜가 10, 20, 30일 중 하나라면 10% 할인한 금액을 반환한다.
+    - [ ] 예약 날짜에 해당하지 않는 다면 받은 금액을 반환한다
 3. cardDiscountPolicy
-   - [ ] 카드 결제시 5% 할인한 금액을 반환한다.
+    - [ ] 카드 결제시 5% 할인한 금액을 반환한다.
+    - [ ] 카드 결제가 아니라면 받은 금액을 반환한다
 4. cashDiscountPolicy
-   - [ ] 현금 결제시 2% 할인한 금액을 반환한다.
+    - [ ] 현금 결제시 2% 할인한 금액을 반환한다.
+    - [ ] 현금 결제가 아니라면 받은 금액을 반환한다
 
-### 12. Money
+### 14. Money
+
 - [x] 입력된 값이 0보다 작으면 예외를 던진다.
