@@ -1,6 +1,7 @@
 import model.CinemaKiosk
 import model.CinemaTime
 import model.CinemaTimeRange
+import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieId
 import model.movie.MovieName
@@ -14,6 +15,7 @@ import model.seat.SeatGrade
 import model.seat.SeatGroup
 import model.seat.SeatRow
 import model.seat.SeatState
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -121,21 +123,55 @@ class CinemaKioskTest {
                     ),
             )
 
-//        cinemaKiosk.reserve(
-//            movieName = MovieName("혼자사는남자"),
-//            startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-//            seatRow = SeatRow("A"),
-//            seatColumn = SeatColumn(2),
-//        )
-//
-//        assertThat(
-//            cinemaKiosk.reserve(
-//                movieName = MovieName("F4 꽃보다 남자"),
-//                startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-//                seatRow = SeatRow("A"),
-//                seatColumn = SeatColumn(2),
-//            ),
-//        ).isEqualTo(MovieReservationResult.Failed)
+        cinemaKiosk.reserve(
+            MovieScreening(
+                movie = movieOne,
+                screenTime =
+                    CinemaTimeRange(
+                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
+                    ),
+                seatGroup =
+                    SeatGroup(
+                        listOf(
+                            Seat(
+                                row = SeatRow("A"),
+                                column = SeatColumn(2),
+                                state = SeatState.AVAILABLE,
+                                grade = SeatGrade.A,
+                            ),
+                        ),
+                    ),
+            ),
+            seatRow = SeatRow("A"),
+            seatColumn = SeatColumn(2),
+        )
+
+        assertThat(
+            cinemaKiosk.reserve(
+                MovieScreening(
+                    movie = movieTwo,
+                    screenTime =
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 40)),
+                        ),
+                    seatGroup =
+                        SeatGroup(
+                            listOf(
+                                Seat(
+                                    row = SeatRow("A"),
+                                    column = SeatColumn(2),
+                                    state = SeatState.AVAILABLE,
+                                    grade = SeatGrade.A,
+                                ),
+                            ),
+                        ),
+                ),
+                seatRow = SeatRow("A"),
+                seatColumn = SeatColumn(2),
+            ),
+        ).isEqualTo(MovieReservationResult.Failed)
     }
 
     @Test

@@ -2,7 +2,6 @@ import model.CinemaKiosk
 import model.CinemaTime
 import model.MovieReservationResult
 import model.movie.MovieCatalog
-import model.movie.MovieName
 import model.payment.MoviePayment
 import model.payment.PayType
 import model.schedule.MovieSchedule
@@ -23,7 +22,7 @@ class CinemaController(
             OutputView.showMovieSchedule(movieSchedule)
             val movieScreening = selectMovieScreening(movieSchedule)
             OutputView.showSeatGroup(movieScreening.seatGroup)
-            reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
+            reserveSeats(movieScreening)
         } while (inputContinue())
         OutputView.showShoppingCart(cinemaKiosk.reserveResults)
         val point = inputPoint()
@@ -87,31 +86,27 @@ class CinemaController(
         }
     }
 
-    private fun reserveSeats(
-        movieName: MovieName,
-        startTime: CinemaTime,
-    ) {
+    private fun reserveSeats(movieScreening: MovieScreening) {
         while (true) {
             try {
                 val positions = InputView.selectSeats()
                 val successPositions = mutableListOf<MovieReservationResult.Success>()
 
                 for (position in positions) {
-//                    val result =
-//                        cinemaKiosk.reserve(
-//                            movieName = movieName,
-//                            startTime = startTime,
-//                            seatRow = position.first,
-//                            seatColumn = position.second,
-//                        )
-//                    when (result) {
-//                        is MovieReservationResult.Success -> successPositions.add(result)
-//                        is MovieReservationResult.Failed -> {
-//                            val successPositions = successPositions.map { it.seat.row to it.seat.column }
-//                            cinemaKiosk.cancelReservations(movieName, startTime, successPositions)
-//                            throw IllegalArgumentException("예약에 실패했습니다.")
-//                        }
-//                    }
+                    val result =
+                        cinemaKiosk.reserve(
+                            movieScreening = movieScreening,
+                            seatRow = position.first,
+                            seatColumn = position.second,
+                        )
+                    when (result) {
+                        is MovieReservationResult.Success -> successPositions.add(result)
+                        is MovieReservationResult.Failed -> {
+                            val successPositions = successPositions.map { it.seat.row to it.seat.column }
+                            cinemaKiosk.cancelReservations(movieScreening, successPositions)
+                            throw IllegalArgumentException("예약에 실패했습니다.")
+                        }
+                    }
                 }
                 OutputView.showReservationInfo(successPositions)
                 return
