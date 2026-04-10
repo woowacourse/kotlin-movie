@@ -16,10 +16,11 @@ class PriceCalculator {
         var totalPrice = Money(0)
 
         reservations.forEach { reservation ->
+            val screeningDateTime = reservation.getScreening().screeningDateTime
             val discounted =
                 discountPolicies.applyDiscount(
                     reservation.calculatePrice(),
-                    reservation.getScreening().screeningDateTime,
+                    screeningDateTime.date.atTime(screeningDateTime.startTime),
                 )
             totalPrice += discounted
         }

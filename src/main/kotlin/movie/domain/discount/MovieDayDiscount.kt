@@ -1,14 +1,14 @@
 package movie.domain.discount
 
 import movie.domain.amount.Money
-import movie.domain.screening.ScreeningDateTime
+import java.time.LocalDateTime
 
 class MovieDayDiscount : DiscountPolicy {
     override fun applyDiscount(
         price: Money,
-        dateTime: ScreeningDateTime,
+        localDateTime: LocalDateTime,
     ): Money {
-        if (dateTime.isMovieDay()) {
+        if (localDateTime.dayOfMonth == 10 || localDateTime.dayOfMonth == 20 || localDateTime.dayOfMonth == 30) {
             return price.percentOf(90)
         }
         return price

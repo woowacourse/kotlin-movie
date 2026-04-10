@@ -1,7 +1,6 @@
 package movie.domain.discount
 
 import movie.domain.amount.Money
-import movie.domain.screening.ScreeningDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -13,10 +12,11 @@ class TimeDiscountTest {
         // given
         val timeDiscount = TimeDiscount()
         val money = Money(10000)
-        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(8, 0), LocalTime.of(9, 0))
+        val date = LocalDate.of(2026, 1, 10)
+        val startTime = LocalTime.of(8, 0)
 
         // when
-        val result = timeDiscount.applyDiscount(money, screenDateTime)
+        val result = timeDiscount.applyDiscount(money, date.atTime(startTime))
 
         // then
         assertThat(result).isEqualTo(Money(8000))
@@ -27,10 +27,11 @@ class TimeDiscountTest {
         // given
         val timeDiscount = TimeDiscount()
         val money = Money(10000)
-        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(20, 10), LocalTime.of(22, 0))
+        val date = LocalDate.of(2026, 1, 10)
+        val startTime = LocalTime.of(20, 10)
 
         // when
-        val result = timeDiscount.applyDiscount(money, screenDateTime)
+        val result = timeDiscount.applyDiscount(money, date.atTime(startTime))
 
         // then
         assertThat(result).isEqualTo(Money(8000))
@@ -41,10 +42,11 @@ class TimeDiscountTest {
         // given
         val timeDiscount = TimeDiscount()
         val money = Money(10000)
-        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(12, 0), LocalTime.of(14, 0))
+        val date = LocalDate.of(2026, 1, 10)
+        val startTime = LocalTime.of(12, 0)
 
         // when
-        val result = timeDiscount.applyDiscount(money, screenDateTime)
+        val result = timeDiscount.applyDiscount(money, date.atTime(startTime))
 
         // then
         assertThat(result).isEqualTo(Money(10000))

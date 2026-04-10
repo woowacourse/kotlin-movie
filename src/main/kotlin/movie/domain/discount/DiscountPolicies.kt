@@ -1,7 +1,7 @@
 package movie.domain.discount
 
 import movie.domain.amount.Money
-import movie.domain.screening.ScreeningDateTime
+import java.time.LocalDateTime
 
 class DiscountPolicies(
     private val percentagePolicies: List<DiscountPolicy>,
@@ -9,7 +9,7 @@ class DiscountPolicies(
 ) {
     fun applyDiscount(
         price: Money,
-        dateTime: ScreeningDateTime,
+        dateTime: LocalDateTime,
     ): Money {
         var result = price
         percentagePolicies.forEach {

@@ -1,11 +1,9 @@
 package movie.domain.discount
 
 import movie.domain.amount.Money
-import movie.domain.screening.ScreeningDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 class DiscountPoliciesTest {
     @Test
@@ -19,11 +17,7 @@ class DiscountPoliciesTest {
         val result =
             discountPolicies.applyDiscount(
                 Money(10000),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 10),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
-                ),
+                LocalDateTime.of(2026, 1, 10, 10, 0),
             )
 
         // then

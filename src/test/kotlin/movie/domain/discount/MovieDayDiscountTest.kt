@@ -1,7 +1,6 @@
 package movie.domain.discount
 
 import movie.domain.amount.Money
-import movie.domain.screening.ScreeningDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -13,10 +12,11 @@ class MovieDayDiscountTest {
         // given
         val movieDayDiscount = MovieDayDiscount()
         val money = Money(10000)
-        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(10, 0), LocalTime.of(12, 0))
+        val date = LocalDate.of(2026, 1, 10)
+        val startTime = LocalTime.of(10, 0)
 
         // when
-        val result = movieDayDiscount.applyDiscount(money, screenDateTime)
+        val result = movieDayDiscount.applyDiscount(money, date.atTime(startTime))
 
         // then
         assertThat(result).isEqualTo(Money(9000))
@@ -27,10 +27,11 @@ class MovieDayDiscountTest {
         // given
         val movieDayDiscount = MovieDayDiscount()
         val money = Money(10000)
-        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 11), LocalTime.of(10, 0), LocalTime.of(12, 0))
+        val date = LocalDate.of(2026, 1, 11)
+        val startTime = LocalTime.of(10, 0)
 
         // when
-        val result = movieDayDiscount.applyDiscount(money, screenDateTime)
+        val result = movieDayDiscount.applyDiscount(money, date.atTime(startTime))
 
         // then
         assertThat(result).isEqualTo(Money(10000))
