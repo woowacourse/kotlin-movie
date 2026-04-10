@@ -12,10 +12,10 @@ class Seats(
     fun size(): Int = seats.size
 
     fun findSeat(
-        row: String,
-        column: Int,
+        row: SeatRow,
+        column: SeatColumn,
     ): Seat =
-        seats.find { it.row == row && it.column == column }
+        seats.find { it.seatRow == row && it.seatColumn == column }
             ?: throw IllegalArgumentException("존재하지 않는 좌석입니다.")
 
     companion object {
@@ -29,9 +29,9 @@ class Seats(
                     "D" to SeatGrade.S,
                     "E" to SeatGrade.A,
                 )
-            for ((row, grade) in layout) {
-                for (column in 1..4) {
-                    seats.add(Seat(row, column, grade))
+            for ((seatRow, grade) in layout) {
+                for (seatColumn in 1..4) {
+                    seats.add(Seat(SeatRow(seatRow), SeatColumn(seatColumn), grade))
                 }
             }
             return Seats(seats)

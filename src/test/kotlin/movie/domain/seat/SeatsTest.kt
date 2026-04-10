@@ -15,6 +15,6 @@ class SeatsTest {
     fun `좌석 목록 객체는 특정 좌석이 존재하는지 판단할 수 있다`() {
         val seats = Seats.createDefault()
 
-        seats.hasSeat(Seat("C", 1, SeatGrade.S))
+        seats.hasSeat(Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S))
     }
 }

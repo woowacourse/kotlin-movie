@@ -7,6 +7,8 @@ import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.SeatColumn
+import movie.domain.seat.SeatRow
 
 class OutputView {
     fun printScreeningList(screenings: List<Screening>) {
@@ -30,7 +32,7 @@ class OutputView {
         for (row in rows) {
             print("$row ")
             for (col in 1..4) {
-                val seat = screen.seats.findSeat(row, col)
+                val seat = screen.seats.findSeat(SeatRow(row), SeatColumn(col))
                 if (reservedSeats.isAvailable(seat)) {
                     print("[ ${seat.grade}] ")
                 } else {

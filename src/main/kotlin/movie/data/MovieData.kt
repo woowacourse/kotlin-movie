@@ -11,7 +11,9 @@ import movie.domain.screening.ScreeningDateTime
 import movie.domain.screening.Screenings
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
+import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatGrade
+import movie.domain.seat.SeatRow
 import movie.domain.seat.Seats
 import movie.domain.user.User
 import java.time.LocalDate
@@ -55,10 +57,10 @@ object MovieData {
                     ),
                     ReservatedSeats(
                         listOf(
-                            Seat("B", 2, SeatGrade.B),
-                            Seat("B", 3, SeatGrade.B),
-                            Seat("C", 3, SeatGrade.S),
-                            Seat("E", 4, SeatGrade.A),
+                            Seat(SeatRow("B"), SeatColumn(2), SeatGrade.B),
+                            Seat(SeatRow("B"), SeatColumn(3), SeatGrade.B),
+                            Seat(SeatRow("C"), SeatColumn(3), SeatGrade.S),
+                            Seat(SeatRow("E"), SeatColumn(4), SeatGrade.A),
                         ),
                     ),
                 ),

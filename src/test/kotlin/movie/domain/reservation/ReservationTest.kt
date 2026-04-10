@@ -7,7 +7,9 @@ import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
+import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatGrade
+import movie.domain.seat.SeatRow
 import movie.domain.seat.Seats
 import movie.domain.seat.SelectedSeats
 import org.assertj.core.api.Assertions.assertThat
@@ -22,8 +24,8 @@ class ReservationTest {
         val selectedSeats =
             SelectedSeats(
                 listOf(
-                    Seat("A", 1, SeatGrade.B),
-                    Seat("C", 1, SeatGrade.S),
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
+                    Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
                 ),
             )
 
@@ -38,9 +40,9 @@ class ReservationTest {
                 ),
                 ReservatedSeats(
                     listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                        Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
                     ),
                 ),
             )

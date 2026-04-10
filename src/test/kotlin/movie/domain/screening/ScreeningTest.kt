@@ -3,7 +3,9 @@ package movie.domain.screening
 import movie.domain.movie.MovieTitle
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
+import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatGrade
+import movie.domain.seat.SeatRow
 import movie.domain.seat.Seats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -16,7 +18,7 @@ class ScreeningTest {
     fun `존재하지 하지 않는 좌석은 예약할 수 없다`() {
         val selectedSeats =
             listOf(
-                Seat("A", 1, SeatGrade.S),
+                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
             )
 
         val screening =
@@ -30,9 +32,9 @@ class ScreeningTest {
                 ),
                 ReservatedSeats(
                     listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                        Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
                     ),
                 ),
             )
@@ -48,7 +50,7 @@ class ScreeningTest {
     fun `예약되지 않은 좌석은 예약할 수 있다`() {
         val selectedSeats =
             listOf(
-                Seat("A", 1, SeatGrade.B),
+                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
             )
 
         val screening =
@@ -62,9 +64,9 @@ class ScreeningTest {
                 ),
                 ReservatedSeats(
                     listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                        Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
                     ),
                 ),
             )
@@ -78,9 +80,9 @@ class ScreeningTest {
     fun `이미 예약된 좌석들은 예약이 불가능하다`() {
         val selectedSeats =
             listOf(
-                Seat("C", 1, SeatGrade.S),
-                Seat("C", 2, SeatGrade.S),
-                Seat("E", 1, SeatGrade.A),
+                Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
             )
 
         val screening =
@@ -94,9 +96,9 @@ class ScreeningTest {
                 ),
                 ReservatedSeats(
                     listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                        Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
                     ),
                 ),
             )
@@ -111,7 +113,7 @@ class ScreeningTest {
     fun `예약 검증 후 true일 경우 예약이 생성된다`() {
         val selectedSeats =
             listOf(
-                Seat("A", 1, SeatGrade.S),
+                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
             )
 
         val screening =
@@ -125,9 +127,9 @@ class ScreeningTest {
                 ),
                 ReservatedSeats(
                     listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                        Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
                     ),
                 ),
             )

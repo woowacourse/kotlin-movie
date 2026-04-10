@@ -13,7 +13,9 @@ import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
+import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatGrade
+import movie.domain.seat.SeatRow
 import movie.domain.seat.Seats
 import movie.domain.seat.SelectedSeats
 import org.assertj.core.api.Assertions.assertThat
@@ -38,8 +40,8 @@ class PriceCalculatorTest {
                 reservatedSeats =
                     ReservatedSeats(
                         listOf(
-                            Seat("C", 1, SeatGrade.S),
-                            Seat("C", 2, SeatGrade.S),
+                            Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                            Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
                         ),
                     ),
             )
@@ -47,7 +49,7 @@ class PriceCalculatorTest {
         val selectedSeats =
             SelectedSeats(
                 listOf(
-                    Seat("C", 1, SeatGrade.S),
+                    Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
                 ),
             )
 

@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 class ReservatedSeatsTest {
     private val seats =
         listOf(
-            Seat("C", 1, SeatGrade.S),
-            Seat("C", 2, SeatGrade.S),
-            Seat("E", 1, SeatGrade.A),
+            Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+            Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+            Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
         )
 
     @Test
@@ -17,7 +17,7 @@ class ReservatedSeatsTest {
         val reservatedSeats = ReservatedSeats(seats)
 
         // when
-        val result = reservatedSeats.isAvailable(Seat("A", 1, SeatGrade.S))
+        val result = reservatedSeats.isAvailable(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S))
 
         // then
         assertThat(result).isTrue()
@@ -29,7 +29,7 @@ class ReservatedSeatsTest {
         val reservatedSeats = ReservatedSeats(seats)
 
         // when
-        val result = reservatedSeats.isAvailable(Seat("C", 1, SeatGrade.S))
+        val result = reservatedSeats.isAvailable(Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S))
 
         // then
         assertThat(result).isFalse()
@@ -41,8 +41,8 @@ class ReservatedSeatsTest {
         val reservatedSeats = ReservatedSeats(seats)
 
         // when
-        val newReservatedSeats = reservatedSeats.add(listOf(Seat("A", 1, SeatGrade.B)))
-        val result = ReservatedSeats(newReservatedSeats).isAvailable(Seat("A", 1, SeatGrade.B))
+        val newReservatedSeats = reservatedSeats.add(listOf(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B)))
+        val result = ReservatedSeats(newReservatedSeats).isAvailable(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B))
 
         // then
         assertThat(result).isFalse()

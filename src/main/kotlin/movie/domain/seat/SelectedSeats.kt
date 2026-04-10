@@ -13,5 +13,5 @@ class SelectedSeats(
     val totalPrice: Money
         get() = Money(seats.sumOf { it.grade.price.value })
 
-    fun display(): String = seats.joinToString(", ") { "${it.row}${it.column}" }
+    fun display(): String = seats.joinToString(", ") { "${it.seatRow.value}${it.seatColumn.value}" }
 }

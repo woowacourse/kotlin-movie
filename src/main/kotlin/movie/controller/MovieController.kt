@@ -19,6 +19,8 @@ import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.seat.Seat
+import movie.domain.seat.SeatColumn
+import movie.domain.seat.SeatRow
 import movie.domain.seat.SelectedSeats
 import movie.domain.user.User
 import movie.view.InputView
@@ -114,8 +116,7 @@ class MovieController(
         val date = selectDate(movie)
         val screening = selectScreening(movie, date, existingReservations)
         val seats = selectSeats(screening)
-        screening.reserve(seats)
-        val reservation = Reservation(screening, SelectedSeats(seats))
+        val reservation = screening.reserve(seats)
         outputView.printAddedToCart(reservation)
         return reservation
     }
@@ -178,11 +179,11 @@ class MovieController(
             .split(",")
             .map { it.trim() }
             .map { seatInput ->
-                val row = seatInput.substring(0, 1).uppercase()
+                val row = SeatRow(seatInput.substring(0, 1).uppercase())
                 val column =
                     seatInput.substring(1).toIntOrNull()
                         ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
-                screen.seats.findSeat(row, column)
+                screen.seats.findSeat(row, SeatColumn(column))
             }
 
     // 입력 로직

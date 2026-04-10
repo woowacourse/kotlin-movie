@@ -6,7 +6,9 @@ import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
+import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatGrade
+import movie.domain.seat.SeatRow
 import movie.domain.seat.Seats
 import movie.domain.seat.SelectedSeats
 import java.time.LocalDate
@@ -18,8 +20,8 @@ object ReservationData {
     private val selectedSeats =
         SelectedSeats(
             listOf(
-                Seat("A", 1, SeatGrade.B),
-                Seat("C", 1, SeatGrade.S),
+                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
+                Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
             ),
         )
 

@@ -11,9 +11,9 @@ class SelectedSeatsTest {
         val selectedSeats =
             SelectedSeats(
                 listOf(
-                    Seat("C", 1, SeatGrade.S),
-                    Seat("C", 2, SeatGrade.S),
-                    Seat("E", 1, SeatGrade.A),
+                    Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                    Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                    Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
                 ),
             )
 
@@ -36,8 +36,8 @@ class SelectedSeatsTest {
             assertThrows<IllegalArgumentException> {
                 SelectedSeats(
                     listOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 1, SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                        Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
                     ),
                 )
             }
