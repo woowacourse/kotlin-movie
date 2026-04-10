@@ -5,9 +5,6 @@ import domain.movie.itmes.RunningTime
 import domain.movie.itmes.ScreeningPeriod
 import domain.movie.itmes.Title
 import domain.seat.Seat
-import domain.seat.items.ColumnNumber
-import domain.seat.items.GradeA
-import domain.seat.items.RowNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -143,9 +140,7 @@ class ScreeningScheduleTest {
             )
         val reserveSeat =
             Seat(
-                RowNumber("A"),
-                ColumnNumber(1),
-                GradeA(),
+                "A1",
             )
         reservationSchedule.reserveSeat(reserveSeat)
 
@@ -199,9 +194,7 @@ class ScreeningScheduleTest {
             )
         val reserveSeat =
             Seat(
-                RowNumber("A"),
-                ColumnNumber(1),
-                GradeA(),
+                "A1",
             )
         reservationSchedule.reserveSeat(reserveSeat)
 

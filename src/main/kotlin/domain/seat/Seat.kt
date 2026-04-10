@@ -2,14 +2,32 @@ package domain.seat
 
 import domain.money.Money
 import domain.seat.items.ColumnNumber
+import domain.seat.items.GradeA
+import domain.seat.items.GradeB
+import domain.seat.items.GradeS
 import domain.seat.items.RowNumber
 import domain.seat.items.SeatGrade
 
 class Seat(
-    private val rowNumber: RowNumber,
-    private val columnNumber: ColumnNumber,
-    private val seatGrade: SeatGrade,
+    seatNumber: String,
 ) {
+    private val rowNumber: RowNumber
+    private val columnNumber: ColumnNumber
+    private val seatGrade: SeatGrade
+
+    init {
+        val row = seatNumber.substring(0, 1)
+        val col = seatNumber.substring(1).toInt()
+        rowNumber = RowNumber(row)
+        columnNumber = ColumnNumber(col)
+        seatGrade =
+            when (row) {
+                "A", "B" -> GradeB()
+                "C", "D" -> GradeS()
+                else -> GradeA()
+            }
+    }
+
     fun isExist(number: String): Boolean {
         val row = number.substring(0, 1)
         val col = number.substring(1).toInt()
@@ -18,7 +36,5 @@ class Seat(
 
     fun getPrice(): Money = seatGrade.price
 
-    fun getSeatNumber(): String {
-        return rowNumber.getRow() + columnNumber.getColum()
-    }
+    fun getSeatNumber(): String = rowNumber.getRow() + columnNumber.getColum()
 }

@@ -1,33 +1,18 @@
 package domain.timetable.items
 
 import domain.seat.Seat
-import domain.seat.items.ColumnNumber
-import domain.seat.items.GradeA
-import domain.seat.items.GradeB
-import domain.seat.items.GradeS
-import domain.seat.items.RowNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ScreenTest {
-    val row = listOf("A", "B", "C", "D", "E")
-    val col = listOf(1, 2, 3, 4, 5, 6)
     val seats =
-        row.flatMap { row ->
-            col.map { col ->
-                val grade =
-                    when (row) {
-                        "A", "B" -> GradeB()
-                        "C", "D" -> GradeS()
-                        else -> GradeA()
-                    }
-                Seat(
-                    rowNumber = RowNumber(row),
-                    columnNumber = ColumnNumber(col),
-                    seatGrade = grade,
-                )
-            }
-        }
+        listOf(
+            Seat("A1"),
+            Seat("A2"),
+            Seat("A3"),
+            Seat("A4"),
+            Seat("A5"),
+        )
 
     @Test
     fun `입력된 좌석 번호가 상영관에 존재하는 좌석이면 true가 반환된다`() {

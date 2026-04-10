@@ -8,10 +8,6 @@ import domain.movie.itmes.ScreeningPeriod
 import domain.movie.itmes.Title
 import domain.reservations.items.Reservation
 import domain.seat.Seat
-import domain.seat.items.ColumnNumber
-import domain.seat.items.GradeA
-import domain.seat.items.GradeS
-import domain.seat.items.RowNumber
 import domain.timetable.items.ScreenTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -19,14 +15,13 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class PayCalculatorTest {
-
     @Test
-    fun `PayCalculator가 생성될 때 예약 목록의 좌석을 바탕으로 총 금액이 계산된다` () {
+    fun `PayCalculator가 생성될 때 예약 목록의 좌석을 바탕으로 총 금액이 계산된다`() {
         val payCalculator = PayCalculator(createMockReservation())
 
         val amount = payCalculator.getTotalPrice()
 
-        assertThat(amount).isEqualTo(Money(33000))
+        assertThat(amount).isEqualTo(Money(26000))
     }
 
     @Test
@@ -37,11 +32,11 @@ class PayCalculatorTest {
 
         val amount = payCalculator.getTotalPrice()
 
-        assertThat(amount).isEqualTo(Money(27700))
+        assertThat(amount).isEqualTo(Money(21400))
     }
 
     @Test
-    fun `포인트를 사용하면 사용한 만큼 금액이 차감된다` () {
+    fun `포인트를 사용하면 사용한 만큼 금액이 차감된다`() {
         val payCalculator = PayCalculator(createMockReservation())
 
         payCalculator.calculateTotalPrice()
@@ -50,30 +45,11 @@ class PayCalculatorTest {
 
         val amount = payCalculator.getTotalPrice()
 
-        assertThat(amount).isEqualTo(Money(25700))
+        assertThat(amount).isEqualTo(Money(19400))
     }
 
     @Test
-    fun `현금 결제를 선택하면 2% 할인이 적용된다` () {
-
-        val payCalculator = PayCalculator(createMockReservation())
-
-        payCalculator.calculateTotalPrice()
-
-        payCalculator.usePoint(2000)
-
-        payCalculator.getTotalPrice()
-
-        payCalculator.pay(PayMethod.CASH)
-
-        val amount = payCalculator.getTotalPrice()
-
-        assertThat(amount).isEqualTo(Money(25186))
-    }
-
-    @Test
-    fun `카드 결제를 선택하면 5% 할인이 적용된다` () {
-
+    fun `현금 결제를 선택하면 2% 할인이 적용된다`() {
         val payCalculator = PayCalculator(createMockReservation())
 
         payCalculator.calculateTotalPrice()
@@ -86,11 +62,28 @@ class PayCalculatorTest {
 
         val amount = payCalculator.getTotalPrice()
 
-        assertThat(amount).isEqualTo(Money(25186))
+        assertThat(amount).isEqualTo(Money(19012))
     }
 
-    private fun createMockReservation(): List<Reservation> {
-        return listOf(
+    @Test
+    fun `카드 결제를 선택하면 5% 할인이 적용된다`() {
+        val payCalculator = PayCalculator(createMockReservation())
+
+        payCalculator.calculateTotalPrice()
+
+        payCalculator.usePoint(2000)
+
+        payCalculator.getTotalPrice()
+
+        payCalculator.pay(PayMethod.CASH)
+
+        val amount = payCalculator.getTotalPrice()
+
+        assertThat(amount).isEqualTo(Money(19012))
+    }
+
+    private fun createMockReservation(): List<Reservation> =
+        listOf(
             Reservation(
                 movie =
                     Movie(
@@ -134,17 +127,12 @@ class PayCalculatorTest {
                 seats =
                     listOf<Seat>(
                         Seat(
-                            rowNumber = RowNumber("A"),
-                            columnNumber = ColumnNumber(1),
-                            seatGrade = GradeS(),
+                            "A1",
                         ),
                         Seat(
-                            rowNumber = RowNumber("B"),
-                            columnNumber = ColumnNumber(1),
-                            seatGrade = GradeA(),
+                            "B1",
                         ),
                     ),
             ),
         )
-    }
 }
