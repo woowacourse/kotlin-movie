@@ -5,6 +5,7 @@ import domain.discount.MovieDayDiscount
 import domain.discount.TimeDiscount
 import domain.purchase.PaymentMethod
 import domain.purchase.Price
+import domain.user.Point
 import domain.user.User
 import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -81,7 +82,7 @@ class CalculatorTest {
 
         // when : 사용 포인트가 2000이면
         val result = price.subtractPrice(2000)
-        val resultUser = user.discountPoint(2000)
+        val resultUser = user.discountPoint(Point(2000))
 
         // then : user의 포인트는 0이 되고 14_000원이 반환된다.
         assertEquals(14_000, result.price)

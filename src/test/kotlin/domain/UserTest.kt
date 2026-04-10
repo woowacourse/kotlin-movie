@@ -34,7 +34,7 @@ class UserTest {
         val user = User(Id(1), Point(2000))
 
         // when : discountPoint로 500을 입력했을 때
-        val result = user.discountPoint(1000)
+        val result = user.discountPoint(Point(1000))
 
         // then : 전체 포인트 값이 1500이 된다.
         assertEquals(1000, result.point.point)
@@ -47,7 +47,7 @@ class UserTest {
 
         // when : discountPoint로 1500을 입력했을 때
         val exception = assertThrows<IllegalArgumentException> {
-            result.discountPoint(2500)
+            result.discountPoint(Point(2500))
         }
 
         // then : 예외가 발생 한다.

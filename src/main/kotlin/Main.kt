@@ -10,6 +10,7 @@ import domain.cinema.Movies
 import domain.cinema.Screen
 import domain.cinema.Showing
 import domain.cinema.Showings
+import domain.purchase.Payment
 import domain.reservation.ReservationInfos
 import domain.seat.Seat
 import domain.seat.SeatCoordinate
@@ -80,6 +81,7 @@ fun main() {
     )
 
     var cart = Cart(ReservationInfos(emptyList()))
+    val user = User(Id(1))
     val cartController = CartController()
     val flowController = FlowController()
 
@@ -97,12 +99,10 @@ fun main() {
 
     val paymentController = PaymentController(
         cart = cart,
-        user = User(
-            Id(1),
-        ),
+        user = user,
     )
-
-    val total = paymentController.run()
+    val payment = Payment(cart, user)
+    val total = paymentController.run(payment)
     val confirm = InputView.readPurchaseConfirm()
     if (confirm != "Y") return
 
