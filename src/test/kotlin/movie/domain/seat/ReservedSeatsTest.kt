@@ -3,7 +3,7 @@ package movie.domain.seat
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ReservatedSeatsTest {
+class ReservedSeatsTest {
     private val seats =
         setOf(
             Seat("C", 1, SeatGrade.S),
