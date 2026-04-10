@@ -1,7 +1,11 @@
+@file:OptIn(ExperimentalUuidApi::class)
+
 import model.CinemaKiosk
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
+import model.movie.MovieCatalog
+import model.movie.MovieId
 import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.CinemaSchedule
@@ -14,6 +18,8 @@ import model.seat.SeatGroup
 import model.seat.SeatRow
 import model.seat.SeatState
 import java.time.LocalDateTime
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 fun main() {
     val screenSchedules =
@@ -30,7 +36,8 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
+                                    id = MovieId(Uuid.generateV7()),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -71,7 +78,8 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
+                                    id = MovieId(Uuid.generateV7()),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -112,7 +120,8 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
+                                    id = MovieId(Uuid.generateV7()),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -153,7 +162,8 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "F4 꽃보다 남자", id = "2"),
+                                    name = MovieName(name = "F4 꽃보다 남자"),
+                                    id = MovieId(Uuid.generateV7()),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -205,7 +215,8 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "F4 꽃보다 남자", id = "2"),
+                                    name = MovieName(name = "F4 꽃보다 남자"),
+                                    id = MovieId(Uuid.generateV7()),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -246,7 +257,8 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
+                                    id = MovieId(Uuid.generateV7()),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -292,5 +304,16 @@ fun main() {
         CinemaSchedule(
             screenSchedules = screenSchedules,
         )
-    CinemaController(cinemaKiosk = CinemaKiosk(cinemaSchedule)).run()
+    CinemaController(
+        cinemaKiosk = CinemaKiosk(cinemaSchedule),
+        movieCatalog = MovieCatalog(
+            movies = listOf(
+                Movie(
+                    name = MovieName(name = "혼자사는남자"),
+                    id = MovieId(Uuid.generateV7()),
+                    runningTime = RunningTime(minute = 60),
+                )
+            )
+        )
+    ).run()
 }

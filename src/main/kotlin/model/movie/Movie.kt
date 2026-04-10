@@ -4,15 +4,16 @@ import model.CinemaTimeRange
 
 class Movie(
     val name: MovieName,
+    val id: MovieId,
     private val runningTime: RunningTime,
 ) {
     fun isSameDuration(cinemaTimeRange: CinemaTimeRange): Boolean = runningTime.isSameDuration(cinemaTimeRange)
 
-    fun isEqualName(movieName: MovieName): Boolean = name == movieName
+    fun isEqualId(movieId: MovieId): Boolean = id == movieId
 
     override fun equals(other: Any?): Boolean {
         if (other is Movie) {
-            return this.name == other.name
+            return this.id == other.id
         }
         return false
     }

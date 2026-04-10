@@ -3,6 +3,7 @@ package schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
+import model.movie.MovieId
 import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.MovieSchedule
@@ -11,18 +12,23 @@ import model.seat.SeatGroup
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@OptIn(ExperimentalUuidApi::class)
 class MovieScheduleTest {
     @Test
     fun `특정 영화의 상영 일정 목록에 포함된 모든 영화들이 같은 영화가 아니라면 예외를 발생시킨다`() {
         val movieOne =
             Movie(
-                name = MovieName("혼자사는남자", id = "1"),
+                name = MovieName("혼자사는남자"),
+                id = MovieId(id = Uuid.generateV7()),
                 runningTime = RunningTime(10),
             )
         val movieTwo =
             Movie(
-                name = MovieName("혼자사는남자", id = "2"),
+                name = MovieName("혼자사는남자"),
+                id = MovieId(id = Uuid.generateV7()),
                 runningTime = RunningTime(100),
             )
 

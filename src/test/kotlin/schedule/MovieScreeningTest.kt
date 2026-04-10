@@ -3,6 +3,7 @@ package schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
+import model.movie.MovieId
 import model.movie.MovieName
 import model.movie.RunningTime
 import model.schedule.MovieScreening
@@ -11,7 +12,10 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.provider.Arguments
 import java.time.LocalDateTime
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@OptIn(ExperimentalUuidApi::class)
 class MovieScreeningTest {
     @Test
     fun `영화, 상영관, 기간이 같은 일정은 동일한 일정으로 판단한다`() {
@@ -38,7 +42,8 @@ class MovieScreeningTest {
                 MovieScreening(
                     movie =
                         Movie(
-                            name = MovieName("혼자사는남자", id = idOne),
+                            name = MovieName("혼자사는남자"),
+                            id = MovieId(Uuid.generateV7()),
                             runningTime = RunningTime(minute = 60),
                         ),
                     screenTime =
@@ -58,7 +63,8 @@ class MovieScreeningTest {
                 MovieScreening(
                     movie =
                         Movie(
-                            name = MovieName("혼자사는남자", id = idOne),
+                            name = MovieName("혼자사는남자"),
+                            id = MovieId(Uuid.generateV7()),
                             runningTime = RunningTime(minute = 60),
                         ),
                     screenTime =
@@ -76,12 +82,14 @@ class MovieScreeningTest {
         private val idTwo = "2"
         private val oneHourMovie =
             Movie(
-                name = MovieName("혼자사는남자", id = idOne),
+                name = MovieName("혼자사는남자"),
+                id = MovieId(Uuid.generateV7()),
                 runningTime = RunningTime(minute = 60),
             )
         private val twoHourMovie =
             Movie(
-                name = MovieName("혼자사는남자", id = idTwo),
+                name = MovieName("혼자사는남자"),
+                id = MovieId(Uuid.generateV7()),
                 runningTime = RunningTime(minute = 120),
             )
 

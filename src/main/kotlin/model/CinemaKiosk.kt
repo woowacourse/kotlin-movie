@@ -1,5 +1,7 @@
 package model
 
+import model.movie.Movie
+import model.movie.MovieId
 import model.movie.MovieName
 import model.schedule.CinemaSchedule
 import model.seat.SeatColumn
@@ -11,12 +13,12 @@ class CinemaKiosk(
     var reserveResults: MutableList<MovieReservationResult.Success> = mutableListOf()
 
     fun reserve(
-        movieName: MovieName,
+        movieId: MovieId,
         startTime: CinemaTime,
         seatRow: SeatRow,
         seatColumn: SeatColumn,
     ): MovieReservationResult {
-        val movieSchedule = cinemaSchedule.getMovieSchedule(movieName)
+        val movieSchedule = cinemaSchedule.getMovieSchedule(movieId)
         val movieScreening = movieSchedule.getMovieScreening(startTime)
         val seat = movieScreening.getSeat(seatRow, seatColumn)
 
@@ -51,11 +53,11 @@ class CinemaKiosk(
     }
 
     fun cancelReservations(
-        movieName: MovieName,
+        movieId: MovieId,
         startTime: CinemaTime,
         positions: List<Pair<SeatRow, SeatColumn>>,
     ) {
-        val movieSchedule = cinemaSchedule.getMovieSchedule(movieName)
+        val movieSchedule = cinemaSchedule.getMovieSchedule(movieId)
         val movieScreening = movieSchedule.getMovieScreening(startTime)
         positions.forEach { (seatRow, seatColumn) ->
             movieScreening.getSeat(seatRow, seatColumn).cancelReservation()

@@ -1,10 +1,10 @@
 import model.CinemaKiosk
 import model.CinemaTime
 import model.MovieReservationResult
+import model.movie.MovieCatalog
 import model.movie.MovieName
 import model.payment.MoviePayment
 import model.payment.PayType
-import model.schedule.MovieNameGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import view.InputView
@@ -12,15 +12,8 @@ import view.OutputView
 
 class CinemaController(
     val cinemaKiosk: CinemaKiosk,
+    val movieCatalog: MovieCatalog,
 ) {
-    val movieNames =
-        MovieNameGroup(
-            listOf(
-                MovieName("혼자사는남자", id = "1"),
-                MovieName("F4 꽃보다 남자", id = "2"),
-            ),
-        )
-
     fun run() {
         if (startMovieReservation().not()) return
         do {
@@ -66,9 +59,9 @@ class CinemaController(
 
     private fun getMovieSchedule(): MovieSchedule {
         while (true) {
-            val movieName = movieNames.find(InputView.inputMovieName())
-            if (movieName != null) {
-                val movieSchedule = cinemaKiosk.cinemaSchedule.getMovieSchedule(movieName)
+            val movie = movieCatalog.findByName(InputView.inputMovieName())
+            if (movie != null) {
+                val movieSchedule = cinemaKiosk.cinemaSchedule.getMovieSchedule(movie.id)
                 if (movieSchedule.isEmpty().not()) return movieSchedule
             }
         }
@@ -104,21 +97,21 @@ class CinemaController(
                 val successPositions = mutableListOf<MovieReservationResult.Success>()
 
                 for (position in positions) {
-                    val result =
-                        cinemaKiosk.reserve(
-                            movieName = movieName,
-                            startTime = startTime,
-                            seatRow = position.first,
-                            seatColumn = position.second,
-                        )
-                    when (result) {
-                        is MovieReservationResult.Success -> successPositions.add(result)
-                        is MovieReservationResult.Failed -> {
-                            val successPositions = successPositions.map { it.seat.row to it.seat.column }
-                            cinemaKiosk.cancelReservations(movieName, startTime, successPositions)
-                            throw IllegalArgumentException("예약에 실패했습니다.")
-                        }
-                    }
+//                    val result =
+//                        cinemaKiosk.reserve(
+//                            movieName = movieName,
+//                            startTime = startTime,
+//                            seatRow = position.first,
+//                            seatColumn = position.second,
+//                        )
+//                    when (result) {
+//                        is MovieReservationResult.Success -> successPositions.add(result)
+//                        is MovieReservationResult.Failed -> {
+//                            val successPositions = successPositions.map { it.seat.row to it.seat.column }
+//                            cinemaKiosk.cancelReservations(movieName, startTime, successPositions)
+//                            throw IllegalArgumentException("예약에 실패했습니다.")
+//                        }
+//                    }
                 }
                 OutputView.showReservationInfo(successPositions)
                 return

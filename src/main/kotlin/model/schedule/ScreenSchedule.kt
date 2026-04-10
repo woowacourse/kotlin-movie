@@ -2,6 +2,7 @@ package model.schedule
 
 import model.CinemaTime
 import model.CinemaTimeRange
+import model.movie.MovieId
 import model.movie.MovieName
 
 class ScreenSchedule(
@@ -25,8 +26,8 @@ class ScreenSchedule(
 
     fun isContainServicePeriod(time: CinemaTime): Boolean = servicePeriod.contains(time)
 
-    fun getMovieSchedule(movie: MovieName): MovieSchedule =
-        MovieSchedule(movieScreenings.filter { it.movie.isEqualName(movie) })
+    fun getMovieSchedule(movieId: MovieId): MovieSchedule =
+        MovieSchedule(movieScreenings.filter { it.movie.isEqualId(movieId) })
 
     override fun equals(other: Any?): Boolean {
         if (other is ScreenSchedule) {

@@ -1,16 +1,6 @@
 package model.schedule
 
-import model.movie.MovieName
-
-class MovieNameGroup(
-    movieNames: List<MovieName>,
-) {
-    private val movieNames = movieNames.toList()
-
-    fun find(name: String): MovieName? = movieNames.find { it.name == name }
-
-    fun contains(movieName: MovieName): Boolean = movieName in movieNames
-}
+import model.movie.MovieId
 
 class CinemaSchedule(
     screenSchedules: List<ScreenSchedule>,
@@ -21,5 +11,5 @@ class CinemaSchedule(
         require(screenSchedules.distinct().size == screenSchedules.size)
     }
 
-    fun getMovieSchedule(movie: MovieName): MovieSchedule = MovieSchedule(screenSchedules.flatMap { it.getMovieSchedule(movie) })
+    fun getMovieSchedule(movieId: MovieId): MovieSchedule = MovieSchedule(screenSchedules.flatMap { it.getMovieSchedule(movieId) })
 }

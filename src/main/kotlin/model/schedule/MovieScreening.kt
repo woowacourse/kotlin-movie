@@ -17,10 +17,6 @@ class MovieScreening(
         require(movie.isSameDuration(screenTime)) { "영화의 러닝타임과 상영관의 상영 시간이 일치하지 않습니다." }
     }
 
-    fun isValidMovieNames(movieNameGroup: MovieNameGroup) {
-        movieNameGroup.contains(movie.name)
-    }
-
     fun getSeat(
         seatRow: SeatRow,
         seatColumn: SeatColumn,
