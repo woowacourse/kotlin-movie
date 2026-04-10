@@ -73,8 +73,8 @@ class MoviePaymentTest {
     fun `무비데이(매월 10일, 20일, 30일)에 상영되는 영화는 10% 할인된다`() {
         val screenTime =
             CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 21, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 13, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 14, 0)),
             )
 
         val moviePayment =
@@ -105,7 +105,7 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.discountMovieDay()
+        moviePayment.applyDiscount()
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
@@ -116,8 +116,8 @@ class MoviePaymentTest {
     fun `오전 11시까지 시작하는 상영은 2,000원이 할인된다`() {
         val screenTime =
             CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 10, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 11, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 15, 10, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 15, 11, 0)),
             )
 
         val moviePayment =
@@ -137,7 +137,7 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.discountTime()
+        moviePayment.applyDiscount()
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
@@ -148,8 +148,8 @@ class MoviePaymentTest {
     fun `오후 8시부터 시작하는 상영은 2,000원이 할인된다`() {
         val screenTime =
             CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 20, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 21, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 13, 20, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 13, 21, 0)),
             )
 
         val moviePayment =
@@ -169,7 +169,7 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.discountTime()
+        moviePayment.applyDiscount()
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
@@ -201,7 +201,7 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.discount()
+        moviePayment.applyDiscount()
         Assertions
             .assertThat(
                 moviePayment.currentPrice,
@@ -329,7 +329,7 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.discount()
+        moviePayment.applyDiscount()
         moviePayment.applyPoint(0)
         Assertions
             .assertThat(

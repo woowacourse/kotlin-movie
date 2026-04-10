@@ -32,7 +32,7 @@ class CinemaController(
             MoviePayment(
                 reservations = cinemaKiosk.reserveResults,
             )
-        payment.discount()
+        payment.applyDiscount()
         payment.applyPoint(point)
         OutputView.printTotalPrice(payment.pay(payType))
         val confirm = inputConfirmPayment()
