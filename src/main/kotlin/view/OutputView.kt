@@ -7,6 +7,10 @@ import kotlin.collections.component1
 import kotlin.collections.component2
 
 object OutputView {
+    fun showInvalidMovieName() {
+        println(Message.INVALID_MOVIE_NAME)
+    }
+
     fun showMovieSchedule(movieSchedule: MovieSchedule) {
         val timeTable = movieSchedule.map { it.screenTime }.sortedBy { it.start }
         timeTable.forEachIndexed { index, time ->
