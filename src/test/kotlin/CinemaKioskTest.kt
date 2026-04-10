@@ -1,7 +1,6 @@
 import model.CinemaKiosk
 import model.CinemaTime
 import model.CinemaTimeRange
-import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieId
 import model.movie.MovieName
@@ -15,7 +14,6 @@ import model.seat.SeatGrade
 import model.seat.SeatGroup
 import model.seat.SeatRow
 import model.seat.SeatState
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

@@ -1,8 +1,6 @@
 package model
 
-import model.movie.Movie
 import model.movie.MovieId
-import model.movie.MovieName
 import model.schedule.CinemaSchedule
 import model.seat.SeatColumn
 import model.seat.SeatRow

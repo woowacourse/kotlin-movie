@@ -16,23 +16,28 @@ class MovieCatalogTest {
     fun `영화 목록에 포함된 영화 제목을 입력하면 영화를 반환한다`() {
         val id1 = MovieId(Uuid.generateV7())
         val id2 = MovieId(Uuid.generateV7())
-        val movie1 = Movie(
-            id = id1,
-            name = MovieName("영화1"),
-            runningTime = RunningTime(100)
-        )
-
-        val movie2 = Movie(
-            id = id2,
-            name = MovieName("영화2"),
-            runningTime = RunningTime(30)
-        )
-
-        val movieCatalog = MovieCatalog(
-            movies = listOf(
-                movie1, movie2
+        val movie1 =
+            Movie(
+                id = id1,
+                name = MovieName("영화1"),
+                runningTime = RunningTime(100),
             )
-        )
+
+        val movie2 =
+            Movie(
+                id = id2,
+                name = MovieName("영화2"),
+                runningTime = RunningTime(30),
+            )
+
+        val movieCatalog =
+            MovieCatalog(
+                movies =
+                    listOf(
+                        movie1,
+                        movie2,
+                    ),
+            )
         assertThat(movieCatalog.findByName("영화1")).isEqualTo(movie1)
     }
 
@@ -40,23 +45,28 @@ class MovieCatalogTest {
     fun `영화 목록에 포함되어 있지 않은 영화 제목을 입력하면 null을 반환한다`() {
         val id1 = MovieId(Uuid.generateV7())
         val id2 = MovieId(Uuid.generateV7())
-        val movie1 = Movie(
-            id = id1,
-            name = MovieName("영화1"),
-            runningTime = RunningTime(100)
-        )
-
-        val movie2 = Movie(
-            id = id2,
-            name = MovieName("영화2"),
-            runningTime = RunningTime(30)
-        )
-
-        val movieCatalog = MovieCatalog(
-            movies = listOf(
-                movie1, movie2
+        val movie1 =
+            Movie(
+                id = id1,
+                name = MovieName("영화1"),
+                runningTime = RunningTime(100),
             )
-        )
+
+        val movie2 =
+            Movie(
+                id = id2,
+                name = MovieName("영화2"),
+                runningTime = RunningTime(30),
+            )
+
+        val movieCatalog =
+            MovieCatalog(
+                movies =
+                    listOf(
+                        movie1,
+                        movie2,
+                    ),
+            )
         assertThat(movieCatalog.findByName("영화3")).isNull()
     }
 }

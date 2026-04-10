@@ -6,7 +6,6 @@ import model.movie.Movie
 import model.movie.MovieId
 import model.movie.MovieName
 import model.movie.RunningTime
-import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
 import model.seat.SeatGroup

@@ -23,8 +23,7 @@ class MovieSchedule(
             },
         )
 
-    fun getMovieScreening(time: CinemaTime): MovieScreening =
-        scheduledScreens.first { it.screenTime.start.isEqual(time) }
+    fun getMovieScreening(time: CinemaTime): MovieScreening = scheduledScreens.first { it.screenTime.start.isEqual(time) }
 
     fun isEmpty(): Boolean = scheduledScreens.isEmpty()
 

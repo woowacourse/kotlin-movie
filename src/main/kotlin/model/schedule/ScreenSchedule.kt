@@ -3,7 +3,6 @@ package model.schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.MovieId
-import model.movie.MovieName
 
 class ScreenSchedule(
     private val screenId: String,
@@ -26,8 +25,7 @@ class ScreenSchedule(
 
     fun isContainServicePeriod(time: CinemaTime): Boolean = servicePeriod.contains(time)
 
-    fun getMovieSchedule(movieId: MovieId): MovieSchedule =
-        MovieSchedule(movieScreenings.filter { it.movie.isEqualId(movieId) })
+    fun getMovieSchedule(movieId: MovieId): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie.isEqualId(movieId) })
 
     override fun equals(other: Any?): Boolean {
         if (other is ScreenSchedule) {

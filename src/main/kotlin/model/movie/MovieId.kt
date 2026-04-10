@@ -6,5 +6,5 @@ import kotlin.uuid.Uuid
 @JvmInline
 @OptIn(ExperimentalUuidApi::class)
 value class MovieId(
-    val id: Uuid
+    val id: Uuid,
 )

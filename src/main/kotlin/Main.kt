@@ -308,14 +308,16 @@ fun main() {
         )
     CinemaController(
         cinemaKiosk = CinemaKiosk(cinemaSchedule),
-        movieCatalog = MovieCatalog(
-            movies = listOf(
-                Movie(
-                    name = MovieName(name = "혼자사는남자"),
-                    id = MovieId(movieId1),
-                    runningTime = RunningTime(minute = 60),
-                )
-            )
-        )
+        movieCatalog =
+            MovieCatalog(
+                movies =
+                    listOf(
+                        Movie(
+                            name = MovieName(name = "혼자사는남자"),
+                            id = MovieId(movieId1),
+                            runningTime = RunningTime(minute = 60),
+                        ),
+                    ),
+            ),
     ).run()
 }
