@@ -47,7 +47,7 @@ object ReservationData {
         )
 
     val movie1 = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
-    val movie2 = Movie(title = "", screenings = Screenings(listOf(screening2)))
+    val movie2 = Movie(title = "토이 스토리", screenings = Screenings(listOf(screening2)))
 
     val reservations =
         listOf(

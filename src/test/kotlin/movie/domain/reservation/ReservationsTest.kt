@@ -1,6 +1,9 @@
 package movie.domain.reservation
 
 import movie.domain.amount.Price
+import movie.domain.discount.DiscountPolicies
+import movie.domain.discount.MovieDayDiscount
+import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
@@ -96,12 +99,59 @@ class ReservationsTest {
     }
 
     @Test
-    fun `전체 원가는 각 예매 원가의 합이다`() {
+    fun `무비데이에 상영하는 영화의 A등급 좌석 2개, 시간 할인이 적용되는 영화의 A등급 좌석 2개를 구매했을 때의 가격은 55000원이다`() {
         // given
-        val reservationData = ReservationData.reservations
-        val reservations = Reservations(reservationData)
+        val screen = Screen(1, Seats.createDefault())
+
+        val selectedSeats =
+            SelectedSeats(
+                setOf(
+                    Seat("E", 1, SeatGrade.A),
+                    Seat("E", 2, SeatGrade.A),
+                ),
+            )
+
+        val screening1 =
+            Screening(
+                screen,
+                ScreeningDateTime(
+                    LocalDate.of(2026, 1, 10),
+                    LocalTime.of(12, 0),
+                    LocalTime.of(14, 0),
+                ),
+                ReservedSeats(emptySet()),
+            )
+
+        val screening2 =
+            Screening(
+                screen,
+                ScreeningDateTime(
+                    LocalDate.of(2026, 1, 1),
+                    LocalTime.of(9, 0),
+                    LocalTime.of(12, 0),
+                ),
+                ReservedSeats(emptySet()),
+            )
+
+        val movie1 = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
+        val movie2 = Movie(title = "토이 스토리", screenings = Screenings(listOf(screening2)))
+
+        val reservations =
+            Reservations(
+                listOf(
+                    Reservation(movie1, screening1, selectedSeats),
+                    Reservation(movie2, screening2, selectedSeats),
+                ),
+            )
 
         // then
-        assert(reservations.totalPrice() == Price(60000))
+        assert(
+            reservations.discountedTotalPrice(
+                DiscountPolicies(
+                    listOf(MovieDayDiscount()),
+                    listOf(TimeDiscount()),
+                ),
+            ) == Price(55000),
+        )
     }
 }
