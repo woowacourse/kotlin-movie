@@ -1,4 +1,4 @@
-package model.discount
+package model.policy
 
 import model.Money
 import model.screening.Screening
@@ -9,12 +9,11 @@ object TimeDiscountPolicy : DiscountPolicy {
     private val MORNING_CUTOFF = LocalTime.of(11, 0)
     private val EVENING_CUTOFF = LocalTime.of(20, 0)
 
-    override fun calculateDiscountAmount(
-        price: Money,
-        screening: Screening,
-    ): Money {
+    override fun getDiscountEffect(screening: Screening): DiscountEffect {
         val startTime = screening.startShowTime
-        if (startTime.isBefore(MORNING_CUTOFF) || !startTime.isBefore(EVENING_CUTOFF)) return DISCOUNT_AMOUNT
-        return Money(0)
+        if (startTime <= MORNING_CUTOFF || startTime >= EVENING_CUTOFF) return AmountDiscountEffect(
+            DISCOUNT_AMOUNT
+        )
+        return NoDiscountEffect
     }
 }

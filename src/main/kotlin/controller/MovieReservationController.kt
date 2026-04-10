@@ -1,10 +1,9 @@
 package controller
 
 import model.Scheduler
-import model.discount.MovieDayDiscountPolicy
-import model.discount.TimeDiscountPolicy
 import model.movie.Movie
 import model.payment.PaymentSystem
+import model.policy.DiscountSystem
 import model.reservation.Reservation
 import model.reservation.Reservations
 import model.screening.Screening
@@ -32,14 +31,18 @@ class MovieReservationController(
         // 결제 수단 선택
         val paymentMethod = retryUntilValid { inputView.readPaymentMethod() }
 
-        // 결제
-        val paymentSystem = PaymentSystem(listOf(MovieDayDiscountPolicy, TimeDiscountPolicy), paymentMethod)
-        val payResult = paymentSystem.pay(reservations, point)
+        // 할인 시스템 가동
+        val discountSystem = DiscountSystem()
+        val discountedPrice = discountSystem.discountPrice(reservations)
+
+        // 결제 시스템 가동
+        val paymentSystem = PaymentSystem(paymentMethod)
+        val payResult = paymentSystem.pay(discountedPrice, point)
 
         // 최종 결제 금액 출력
         outputView.printFinalPrice(payResult.finalPrice)
 
-        // 결제하실?
+        // 결제 여부 입력
         val isPaymentConfirmation = retryUntilValid { inputView.readPaymentConfirmation() }
         if (!isPaymentConfirmation) return
 
