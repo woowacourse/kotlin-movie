@@ -2,9 +2,6 @@ package domain.seat
 
 import domain.money.Money
 import domain.seat.items.ColumnNumber
-import domain.seat.items.GradeA
-import domain.seat.items.GradeB
-import domain.seat.items.GradeS
 import domain.seat.items.RowNumber
 import domain.seat.items.SeatGrade
 
@@ -22,9 +19,9 @@ class Seat(
         columnNumber = ColumnNumber(col)
         seatGrade =
             when (row) {
-                "A", "B" -> GradeB()
-                "C", "D" -> GradeS()
-                "E" -> GradeA()
+                "A", "B" -> SeatGrade.GradeB
+                "C", "D" -> SeatGrade.GradeS
+                "E" -> SeatGrade.GradeA
                 else -> throw IllegalArgumentException("존재하지 않는 좌석입니다.")
             }
     }
@@ -35,7 +32,7 @@ class Seat(
         return columnNumber.isSame(col) && rowNumber.isSame(row)
     }
 
-    fun getPrice(): Money = seatGrade.price
+    fun getPrice(): Money = seatGrade.getPrice()
 
     fun getSeatNumber(): String = rowNumber.getRow() + columnNumber.getColum()
 }

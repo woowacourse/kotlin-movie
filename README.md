@@ -181,4 +181,4 @@
    2. [x] 실제로 totalPrice에 point가 사용되었는가?
    3. [x] Point라는 객체가 있는데, usePoint 메서드에선 Money를 쓰고 있음. 프로젝트의 일관성이 유지되고 있는가?
 7. [ ] Reservations에서 date와 time을 나눠서 사용한 이유가 있는가?
-8. [ ] 좌석의 등급에서 상수를 따로 나누고, interface-class 구조로 만들 필요가 있었는가? 
+8. [x] 좌석의 등급에서 상수를 따로 나누고, interface-class 구조로 만들 필요가 있었는가? 
