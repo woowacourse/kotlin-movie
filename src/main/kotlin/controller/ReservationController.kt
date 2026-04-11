@@ -2,18 +2,18 @@ package controller
 
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
+import domain.cinema.MovieTime
 import domain.cinema.Showing
 import domain.reservation.ReservationInfo
 import domain.seat.Seats
-import kotlinx.datetime.LocalDate
 import view.InputView
 import view.OutputView
 
 class ReservationController(val movieTheater: MovieTheater) {
     fun run(): ReservationInfo {
         val movie = chooseMovie()
-        val date = chooseDate()
-        val showing = chooseShowingTime(movie, date)
+        val movieTime = chooseDate()
+        val showing = chooseShowingTime(movie, movieTime)
         val seats = chooseSeat(showing)
 
         return ReservationInfo(showing, seats)
@@ -25,24 +25,18 @@ class ReservationController(val movieTheater: MovieTheater) {
         return movie
     }
 
-    fun chooseDate(): LocalDate {
-        val input = InputView.readDate()
-        val date = runCatching { LocalDate.parse(input) }.getOrNull()
-        require(date != null) { "올바른 날짜 형식이 아닙니다. (YYYY-MM-DD)" }
-
-        return date
-    }
+    fun chooseDate(): MovieTime = InputView.readDate()
 
     fun chooseShowingTime(
         movie: Movie,
-        date: LocalDate,
+        movieTime: MovieTime,
     ): Showing {
         OutputView.printShowing(
-            movieTheater.showings.findByMovieAndDate(movie, date),
+            movieTheater.showings.findByMovieAndDate(movie, movieTime),
         )
 
         val input = InputView.readShowingNumber()
-        return movieTheater.showings.findAvailableShowing(movie, date, input, movieTheater.reservationInfos)
+        return movieTheater.showings.findAvailableShowing(movie, movieTime, input, movieTheater.reservationInfos)
     }
 
     fun chooseSeat(showing: Showing): Seats {

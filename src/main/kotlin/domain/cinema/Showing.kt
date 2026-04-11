@@ -1,14 +1,5 @@
 package domain.cinema
 
-import kotlin.time.Duration.Companion.minutes
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
-import kotlinx.datetime.toLocalDateTime
-
-class Showing(val startTime: LocalDateTime, val screen: Screen, val movie: Movie) {
-    val endTime = startTime
-        .toInstant(TimeZone.currentSystemDefault())
-        .plus(movie.runningTime.minutes)
-        .toLocalDateTime(TimeZone.currentSystemDefault())
+class Showing(val startTime: MovieTime, val screen: Screen, val movie: Movie) {
+    val endTime: MovieTime = startTime.plusMinutes(movie.runningTime)
 }

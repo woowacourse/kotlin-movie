@@ -1,11 +1,11 @@
 package domain.discount
 
+import domain.cinema.MovieTime
 import domain.purchase.Price
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 
 class TimeDiscount : DiscountPolicy {
-    override fun isApplicable(at: LocalDateTime): Boolean {
+    override fun isApplicable(at: MovieTime): Boolean {
         return at.time <= noneDiscountTimeBoundary.first || at.time >= noneDiscountTimeBoundary.second
     }
 

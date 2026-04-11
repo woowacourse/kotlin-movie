@@ -2,6 +2,7 @@ import domain.Id
 import domain.cart.Cart
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
+import domain.cinema.MovieTime
 import domain.cinema.Movies
 import domain.cinema.Screen
 import domain.cinema.Showing
@@ -14,7 +15,6 @@ import domain.seat.SeatGrade
 import domain.seat.SeatState
 import domain.seat.Seats
 import domain.user.User
-import kotlinx.datetime.LocalDateTime
 
 object TestFixtureData {
     val users = listOf(
@@ -49,9 +49,9 @@ object TestFixtureData {
 
     val showings = Showings(
         listOf(
-            Showing(LocalDateTime(2026, 4, 10, 10, 0), screens[0], movies.movies[0]),
-            Showing(LocalDateTime(2026, 4, 10, 14, 0), screens[1], movies.movies[1]),
-            Showing(LocalDateTime(2026, 4, 10, 21, 0), screens[2], movies.movies[2]),
+            Showing(MovieTime(2026, 4, 10, 10, 0), screens[0], movies.movies[0]),
+            Showing(MovieTime(2026, 4, 10, 14, 0), screens[1], movies.movies[1]),
+            Showing(MovieTime(2026, 4, 10, 21, 0), screens[2], movies.movies[2]),
         ),
     )
 

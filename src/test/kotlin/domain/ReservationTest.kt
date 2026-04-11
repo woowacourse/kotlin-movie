@@ -1,7 +1,7 @@
 package domain
 
+import domain.cinema.MovieTime
 import domain.cinema.Showing
-import kotlinx.datetime.LocalDate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -36,11 +36,11 @@ class ReservationTest {
     fun `예매 영화와 예매 날짜를 입력하였을 때 해당하는 상영 일정을 반환한다`() {
         // given : 예매 영화의 id는 1이고, 예매 날짜는 2026-4-10일이다.
         val movieId = Id(1)
-        val date = LocalDate(2026, 4, 10)
+        val movieTime = MovieTime.from("2026-04-10")
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
         val movie = TestFixtureData.movieTheater.movies.findMovieById(movieId)
-        val result = TestFixtureData.movieTheater.showings.findByMovieAndDate(movie, date)
+        val result = TestFixtureData.movieTheater.showings.findByMovieAndDate(movie, movieTime)
 
         // then : 해당하는 상영 일정을 반환한다.
         assertEquals(listOf<Showing>(TestFixtureData.showings.first()), result.showings)
@@ -50,12 +50,12 @@ class ReservationTest {
     fun `예매 영화와 예매 날짜를 입력하였을 때 해당하는 상영 일정이 없을 경우, 예외가 발생한다`() {
         // given : 예매 영화의 id는 1이고, 예매 날짜는 2026-4-11일이다.
         val movieId = Id(1)
-        val date = LocalDate(2026, 4, 11)
+        val movieTime = MovieTime.from("2026-04-11")
 
         // when : 전체 영화 리스트에서 영화를 확인하고, 전체 상영 일정에서 해당 영화와 예매 날짜를 검색하면
         val movie = TestFixtureData.movieTheater.movies.findMovieById(movieId)
         val exception = assertThrows<IllegalArgumentException> {
-            TestFixtureData.movieTheater.showings.findByMovieAndDate(movie, date)
+            TestFixtureData.movieTheater.showings.findByMovieAndDate(movie, movieTime)
         }
         // then : 예외가 발생한다.
         assertEquals("해당 영화는 해당 날짜에 상영되지 않습니다.", exception.message)

@@ -1,7 +1,6 @@
 package domain.cinema
 
 import domain.reservation.ReservationInfos
-import kotlinx.datetime.LocalDate
 
 class Showings(val showings: List<Showing>) {
     operator fun get(index: Int): Showing = showings[index]
@@ -10,9 +9,9 @@ class Showings(val showings: List<Showing>) {
 
     fun findByMovieAndDate(
         movie: Movie,
-        date: LocalDate,
+        movieTime: MovieTime,
     ): Showings {
-        val filtered = showings.filter { it.movie == movie && it.startTime.date == date }
+        val filtered = showings.filter { it.movie == movie && it.startTime.isOnSameDate(movieTime) }
         require(filtered.isNotEmpty()) { "해당 영화는 해당 날짜에 상영되지 않습니다." }
         return Showings(filtered)
     }
@@ -24,11 +23,11 @@ class Showings(val showings: List<Showing>) {
 
     fun findAvailableShowing(
         movie: Movie,
-        date: LocalDate,
+        movieTime: MovieTime,
         number: String,
         reservationInfos: ReservationInfos,
     ): Showing {
-        val showings = findByMovieAndDate(movie, date)
+        val showings = findByMovieAndDate(movie, movieTime)
         val selected = showings.findByIndex(number)
         reservationInfos.checkReservationHistory(selected)
 

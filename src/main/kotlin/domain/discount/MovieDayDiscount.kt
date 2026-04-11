@@ -1,10 +1,10 @@
 package domain.discount
 
+import domain.cinema.MovieTime
 import domain.purchase.Price
-import kotlinx.datetime.LocalDateTime
 
 class MovieDayDiscount : DiscountPolicy {
-    override fun isApplicable(at: LocalDateTime): Boolean {
+    override fun isApplicable(at: MovieTime): Boolean {
         return movieDay.contains(at.day)
     }
 

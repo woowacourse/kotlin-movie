@@ -1,9 +1,9 @@
 package domain.discount
 
+import domain.cinema.MovieTime
 import domain.purchase.Price
-import kotlinx.datetime.LocalDateTime
 
 interface DiscountPolicy {
-    fun isApplicable(at: LocalDateTime): Boolean
+    fun isApplicable(at: MovieTime): Boolean
     fun discountApply(base: Price): Price
 }

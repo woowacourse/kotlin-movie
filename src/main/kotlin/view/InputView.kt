@@ -1,5 +1,7 @@
 package view
 
+import domain.cinema.MovieTime
+
 object InputView {
     fun readLine(): String {
         val input = readln()
@@ -23,10 +25,9 @@ object InputView {
         return input
     }
 
-    fun readDate(): String {
+    fun readDate(): MovieTime {
         println("날짜를 입력하세요 (YYYY-MM-DD):")
-        val input = readLine()
-        return input
+        return MovieTime.from(readLine())
     }
 
     fun readShowingNumber(): String {

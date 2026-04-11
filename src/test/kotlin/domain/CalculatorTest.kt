@@ -1,5 +1,6 @@
 package domain
 
+import domain.cinema.MovieTime
 import domain.discount.DiscountPolicy
 import domain.discount.MovieDayDiscount
 import domain.discount.TimeDiscount
@@ -7,7 +8,6 @@ import domain.purchase.PaymentMethod
 import domain.purchase.Price
 import domain.user.Point
 import domain.user.User
-import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -16,7 +16,7 @@ class CalculatorTest {
     fun `무비데이에 상영되는 영화는 10퍼센트 할인이 적용된다`() {
         // given : 날짜가 10일이고, 영화가 16_000원이다.
         val price = Price(16_000)
-        val date = LocalDateTime(2026, 4, 10, 14, 0)
+        val date = MovieTime(2026, 4, 10, 14, 0)
         val policy = MovieDayDiscount()
 
         // when : 할인율을 적용하면
@@ -31,7 +31,7 @@ class CalculatorTest {
     fun `할인 시간에 상영되는 영화는 2000원 할인이 적용된다`() {
         // given : 시간이 10시이고, 영화가 16_000원이다.
         val price = Price(16_000)
-        val date = LocalDateTime(2026, 4, 10, 10, 0)
+        val date = MovieTime(2026, 4, 10, 10, 0)
         val policy = TimeDiscount()
 
         // when : 할인액을 적용하면
@@ -46,7 +46,7 @@ class CalculatorTest {
     fun `무비데이도 아니고 할인 시간도 아닌 영화는 할인이 적용되지 않는다`() {
         // given : 날짜가 11일이고 시간이 14시이고, 영화가 16_000원이다.
         val price = Price(16_000)
-        val date = LocalDateTime(2026, 4, 11, 14, 0)
+        val date = MovieTime(2026, 4, 11, 14, 0)
         val policies: List<DiscountPolicy> = listOf(MovieDayDiscount(), TimeDiscount())
 
         // when : 할인을 적용하면
@@ -62,7 +62,7 @@ class CalculatorTest {
     fun `무비데이 할인과 시간 할인이 순서대로 적용된다`() {
         // given : 날짜가 10일이고 시간이 10시이고, 영화가 16_000원이다.
         val price = Price(16_000)
-        val date = LocalDateTime(2026, 4, 10, 10, 0)
+        val date = MovieTime(2026, 4, 10, 10, 0)
         val policies: List<DiscountPolicy> = listOf(MovieDayDiscount(), TimeDiscount())
 
         // when : 할인을 적용하면
