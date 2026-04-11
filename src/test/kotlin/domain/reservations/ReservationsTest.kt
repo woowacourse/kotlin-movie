@@ -10,6 +10,7 @@ import domain.seat.items.ColumnNumber
 import domain.seat.items.GradeA
 import domain.seat.items.GradeS
 import domain.seat.items.RowNumber
+import domain.seat.items.SeatPosition
 import domain.timetable.items.ScreenTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
@@ -96,13 +97,19 @@ class ReservationsTest {
                     seats =
                         listOf<Seat>(
                             Seat(
-                                rowNumber = RowNumber("A"),
-                                columnNumber = ColumnNumber(1),
+                                seatPosition =
+                                    SeatPosition(
+                                        RowNumber("A"),
+                                        ColumnNumber(1),
+                                    ),
                                 seatGrade = GradeS(),
                             ),
                             Seat(
-                                rowNumber = RowNumber("B"),
-                                columnNumber = ColumnNumber(1),
+                                seatPosition =
+                                    SeatPosition(
+                                        RowNumber("B"),
+                                        ColumnNumber(1),
+                                    ),
                                 seatGrade = GradeA(),
                             ),
                         ),

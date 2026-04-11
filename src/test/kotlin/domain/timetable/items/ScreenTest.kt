@@ -6,6 +6,7 @@ import domain.seat.items.GradeA
 import domain.seat.items.GradeB
 import domain.seat.items.GradeS
 import domain.seat.items.RowNumber
+import domain.seat.items.SeatPosition
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -22,8 +23,11 @@ class ScreenTest {
                         else -> GradeA()
                     }
                 Seat(
-                    rowNumber = RowNumber(row),
-                    columnNumber = ColumnNumber(col),
+                    seatPosition =
+                        SeatPosition(
+                            RowNumber(row),
+                            ColumnNumber(col),
+                        ),
                     seatGrade = grade,
                 )
             }

@@ -1,20 +1,14 @@
 package domain.seat
 
 import domain.money.Money
-import domain.seat.items.ColumnNumber
-import domain.seat.items.RowNumber
 import domain.seat.items.SeatGrade
+import domain.seat.items.SeatPosition
 
 class Seat(
-    private val rowNumber: RowNumber,
-    private val columnNumber: ColumnNumber,
+    private val seatPosition: SeatPosition,
     private val seatGrade: SeatGrade,
 ) {
-    fun isExist(number: String): Boolean {
-        val row = number.substring(0, 1)
-        val col = number.substring(1).toInt()
-        return columnNumber.isSame(col) && rowNumber.isSame(row)
-    }
+    fun isExist(number: String): Boolean = seatPosition.isExistSeatPosition(number)
 
     fun getPrice(): Money = seatGrade.price
 }

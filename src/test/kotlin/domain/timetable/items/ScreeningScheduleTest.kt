@@ -8,6 +8,7 @@ import domain.seat.Seat
 import domain.seat.items.ColumnNumber
 import domain.seat.items.GradeA
 import domain.seat.items.RowNumber
+import domain.seat.items.SeatPosition
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -143,8 +144,11 @@ class ScreeningScheduleTest {
             )
         val reserveSeat =
             Seat(
-                RowNumber("A"),
-                ColumnNumber(1),
+                seatPosition =
+                    SeatPosition(
+                        RowNumber("A"),
+                        ColumnNumber(1),
+                    ),
                 GradeA(),
             )
         reservationSchedule.reserveSeat(reserveSeat)
@@ -199,8 +203,11 @@ class ScreeningScheduleTest {
             )
         val reserveSeat =
             Seat(
-                RowNumber("A"),
-                ColumnNumber(1),
+                seatPosition =
+                    SeatPosition(
+                        RowNumber("A"),
+                        ColumnNumber(1),
+                    ),
                 GradeA(),
             )
         reservationSchedule.reserveSeat(reserveSeat)
