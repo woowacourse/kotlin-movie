@@ -29,12 +29,12 @@ fun main() {
     val movieDayDiscountPolicy =
         MovieDayDiscountPolicy(
             condition = movieDayCondition,
-            discountRate = 10.0,
+            discountRate = 0.9,
         )
 
-    val cardDiscountPolicy = CardDiscountPolicy(discountRate = 5.0)
+    val cardDiscountPolicy = CardDiscountPolicy(discountRate = 0.95)
 
-    val cashDiscountPolicy = CashDiscountPolicy(2.0)
+    val cashDiscountPolicy = CashDiscountPolicy(0.98)
 
     val discountPolicies = listOf(movieDayDiscountPolicy, timeDiscountPolicy)
 
