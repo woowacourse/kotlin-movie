@@ -15,4 +15,6 @@ value class Money(
     operator fun minus(other: Money): Money = Money(amount - other.amount)
 
     operator fun times(scale: Double): Money = Money((amount * scale).toInt())
+
+    operator fun compareTo(other: Money): Int = this.amount.compareTo(other.amount)
 }
