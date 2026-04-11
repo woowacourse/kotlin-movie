@@ -33,6 +33,8 @@ class CinemaController(
         // 결제
         val totalPrice = processPayment(cinemaKiosk)
         OutputView.showTotalPrice(totalPrice)
+
+        if (InputView.askPaymentConfirm().not()) return
     }
 
     private fun startReservation(): Boolean = InputView.askStartReservation()

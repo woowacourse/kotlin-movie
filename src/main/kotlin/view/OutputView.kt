@@ -60,7 +60,7 @@ object OutputView {
 
     fun showTotalPrice(totalPrice: Int) {
         println(Message.TOTAL_PRICE_TITLE)
-        println("${Message.TOTAL_PRICE} ${totalPrice}원")
+        println("${Message.TOTAL_PRICE} ${"%,d".format(totalPrice)}원")
     }
 
     fun end() {

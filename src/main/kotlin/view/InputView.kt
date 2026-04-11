@@ -12,6 +12,16 @@ object InputView {
 
     fun askReserveMore(): Boolean = inputYesOrNo(Message.INPUT_CONTINUE)
 
+    fun askPaymentConfirm(): Boolean {
+        while (true) {
+            try {
+                return inputYesOrNo(Message.INPUT_CONFIRM_PAYMENT)
+            } catch (e: Exception) {
+                println(e.message)
+            }
+        }
+    }
+
     private fun inputYesOrNo(text: String): Boolean {
         println(text)
         val input = readln()
@@ -69,13 +79,6 @@ object InputView {
         val input = readln()
         InputValidator.validateType(input)
         return input.toInt()
-    }
-
-    fun inputConfirmPayment(): Boolean {
-        println(Message.INPUT_CONFIRM_PAYMENT)
-        val input = readln()
-        InputValidator.validateYesOrNo(input)
-        return input == "Y"
     }
 
     private fun displayPayType(payType: PayType) =
