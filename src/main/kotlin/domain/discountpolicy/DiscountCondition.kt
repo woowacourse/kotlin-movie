@@ -9,14 +9,14 @@ interface DiscountCondition {
 
 class TimeCondition(
     private val beforeTime: LocalTime,
-    private val afterTime: LocalTime
+    private val afterTime: LocalTime,
 ) : DiscountCondition {
     override fun isSatisfiedBy(info: ReservationInfo): Boolean =
         info.screenTime.isStartBefore(beforeTime) || info.screenTime.isStartAfter(afterTime)
 }
 
 class MovieDayCondition(
-    private val condition: List<Int>
+    private val condition: List<Int>,
 ) : DiscountCondition {
     override fun isSatisfiedBy(info: ReservationInfo): Boolean {
         val screeningDay = info.screenTime.screeningDayOfMonth()

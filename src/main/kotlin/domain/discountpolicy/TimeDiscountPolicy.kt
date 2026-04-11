@@ -14,9 +14,8 @@ interface DiscountPolicy {
 
 class TimeDiscountPolicy(
     override val condition: DiscountCondition,
-    private val discountAmount: Money
+    private val discountAmount: Money,
 ) : DiscountPolicy {
-
     override fun applyDiscount(
         price: Money,
         reservation: Reservation,
@@ -31,9 +30,8 @@ class TimeDiscountPolicy(
 
 class MovieDayDiscountPolicy(
     override val condition: DiscountCondition,
-    private val discountRate: Double
+    private val discountRate: Double,
 ) : DiscountPolicy {
-
     override fun applyDiscount(
         price: Money,
         reservation: Reservation,
