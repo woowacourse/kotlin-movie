@@ -1,5 +1,6 @@
 package domain.timetable.items
 
+import domain.money.Money
 import domain.seat.Seat
 import domain.seat.items.ColumnNumber
 import domain.seat.items.GradeB
@@ -59,6 +60,19 @@ class SeatsTest {
         val screenSeats = Seats(seats)
 
         assertThrows<IllegalArgumentException> { screenSeats.findSeat(SeatPosition.of("ZZ11234")) }
+    }
+
+    @Test
+    fun `예약된 좌석들의 가격의 합계를 반환한다`() {
+        val seatA = createSeat()
+        val seatB = createSeat(columnNumber = ColumnNumber(2))
+
+        val seats = listOf(seatA, seatB)
+        val screenSeats = Seats(seats)
+
+        val result = screenSeats.sumPrice()
+
+        assertThat(result).isEqualTo(Money(24_000))
     }
 
     private fun createSeat(
