@@ -1,14 +1,12 @@
 package schedule
 
 import io.kotest.matchers.shouldBe
-import model.CinemaTime
-import model.CinemaTimeRange
-import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
+import model.reservation.MovieReservationGroup
+import model.reservation.MovieReservationResult
 import model.schedule.CinemaSchedule
-import model.schedule.MovieReservationGroup
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
 import model.seat.Seat
@@ -18,6 +16,8 @@ import model.seat.SeatGroup
 import model.seat.SeatPosition
 import model.seat.SeatRow
 import model.seat.SeatState
+import model.time.CinemaTime
+import model.time.CinemaTimeRange
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

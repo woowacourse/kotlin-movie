@@ -1,8 +1,5 @@
 package payment
 
-import model.CinemaTime
-import model.CinemaTimeRange
-import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
@@ -10,13 +7,16 @@ import model.payment.Money
 import model.payment.MoviePayment
 import model.payment.PayType
 import model.payment.Point
-import model.schedule.MovieReservationGroup
+import model.reservation.MovieReservationGroup
+import model.reservation.MovieReservationResult
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
 import model.seat.SeatPosition
 import model.seat.SeatRow
 import model.seat.SeatState
+import model.time.CinemaTime
+import model.time.CinemaTimeRange
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

@@ -1,8 +1,9 @@
-package model
+package model.reservation
 
 import model.movie.Movie
 import model.seat.Seat
 import model.seat.SeatState
+import model.time.CinemaTime
 
 data class MovieReservationResult(
     val movie: Movie,

@@ -1,5 +1,3 @@
-import model.CinemaTime
-import model.CinemaTimeRange
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
@@ -12,6 +10,8 @@ import model.seat.SeatGrade
 import model.seat.SeatGroup
 import model.seat.SeatPosition
 import model.seat.SeatRow
+import model.time.CinemaTime
+import model.time.CinemaTimeRange
 import java.time.LocalDateTime
 
 fun main() {

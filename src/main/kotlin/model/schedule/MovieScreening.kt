@@ -1,11 +1,11 @@
 package model.schedule
 
-import model.CinemaTimeRange
-import model.MovieReservationResult
 import model.movie.Movie
+import model.reservation.MovieReservationResult
 import model.seat.SeatGroup
 import model.seat.SeatPosition
 import model.seat.SeatState
+import model.time.CinemaTimeRange
 import java.util.Objects
 
 class MovieScreening(

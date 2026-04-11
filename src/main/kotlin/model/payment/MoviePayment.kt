@@ -1,6 +1,6 @@
 package model.payment
 
-import model.schedule.MovieReservationGroup
+import model.reservation.MovieReservationGroup
 import java.time.LocalTime
 
 class MoviePayment(

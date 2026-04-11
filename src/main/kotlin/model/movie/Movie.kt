@@ -1,6 +1,6 @@
 package model.movie
 
-import model.CinemaTimeRange
+import model.time.CinemaTimeRange
 
 class Movie(
     val name: MovieName,

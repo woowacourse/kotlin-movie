@@ -1,10 +1,11 @@
-package model.schedule
+package model.reservation
 
-import model.CinemaTime
-import model.MovieReservationResult
 import model.movie.MovieName
+import model.reservation.MovieReservationResult
+import model.schedule.CinemaSchedule
 import model.seat.SeatPosition
 import model.seat.SeatState
+import model.time.CinemaTime
 
 class MovieReservationGroup(
     movieReservations: Set<MovieReservationResult>,

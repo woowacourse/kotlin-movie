@@ -2,7 +2,7 @@ package view
 
 import model.payment.Money
 import model.payment.Point
-import model.schedule.MovieReservationGroup
+import model.reservation.MovieReservationGroup
 import model.schedule.MovieSchedule
 import model.seat.SeatGroup
 import kotlin.collections.component1

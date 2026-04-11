@@ -1,13 +1,13 @@
-import model.CinemaTime
 import model.movie.MovieName
 import model.payment.MoviePayment
 import model.payment.PayType
 import model.payment.Point
+import model.reservation.MovieReservationGroup
 import model.schedule.CinemaSchedule
-import model.schedule.MovieReservationGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import model.seat.SeatPosition
+import model.time.CinemaTime
 import view.InputView
 import view.OutputView
 

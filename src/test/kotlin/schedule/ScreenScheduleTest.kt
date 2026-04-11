@@ -1,7 +1,5 @@
 package schedule
 
-import model.CinemaTime
-import model.CinemaTimeRange
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
@@ -9,6 +7,8 @@ import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
 import model.seat.SeatGroup
+import model.time.CinemaTime
+import model.time.CinemaTimeRange
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test

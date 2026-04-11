@@ -1,12 +1,12 @@
 package view
 
-import model.CinemaTime
 import model.movie.MovieName
 import model.payment.PayType
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import model.seat.SeatColumn
 import model.seat.SeatRow
+import model.time.CinemaTime
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

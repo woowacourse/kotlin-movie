@@ -1,8 +1,8 @@
 package model.schedule
 
-import model.CinemaTime
-import model.CinemaTimeRange
 import model.movie.MovieName
+import model.time.CinemaTime
+import model.time.CinemaTimeRange
 
 class ScreenSchedule(
     private val screenId: String,

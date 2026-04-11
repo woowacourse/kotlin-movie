@@ -1,6 +1,6 @@
 package model.schedule
 
-import model.CinemaTime
+import model.time.CinemaTime
 
 class MovieSchedule(
     movieScreenings: List<MovieScreening>,
