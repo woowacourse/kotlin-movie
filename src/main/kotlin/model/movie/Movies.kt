@@ -1,10 +1,12 @@
 package model.movie
 
 class Movies(
-    private val value: List<Movie>,
+    movies: List<Movie>,
 ) {
+    private val value = movies.toList()
+
     init {
-        require(value.isNotEmpty()) { "영화 목록이 비어있으면 안됩니다." }
+        require(this.value.isNotEmpty()) { "영화 목록이 비어있으면 안됩니다." }
     }
 
     fun isInclude(movie: Movie): Boolean = value.contains(movie)

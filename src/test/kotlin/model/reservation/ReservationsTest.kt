@@ -41,6 +41,7 @@ class ReservationsTest {
             ScreeningSeatMap(defaultScreen),
         )
 
+    @Suppress("SameParameterValue")
     private fun screening2(startHour: Int): Screening =
         Screening(
             movie2,
@@ -58,11 +59,11 @@ class ReservationsTest {
     @Test
     fun `시간이 겹치는 상영을 예매하면 예외가 발생한다`() {
         val reservation1 = screening1(14).reserve(listOf(SeatNumber('A', 1)))
-        val reservations = Reservations().addReservation(reservation1)
+        val reservations = Reservations().add(reservation1)
 
         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException::class.java) {
             val reservation2 = screening2(14).reserve(listOf(SeatNumber('A', 1)))
-            reservations.addReservation(reservation2)
+            reservations.add(reservation2)
         }
     }
 
@@ -71,7 +72,7 @@ class ReservationsTest {
         val reservation1 = screening1(14).reserve(listOf(SeatNumber('A', 1)))
         val reservation2 = screening1(16).reserve(listOf(SeatNumber('A', 1)))
 
-        val reservations = Reservations().addReservation(reservation1).addReservation(reservation2)
+        val reservations = Reservations().add(reservation1).add(reservation2)
 
         Assertions.assertThat(reservations).hasSize(2)
     }

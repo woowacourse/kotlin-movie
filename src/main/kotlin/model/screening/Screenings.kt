@@ -4,8 +4,10 @@ import model.movie.Movie
 import java.time.LocalDate
 
 class Screenings(
-    private val value: List<Screening>,
+    screenings: List<Screening>,
 ) : Iterable<Screening> {
+    private val value = screenings.toList()
+
     override fun iterator(): Iterator<Screening> = value.iterator()
 
     fun isEmpty(): Boolean = value.isEmpty()

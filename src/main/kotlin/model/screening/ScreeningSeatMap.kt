@@ -14,7 +14,7 @@ class ScreeningSeatMap(
             require(!reservedSeats.seatNumbers.contains(it)) { "이미 예약된 좌석입니다." }
         }
         val newReservedSeats = Seats(seatNumbers.map { screen.seats.findSeat(it) })
-        val updatedSeats = reservedSeats.addSeats(newReservedSeats)
+        val updatedSeats = reservedSeats.add(newReservedSeats)
         return ScreeningSeatMap(screen, updatedSeats)
     }
 

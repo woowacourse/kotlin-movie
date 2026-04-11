@@ -3,10 +3,12 @@ package model.seat
 import model.Money
 
 class Seats(
-    private val value: List<Seat>,
+    seats: List<Seat>,
 ) {
-    val seatCount: Int = value.size
-    val seatNumbers: List<SeatNumber> = value.map { it.seatNumber }
+    private val value = seats.toList()
+
+    val seatCount: Int = seats.size
+    val seatNumbers: List<SeatNumber> = seats.map { it.seatNumber }
 
     fun findSeat(seatNumber: SeatNumber): Seat =
         value.find { it.seatNumber == seatNumber }
@@ -16,5 +18,5 @@ class Seats(
 
     fun calculateTotalPrice(): Money = value.fold(Money(0)) { total, seat -> total + seat.seatGrade.price }
 
-    fun addSeats(seatsToAdd: Seats) = Seats(value + seatsToAdd.value)
+    fun add(newSeats: Seats) = Seats(value + newSeats.value)
 }

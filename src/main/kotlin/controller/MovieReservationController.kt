@@ -46,7 +46,7 @@ class MovieReservationController(
         do {
             val reservation = makeReservation(reservations)
             scheduler.update(reservation.screening)
-            reservations = reservations.addReservation(reservation)
+            reservations = reservations.add(reservation)
             outputView.printCartItem(reservation)
         } while (inputView.readAddMoreMovie())
 
