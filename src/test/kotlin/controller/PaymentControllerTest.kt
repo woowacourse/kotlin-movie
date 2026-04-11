@@ -1,0 +1,161 @@
+package controller
+
+import domain.model.Movie
+import domain.model.Payment.PaymentMethod
+import domain.model.cart.CartItem
+import domain.model.screen.Screening
+import domain.model.seat.RowLabel
+import domain.model.seat.Seat
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+import java.time.LocalDate
+import java.time.LocalTime
+
+class PaymentControllerTest {
+    private fun screening(
+        date: LocalDate,
+        startTime: LocalTime,
+        title: String = "테스트 영화",
+        runningMinutes: Int = 120,
+    ): Screening =
+        Screening(
+            screeningDate = date,
+            startTime = startTime,
+            movie = Movie(title = title, runningMinutes = runningMinutes),
+        )
+
+    private fun seat(
+        row: RowLabel,
+        column: Int,
+    ): Seat = Seat(column = column, row = row)
+
+    @Test
+    fun `결제는 예매별 할인 후 합산하고 포인트 차감 뒤 카드 할인을 적용한다`() {
+        val paymentController = PaymentController()
+        paymentController.usePoint(2_000)
+        paymentController.selectPaymentMethod(PaymentMethod.CARD)
+
+        val items =
+            listOf(
+                CartItem(
+                    screening =
+                        screening(
+                            date = LocalDate.of(2025, 9, 20),
+                            startTime = LocalTime.of(13, 0),
+                            title = "F1 더 무비",
+                        ),
+                    seats = listOf(seat(RowLabel.D, 1), seat(RowLabel.D, 2)),
+                ),
+                CartItem(
+                    screening =
+                        screening(
+                            date = LocalDate.of(2025, 9, 20),
+                            startTime = LocalTime.of(16, 0),
+                            title = "토이 스토리",
+                        ),
+                    seats = listOf(seat(RowLabel.C, 2)),
+                ),
+                CartItem(
+                    screening =
+                        screening(
+                            date = LocalDate.of(2025, 9, 20),
+                            startTime = LocalTime.of(9, 50),
+                            title = "아이언맨",
+                        ),
+                    seats = listOf(seat(RowLabel.A, 1)),
+                ),
+            )
+
+        val result = paymentController.payAmountApply(items)
+
+        assertThat(result).isEqualTo(50_065)
+    }
+
+    @Test
+    fun `현재 샘플 입력 시나리오는 최종 결제 금액 38950원을 반환한다`() {
+        val paymentController = PaymentController()
+        paymentController.usePoint(500)
+        paymentController.selectPaymentMethod(PaymentMethod.CARD)
+
+        val items =
+            listOf(
+                CartItem(
+                    screening =
+                        screening(
+                            date = LocalDate.of(2026, 4, 6),
+                            startTime = LocalTime.of(13, 0),
+                            title = "마더",
+                        ),
+                    seats = listOf(seat(RowLabel.A, 9)),
+                ),
+                CartItem(
+                    screening =
+                        screening(
+                            date = LocalDate.of(2026, 4, 7),
+                            startTime = LocalTime.of(10, 0),
+                            title = "탑건: 매버릭",
+                        ),
+                    seats = listOf(seat(RowLabel.E, 1)),
+                ),
+                CartItem(
+                    screening =
+                        screening(
+                            date = LocalDate.of(2026, 4, 10),
+                            startTime = LocalTime.of(16, 0),
+                            title = "체인소맨",
+                        ),
+                    seats = listOf(seat(RowLabel.C, 8)),
+                ),
+            )
+
+        val result = paymentController.payAmountApply(items)
+
+        assertThat(result).isEqualTo(38_950)
+    }
+
+    @Test
+    fun `카드 대신 현금을 선택하면 현금 할인률로 계산된다`() {
+        val paymentController = PaymentController()
+        paymentController.usePoint(500)
+        paymentController.selectPaymentMethod(PaymentMethod.CASH)
+
+        val items =
+            listOf(
+                CartItem(
+                    screening = screening(LocalDate.of(2026, 4, 6), LocalTime.of(13, 0), "마더"),
+                    seats = listOf(seat(RowLabel.A, 9)),
+                ),
+                CartItem(
+                    screening = screening(LocalDate.of(2026, 4, 7), LocalTime.of(10, 0), "탑건: 매버릭"),
+                    seats = listOf(seat(RowLabel.E, 1)),
+                ),
+                CartItem(
+                    screening = screening(LocalDate.of(2026, 4, 10), LocalTime.of(16, 0), "체인소맨"),
+                    seats = listOf(seat(RowLabel.C, 8)),
+                ),
+            )
+
+        val result = paymentController.payAmountApply(items)
+
+        assertThat(result).isEqualTo(40_180)
+    }
+
+    @Test
+    fun `포인트가 할인 적용 후 합계보다 크면 최종 결제 금액은 0원이다`() {
+        val paymentController = PaymentController()
+        paymentController.usePoint(100_000)
+        paymentController.selectPaymentMethod(PaymentMethod.CARD)
+
+        val items =
+            listOf(
+                CartItem(
+                    screening = screening(LocalDate.of(2026, 4, 7), LocalTime.of(13, 0), "단일 예매"),
+                    seats = listOf(seat(RowLabel.A, 1)),
+                ),
+            )
+
+        val result = paymentController.payAmountApply(items)
+
+        assertThat(result).isEqualTo(0)
+    }
+}
