@@ -38,6 +38,5 @@ class ScreeningMovies(
         return screeningMovies
     }
 
-    fun containsMovieTitle(movieTitle: MovieTitle): Boolean =
-        ScreeningMovies.any { it.movie.title == movieTitle }
+    fun containsMovieTitle(movieTitle: MovieTitle): Boolean = ScreeningMovies.any { it.movie.title == movieTitle }
 }

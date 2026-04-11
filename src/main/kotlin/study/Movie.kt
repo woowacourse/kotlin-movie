@@ -1,12 +1,12 @@
-//package study
+// package study
 //
-//import java.time.Duration
+// import java.time.Duration
 //
-//class Movie(
+// class Movie(
 //    val title: String,
 //    val runningTime: Duration,
 //    val schedule: List<Schedule>
-//) {
+// ) {
 //    constructor(title:String,runningTime: Int,schedule: List<Schedule>):this{
 //        title,
 //        Duration.ofMinutes(runningTime),
@@ -17,4 +17,4 @@
 //    }
 //
 //    private fun b
-//}
+// }

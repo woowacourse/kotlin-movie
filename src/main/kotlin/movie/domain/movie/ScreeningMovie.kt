@@ -44,6 +44,5 @@ class ScreeningMovie(
 
     fun isReserved(seatNumber: SeatNumber) = ScreeningMovie.contains(seatNumber)
 
-    fun isAbleReservation(seatNumbers: List<SeatNumber>): Boolean =
-        seatNumbers.any { ScreeningMovie.contains(it) }
+    fun isAbleReservation(seatNumbers: List<SeatNumber>): Boolean = seatNumbers.any { ScreeningMovie.contains(it) }
 }

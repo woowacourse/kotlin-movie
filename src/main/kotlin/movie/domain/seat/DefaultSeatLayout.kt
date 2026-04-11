@@ -20,12 +20,14 @@ class DefaultSeatLayout : SeatLayout {
                             row = Row(row),
                             col = Column(col),
                         ),
-                    rank = if (row in 'A'..'B')
-                        BRank()
-                    else if (row in 'C'..'D')
-                        SRank()
-                    else
-                        ARank(),
+                    rank =
+                        if (row in 'A'..'B') {
+                            BRank()
+                        } else if (row in 'C'..'D') {
+                            SRank()
+                        } else {
+                            ARank()
+                        },
                 )
             }
         }

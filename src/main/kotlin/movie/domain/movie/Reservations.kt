@@ -10,7 +10,6 @@ class Reservations(
 
     fun getReservations() = reservations.toList()
 
-
     fun calculateTotalPrice(): Price =
         reservations.fold(Price(0)) { total, reservation ->
             total.sumPrice(reservation.getTotalPrice())
@@ -36,8 +35,8 @@ class Reservations(
         reservations.any {
             val srcMovieTime = it.screeningMovie.movieTime
             srcMovieTime.date == movieTime.date &&
-                    srcMovieTime.startTime in movieTime.startTime..movieTime.endTime &&
-                    srcMovieTime.endTime in movieTime.startTime..movieTime.endTime
+                srcMovieTime.startTime in movieTime.startTime..movieTime.endTime &&
+                srcMovieTime.endTime in movieTime.startTime..movieTime.endTime
         }
 
     fun reset() {

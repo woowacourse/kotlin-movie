@@ -7,8 +7,8 @@ import movie.domain.seat.number.SeatNumber
 class Ticket(
     private val reservations: Reservations = Reservations(),
 ) {
-    fun calculateDiscountedTotalPrice(discountPolicy: DiscountPolicy): Price =
-        reservations.calculateDiscountedTotalPrice(discountPolicy)
+    fun calculateDiscountedTotalPrice(discountPolicy: DiscountPolicy): Price = reservations.calculateDiscountedTotalPrice(discountPolicy)
+
     fun getReservations(): List<Reservation> = reservations.getReservations()
 
     fun isDupTime(movieTime: MovieTime): Boolean = reservations.isDupTime(movieTime = movieTime)

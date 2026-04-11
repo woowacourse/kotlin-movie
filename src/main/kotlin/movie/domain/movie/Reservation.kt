@@ -8,15 +8,11 @@ class Reservation(
     val screeningMovie: ScreeningMovie,
     val seatNumbers: List<SeatNumber>,
 ) {
-
-    fun calculateDiscountedPrice(
-        discountPolicy: DiscountPolicy
-    ): Price {
-        return discountPolicy.calculateDiscount(
+    fun calculateDiscountedPrice(discountPolicy: DiscountPolicy): Price =
+        discountPolicy.calculateDiscount(
             totalPrice = getTotalPrice(),
             movieTime = screeningMovie.movieTime,
         )
-    }
 
     fun getTotalPrice(): Price = screeningMovie.calculatePrice(targetSeatNumbers = seatNumbers)
 }

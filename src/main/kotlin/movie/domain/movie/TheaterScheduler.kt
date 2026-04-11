@@ -1,6 +1,5 @@
 package movie.domain.movie
 
-import jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.uuid.ExperimentalUuidApi
@@ -10,22 +9,23 @@ class TheaterScheduler(
     private val theaters: Theaters,
     private val screeningMovies: ScreeningMovies = ScreeningMovies(),
 ) {
-
     fun addTheater(theater: Theater) {
-        val newTheater = createTheater(
-            openTime = theater.openTime,
-            closeTime = theater.closeTime,
-        )
+        val newTheater =
+            createTheater(
+                openTime = theater.openTime,
+                closeTime = theater.closeTime,
+            )
         theaters.addTheater(newTheater)
     }
 
     fun createTheater(
         openTime: LocalTime,
-        closeTime: LocalTime
-    ): Theater = Theater(
-        openTime = openTime,
-        closeTime = closeTime
-    )
+        closeTime: LocalTime,
+    ): Theater =
+        Theater(
+            openTime = openTime,
+            closeTime = closeTime,
+        )
 
     fun addMovie(
         theater: Theater,
@@ -35,8 +35,8 @@ class TheaterScheduler(
         require(
             !checkDuplicateTime(
                 theater = theater,
-                movieTime = movieTime
-            )
+                movieTime = movieTime,
+            ),
         ) { throw IllegalArgumentException("시간 중복으로 영화를 추가할 수 없습니다.") }
 
         val newMovie =
@@ -69,8 +69,7 @@ class TheaterScheduler(
             movieTime = movieTime,
         )
 
-    fun containsMovieTitle(movieTitle: MovieTitle): Boolean =
-        screeningMovies.containsMovieTitle(movieTitle)
+    fun containsMovieTitle(movieTitle: MovieTitle): Boolean = screeningMovies.containsMovieTitle(movieTitle)
 
     fun getMovies(
         title: MovieTitle,

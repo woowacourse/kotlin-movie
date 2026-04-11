@@ -2,34 +2,24 @@ package movie.controller
 
 import movie.MovieFixtures
 import movie.domain.Point
-import movie.domain.Price
-import movie.domain.discount.DiscountPolicy
-import movie.domain.movie.Movie
-import movie.domain.movie.MovieTime
 import movie.domain.movie.MovieTitle
 import movie.domain.movie.ScreeningMovie
-import movie.domain.movie.ScreeningMovies
-import movie.domain.movie.Theater
-import movie.domain.movie.TheaterScheduler
-import movie.domain.movie.Theaters
 import movie.domain.movie.Ticket
 import movie.domain.payment.Card
 import movie.domain.payment.Cash
-import movie.domain.payment.Payment
 import movie.domain.payment.PaymentMethod
-import movie.domain.point.PointPolicy
 import movie.domain.seat.number.SeatNumber
 import movie.view.InputParser
 import movie.view.InputValidator
 import movie.view.InputView
 import movie.view.OutputView
 import java.time.LocalDate
-import java.time.LocalTime
 import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieController {
     val movieFixtures = MovieFixtures()
+
     fun run() {
         val isStart = getReservationStart()
 
@@ -44,10 +34,11 @@ class MovieController {
             val screeningMovie = getScreeningMovie(movieTimes, ticket)
             OutputView.printSeats(screeningMovie = screeningMovie)
             val selectedSeatNumbers = getSeatNumbers(screeningMovie = screeningMovie)
-            val reservation = ticket.addReservation(
-                screeningMovie = screeningMovie,
-                seatNumbers = selectedSeatNumbers
-            )
+            val reservation =
+                ticket.addReservation(
+                    screeningMovie = screeningMovie,
+                    seatNumbers = selectedSeatNumbers,
+                )
             OutputView.printReservationAddMessage(reservation = reservation)
             require(getContinueReservation()) { break }
         }
@@ -138,7 +129,7 @@ class MovieController {
 
             require(!screeningMovie.isAbleReservation(seatNumbers)) {
                 throw IllegalArgumentException(
-                    "이미 예약된 좌석입니다."
+                    "이미 예약된 좌석입니다.",
                 )
             }
 

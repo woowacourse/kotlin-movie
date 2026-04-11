@@ -5,9 +5,7 @@ class Theaters(
 ) {
     private val theaters = theaters.toMutableList()
 
-    fun addTheater(
-        newTheater: Theater
-    ) {
+    fun addTheater(newTheater: Theater) {
         theaters.add(newTheater)
     }
 }
