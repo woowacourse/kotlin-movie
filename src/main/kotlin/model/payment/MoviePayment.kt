@@ -1,10 +1,10 @@
 package model.payment
 
-import model.MovieReservationResult
+import model.schedule.MovieReservationGroup
 import java.time.LocalTime
 
 class MoviePayment(
-    val reservations: List<MovieReservationResult.Success>,
+    val reservations: MovieReservationGroup,
     val totalPrice: Money =
         Money(
             reservations.sumOf {
@@ -26,7 +26,7 @@ class MoviePayment(
     fun discountMovieDay() {
         reservations.forEach { reservation ->
             for (day in listOf(10, 20, 30)) {
-                if (reservation.screenTime.start.isSameDay(day)) {
+                if (reservation.startTime.isSameDay(day)) {
                     currentPrice -= reservation.seat.grade.price applyRate 0.1
                 }
             }
@@ -35,7 +35,7 @@ class MoviePayment(
 
     fun discountTime() {
         reservations.forEach { reservation ->
-            val time = reservation.screenTime.start.toLocalTime()
+            val time = reservation.startTime.toLocalTime()
             if (!time.isAfter(LocalTime.of(11, 0)) ||
                 !time.isBefore(LocalTime.of(20, 0))
             ) {

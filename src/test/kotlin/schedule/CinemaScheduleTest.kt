@@ -87,7 +87,7 @@ class CinemaScheduleTest {
             .assertThat(
                 CinemaSchedule(
                     screenSchedules = schedules,
-                ).getMovieSchedule(MovieName("혼자사는남자", id = "1")),
+                )[MovieName("혼자사는남자", id = "1")],
             ).isEqualTo(expected)
     }
 

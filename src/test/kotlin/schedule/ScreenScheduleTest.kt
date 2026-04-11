@@ -160,7 +160,7 @@ class ScreenScheduleTest {
                                 seatGroup = SeatGroup(emptyList()),
                             ),
                         ),
-                ).getMovieSchedule(MovieName("혼자사는남자", id = idOne)),
+                )[MovieName("혼자사는남자", id = idOne)],
             ).isEqualTo(
                 MovieSchedule(
                     listOf(

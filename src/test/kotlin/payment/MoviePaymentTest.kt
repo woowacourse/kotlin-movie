@@ -10,9 +10,11 @@ import model.payment.Money
 import model.payment.MoviePayment
 import model.payment.PayType
 import model.payment.Point
+import model.schedule.MovieReservationGroup
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
+import model.seat.SeatPosition
 import model.seat.SeatRow
 import model.seat.SeatState
 import org.assertj.core.api.Assertions
@@ -38,28 +40,28 @@ class MoviePaymentTest {
             .assertThat(
                 MoviePayment(
                     reservations =
-                        listOf(
-                            MovieReservationResult.Success(
-                                movie = movieOne,
-                                screenTime = screenTime,
-                                seat =
-                                    Seat(
-                                        row = SeatRow("A"),
-                                        column = SeatColumn(1),
-                                        grade = SeatGrade.A,
-                                        state = SeatState.RESERVED,
-                                    ),
-                            ),
-                            MovieReservationResult.Success(
-                                movie = movieOne,
-                                screenTime = screenTime,
-                                seat =
-                                    Seat(
-                                        row = SeatRow("A"),
-                                        column = SeatColumn(2),
-                                        grade = SeatGrade.S,
-                                        state = SeatState.RESERVED,
-                                    ),
+                        MovieReservationGroup(
+                            setOf(
+                                MovieReservationResult(
+                                    movie = movieOne,
+                                    startTime = screenTime.start,
+                                    seat =
+                                        Seat(
+                                            position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                            grade = SeatGrade.A,
+                                        ),
+                                    state = SeatState.RESERVED,
+                                ),
+                                MovieReservationResult(
+                                    movie = movieOne,
+                                    startTime = screenTime.start,
+                                    seat =
+                                        Seat(
+                                            position = SeatPosition(SeatRow("A"), SeatColumn(2)),
+                                            grade = SeatGrade.S,
+                                        ),
+                                    state = SeatState.RESERVED,
+                                ),
                             ),
                         ),
                 ).totalPrice,
@@ -77,28 +79,28 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
-                        ),
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(2),
-                                    grade = SeatGrade.S,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(2)),
+                                        grade = SeatGrade.S,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -120,17 +122,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -152,17 +155,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -184,17 +188,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -216,17 +221,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -248,17 +254,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -280,17 +287,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )
@@ -312,17 +320,18 @@ class MoviePaymentTest {
         val moviePayment =
             MoviePayment(
                 reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
+                    MovieReservationGroup(
+                        setOf(
+                            MovieReservationResult(
+                                movie = movieOne,
+                                startTime = screenTime.start,
+                                seat =
+                                    Seat(
+                                        position = SeatPosition(SeatRow("A"), SeatColumn(1)),
+                                        grade = SeatGrade.A,
+                                    ),
+                                state = SeatState.RESERVED,
+                            ),
                         ),
                     ),
             )

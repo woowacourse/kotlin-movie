@@ -4,39 +4,31 @@ import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
 import model.seat.SeatGroup
+import model.seat.SeatPosition
 import model.seat.SeatRow
-import model.seat.SeatState
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class SeatGroupTest {
+    private val seatPositionA1 = SeatPosition(row = SeatRow("A"), column = SeatColumn(1))
+
     @Test
     fun `존재하는 좌석을 요청하면 해당 좌석을 반환한다`() {
         val seats =
             listOf(
                 Seat(
-                    row = SeatRow("A"),
-                    column = SeatColumn(1),
+                    position = seatPositionA1,
                     grade = SeatGrade.A,
-                    state = SeatState.PURCHASED,
                 ),
             )
-        assertThat(
-            SeatGroup(
-                seats = seats,
-            ).getSeat(
-                row = SeatRow("A"),
-                column = SeatColumn(1),
-            ),
-        ).isEqualTo(
-            Seat(
-                row = SeatRow("A"),
-                column = SeatColumn(1),
-                grade = SeatGrade.A,
-                state = SeatState.PURCHASED,
-            ),
-        )
+        assertThat(SeatGroup(seats = seats)[seatPositionA1])
+            .isEqualTo(
+                Seat(
+                    position = seatPositionA1,
+                    grade = SeatGrade.A,
+                ),
+            )
     }
 
     @Test
@@ -44,16 +36,12 @@ class SeatGroupTest {
         val seats =
             listOf(
                 Seat(
-                    row = SeatRow("A"),
-                    column = SeatColumn(1),
+                    position = seatPositionA1,
                     grade = SeatGrade.A,
-                    state = SeatState.PURCHASED,
                 ),
                 Seat(
-                    row = SeatRow("A"),
-                    column = SeatColumn(1),
+                    position = seatPositionA1,
                     grade = SeatGrade.A,
-                    state = SeatState.PURCHASED,
                 ),
             )
         assertThatThrownBy {

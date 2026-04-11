@@ -1,18 +1,19 @@
-import model.CinemaKiosk
 import model.CinemaTime
-import model.MovieReservationResult
 import model.movie.MovieName
 import model.payment.MoviePayment
 import model.payment.PayType
 import model.payment.Point
+import model.schedule.CinemaSchedule
 import model.schedule.MovieNameGroup
+import model.schedule.MovieReservationGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
+import model.seat.SeatPosition
 import view.InputView
 import view.OutputView
 
 class CinemaController(
-    val cinemaKiosk: CinemaKiosk,
+    val cinemaSchedule: CinemaSchedule,
 ) {
     val movieNames =
         MovieNameGroup(
@@ -22,7 +23,8 @@ class CinemaController(
             ),
         )
 
-    fun run() {
+    fun run(movieReservationGroup: MovieReservationGroup = MovieReservationGroup(emptySet())) {
+        var movieReservationGroup = movieReservationGroup
         if (startMovieReservation().not()) return
         do {
             val movieScheduleOne = getMovieSchedule()
@@ -31,25 +33,28 @@ class CinemaController(
             OutputView.showMovieSchedule(movieSchedule)
             val movieScreening = selectMovieScreening(movieSchedule)
             OutputView.showSeatGroup(movieScreening.seatGroup)
-            reserveSeats(movieScreening.movie.name, movieScreening.screenTime.start)
+            println("${movieScreening.screenTime.start}")
+            movieReservationGroup =
+                reserveSeats(
+                    movieScreening.movie.name,
+                    movieScreening.screenTime.start,
+                    cinemaSchedule = cinemaSchedule,
+                    movieReservationGroup,
+                )
         } while (inputContinue())
-        OutputView.showShoppingCart(cinemaKiosk.reserveResults)
+        OutputView.showMovieReservationResult("장바구니", movieReservationGroup)
         val point = Point(inputPoint())
         val payType = inputPayType()
         val payment =
             MoviePayment(
-                reservations = cinemaKiosk.reserveResults,
+                reservations = movieReservationGroup,
             )
         payment.discount()
         payment.applyPoint(point)
         OutputView.printTotalPrice(payment.pay(payType))
         val confirm = inputConfirmPayment()
         if (confirm) {
-            OutputView.totalReservation(
-                successResults = cinemaKiosk.reserveResults,
-                price = payment.currentPrice,
-                point = point,
-            )
+            OutputView.showMovieReservationResult("예매 완료\n내역:", movieReservationGroup)
         }
         OutputView.end()
     }
@@ -69,7 +74,7 @@ class CinemaController(
         while (true) {
             val movieName = movieNames.find(InputView.inputMovieName())
             if (movieName != null) {
-                val movieSchedule = cinemaKiosk.cinemaSchedule.getMovieSchedule(movieName)
+                val movieSchedule = cinemaSchedule[movieName]
                 if (movieSchedule.isEmpty().not()) return movieSchedule
             }
         }
@@ -98,33 +103,32 @@ class CinemaController(
     private fun reserveSeats(
         movieName: MovieName,
         startTime: CinemaTime,
-    ) {
+        cinemaSchedule: CinemaSchedule,
+        initialMovieReservationGroup: MovieReservationGroup,
+    ): MovieReservationGroup {
         while (true) {
             try {
                 val positions = InputView.selectSeats()
-                val successPositions = mutableListOf<MovieReservationResult.Success>()
-
-                for (position in positions) {
-                    val result =
-                        cinemaKiosk.reserve(
+                val finalMovieReservationGroup =
+                    positions.fold(initialMovieReservationGroup) { group, (row, column) ->
+                        group.reserve(
+                            cinemaSchedule = cinemaSchedule,
                             movieName = movieName,
                             startTime = startTime,
-                            seatRow = position.first,
-                            seatColumn = position.second,
+                            seatPosition =
+                                SeatPosition(
+                                    row = row,
+                                    column = column,
+                                ),
                         )
-                    when (result) {
-                        is MovieReservationResult.Success -> successPositions.add(result)
-                        is MovieReservationResult.Failed -> {
-                            val successPositions = successPositions.map { it.seat.row to it.seat.column }
-                            cinemaKiosk.cancelReservations(movieName, startTime, successPositions)
-                            throw IllegalArgumentException("예약에 실패했습니다.")
-                        }
                     }
-                }
-                OutputView.showReservationInfo(successPositions)
-                return
-            } catch (_: Exception) {
-                println("문제가 발생했습니다.")
+                OutputView.showMovieReservationResult(
+                    initialMessage = "장바구니에 추가됨",
+                    reservationGroup = finalMovieReservationGroup - initialMovieReservationGroup,
+                )
+                return finalMovieReservationGroup
+            } catch (e: Exception) {
+                println("예약 중 문제가 발생했습니다 ${e.message}")
             }
         }
     }

@@ -9,11 +9,8 @@ class SeatGroup(
         require(seats.distinct().size == seats.size) { "중복된 좌석은 존재할 수 없습니다." }
     }
 
-    fun getSeat(
-        row: SeatRow,
-        column: SeatColumn,
-    ): Seat {
-        val seat = seats.first { it.isSameSeat(row, column) }
+    operator fun get(seatPosition: SeatPosition): Seat {
+        val seat = seats.first { it.isEqual(seatPosition) }
         return seat
     }
 

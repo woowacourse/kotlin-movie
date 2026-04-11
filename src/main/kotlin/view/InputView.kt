@@ -42,7 +42,7 @@ object InputView {
         require(input.all { it.isDigit() }) { "숫자만 가능합니다" }
         val index = input.toInt() - 1
         require(index in (0..<movieSchedule.size)) { "올바르지 않은 번호입니다." }
-        return movieSchedule[index]
+        return movieSchedule.toList().sortedBy { it.screenTime.start }[index]
     }
 
     fun selectSeats(): List<Pair<SeatRow, SeatColumn>> {

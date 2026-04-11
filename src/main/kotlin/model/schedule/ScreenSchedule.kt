@@ -34,5 +34,5 @@ class ScreenSchedule(
 
     override fun hashCode(): Int = screenId.hashCode()
 
-    fun getMovieSchedule(movie: MovieName): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie.isEqualName(movie) })
+    operator fun get(movie: MovieName): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie.isEqualName(movie) })
 }

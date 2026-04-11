@@ -5,11 +5,11 @@ import model.CinemaTime
 class MovieSchedule(
     movieScreenings: List<MovieScreening>,
 ) : Iterable<MovieScreening> {
-    private val scheduledScreens = movieScreenings.toList()
+    private val movieScreenings = movieScreenings.toList()
 
-    operator fun get(index: Int): MovieScreening = scheduledScreens[index]
+    operator fun get(startTime: CinemaTime): MovieScreening = movieScreenings.first { it.screenTime.start.isEqual(startTime) }
 
-    val size: Int = scheduledScreens.size
+    val size: Int = movieScreenings.size
 
     init {
         require(movieScreenings.distinctBy { it.movie }.size <= 1) {
@@ -19,23 +19,23 @@ class MovieSchedule(
 
     override fun equals(other: Any?): Boolean {
         if (other is MovieSchedule) {
-            return scheduledScreens == other.scheduledScreens
+            return movieScreenings == other.movieScreenings
         }
         return false
     }
 
+    fun toList(): List<MovieScreening> = movieScreenings
+
     fun getMovieSchedule(time: CinemaTime): MovieSchedule =
         MovieSchedule(
-            scheduledScreens.filter { screen ->
+            movieScreenings.filter { screen ->
                 screen.screenTime.start.isEqualDate(time)
             },
         )
 
-    fun getMovieScreening(time: CinemaTime): MovieScreening = scheduledScreens.first { it.screenTime.start.isEqual(time) }
+    fun isEmpty(): Boolean = movieScreenings.isEmpty()
 
-    fun isEmpty(): Boolean = scheduledScreens.isEmpty()
+    override fun hashCode(): Int = movieScreenings.hashCode()
 
-    override fun hashCode(): Int = scheduledScreens.hashCode()
-
-    override fun iterator(): Iterator<MovieScreening> = scheduledScreens.iterator()
+    override fun iterator(): Iterator<MovieScreening> = movieScreenings.iterator()
 }

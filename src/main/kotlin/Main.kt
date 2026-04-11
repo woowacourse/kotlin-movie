@@ -1,4 +1,3 @@
-import model.CinemaKiosk
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
@@ -11,8 +10,8 @@ import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
 import model.seat.SeatGroup
+import model.seat.SeatPosition
 import model.seat.SeatRow
-import model.seat.SeatState
 import java.time.LocalDateTime
 
 fun main() {
@@ -38,35 +37,7 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 10, 0)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
                                 ),
-                            seatGroup =
-                                SeatGroup(
-                                    listOf(
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                    ),
-                                ),
+                            seatGroup = createSeatGroup(),
                         ),
                         MovieScreening(
                             movie =
@@ -79,35 +50,7 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 9, 7, 0)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 9, 8, 0)),
                                 ),
-                            seatGroup =
-                                SeatGroup(
-                                    listOf(
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                    ),
-                                ),
+                            seatGroup = createSeatGroup(),
                         ),
                         MovieScreening(
                             movie =
@@ -120,35 +63,7 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 10)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 10)),
                                 ),
-                            seatGroup =
-                                SeatGroup(
-                                    listOf(
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                    ),
-                                ),
+                            seatGroup = createSeatGroup(),
                         ),
                         MovieScreening(
                             movie =
@@ -161,35 +76,7 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 30)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 30)),
                                 ),
-                            seatGroup =
-                                SeatGroup(
-                                    listOf(
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                    ),
-                                ),
+                            seatGroup = createSeatGroup(),
                         ),
                     ),
             ),
@@ -213,35 +100,7 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 14, 10)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 15, 10)),
                                 ),
-                            seatGroup =
-                                SeatGroup(
-                                    listOf(
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                    ),
-                                ),
+                            seatGroup = createSeatGroup(),
                         ),
                         MovieScreening(
                             movie =
@@ -254,35 +113,7 @@ fun main() {
                                     start = CinemaTime(LocalDateTime.of(2026, 4, 8, 15, 20)),
                                     end = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 20)),
                                 ),
-                            seatGroup =
-                                SeatGroup(
-                                    listOf(
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("B"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(2),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.B,
-                                        ),
-                                        Seat(
-                                            row = SeatRow("A"),
-                                            column = SeatColumn(1),
-                                            state = SeatState.AVAILABLE,
-                                            grade = SeatGrade.S,
-                                        ),
-                                    ),
-                                ),
+                            seatGroup = createSeatGroup(),
                         ),
                     ),
             ),
@@ -292,5 +123,39 @@ fun main() {
         CinemaSchedule(
             screenSchedules = screenSchedules,
         )
-    CinemaController(cinemaKiosk = CinemaKiosk(cinemaSchedule)).run()
+    CinemaController(cinemaSchedule = cinemaSchedule).run()
 }
+
+private fun createSeatGroup(
+    seats: List<Seat> =
+        listOf(
+            Seat(
+                SeatPosition(
+                    row = SeatRow("B"),
+                    column = SeatColumn(2),
+                ),
+                grade = SeatGrade.S,
+            ),
+            Seat(
+                SeatPosition(
+                    row = SeatRow("B"),
+                    column = SeatColumn(1),
+                ),
+                grade = SeatGrade.B,
+            ),
+            Seat(
+                SeatPosition(
+                    row = SeatRow("A"),
+                    column = SeatColumn(2),
+                ),
+                grade = SeatGrade.B,
+            ),
+            Seat(
+                SeatPosition(
+                    row = SeatRow("A"),
+                    column = SeatColumn(1),
+                ),
+                grade = SeatGrade.S,
+            ),
+        ),
+): SeatGroup = SeatGroup(seats)
