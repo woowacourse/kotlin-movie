@@ -1,8 +1,8 @@
+import controller.BookingController
 import controller.CartController
 import controller.PaymentController
 import controller.ReservationController
 import domain.Id
-import domain.cart.Cart
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.MovieTime
@@ -10,7 +10,6 @@ import domain.cinema.Movies
 import domain.cinema.Screen
 import domain.cinema.Showing
 import domain.cinema.Showings
-import domain.purchase.Payment
 import domain.reservation.ReservationInfos
 import domain.seat.Seat
 import domain.seat.SeatCoordinate
@@ -18,8 +17,6 @@ import domain.seat.SeatGrade
 import domain.seat.SeatState
 import domain.seat.Seats
 import domain.user.User
-import view.InputView
-import view.OutputView
 
 fun main() {
     val movies = Movies(
@@ -78,34 +75,12 @@ fun main() {
         showings,
         ReservationInfos(emptyList()),
     )
-
-    var cart = Cart(ReservationInfos(emptyList()))
     val user = User(Id(1))
-    val cartController = CartController()
 
-    var answer = InputView.startTicketing()
-    while (answer.isYes()) {
-        val reservationController = ReservationController(
-            movieTheater = movieTheater,
-        )
-        val info = reservationController.run()
-
-        cart = cartController.run(cart, info)
-
-        answer = InputView.continueTicketing()
-    }
-
-    val paymentController = PaymentController(
-        cart = cart,
+    BookingController(
+        reservationController = ReservationController(movieTheater),
+        cartController = CartController(),
+        paymentController = PaymentController(),
         user = user,
-    )
-    val payment = Payment(cart, user)
-    val total = paymentController.run(payment)
-    if (!InputView.readPurchaseConfirm().isYes()) return
-
-    OutputView.printTotal(
-        cart = cart,
-        totalPrice = total.totalPrice,
-        usedPoint = total.usedPoint,
-    )
+    ).run()
 }

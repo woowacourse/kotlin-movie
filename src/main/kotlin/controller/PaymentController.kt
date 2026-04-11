@@ -1,15 +1,13 @@
 package controller
 
-import domain.cart.Cart
 import domain.purchase.Payment
 import domain.purchase.PaymentMethod
 import domain.purchase.PaymentResult
 import domain.user.Point
-import domain.user.User
 import view.InputView
 import view.OutputView
 
-class PaymentController(val cart: Cart, val user: User) {
+class PaymentController {
     fun run(payment: Payment): PaymentResult {
         val point = Point(InputView.readPoint().toInt())
         val method = PaymentMethod.from(getPaymentMethod())

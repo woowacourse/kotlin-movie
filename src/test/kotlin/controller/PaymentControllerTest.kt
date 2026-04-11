@@ -13,10 +13,7 @@ import org.junit.jupiter.api.assertThrows
 
 class PaymentControllerTest {
 
-    val controller = PaymentController(
-        cart = TestFixtureData.cart,
-        user = TestFixtureData.users.first(),
-    )
+    val controller = PaymentController()
 
     @Test
     fun `좌석 별로 무비데이 할인(10퍼센트)과 시간 할인(2,000원)이 적용된다`() {
