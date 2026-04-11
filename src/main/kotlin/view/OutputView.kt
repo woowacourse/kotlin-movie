@@ -64,8 +64,8 @@ object OutputView {
     }
 
     fun printTotalPrice(price: Money) {
-        println(Message.TOTAL_PRICE_TITLE)
-        print(Message.TOTAL_PRICE)
+        println("가격 계산")
+        print("최종 결제 금액: ")
         println("${"%,d".format(price.toInt())}원")
     }
 

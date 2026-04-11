@@ -1,6 +1,7 @@
 package view
 
 import model.CinemaTime
+import model.movie.MovieName
 import model.payment.PayType
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
@@ -17,13 +18,13 @@ object InputView {
         return input == "Y"
     }
 
-    fun inputMovieName(): String {
-        println(Message.INPUT_MOVIE_NAME)
-        return readln()
+    fun inputMovieName(): MovieName {
+        println("예매할 영화 제목을 입력하세요:")
+        return MovieName(readln())
     }
 
     fun inputDate(): CinemaTime {
-        println(Message.INPUT_DATE)
+        println("날짜를 입력하세요 (YYYY-MM-DD):")
         val input = readln()
         val date =
             runCatching {
@@ -42,7 +43,7 @@ object InputView {
         require(input.all { it.isDigit() }) { "숫자만 가능합니다" }
         val index = input.toInt() - 1
         require(index in (0..<movieSchedule.size)) { "올바르지 않은 번호입니다." }
-        return movieSchedule.toList().sortedBy { it.screenTime.start }[index]
+        return movieSchedule.sortedBy { it.screenTime.start }[index]
     }
 
     fun selectSeats(): List<Pair<SeatRow, SeatColumn>> {
@@ -54,21 +55,21 @@ object InputView {
     }
 
     fun inputContinue(): Boolean {
-        println(Message.INPUT_CONTINUE)
+        println("다른 영화를 추가하시겠습니까? (Y/N)")
         val input = readln()
         InputValidator.validateYesOrNo(input)
         return input == "Y"
     }
 
     fun inputPoint(): Int {
-        println(Message.INPUT_POINT)
+        println("사용할 포인트를 입력하세요 (없으면 0):")
         val point = readln()
         InputValidator.validateNumber(point)
         return point.toInt()
     }
 
     fun inputPaymentMethod(): Int {
-        println(Message.SELECT_PAYMENT_METHOD)
+        println("결제 수단을 선택하세요:")
         PayType.entries.forEach { payType ->
             println(displayPayType(payType))
         }
@@ -78,7 +79,7 @@ object InputView {
     }
 
     fun inputConfirmPayment(): Boolean {
-        println(Message.INPUT_CONFIRM_PAYMENT)
+        println("위 금액으로 결제하시겠습니까? (Y/N)")
         val input = readln()
         InputValidator.validateYesOrNo(input)
         return input == "Y"

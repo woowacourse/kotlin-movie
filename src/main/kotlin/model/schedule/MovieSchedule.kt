@@ -7,7 +7,9 @@ class MovieSchedule(
 ) : Iterable<MovieScreening> {
     private val movieScreenings = movieScreenings.toList()
 
-    operator fun get(startTime: CinemaTime): MovieScreening = movieScreenings.first { it.screenTime.start.isEqual(startTime) }
+    operator fun get(startTime: CinemaTime): MovieScreening =
+        movieScreenings.firstOrNull { it.screenTime.start.isEqual(startTime) }
+            ?: throw IllegalArgumentException("해당 시간에 존재하는 영화가 없습니다.")
 
     val size: Int = movieScreenings.size
 
@@ -24,18 +26,16 @@ class MovieSchedule(
         return false
     }
 
-    fun toList(): List<MovieScreening> = movieScreenings
+    override fun hashCode(): Int = movieScreenings.hashCode()
+
+    override fun iterator(): Iterator<MovieScreening> = movieScreenings.iterator()
 
     fun getMovieSchedule(time: CinemaTime): MovieSchedule =
         MovieSchedule(
             movieScreenings.filter { screen ->
-                screen.screenTime.start.isEqualDate(time)
+                screen.screenTime.isStartDate(time)
             },
         )
 
     fun isEmpty(): Boolean = movieScreenings.isEmpty()
-
-    override fun hashCode(): Int = movieScreenings.hashCode()
-
-    override fun iterator(): Iterator<MovieScreening> = movieScreenings.iterator()
 }

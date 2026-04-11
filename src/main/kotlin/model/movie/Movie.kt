@@ -8,11 +8,11 @@ class Movie(
 ) {
     fun isSameDuration(cinemaTimeRange: CinemaTimeRange): Boolean = runningTime.isSameDuration(cinemaTimeRange)
 
-    fun isEqualName(movieName: MovieName): Boolean = name == movieName
+    fun isEqual(movieName: MovieName): Boolean = name == movieName
 
     override fun equals(other: Any?): Boolean {
         if (other is Movie) {
-            return this.name == other.name
+            return this.name == other.name && this.runningTime == other.runningTime
         }
         return false
     }

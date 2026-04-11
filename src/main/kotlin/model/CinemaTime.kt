@@ -16,8 +16,6 @@ value class CinemaTime(
 
     fun isSameDay(dayOfMonth: Int): Boolean = time.dayOfMonth == dayOfMonth
 
-    fun isEqualDate(date: CinemaTime): Boolean = time.toLocalDate().isEqual(date.time.toLocalDate())
-
     fun toLocalTime() = time.toLocalTime()
 
     fun toLocalDate() = time.toLocalDate()

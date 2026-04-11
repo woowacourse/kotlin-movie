@@ -1,8 +1,8 @@
 package model.movie
 
-data class MovieName(
-    val name: String,
-    private val id: String,
+@JvmInline
+value class MovieName(
+    private val name: String,
 ) {
     override fun toString(): String = name
 }

@@ -10,22 +10,14 @@ import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
 import model.seat.SeatGroup
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
 class CinemaScheduleTest {
-    private val uuidOne = "1"
-    private val uuidTwo = "2"
-
     @Test
-    fun `모든 상영관의 영화 상영 일정을 반환한다`() {
-        val movie =
-            Movie(
-                name = MovieName("혼자사는남자", id = uuidOne),
-                runningTime = RunningTime(minute = 60),
-            )
-
+    fun `상영관들의 모든 영화 상영 일정에 대해 제목에 해당하는 영화 목록을 반환한다`() {
         val cinemaTimeRange =
             CinemaTimeRange(
                 CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
@@ -33,90 +25,63 @@ class CinemaScheduleTest {
             )
 
         val movieScreening =
-            listOf(
-                MovieScreening(
-                    movie = movie,
-                    screenTime =
-                        CinemaTimeRange(
-                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
-                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
-                        ),
-                    seatGroup = SeatGroup(emptyList()),
-                ),
+            MovieScreening(
+                movie =
+                    Movie(
+                        name = MovieName("혼자사는남자"),
+                        runningTime = RunningTime(60),
+                    ),
+                screenTime =
+                    CinemaTimeRange(
+                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
+                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
+                    ),
+                seatGroup = SeatGroup(emptyList()),
             )
 
-        val expectedMovieScreening =
-            listOf(
-                MovieScreening(
-                    movie = movie,
-                    screenTime =
-                        CinemaTimeRange(
-                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
-                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
+        assertThat(
+            CinemaSchedule(
+                screenSchedules =
+                    listOf(
+                        ScreenSchedule(
+                            screenId = "1",
+                            servicePeriod = cinemaTimeRange,
+                            movieScreenings = listOf(movieScreening),
                         ),
-                    seatGroup = SeatGroup(emptyList()),
-                ),
-                MovieScreening(
-                    movie = movie,
-                    screenTime =
-                        CinemaTimeRange(
-                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 16, 0)),
-                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 17, 0)),
+                        ScreenSchedule(
+                            screenId = "2",
+                            servicePeriod = cinemaTimeRange,
+                            movieScreenings = listOf(movieScreening),
                         ),
-                    seatGroup = SeatGroup(emptyList()),
-                ),
-            )
-
-        val schedules =
-            listOf(
-                ScreenSchedule(
-                    screenId = uuidOne,
-                    servicePeriod = cinemaTimeRange,
-                    movieScreenings = movieScreening,
-                ),
-                ScreenSchedule(
-                    screenId = uuidTwo,
-                    servicePeriod = cinemaTimeRange,
-                    movieScreenings = movieScreening,
-                ),
-            )
-
-        val expected = MovieSchedule(movieScreenings = expectedMovieScreening)
-
-        Assertions
-            .assertThat(
-                CinemaSchedule(
-                    screenSchedules = schedules,
-                )[MovieName("혼자사는남자", id = "1")],
-            ).isEqualTo(expected)
+                    ),
+            )[MovieName("혼자사는남자")],
+        ).isEqualTo(MovieSchedule(listOf(movieScreening, movieScreening)))
     }
 
     @Test
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
-        Assertions
-            .assertThatThrownBy {
-                val cinemaTimeRange =
-                    CinemaTimeRange(
-                        CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
-                        CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
-                    )
+        val cinemaTimeRange =
+            CinemaTimeRange(
+                CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
+            )
 
-                val schedules =
+        assertThatThrownBy {
+            CinemaSchedule(
+                screenSchedules =
                     listOf(
                         ScreenSchedule(
-                            screenId = uuidOne,
+                            screenId = "1",
                             servicePeriod = cinemaTimeRange,
                             movieScreenings = emptyList(),
                         ),
                         ScreenSchedule(
-                            screenId = uuidOne,
+                            screenId = "1",
                             servicePeriod = cinemaTimeRange,
                             movieScreenings = emptyList(),
                         ),
-                    )
-                CinemaSchedule(
-                    screenSchedules = schedules,
-                )
-            }.isInstanceOf(IllegalArgumentException::class.java)
+                    ),
+            )
+        }.isInstanceOf(IllegalArgumentException::class.java)
     }
 }

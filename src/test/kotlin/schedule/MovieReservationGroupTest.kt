@@ -32,7 +32,7 @@ class MovieReservationGroupTest {
                         MovieReservationResult(
                             movie =
                                 Movie(
-                                    name = MovieName("자취하는남자", id = "1"),
+                                    name = MovieName("자취하는남자"),
                                     runningTime = RunningTime(60),
                                 ),
                             startTime =
@@ -73,18 +73,30 @@ class MovieReservationGroupTest {
                                             MovieScreening(
                                                 movie =
                                                     Movie(
-                                                        name = MovieName("자취하는남자", id = "1"),
+                                                        name = MovieName("자취하는남자"),
                                                         runningTime = RunningTime(60),
                                                     ),
                                                 screenTime =
                                                     CinemaTimeRange(
                                                         start =
                                                             CinemaTime(
-                                                                LocalDateTime.of(2026, 4, 10, 15, 30),
+                                                                LocalDateTime.of(
+                                                                    2026,
+                                                                    4,
+                                                                    10,
+                                                                    15,
+                                                                    30,
+                                                                ),
                                                             ),
                                                         end =
                                                             CinemaTime(
-                                                                LocalDateTime.of(2026, 4, 10, 16, 30),
+                                                                LocalDateTime.of(
+                                                                    2026,
+                                                                    4,
+                                                                    10,
+                                                                    16,
+                                                                    30,
+                                                                ),
                                                             ),
                                                     ),
                                                 seatGroup =
@@ -104,7 +116,7 @@ class MovieReservationGroupTest {
                                 ),
                             ),
                     ),
-                movieName = MovieName("자취하는남자", id = "1"),
+                movieName = MovieName("자취하는남자"),
                 startTime =
                     CinemaTime(
                         time = LocalDateTime.of(2026, 4, 10, 15, 30),
@@ -127,7 +139,7 @@ class MovieReservationGroupTest {
                         MovieReservationResult(
                             movie =
                                 Movie(
-                                    name = MovieName("자취하는남자", id = "1"),
+                                    name = MovieName("자취하는남자"),
                                     runningTime = RunningTime(60),
                                 ),
                             startTime =
@@ -168,18 +180,30 @@ class MovieReservationGroupTest {
                                             MovieScreening(
                                                 movie =
                                                     Movie(
-                                                        name = MovieName("자취하는남자", id = "1"),
+                                                        name = MovieName("자취하는남자"),
                                                         runningTime = RunningTime(60),
                                                     ),
                                                 screenTime =
                                                     CinemaTimeRange(
                                                         start =
                                                             CinemaTime(
-                                                                LocalDateTime.of(2026, 4, 10, 15, 30),
+                                                                LocalDateTime.of(
+                                                                    2026,
+                                                                    4,
+                                                                    10,
+                                                                    15,
+                                                                    30,
+                                                                ),
                                                             ),
                                                         end =
                                                             CinemaTime(
-                                                                LocalDateTime.of(2026, 4, 10, 16, 30),
+                                                                LocalDateTime.of(
+                                                                    2026,
+                                                                    4,
+                                                                    10,
+                                                                    16,
+                                                                    30,
+                                                                ),
                                                             ),
                                                     ),
                                                 seatGroup =
@@ -199,7 +223,7 @@ class MovieReservationGroupTest {
                                 ),
                             ),
                     ),
-                movieName = MovieName("자취하는남자", id = "1"),
+                movieName = MovieName("자취하는남자"),
                 startTime =
                     CinemaTime(
                         time = LocalDateTime.of(2026, 4, 10, 15, 30),
@@ -240,7 +264,7 @@ class MovieReservationGroupTest {
                                         MovieScreening(
                                             movie =
                                                 Movie(
-                                                    name = MovieName("자취하는남자", id = "1"),
+                                                    name = MovieName("자취하는남자"),
                                                     runningTime = RunningTime(60),
                                                 ),
                                             screenTime =
@@ -271,7 +295,7 @@ class MovieReservationGroupTest {
                             ),
                         ),
                 ),
-            movieName = MovieName("자취하는남자", id = "1"),
+            movieName = MovieName("자취하는남자"),
             startTime =
                 CinemaTime(
                     time = LocalDateTime.of(2026, 4, 10, 15, 30),
@@ -288,7 +312,7 @@ class MovieReservationGroupTest {
                         MovieReservationResult(
                             movie =
                                 Movie(
-                                    name = MovieName("자취하는남자", id = "1"),
+                                    name = MovieName("자취하는남자"),
                                     runningTime = RunningTime(60),
                                 ),
                             startTime =
@@ -307,5 +331,22 @@ class MovieReservationGroupTest {
                         ),
                     ),
             )
+    }
+
+    @Test
+    fun `예약 가능한 상태의 영화 예약 결과가 있으면 예외가 발생한다`() {
+        assertThatThrownBy {
+            MovieReservationGroup(
+                movieReservations =
+                    setOf(
+                        MovieReservationResult(
+                            movie = Movie(name = MovieName("혼자사는 남자"), runningTime = RunningTime(100)),
+                            startTime = CinemaTime(LocalDateTime.now()),
+                            seat = Seat(SeatPosition(SeatRow("A"), SeatColumn(1)), SeatGrade.A),
+                            state = SeatState.AVAILABLE,
+                        ),
+                    ),
+            )
+        }
     }
 }

@@ -24,7 +24,7 @@ import java.time.LocalDateTime
 class MoviePaymentTest {
     private val movieOne =
         Movie(
-            name = MovieName("혼자사는남자", id = "1"),
+            name = MovieName("혼자사는남자"),
             runningTime = RunningTime(60),
         )
 

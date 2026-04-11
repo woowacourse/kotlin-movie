@@ -29,7 +29,7 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -42,7 +42,7 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -55,7 +55,7 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -68,7 +68,7 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "F4 꽃보다 남자", id = "2"),
+                                    name = MovieName(name = "F4 꽃보다 남자"),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -92,7 +92,7 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "F4 꽃보다 남자", id = "2"),
+                                    name = MovieName(name = "F4 꽃보다 남자"),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =
@@ -105,7 +105,7 @@ fun main() {
                         MovieScreening(
                             movie =
                                 Movie(
-                                    name = MovieName(name = "혼자사는남자", id = "1"),
+                                    name = MovieName(name = "혼자사는남자"),
                                     runningTime = RunningTime(minute = 60),
                                 ),
                             screenTime =

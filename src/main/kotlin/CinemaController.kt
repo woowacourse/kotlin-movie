@@ -4,7 +4,6 @@ import model.payment.MoviePayment
 import model.payment.PayType
 import model.payment.Point
 import model.schedule.CinemaSchedule
-import model.schedule.MovieNameGroup
 import model.schedule.MovieReservationGroup
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
@@ -15,14 +14,6 @@ import view.OutputView
 class CinemaController(
     val cinemaSchedule: CinemaSchedule,
 ) {
-    val movieNames =
-        MovieNameGroup(
-            listOf(
-                MovieName("혼자사는남자", id = "1"),
-                MovieName("F4 꽃보다 남자", id = "2"),
-            ),
-        )
-
     fun run(movieReservationGroup: MovieReservationGroup = MovieReservationGroup(emptySet())) {
         var movieReservationGroup = movieReservationGroup
         if (startMovieReservation().not()) return
@@ -62,7 +53,7 @@ class CinemaController(
     private fun startMovieReservation(): Boolean {
         while (true) {
             try {
-                val start = InputView.startMovieReservation(Message.START_RESERVATION)
+                val start = InputView.startMovieReservation("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
                 return start
             } catch (e: IllegalArgumentException) {
                 println(e.message)
@@ -72,7 +63,7 @@ class CinemaController(
 
     private fun getMovieSchedule(): MovieSchedule {
         while (true) {
-            val movieName = movieNames.find(InputView.inputMovieName())
+            val movieName = InputView.inputMovieName()
             if (movieName != null) {
                 val movieSchedule = cinemaSchedule[movieName]
                 if (movieSchedule.isEmpty().not()) return movieSchedule
