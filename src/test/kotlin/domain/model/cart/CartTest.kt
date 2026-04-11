@@ -1,6 +1,8 @@
 package domain.model.cart
 
 import domain.model.Movie
+import domain.model.seat.RowLabel
+import domain.model.seat.Seat
 import domain.model.screen.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,7 +33,11 @@ class CartTest {
         val item =
             CartItem(
                 screening = screening(),
-                seatCodes = listOf("C2", "C3"),
+                seats =
+                    listOf(
+                        Seat(column = 2, row = RowLabel.C),
+                        Seat(column = 3, row = RowLabel.C),
+                    ),
             )
 
         cart.add(item)
@@ -50,7 +56,7 @@ class CartTest {
                         startTime = LocalTime.of(10, 0),
                         runningMinutes = 120,
                     ),
-                seatCodes = listOf("A1"),
+                seats = listOf(Seat(column = 1, row = RowLabel.A)),
             )
         cart.add(reserved)
 
@@ -77,7 +83,7 @@ class CartTest {
                         startTime = LocalTime.of(10, 0),
                         runningMinutes = 120,
                     ),
-                seatCodes = listOf("A1"),
+                seats = listOf(Seat(column = 1, row = RowLabel.A)),
             )
         cart.add(reserved)
 
@@ -91,5 +97,30 @@ class CartTest {
         val result = cart.hasOverlapping(candidate)
 
         assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `장바구니에 담긴 예매들의 좌석 금액을 합산해 총 금액을 반환한다`() {
+        val cart = Cart()
+        cart.add(
+            CartItem(
+                screening = screening(startTime = LocalTime.of(10, 0)),
+                seats =
+                    listOf(
+                        Seat(column = 1, row = RowLabel.D),
+                        Seat(column = 2, row = RowLabel.D),
+                    ),
+            ),
+        )
+        cart.add(
+            CartItem(
+                screening = screening(startTime = LocalTime.of(13, 0)),
+                seats = listOf(Seat(column = 2, row = RowLabel.C)),
+            ),
+        )
+
+        val result = cart.totalSeatAmount()
+
+        assertThat(result).isEqualTo(51000)
     }
 }
