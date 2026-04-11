@@ -27,7 +27,7 @@ class TimeDiscountTest {
         // given
         val timeDiscount = TimeDiscount()
         val money = Money(10000)
-        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 10), LocalTime.of(20, 10), LocalTime.of(22, 0))
+        val screenDateTime = ScreeningDateTime(LocalDate.of(2026, 1, 11), LocalTime.of(20, 10), LocalTime.of(22, 0))
 
         // when
         val result = timeDiscount.applyDiscount(money, screenDateTime)

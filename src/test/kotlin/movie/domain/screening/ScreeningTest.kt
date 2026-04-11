@@ -24,11 +24,13 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(ScreenId(1), Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
+                ScreeningSlot(
+                    Screen(ScreenId(1), Seats.createDefault()),
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
                 ),
                 ReservatedSeats(
                     listOf(
@@ -56,11 +58,13 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(ScreenId(1), Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
+                ScreeningSlot(
+                    Screen(ScreenId(1), Seats.createDefault()),
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
                 ),
                 ReservatedSeats(
                     listOf(
@@ -88,11 +92,13 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(ScreenId(1), Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
+                ScreeningSlot(
+                    Screen(ScreenId(1), Seats.createDefault()),
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
                 ),
                 ReservatedSeats(
                     listOf(
@@ -119,11 +125,13 @@ class ScreeningTest {
         val screening =
             Screening(
                 MovieTitle("토이 스토리"),
-                Screen(ScreenId(1), Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
+                ScreeningSlot(
+                    Screen(ScreenId(1), Seats.createDefault()),
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
                 ),
                 ReservatedSeats(
                     listOf(
@@ -136,5 +144,6 @@ class ScreeningTest {
 
         val result = screening.reserve(selectedSeats)
         assertThat(result).isNotNull()
+        assertThat(result.display()).contains("좌석: A1")
     }
 }

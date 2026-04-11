@@ -151,7 +151,7 @@ class MovieController(
             val selectedScreening = screenings[number - 1]
             val hasOverlap =
                 existingReservations.any {
-                    it.isTimeOverlapping(it)
+                    it.isTimeOverlapping(selectedScreening)
                 }
 
             if (hasOverlap) {
@@ -163,9 +163,9 @@ class MovieController(
 
     private fun selectSeats(screening: Screening): List<Seat> =
         executeWithRetry {
-            outputView.printSeatLayout(screening.screen, screening.reservatedSeats)
+            outputView.printSeatLayout(screening.slot.screen, screening.reservatedSeats)
             val input = inputView.inputSeat()
-            val seats = parseSeatInput(input, screening.screen)
+            val seats = parseSeatInput(input, screening.slot.screen)
             val reserveAvailableSeats = screening.isReserveAvailable(seats)
             reserveAvailableSeats
         }

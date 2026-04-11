@@ -7,12 +7,11 @@ import movie.domain.seat.Seat
 import movie.domain.seat.SelectedSeats
 
 class Screening(
-    val title: MovieTitle,
-    val screen: Screen,
-    val screeningDateTime: ScreeningDateTime,
+    val movie: MovieTitle,
+    val slot: ScreeningSlot,
     val reservatedSeats: ReservatedSeats,
 ) {
-    fun isTimeOverlapping(other: Screening): Boolean = screeningDateTime.isOverlapping(other.screeningDateTime)
+    fun isTimeOverlapping(other: Screening): Boolean = slot.isOverlapping(other.slot)
 
     fun isReserveAvailable(selectedSeats: List<Seat>): List<Seat> {
         require(isValidSeats(selectedSeats)) { "존재하지 않는 좌석입니다." }
@@ -22,12 +21,11 @@ class Screening(
     }
 
     fun reserve(selectedSeats: List<Seat>): Reservation {
-        val finalSeats = reservatedSeats.add(selectedSeats)
         return Reservation(
             this,
-            SelectedSeats(finalSeats),
+            SelectedSeats(selectedSeats),
         )
     }
 
-    private fun isValidSeats(selectedSeats: List<Seat>): Boolean = selectedSeats.all { screen.seats.hasSeat(it) }
+    private fun isValidSeats(selectedSeats: List<Seat>): Boolean = selectedSeats.all { slot.hasSeat(it) }
 }

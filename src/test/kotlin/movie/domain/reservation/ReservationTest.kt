@@ -8,6 +8,7 @@ import movie.domain.screening.Screen
 import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
+import movie.domain.screening.ScreeningSlot
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatColumn
@@ -35,11 +36,13 @@ class ReservationTest {
         val screening =
             Screening(
                 MovieTitle("F1 더 무비"),
-                Screen(ScreenId(1), Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(13, 0),
-                    LocalTime.of(15, 0),
+                ScreeningSlot(
+                    Screen(ScreenId(1), Seats.createDefault()),
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(13, 0),
+                        LocalTime.of(15, 0),
+                    ),
                 ),
                 ReservatedSeats(
                     listOf(
@@ -79,11 +82,13 @@ class ReservationTest {
         val screening =
             Screening(
                 MovieTitle("F1 더 무비"),
-                Screen(ScreenId(1), Seats.createDefault()),
-                ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
+                ScreeningSlot(
+                    Screen(ScreenId(1), Seats.createDefault()),
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
                 ),
                 ReservatedSeats(
                     listOf(

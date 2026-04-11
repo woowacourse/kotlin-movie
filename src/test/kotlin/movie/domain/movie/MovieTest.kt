@@ -4,6 +4,7 @@ import movie.domain.screening.Screen
 import movie.domain.screening.ScreenId
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
+import movie.domain.screening.ScreeningSlot
 import movie.domain.screening.Screenings
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.Seats
@@ -22,13 +23,15 @@ class MovieTest {
             Screenings(
                 listOf(
                     Screening(
-                        title = MovieTitle("F1 더 무비"),
-                        screen = Screen(ScreenId(1), Seats.createDefault()),
-                        screeningDateTime =
-                            ScreeningDateTime(
-                                LocalDate.of(2026, 4, 9),
-                                LocalTime.of(10, 20),
-                                LocalTime.of(13, 0),
+                        movie = MovieTitle("F1 더 무비"),
+                        slot =
+                            ScreeningSlot(
+                                Screen(ScreenId(1), Seats.createDefault()),
+                                ScreeningDateTime(
+                                    LocalDate.of(2026, 4, 9),
+                                    LocalTime.of(10, 20),
+                                    LocalTime.of(13, 0),
+                                ),
                             ),
                         reservatedSeats = ReservatedSeats(listOf()),
                     ),

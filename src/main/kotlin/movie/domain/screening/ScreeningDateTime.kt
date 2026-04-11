@@ -12,5 +12,5 @@ class ScreeningDateTime(
 
     fun isMovieDay(): Boolean = date.dayOfMonth == 10 || date.dayOfMonth == 20 || date.dayOfMonth == 30
 
-    fun isTimeDiscountTarget(): Boolean = startTime.hour !in 11..20
+    fun isTimeDiscountTarget(): Boolean = startTime.hour < 11 || startTime.hour >= 20
 }

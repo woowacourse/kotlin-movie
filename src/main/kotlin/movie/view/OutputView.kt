@@ -14,7 +14,7 @@ class OutputView {
     fun printScreeningList(screenings: List<Screening>) {
         println(SCREENING_LIST_HEADER)
         screenings.forEachIndexed { index, screening ->
-            println("[${index + 1}] ${screening.screeningDateTime.startTime}")
+            println("[${index + 1}] ${screening.slot.startTime}")
         }
     }
 

@@ -12,12 +12,15 @@ class Reservation(
     fun isTimeOverlapping(other: Reservation): Boolean =
         screening.isTimeOverlapping(other.screening)
 
+    fun isTimeOverlapping(other: Screening): Boolean =
+        screening.isTimeOverlapping(other)
+
     fun calculateDiscountedPrice(discountPolicies: DiscountPolicies): Money =
         discountPolicies.applyDiscount(
             selectedSeats.totalPrice,
-            screening.screeningDateTime,
+            screening.slot.screeningDateTime,
         )
 
     fun display(): String =
-        "- [${screening.title}] ${screening.screeningDateTime.date} ${screening.screeningDateTime.startTime}  좌석: ${selectedSeats.display()}"
+        "- [${screening.movie}] ${screening.slot.date} ${screening.slot.startTime}  좌석: ${selectedSeats.display()}"
 }
