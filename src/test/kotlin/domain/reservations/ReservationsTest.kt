@@ -15,35 +15,46 @@ import java.time.LocalTime
 
 class ReservationsTest {
     @Test
-    fun `reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 있다면 true를 반환받는다`() {
-        val result = reservations.checkDuplicateTime(LocalTime.of(12, 0))
+    fun `날짜와 시간이 모두 겹치는 상영 시간이 입력되면 true를 반환한다`() {
+        val screenTime =
+            ScreenTime(
+                startTime = LocalTime.of(11, 0),
+                endTime = LocalTime.of(13, 0),
+                screeningDate = LocalDate.of(2026, 4, 10),
+            )
+        val result = reservations.checkDuplicate(screenTime)
 
         assertThat(result).isTrue()
     }
 
     @Test
-    fun `reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 없다면 false를 반환받는다`() {
-        val result = reservations.checkDuplicateTime(LocalTime.of(14, 0))
+    fun `날짜는 같지만 시간이 겹치지 않으면 false를 반환한다`() {
+        val screenTime =
+            ScreenTime(
+                startTime = LocalTime.of(14, 0),
+                endTime = LocalTime.of(16, 0),
+                screeningDate = LocalDate.of(2026, 4, 10),
+            )
+        val result = reservations.checkDuplicate(screenTime)
 
         assertThat(result).isFalse()
     }
 
     @Test
-    fun `reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 있다면 true를 반환받는다`() {
-        val result = reservations.checkDuplicateDate(LocalDate.of(2026, 4, 10))
-
-        assertThat(result).isTrue()
-    }
-
-    @Test
-    fun `reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 없다면 false를 반환받는다`() {
-        val result = reservations.checkDuplicateDate(LocalDate.of(2026, 4, 11))
+    fun `시간은 같지만 날짜가 다르면 false를 반환한다`() {
+        val screenTime =
+            ScreenTime(
+                startTime = LocalTime.of(11, 0),
+                endTime = LocalTime.of(13, 0),
+                screeningDate = LocalDate.of(2026, 4, 11),
+            )
+        val result = reservations.checkDuplicate(screenTime)
 
         assertThat(result).isFalse()
     }
 
     companion object {
-        val reservations = Reservations()
+        private val reservations = Reservations()
 
         @BeforeAll
         @JvmStatic
@@ -56,44 +67,17 @@ class ReservationsTest {
                             runningTime = RunningTime(120),
                             screeningPeriod =
                                 ScreeningPeriod(
-                                    startDate =
-                                        LocalDate.of(
-                                            2026,
-                                            4,
-                                            1,
-                                        ),
-                                    endDate =
-                                        LocalDate.of(
-                                            2026,
-                                            4,
-                                            30,
-                                        ),
+                                    startDate = LocalDate.of(2026, 4, 1),
+                                    endDate = LocalDate.of(2026, 4, 30),
                                 ),
                         ),
                     screenTime =
                         ScreenTime(
-                            startTime =
-                                LocalTime.of(
-                                    11,
-                                    0,
-                                ),
-                            endTime =
-                                LocalTime.of(
-                                    13,
-                                    0,
-                                ),
-                            screeningDate =
-                                LocalDate.of(
-                                    2026,
-                                    4,
-                                    10,
-                                ),
+                            startTime = LocalTime.of(11, 0),
+                            endTime = LocalTime.of(13, 0),
+                            screeningDate = LocalDate.of(2026, 4, 10),
                         ),
-                    seats =
-                        listOf<Seat>(
-                            Seat("A1"),
-                            Seat("B1"),
-                        ),
+                    seats = listOf(Seat("A1"), Seat("B1")),
                 ),
             )
         }
