@@ -79,7 +79,7 @@
 
 - [x] 입력된 좌석 번호가 상영관에 존재하는 좌석이면 true를 반환받는다.
 - [x] 입력된 좌석 번호가 상영관에 존재하지 않는 좌석이면 false를 반환받는다.
-- [ ] 입력된 좌석 번호에 해당하는 좌석을 반환한다
+- [x] 입력된 좌석 번호에 해당하는 좌석을 반환한다
 
 ### 7. seats
 
@@ -109,9 +109,9 @@
 
 - [x] 입력된 상영 일자가 screenTime의 screeningDate과 같다면 true를 반환받는다.
 - [x] 입력된 상영 일자가 screenTime의 screeningDate과 다르다면 false를 반환받는다.
-- [ ] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속한다면 true를 반환한다.
-- [ ] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속하지 않는다면 false를 반환한다.
-- [ ] 예약된 좌석 가격의 합을 Money로 반환한다.
+- [x] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속한다면 true를 반환한다.
+- [x] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속하지 않는다면 false를 반환한다.
+- [x] 예약된 좌석 가격의 합을 Money로 반환한다.
 
 ### 10. reservations
 

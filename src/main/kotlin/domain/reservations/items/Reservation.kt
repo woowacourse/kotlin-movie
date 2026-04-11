@@ -16,6 +16,8 @@ class Reservation(
 
     fun isDuplicatedTime(time: LocalTime): Boolean = screenTime.isContainsTime(time)
 
+    fun sumSeatPrice(): Money = seats.sumPrice()
+
     fun getReservationInfo(): ReservationInfo {
         val money = Money(0)
 
