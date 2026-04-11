@@ -7,6 +7,7 @@ import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatGrade
 import movie.domain.seat.SeatRow
 import movie.domain.seat.Seats
+import movie.domain.seat.SelectedSeats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -17,8 +18,10 @@ class ScreeningTest {
     @Test
     fun `존재하지 하지 않는 좌석은 예약할 수 없다`() {
         val selectedSeats =
-            listOf(
-                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
+            SelectedSeats(
+                listOf(
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
+                ),
             )
 
         val screening =
@@ -51,8 +54,10 @@ class ScreeningTest {
     @Test
     fun `예약되지 않은 좌석은 예약할 수 있다`() {
         val selectedSeats =
-            listOf(
-                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
+            SelectedSeats(
+                listOf(
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
+                ),
             )
 
         val screening =
@@ -83,10 +88,12 @@ class ScreeningTest {
     @Test
     fun `이미 예약된 좌석들은 예약이 불가능하다`() {
         val selectedSeats =
-            listOf(
-                Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
-                Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
-                Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
+            SelectedSeats(
+                listOf(
+                    Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                    Seat(SeatRow("C"), SeatColumn(2), SeatGrade.S),
+                    Seat(SeatRow("E"), SeatColumn(1), SeatGrade.A),
+                ),
             )
 
         val screening =
@@ -118,8 +125,10 @@ class ScreeningTest {
     @Test
     fun `예약 검증 후 true일 경우 예약이 생성된다`() {
         val selectedSeats =
-            listOf(
-                Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
+            SelectedSeats(
+                listOf(
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
+                ),
             )
 
         val screening =

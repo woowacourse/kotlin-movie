@@ -3,14 +3,14 @@ package movie.domain.reservation
 import movie.domain.amount.Money
 import movie.domain.discount.DiscountPolicies
 
-class Reservations(
+data class Reservations(
     private val reservations: List<Reservation>,
 ) {
     init {
         validateNoOverlapping()
     }
 
-    fun add(reservation: Reservation): List<Reservation> = Reservations(reservations + reservation).reservations
+    fun add(reservation: Reservation): Reservations = Reservations(reservations + reservation)
 
     fun totalPrice(discountPolicies: DiscountPolicies): Money =
         reservations.fold(Money(0)) { acc, reservation ->

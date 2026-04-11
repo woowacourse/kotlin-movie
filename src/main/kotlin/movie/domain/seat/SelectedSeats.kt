@@ -13,5 +13,7 @@ class SelectedSeats(
     val totalPrice: Money
         get() = Money(seats.sumOf { it.grade.price.value })
 
+    fun all(predicate: (Seat) -> Boolean): Boolean = seats.all(predicate)
+
     fun display(): String = seats.joinToString(", ") { "${it.seatRow.value}${it.seatColumn.value}" }
 }

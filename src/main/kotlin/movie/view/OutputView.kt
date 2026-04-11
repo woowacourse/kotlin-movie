@@ -5,13 +5,13 @@ import movie.domain.amount.Point
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
-import movie.domain.screening.Screening
+import movie.domain.screening.Screenings
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatRow
 
 class OutputView {
-    fun printScreeningList(screenings: List<Screening>) {
+    fun printScreeningList(screenings: Screenings) {
         println(SCREENING_LIST_HEADER)
         screenings.forEachIndexed { index, screening ->
             println("[${index + 1}] ${screening.slot.startTime}")

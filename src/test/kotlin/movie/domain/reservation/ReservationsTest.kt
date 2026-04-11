@@ -61,7 +61,7 @@ class ReservationsTest {
         val result = reservations.add(addedReservation)
 
         // then
-        assertThat(result).isEqualTo(reservationData + addedReservation)
+        assertThat(result).isEqualTo(Reservations(reservationData + addedReservation))
     }
 
     @Test

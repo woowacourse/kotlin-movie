@@ -1,6 +1,5 @@
 package movie.controller
 
-import jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle
 import movie.data.MovieData
 import movie.domain.payment.PaymentResult
 import movie.domain.amount.Point
@@ -8,7 +7,6 @@ import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
-import movie.domain.movie.MovieTitle
 import movie.domain.movie.Movies
 import movie.domain.payment.Cash
 import movie.domain.payment.CreditCard
@@ -18,7 +16,6 @@ import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
-import movie.domain.seat.Seat
 import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatRow
 import movie.domain.seat.SelectedSeats
@@ -146,9 +143,7 @@ class MovieController(
             outputView.printScreeningList(screenings)
 
             val number = inputView.inputScreeningNumber()
-            require(number in 1..screenings.size) { "유효하지 않은 상영 번호입니다." }
-
-            val selectedScreening = screenings[number - 1]
+            val selectedScreening = screenings.findByNumber(number)
             val hasOverlap =
                 existingReservations.any {
                     it.isTimeOverlapping(selectedScreening)
@@ -161,7 +156,7 @@ class MovieController(
             selectedScreening
         }
 
-    private fun selectSeats(screening: Screening): List<Seat> =
+    private fun selectSeats(screening: Screening): SelectedSeats =
         executeWithRetry {
             outputView.printSeatLayout(screening.slot.screen, screening.reservatedSeats)
             val input = inputView.inputSeat()
@@ -173,17 +168,19 @@ class MovieController(
     private fun parseSeatInput(
         input: String,
         screen: Screen,
-    ): List<Seat> =
-        input
-            .split(",")
-            .map { it.trim() }
-            .map { seatInput ->
-                val row = SeatRow(seatInput.substring(0, 1).uppercase())
-                val column =
-                    seatInput.substring(1).toIntOrNull()
-                        ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
-                screen.seats.findSeat(row, SeatColumn(column))
-            }
+    ): SelectedSeats =
+        SelectedSeats(
+            input
+                .split(",")
+                .map { it.trim() }
+                .map { seatInput ->
+                    val row = SeatRow(seatInput.substring(0, 1).uppercase())
+                    val column =
+                        seatInput.substring(1).toIntOrNull()
+                            ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
+                    screen.seats.findSeat(row, SeatColumn(column))
+                },
+        )
 
     // 입력 로직
     private fun askStartReservation(): Boolean = executeWithRetry { inputView.startMessage() }
