@@ -43,10 +43,18 @@ class ScreeningTest {
     private val defaultScreen = Screen("테스트관", defaultSeats)
 
     private fun screening(startHour: Int): Screening =
-        Screening(movie1, LocalDateTime.of(date, LocalTime.of(startHour, 0)), ScreeningSeatMap(defaultScreen))
+        Screening(
+            movie1,
+            LocalDateTime.of(date, LocalTime.of(startHour, 0)),
+            ScreeningSeatMap(defaultScreen)
+        )
 
     private fun screening2(startHour: Int): Screening =
-        Screening(movie2, LocalDateTime.of(date, LocalTime.of(startHour, 0)), ScreeningSeatMap(defaultScreen))
+        Screening(
+            movie2,
+            LocalDateTime.of(date, LocalTime.of(startHour, 0)),
+            ScreeningSeatMap(defaultScreen)
+        )
 
     @Test
     fun `종료 시각은 시작 시각에 영화 상영 길이를 더한 값이다`() {
@@ -105,5 +113,23 @@ class ScreeningTest {
         val reservation = screening.reserve(listOf(SeatNumber('A', 1), SeatNumber('B', 1)))
 
         Assertions.assertThat(reservation.calculateBasePrice()).isEqualTo(Money(12_000 + 18_000))
+    }
+
+    @Test
+    fun `영화와 시작 시각이 같으면 같은 상영 일정으로 판단한다`() {
+        val screening1 = screening(14)
+        val screening2 = screening(14)
+
+        Assertions.assertThat(screening1.isSameScreening(screening2)).isTrue()
+    }
+
+    @Test
+    fun `영화나 시작 시각이 다르면 다른 상영 일정으로 판단한다`() {
+        val screening1 = screening(14)
+        val screening2 = screening(15)
+        val screening3 = screening2(14)
+
+        Assertions.assertThat(screening1.isSameScreening(screening2)).isFalse()
+        Assertions.assertThat(screening1.isSameScreening(screening3)).isFalse()
     }
 }

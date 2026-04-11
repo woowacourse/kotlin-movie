@@ -6,7 +6,7 @@
 
 - [x] 일급 컬렉션 내부 리스트에 방어적 복사(`toList()`)를 적용하여 불변성 보장
 - [x] `RateDiscountEffect` 생성 시 비정상적인 할인율(`rate`) 값 입력을 막기 위한 유효성 검증 추가
-- [ ] `Scheduler` 클래스의 거대해진 역할과 책임을 분리하여 단일 책임 원칙(SRP) 준수
+- [x] `Scheduler` 클래스의 거대해진 역할과 책임을 분리하여 단일 책임 원칙(SRP) 준수
 - [x] 할인 정책의 지속적인 확장성을 고려하여 `DiscountPolicy`를 `sealed interface`에서 일반 `interface`로 개방 (OCP 준수)
 
 ### 가독성 및 네이밍
@@ -20,7 +20,7 @@
 - [x] `PaymentSystem`에서 할인 계산 로직을 분리하여 새로운 할인 전담 객체로 이동 (단일 책임 원칙)
 - [x] `Screening` 내의 컴파일 타임 의존성을 인터페이스 기반으로 수정 (결합도 낮추기)
 - [x] `Screening`에서 예약 생성 책임을 분리
-- [x] `Scheduler`와 영화 도메인 모델(data)의 역할 분리
+- [x] `Scheduler`와 영화 도메인 모델(repository)의 역할 분리
 
 ### 가독성 및 네이밍
 

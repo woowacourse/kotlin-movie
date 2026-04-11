@@ -9,6 +9,7 @@ import model.reservation.Reservation
 import model.reservation.Reservations
 import model.screening.Screening
 import model.screening.Screenings
+import repository.MovieRepository
 import view.InputView
 import view.OutputView
 
@@ -83,7 +84,7 @@ class MovieReservationController(
     private fun searchMovie(): Movie {
         while (true) {
             val title = inputView.readMovieTitle()
-            val movie = scheduler.getMovies().findByTitle(title)
+            val movie = MovieRepository.getMovies().findByTitle(title)
             if (movie != null) return movie
             outputView.printMovieNotSearch()
         }
@@ -92,7 +93,7 @@ class MovieReservationController(
     private fun searchScreenings(movie: Movie): Screenings =
         retryUntilValid {
             val date = inputView.readDate()
-            val screenings = scheduler.getScreenings(movie, date)
+            val screenings = scheduler.findBy(movie, date)
             if (screenings.isEmpty()) throw IllegalArgumentException("해당 날짜의 상영 목록이 없습니다.")
             screenings
         }
