@@ -5,14 +5,16 @@ import model.reservation.Reservations
 import model.screening.Screening
 
 class DiscountSystem(
-    val discountPolicies: List<DiscountPolicy> = listOf(MovieDayDiscountPolicy, TimeDiscountPolicy),
+    discountPolicies: List<DiscountPolicy> = listOf(MovieDayDiscountPolicy, TimeDiscountPolicy),
 ) {
+    private val discountPolicies = discountPolicies.sortedBy { it.priority }
+
     fun discountPrice(reservations: Reservations): Money =
         reservations.fold(Money(0)) { total, reservation ->
             val basePrice = reservation.calculateBasePrice()
             val seatCount = reservation.seats.seatCount.toDouble()
 
-            total + basePrice - applyDiscounts(basePrice, reservation.screening, seatCount)
+            total + applyDiscounts(basePrice, reservation.screening, seatCount)
         }
 
     private fun applyDiscounts(
@@ -22,7 +24,7 @@ class DiscountSystem(
     ): Money =
         discountPolicies.fold(price) { current, policy ->
             val discountEffect = policy.getDiscountEffect(screening)
-            getDiscountPrice(current, discountEffect, seatCount)
+            current - getDiscountPrice(current, discountEffect, seatCount)
         }
 
     private fun getDiscountPrice(
