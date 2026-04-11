@@ -49,4 +49,21 @@ class CinemaKiosk(
             movieScreening.getSeat(seatRow, seatColumn).cancelReservation()
         }
     }
+
+    fun reserveSeats(
+        movieScreening: MovieScreening,
+        selectedSeats: List<Pair<SeatRow, SeatColumn>>,
+    ): List<MovieReservationResult.Success> {
+        val success = mutableListOf<MovieReservationResult.Success>()
+        for ((row, col) in selectedSeats) {
+            when (val result = reserve(movieScreening, row, col)) {
+                is MovieReservationResult.Success -> success.add(result)
+                is MovieReservationResult.Failed -> {
+                    cancelReservations(movieScreening, success.map { it.seat.row to it.seat.column })
+                    throw IllegalArgumentException(Message.INVALID_SEAT)
+                }
+            }
+        }
+        return success
+    }
 }

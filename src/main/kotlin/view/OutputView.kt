@@ -1,5 +1,6 @@
 package view
 
+import model.MovieReservationResult
 import model.schedule.MovieScreening
 
 object OutputView {
@@ -33,6 +34,17 @@ object OutputView {
             }
             println()
         }
+    }
+
+    fun showReservationInfo(successResults: List<MovieReservationResult.Success>) {
+        println(Message.SHOW_RESERVATION_INFO)
+        successResults
+            .groupBy { it.movie.name to it.screenTime.start }
+            .forEach { (key, results) ->
+                val (movieName, startTime) = key
+                val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+            }
     }
 
     fun end() {

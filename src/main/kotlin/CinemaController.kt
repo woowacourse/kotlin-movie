@@ -1,5 +1,6 @@
 import model.CinemaKiosk
 import model.CinemaTime
+import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieCatalog
 import model.schedule.MovieScreening
@@ -23,6 +24,7 @@ class CinemaController(
         OutputView.showMovieScreenings(onDateMovieScreening)
         val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
         OutputView.showMovieSeatGroup(selectMovieScreening)
+
         // 결제
     }
 
@@ -58,6 +60,19 @@ class CinemaController(
                 require(index in onDateMovieScreening.indices) { "올바르지 않은 번호입니다." }
                 return onDateMovieScreening[index]
             } catch (e: Exception) {
+                OutputView.showErrorMessage(e.message)
+            }
+        }
+    }
+
+    private fun reserveSeats(selectMovieScreening: MovieScreening): List<MovieReservationResult.Success> {
+        while (true) {
+            try {
+                val selectSeats = InputView.selectSeats()
+                val reservations = cinemaKiosk.reserveSeats(selectMovieScreening, selectSeats)
+                OutputView.showReservationInfo(reservations)
+                return reservations
+            } catch (e: IllegalArgumentException) {
                 OutputView.showErrorMessage(e.message)
             }
         }

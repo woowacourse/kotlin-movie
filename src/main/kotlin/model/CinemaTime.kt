@@ -21,6 +21,8 @@ value class CinemaTime(
 
     fun isEqualDate(date: CinemaTime): Boolean = time.toLocalDate().isEqual(date.time.toLocalDate())
 
+    fun format(format: String): String = time.format(DateTimeFormatter.ofPattern(format))
+
     override fun toString(): String = time.format(DateTimeFormatter.ofPattern("HH:mm"))
 
     fun minuteUntil(other: CinemaTime): Int = Duration.between(time, other.time).toMinutes().toInt()
