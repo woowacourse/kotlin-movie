@@ -65,34 +65,73 @@ class ReservationTest {
         assertThat(result).isEqualTo(Money(45_000))
     }
 
-    private fun createReservation() =
-        Reservation(
-            movie =
-                Movie(
-                    title = Title("신바드의 모험"),
-                    runningTime = RunningTime(120),
-                    screeningPeriod =
-                        ScreeningPeriod(
-                            startDate = LocalDate.of(2026, 4, 1),
-                            endDate = LocalDate.of(2026, 4, 30),
-                        ),
-                ),
-            screenTime =
-                ScreenTime(
-                    startTime = LocalTime.of(12, 0),
-                    endTime = LocalTime.of(14, 0),
-                    screeningDate = LocalDate.of(2026, 4, 10),
-                ),
-            seats =
-                Seats(
-                    seats =
-                        listOf(
-                            createSeat(GradeB()),
-                            createSeat(GradeA()),
-                            createSeat(GradeS()),
-                        ),
-                ),
-        )
+    @Test
+    fun `입력된 예약의 screenTime이 겹친다면 true를 반환한다`() {
+        val reservation = createReservation()
+
+        val newReservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(11, 0),
+                        endTime = LocalTime.of(13, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+
+        val result = reservation.isDuplicatedReservation(newReservation)
+
+        assertThat(result).isTrue()
+    }
+
+    @Test
+    fun `입력된 예약의 screenTime이 겹치지 않는다면 false를 반환한다`() {
+        val reservation = createReservation()
+
+        val newReservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(1, 0),
+                        endTime = LocalTime.of(5, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+
+        val result = reservation.isDuplicatedReservation(newReservation)
+
+        assertThat(result).isFalse()
+    }
+
+    private fun createReservation(
+        screenTime: ScreenTime =
+            ScreenTime(
+                startTime = LocalTime.of(12, 0),
+                endTime = LocalTime.of(14, 0),
+                screeningDate = LocalDate.of(2026, 4, 10),
+            ),
+    ) = Reservation(
+        movie =
+            Movie(
+                title = Title("신바드의 모험"),
+                runningTime = RunningTime(120),
+                screeningPeriod =
+                    ScreeningPeriod(
+                        startDate = LocalDate.of(2026, 4, 1),
+                        endDate = LocalDate.of(2026, 4, 30),
+                    ),
+            ),
+        screenTime = screenTime,
+        seats =
+            Seats(
+                seats =
+                    listOf(
+                        createSeat(GradeB()),
+                        createSeat(GradeA()),
+                        createSeat(GradeS()),
+                    ),
+            ),
+    )
 
     private fun createSeat(grade: SeatGrade) =
         Seat(

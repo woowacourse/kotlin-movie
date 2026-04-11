@@ -111,14 +111,14 @@
 - [x] 입력된 상영 일자가 screenTime의 screeningDate과 다르다면 false를 반환받는다.
 - [x] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속한다면 true를 반환한다.
 - [x] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속하지 않는다면 false를 반환한다.
+- [x] 입력된 예약의 screenTime이 겹친다면 true를 반환한다
+- [x] 입력된 예약의 screenTime이 겹치지 않는다면 false를 반환한다
 - [x] 예약된 좌석 가격의 합을 Money로 반환한다.
 
 ### 10. reservations
 
-- [x] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 있다면 true를 반환받는다.
-- [x] reservation 목록 중 입력받은 screenTime과 겹치는 reservation이 없다면 false를 반환받는다.
-- [x] reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 있다면 true를 반환받는다.
-- [x] reservation 목록 중 입력받은 screenDate와 겹치는 reservation이 없다면 false를 반환받는다.
+- [ ] reservations 목록 중 입력받은 reservation과 겹치는 reservation이 없으면 추가한다
+- [ ] reservations 목록 중 입력받은 reservation과 겹치는 reservation이 있으면 에러를 발생한다
 
 ### 11. point
 

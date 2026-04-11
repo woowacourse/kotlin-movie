@@ -16,6 +16,9 @@ class Reservation(
 
     fun isDuplicatedTime(time: LocalTime): Boolean = screenTime.isContainsTime(time)
 
+    fun isDuplicatedReservation(otherReservation: Reservation): Boolean =
+        this.screenTime.isDuplicatedScreenTime(otherReservation.screenTime)
+
     fun sumSeatPrice(): Money = seats.sumPrice()
 
     fun getReservationInfo(): ReservationInfo {
