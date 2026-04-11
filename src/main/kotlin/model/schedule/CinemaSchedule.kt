@@ -12,9 +12,4 @@ class CinemaSchedule(
     }
 
     fun getMovieScreenings(movieId: MovieId): List<MovieScreening> = screenSchedules.flatMap { it.screeningOf(movieId) }
-
-    fun getMovieSchedule(movieId: MovieId): MovieSchedule =
-        MovieSchedule(
-            movieScreenings = screenSchedules.flatMap { it.getMovieSchedule(movieId) },
-        )
 }
