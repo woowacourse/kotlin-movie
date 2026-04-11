@@ -41,13 +41,10 @@
 ### 2. ScreenTime
 
 1. ScreeningTime
-
-- [x] 입력받은 시간이 startTime과 endTime 사이에 있다면 true를 반환한다.
-    1. startTime
-        - [x] 입력된 시간이 소유하고 있는 시간과 같다면 true를 반환한다.
-        - [x] 입력받은 시간이 소유하고 있는 시간과 다르다면 false를 반환하다.
-    2. endTime
-
+    - [x] 입력받은 시간이 startTime과 endTime 사이에 있다면 true를 반환한다
+    - [x] 입력받은 시간이 startTime과 endTime 사이에 없다면 false를 반환한다
+    - [x] ScreeningTime 시간이 startTime과 endTime 사이에 있다면 true를 반환한다.
+    - [x] ScreeningTime 시간이 startTime과 endTime 사이에 없다면 false를 반환한다.
 2. ScreeningDate
     - [x] 입력받은 날자가 소유하고 있는 날자와 같다면 true를 반환한다.
     - [x] 입력받은 날자가 소유하고 있는 날자와 다르다면 false를 반환하다.
@@ -96,6 +93,7 @@
 1. SeatPosition
     - [x] 입력된 좌석 번호가 저장된 좌석 번호와 일치하면 true를 반환한다.
     - [x] 입력된 좌석 번호가 저장된 좌석 번호와 일치하지 않으면 false를 반환한다
+
     1. RowNumber
         - [x] 입력된 행 번호가 자신의 번호와 같다면 true를 반환한다.
         - [x] 입력된 행 번호가 자신의 번호와 같지 않다면 false를 반환한다.
@@ -108,7 +106,7 @@
 ### 9. reservation
 
 - [x] 입력된 상영 일자가 screenTime의 screeningDate과 같다면 true를 반환받는다.
-- [x] 입력된 상영 시간이 screenTime의 ScreeningTime과 같다면 true를 반환받는다.
+- [x] 입력된 상영 일자가 screenTime의 screeningDate과 다르다면 false를 반환받는다.
 - [ ] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속한다면 true를 반환한다.
 - [ ] 입력된 상영 일자가 screenTime의 startTime과 endTime에 속하지 않는다면 false를 반환한다.
 - [ ] 예약된 좌석 가격의 합을 Money로 반환한다.

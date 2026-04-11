@@ -8,15 +8,13 @@ class ScreenTime(
     private val endTime: LocalTime,
     private val screeningDate: LocalDate,
 ) {
-    fun isContain(time: LocalTime): Boolean = time in startTime..endTime
-
-    fun isStartAt(time: LocalTime): Boolean = startTime == time
-
-    fun isStartBefore(time: LocalTime): Boolean = startTime <= time
-
-    fun isStartAfter(time: LocalTime): Boolean = startTime >= time
+    fun isContainsTime(time: LocalTime): Boolean = time in startTime..endTime
 
     fun isScreeningAt(date: LocalDate): Boolean = screeningDate == date
 
-    fun screeningDayOfMonth(): Int = screeningDate.dayOfMonth
+    fun isDuplicatedScreenTime(otherTime: ScreenTime): Boolean {
+        if (this.screeningDate != otherTime.screeningDate) return true
+
+        return this.startTime < otherTime.endTime && otherTime.startTime < this.endTime
+    }
 }
