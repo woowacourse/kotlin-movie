@@ -24,13 +24,6 @@ class CinemaController(
         ),
 ) {
 
-    // 상영 기간 내 특정 날짜/시간에 새 상영을 등록하고, 등록된 상영 객체를 반환한다.
-    fun createScreening(
-        movieTitle: String,
-        screeningDate: LocalDate,
-        startTime: LocalTime,
-    ): Screening = screeningSchedule.createScreening(movieTitle, screeningDate, startTime)
-
     // 특정 제목의 영화 상영 목록을 조회한다.
     fun findScreeningTitle(title: String): List<Screening> =
         screeningSchedule.screeningsOfMovieTitle(title)
@@ -40,15 +33,6 @@ class CinemaController(
         screening: List<Screening>,
         date: LocalDate,
     ): List<Screening> = screeningSchedule.screeningsOfMovieDate(screening, date)
-
-    // 상영 목록들 중에서 상영시간만 추출한다
-    fun findScreeningsTime(screening: List<Screening>): List<LocalTime> {
-        val timeList = mutableListOf<LocalTime>()
-        screening.forEach {
-            timeList.add(it.startTime)
-        }
-        return timeList
-    }
 
     // 특정 상영의 좌석 상태를 조회한다.
     fun findSeatStatuses(
