@@ -3,20 +3,20 @@ package domain.timetable.items
 import domain.movie.Movie
 import domain.movie.itmes.Title
 import domain.seat.Seat
-import domain.seat.items.SeatPosition
 import java.time.LocalDate
 
 class ScreeningSchedule(
     private val movie: Movie,
+    private val screen: Screen,
     private val screenTime: ScreenTime,
 ) {
-    private val reservedSeat: MutableList<Seat> = mutableListOf()
+    private val reservedSeat: ReservedSeats = ReservedSeats()
 
     fun isScreeningMovieTitle(title: Title) = movie.isValidTitle(title)
 
     fun isScreeningDate(date: LocalDate) = screenTime.isScreeningAt(date)
 
-    fun isReservedSeat(seatNumber: SeatPosition) = reservedSeat.any { it.isExistSeatPosition(seatNumber) }
+    fun isReservedSeat(seat: Seat) = reservedSeat.isReserved(seat)
 
-    fun reserveSeat(seat: Seat) = reservedSeat.add(seat)
+    fun addReserveSeat(seat: Seat) = reservedSeat.addSeat(seat)
 }

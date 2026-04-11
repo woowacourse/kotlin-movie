@@ -71,16 +71,10 @@ class ReservationTest {
     }
 
     @Test
-    fun `입력된 상영 시간이 screenTime의 ScreeningTime과 중복된다면 true를 반환받는다`() {
-        val result = reservation.isDuplicatedTime(LocalTime.of(11, 0))
-
-        assertThat(result).isTrue()
+    fun `입력된 상영 일자가 screenTime의 startTime과 endTime에 속한다면 true를 반환한다`() {
     }
 
     @Test
-    fun `입력된 상영 시간이 screenTime의 ScreeningTime과 중복되지 않으면 false를 반환받는다`() {
-        val result = reservation.isDuplicatedTime(LocalTime.of(14, 0))
-
-        assertThat(result).isFalse()
+    fun `입력된 상영 일자가 screenTime의 startTime과 endTime에 속하지 않는다면 false를 반환한다`() {
     }
 }

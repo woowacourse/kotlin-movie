@@ -14,7 +14,7 @@ class Reservation(
 ) {
     fun isDuplicatedDate(date: LocalDate): Boolean = screenTime.isScreeningAt(date)
 
-    fun isDuplicatedTime(time: LocalTime): Boolean = screenTime.isContain(time)
+    fun isDuplicatedTime(time: LocalTime): Boolean = screenTime.isContainsTime(time)
 
     fun getReservationInfo(): ReservationInfo {
         val money = Money(0)

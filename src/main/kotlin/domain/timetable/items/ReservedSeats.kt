@@ -10,5 +10,5 @@ class ReservedSeats(
         reservedSeats.add(seat)
     }
 
-    private fun isReserved(seat: Seat): Boolean = reservedSeats.any { it.isExistSeat(seat) }
+    fun isReserved(seat: Seat): Boolean = reservedSeats.any { it.isExistSeat(seat) }
 }
