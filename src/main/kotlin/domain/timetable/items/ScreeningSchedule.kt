@@ -1,6 +1,7 @@
 package domain.timetable.items
 
 import domain.movie.Movie
+import domain.movie.itmes.Title
 import domain.seat.Seat
 import java.time.LocalDate
 
@@ -10,7 +11,7 @@ class ScreeningSchedule(
 ) {
     private val reservedSeat: MutableList<Seat> = mutableListOf()
 
-    fun isScreeningMovieTitle(title: String) = movie.isExist(title)
+    fun isScreeningMovieTitle(title: Title) = movie.isExist(title)
 
     fun isScreeningDate(date: LocalDate) = screenTime.isScreeningAt(date)
 

@@ -8,7 +8,5 @@ value class Title(
         require(title.isNotBlank()) { "타이틀은 비어있을 수 없습니다. (입력값: $title)" }
     }
 
-    fun isSame(title: String): Boolean = this.title == title
-
     fun getTitle() = this.title
 }

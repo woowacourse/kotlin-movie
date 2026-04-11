@@ -6,6 +6,7 @@ import domain.discountpolicy.DiscountPolicy
 import domain.discountpolicy.PayMethod
 import domain.discountpolicy.PayMethodDiscountPolicy
 import domain.money.Money
+import domain.movie.itmes.Title
 import domain.paycalculator.PayCalculator
 import domain.point.Point
 import domain.reservations.Reservations
@@ -73,7 +74,7 @@ class Controller(
 
     fun searchMovieWithTitle(): TimeTable {
         try {
-            val title = inputView.readMovieTitle()
+            val title = Title(inputView.readMovieTitle())
             return timeTable.getMovieSchedulesWithTitle(title)
         } catch (e: IllegalArgumentException) {
             println(e.message)
