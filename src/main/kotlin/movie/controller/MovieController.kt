@@ -1,5 +1,6 @@
 package movie.controller
 
+import movie.MovieFixtures
 import movie.domain.Point
 import movie.domain.Price
 import movie.domain.discount.DiscountPolicy
@@ -28,61 +29,7 @@ import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieController {
-    private val movie = Movie(title = MovieTitle("아이언맨"))
-    private val movieTime =
-        MovieTime(
-            date = LocalDate.of(2026, 4, 9),
-            startTime = LocalTime.of(12, 0, 0),
-            endTime = LocalTime.of(14, 30, 0),
-        )
-    private val theaterList =
-        listOf(
-            Theater(
-                openTime = LocalTime.of(12, 0, 0),
-                closeTime = LocalTime.of(23, 59, 59),
-            ),
-            Theater(
-                openTime = LocalTime.of(7, 0, 0),
-                closeTime = LocalTime.of(23, 59, 59),
-            ),
-        )
-
-    private val screeningMovies =
-        ScreeningMovies(
-            listOf(
-                ScreeningMovie(
-                    movie = movie,
-                    movieTime = movieTime,
-                    theater = theaterList[0],
-                ),
-                ScreeningMovie(
-                    movie = movie,
-                    movieTime =
-                        MovieTime(
-                            date = LocalDate.of(2026, 4, 10),
-                            startTime = LocalTime.of(20, 30, 0),
-                            endTime = LocalTime.of(23, 30, 0),
-                        ),
-                    theater = theaterList[1],
-                ),
-            ),
-        )
-
-    private val theaters: Theaters =
-        Theaters(
-            theaters = theaterList,
-        )
-
-    private val scheduler: TheaterScheduler =
-        TheaterScheduler(
-            theaters = theaters,
-            screeningMovies = screeningMovies,
-        )
-
-    private val discountPolicy = DiscountPolicy()
-    private val payment = Payment()
-    private val pointPolicy = PointPolicy()
-
+    val movieFixtures = MovieFixtures()
     fun run() {
         val isStart = getReservationStart()
 
@@ -95,40 +42,27 @@ class MovieController {
             val movieTimes = getMovieTimes(title = movieTitle)
             OutputView.printMovieStartTimes(movieTimes)
             val screeningMovie = getScreeningMovie(movieTimes, ticket)
-
             OutputView.printSeats(screeningMovie = screeningMovie)
             val selectedSeatNumbers = getSeatNumbers(screeningMovie = screeningMovie)
-
             val reservation = ticket.addReservation(
                 screeningMovie = screeningMovie,
                 seatNumbers = selectedSeatNumbers
             )
-
             OutputView.printReservationAddMessage(reservation = reservation)
-
             require(getContinueReservation()) { break }
-
         }
 
         OutputView.printCart(ticket = ticket)
 
-        val reservations = ticket.getReservations()
-        var totalPrice = Price(0)
-        reservations.forEach {
-            val price = it.getTotalPrice()
-            val discountPrice =
-                discountPolicy.calculateDiscount(
-                    totalPrice = price,
-                    movieTime = it.screeningMovie.movieTime,
-                )
-            totalPrice = totalPrice.sumPrice(targetPrice = discountPrice)
-        }
+        var totalPrice = ticket.calculateDiscountedTotalPrice(movieFixtures.discountPolicy)
 
         val point = getUsePoint()
         val paymentMethod = getPaymentMethod()
 
-        val pointUsedPrice = pointPolicy.usePoint(totalPrice = totalPrice, usePoint = point)
-        val paymentPrice = payment.paymentPrice(method = paymentMethod, totalPrice = pointUsedPrice)
+        val pointUsedPrice =
+            movieFixtures.pointPolicy.usePoint(totalPrice = totalPrice, usePoint = point)
+        val paymentPrice =
+            movieFixtures.payment.paymentPrice(method = paymentMethod, totalPrice = pointUsedPrice)
 
         OutputView.printTotalPrice(totalPrice = paymentPrice)
 
@@ -149,7 +83,7 @@ class MovieController {
         whileGetInput {
             val date = getDate()
 
-            scheduler.getMovies(title = title, date = date)
+            movieFixtures.scheduler.getMovies(title = title, date = date)
         }
 
     fun getReservationStart(): Boolean =
@@ -166,7 +100,7 @@ class MovieController {
 
             val movieTitle = InputParser.parseMovieTitle(input)
 
-            require(scheduler.containsMovieTitle(movieTitle)) { "상영 중인 영화가 아닙니다." }
+            require(movieFixtures.scheduler.containsMovieTitle(movieTitle)) { "상영 중인 영화가 아닙니다." }
 
             movieTitle
         }

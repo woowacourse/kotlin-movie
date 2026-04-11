@@ -2,6 +2,7 @@ package movie.domain.discount
 
 import movie.domain.Price
 import movie.domain.movie.MovieTime
+import movie.domain.movie.ScreeningMovie
 import java.time.LocalDate
 import java.time.LocalTime
 
