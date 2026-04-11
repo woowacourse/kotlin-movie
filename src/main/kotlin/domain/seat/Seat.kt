@@ -10,5 +10,5 @@ class Seat(
 ) {
     fun isExist(number: String): Boolean = seatPosition.isExistSeatPosition(number)
 
-    fun getPrice(): Money = seatGrade.price
+    fun addSeatPrice(money: Money): Money = seatGrade.addPrice(money)
 }

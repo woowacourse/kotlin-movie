@@ -2,24 +2,19 @@ package domain.seat.items
 
 import domain.money.Money
 
-interface SeatGrade {
-    val price: Money
+abstract class SeatGrade(
+    private val seatGradeName: SeatGradeName,
+    private val price: Money,
+) {
+    fun addPrice(money: Money): Money = price + money
 }
 
-class GradeS : SeatGrade {
-    override val price: Money = Money(SeatPrice.PRICE_S)
-}
+class GradeS : SeatGrade(SeatGradeName("S"), Money(18_000))
 
-class GradeA : SeatGrade {
-    override val price: Money = Money(SeatPrice.PRICE_A)
-}
+class GradeA : SeatGrade(SeatGradeName("A"), Money(15_000))
 
-class GradeB : SeatGrade {
-    override val price: Money = Money(SeatPrice.PRICE_B)
-}
+class GradeB : SeatGrade(SeatGradeName("B"), Money(12_000))
 
-object SeatPrice {
-    const val PRICE_S = 18000
-    const val PRICE_A = 15000
-    const val PRICE_B = 13000
-}
+class SeatGradeName(
+    private val name: String,
+)

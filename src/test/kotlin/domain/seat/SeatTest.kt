@@ -1,5 +1,6 @@
 package domain.seat
 
+import domain.money.Money
 import domain.seat.items.ColumnNumber
 import domain.seat.items.GradeA
 import domain.seat.items.GradeB
@@ -55,8 +56,9 @@ class SeatTest {
                     ),
                 seatGrade = GradeS(),
             )
-
-        assertThat(seat.getPrice().getAmount()).isEqualTo(18000)
+        val initMoney = Money(0)
+        val result = seat.addSeatPrice(initMoney)
+        assertThat(result).isEqualTo(Money(18_000))
     }
 
     @Test
@@ -70,12 +72,13 @@ class SeatTest {
                     ),
                 seatGrade = GradeA(),
             )
-
-        assertThat(seat.getPrice().getAmount()).isEqualTo(15000)
+        val initMoney = Money(0)
+        val result = seat.addSeatPrice(initMoney)
+        assertThat(result).isEqualTo(Money(15_000))
     }
 
     @Test
-    fun `좌석의 등급이 B이면 가격은 13000원이다`() {
+    fun `좌석의 등급이 B이면 가격은 12000원이다`() {
         val seat =
             Seat(
                 seatPosition =
@@ -85,7 +88,8 @@ class SeatTest {
                     ),
                 seatGrade = GradeB(),
             )
-
-        assertThat(seat.getPrice().getAmount()).isEqualTo(13000)
+        val initMoney = Money(0)
+        val result = seat.addSeatPrice(initMoney)
+        assertThat(result).isEqualTo(Money(12_000))
     }
 }
