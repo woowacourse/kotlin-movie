@@ -1,6 +1,5 @@
 package model.schedule
 
-import model.CinemaTime
 import model.CinemaTimeRange
 import model.movie.Movie
 import model.seat.Seat
@@ -32,5 +31,3 @@ class MovieScreening(
 
     override fun hashCode(): Int = Objects.hash(movie.hashCode(), screenTime.hashCode())
 }
-
-fun List<MovieScreening>.onDate(date: CinemaTime): List<MovieScreening> = filter { it.screenTime.start.isEqualDate(date) }

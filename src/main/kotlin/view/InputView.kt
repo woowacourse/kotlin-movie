@@ -2,8 +2,6 @@ package view
 
 import model.CinemaTime
 import model.payment.PayType
-import model.schedule.MovieSchedule
-import model.schedule.MovieScreening
 import model.seat.SeatColumn
 import model.seat.SeatRow
 import java.time.LocalDate
@@ -39,12 +37,11 @@ object InputView {
         return CinemaTime(date.atStartOfDay())
     }
 
-    fun selectMovieScreening(movieSchedule: MovieSchedule): MovieScreening {
+    fun selectMovieScreening(): Int {
+        println(Message.SELECT_MOVIE_SCREENING)
         val input = readln()
         require(input.all { it.isDigit() }) { "숫자만 가능합니다" }
-        val index = input.toInt() - 1
-        require(index in (0..<movieSchedule.size)) { "올바르지 않은 번호입니다." }
-        return movieSchedule[index]
+        return input.toInt()
     }
 
     fun selectSeats(): List<Pair<SeatRow, SeatColumn>> {

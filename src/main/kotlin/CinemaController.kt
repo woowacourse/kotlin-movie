@@ -15,10 +15,14 @@ class CinemaController(
         // 영화 예매
         if (startReservation().not()) return
         val selectedMovie = selectMovie(movieCatalog)
-        val movieSchedule = getMovieSchedule(selectedMovie)
+        val movieScreening = getMovieSchedule(selectedMovie)
+
+        // 날짜 선택하고 해당 날짜의 상영 일정 중 선택
         val selectedDate = selectDate()
-        val onDateMovieSchedule = movieSchedule.onDate(selectedDate)
-        OutputView.showMovieScreenings(onDateMovieSchedule)
+        val onDateMovieScreening = movieScreening.onDate(selectedDate)
+        OutputView.showMovieScreenings(onDateMovieScreening)
+        val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
+
         // 결제
     }
 
@@ -40,6 +44,19 @@ class CinemaController(
             try {
                 val input = InputView.inputDate()
                 return input
+            } catch (e: Exception) {
+                OutputView.showErrorMessage(e.message)
+            }
+        }
+    }
+
+    private fun selectMovieScreening(onDateMovieScreening: List<MovieScreening>): MovieScreening {
+        while (true) {
+            try {
+                val number = InputView.selectMovieScreening()
+                val index = number - 1
+                require(index in onDateMovieScreening.indices) { "올바르지 않은 번호입니다." }
+                return onDateMovieScreening[index]
             } catch (e: Exception) {
                 OutputView.showErrorMessage(e.message)
             }
