@@ -10,7 +10,7 @@ class ScreeningSchedule(
 ) {
     private val reservedSeat: MutableList<Seat> = mutableListOf()
 
-    fun isScreeningMovieTitle(title: String) = movie.isValidTitle(title)
+    fun isScreeningMovieTitle(title: String) = movie.isExist(title)
 
     fun isScreeningDate(date: LocalDate) = screenTime.isScreeningAt(date)
 
