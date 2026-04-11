@@ -1,5 +1,7 @@
 package domain.point
 
+import domain.money.Money
+
 @JvmInline
 value class Point(
     private val amount: Int,
@@ -15,4 +17,6 @@ value class Point(
 
         return Point(this.amount - amount)
     }
+
+    fun exchangeToMoney(): Money = Money(amount)
 }
