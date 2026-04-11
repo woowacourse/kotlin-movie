@@ -15,5 +15,9 @@ class SelectedSeats(
 
     fun all(predicate: (Seat) -> Boolean): Boolean = seats.all(predicate)
 
+    fun forEach(action: (Seat) -> Unit) {
+        seats.forEach(action)
+    }
+
     fun display(): String = seats.joinToString(", ") { "${it.seatRow.value}${it.seatColumn.value}" }
 }

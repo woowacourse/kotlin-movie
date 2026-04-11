@@ -127,7 +127,7 @@ class ScreeningTest {
         val selectedSeats =
             SelectedSeats(
                 listOf(
-                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
                 ),
             )
 
@@ -151,8 +151,17 @@ class ScreeningTest {
                 ),
             )
 
-        val result = screening.reserve(selectedSeats)
-        assertThat(result).isNotNull()
-        assertThat(result.display()).contains("좌석: A1")
+        val updatedScreening = screening.reserve(selectedSeats)
+
+        assertThat(updatedScreening).isNotSameAs(screening)
+        assertThat(
+            assertThrows<IllegalArgumentException> {
+                updatedScreening.isReserveAvailable(selectedSeats)
+            }.message,
+        ).isEqualTo("이미 예약된 좌석입니다.")
+
+        val reservation = updatedScreening.createReservation(selectedSeats)
+        assertThat(reservation).isNotNull()
+        assertThat(reservation.display()).contains("좌석: A1")
     }
 }

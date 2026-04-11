@@ -39,10 +39,16 @@ class ReservatedSeatsTest {
     fun `좌석을 추가하면 해당 좌석이 예약이 불가하다`() {
         // given
         val reservatedSeats = ReservatedSeats(seats)
+        val selectedSeats =
+            SelectedSeats(
+                listOf(
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
+                ),
+            )
 
         // when
-        val newReservatedSeats = reservatedSeats.add(listOf(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B)))
-        val result = ReservatedSeats(newReservatedSeats).isAvailable(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B))
+        val newReservatedSeats = reservatedSeats.add(selectedSeats)
+        val result = newReservatedSeats.isAvailable(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B))
 
         // then
         assertThat(result).isFalse()

@@ -19,12 +19,18 @@ class Screening(
         return selectedSeats
     }
 
-    fun reserve(selectedSeats: SelectedSeats): Reservation {
-        return Reservation(
+    fun reserve(selectedSeats: SelectedSeats): Screening =
+        Screening(
+            movie,
+            slot,
+            reservatedSeats.add(selectedSeats),
+        )
+
+    fun createReservation(selectedSeats: SelectedSeats): Reservation =
+        Reservation(
             this,
             selectedSeats,
         )
-    }
 
     private fun isValidSeats(selectedSeats: SelectedSeats): Boolean = selectedSeats.all { slot.hasSeat(it) }
 }
