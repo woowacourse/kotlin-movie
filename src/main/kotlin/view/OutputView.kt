@@ -16,21 +16,22 @@ object OutputView {
     }
 
     fun printSeats(screen: Screen) {
-        val maxRow = Screen.MAX_ROW
-        val maxColumn = Screen.MAX_COLUMN
 
         println("좌석 배치도")
-        val header = " ".repeat(3) + (1..maxColumn).joinToString("    ")
+        val header = " ".repeat(3) + (1..Screen.MAX_COLUMN).joinToString("    ")
         println(header)
+        printSeatRows(screen)
+        println()
+    }
 
-        ('A' until 'A' + maxRow).forEach { row ->
-            val line = "$row" + (1..maxColumn).joinToString("") { col ->
+    fun printSeatRows(screen: Screen) {
+        ('A' until 'A' + Screen.MAX_ROW).forEach { row ->
+            val line = "$row" + (1..Screen.MAX_COLUMN).joinToString("") { col ->
                 val seat = screen.seats.seats.find { it.coordinate.row == row && it.coordinate.column == col }
                 " [ ${seat?.grade?.name ?: " "}]"
             }
             println(line)
         }
-        println()
     }
 
     fun printCart(items: List<String>) {
