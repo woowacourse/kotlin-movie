@@ -1,7 +1,13 @@
 package controller
 
+import domain.discountpolicy.CardDiscountPolicy
+import domain.discountpolicy.CashDiscountPolicy
+import domain.discountpolicy.DiscountPolicy
 import domain.discountpolicy.PayMethod
+import domain.discountpolicy.PayMethodDiscountPolicy
+import domain.money.Money
 import domain.paycalculator.PayCalculator
+import domain.point.Point
 import domain.reservations.Reservations
 import domain.reservations.items.Reservation
 import domain.seat.Seat
@@ -16,6 +22,9 @@ import java.time.LocalDate
 class Controller(
     val inputView: InputView,
     val outputView: OutputView,
+    val discountPolicies: List<DiscountPolicy>,
+    val cardDiscountPolicy: CardDiscountPolicy,
+    val cashDiscountPolicy: CashDiscountPolicy,
     val timeTable: TimeTable = TimeTable(MockTimeTable.timeTable),
 ) {
     fun run() {
@@ -112,11 +121,12 @@ class Controller(
         val movie = screeningSchedule.getMovie()
         val screenTime = screeningSchedule.getScreenTime()
 
-        val newReservation = Reservation(
-            movie = movie,
-            screenTime = screenTime,
-            seats = selectedSeats,
-        )
+        val newReservation =
+            Reservation(
+                movie = movie,
+                screenTime = screenTime,
+                seats = selectedSeats,
+            )
         outputView.printAddReservation(newReservation)
         return newReservation
     }
@@ -124,37 +134,63 @@ class Controller(
     fun payProcessor(reservations: Reservations) {
         val reservationItems = reservations.reservations
         outputView.printFinalReservations(reservationItems)
-        val payCalculator = PayCalculator(reservationItems)
+        val payCalculator = PayCalculator()
 
-        val usePoint = getUsePoint()
-        val payMethod = getUsePayMethod()
+        val initPrice = payCalculator.calculateInitPrice(reservationItems)
+        val discountedPrice = payCalculator.calculateTimeDiscountedPrice(initPrice, reservationItems, discountPolicies)
+        val pointAppliedPrice = usePoint(discountedPrice, payCalculator)
+        val finalPrice = applyPayMethodDiscount(pointAppliedPrice, payCalculator)
 
-        payCalculator.usePoint(usePoint)
-        payCalculator.pay(payMethod)
-        outputView.printFinalPrice(payCalculator.getTotalPrice().getAmount())
+        outputView.printFinalPrice(finalPrice.getAmount())
 
         if (!inputView.readPayAgreement()) return
+
         outputView.printReceipt(
             reservations.reservations,
-            payCalculator.getTotalPrice().getAmount(),
+            finalPrice.getAmount(),
         )
     }
 
-    fun getUsePoint(): Int {
+    fun getUsePoint(): Point {
         try {
-            return inputView.readUsePoint()
+            return Point(inputView.readUsePoint())
         } catch (e: IllegalArgumentException) {
             println(e.message)
             return getUsePoint()
         }
     }
 
-    fun getUsePayMethod(): PayMethod {
+    fun usePoint(
+        price: Money,
+        payCalculator: PayCalculator,
+    ): Money {
         try {
-            return inputView.readPayMethod()
+            val point = getUsePoint()
+            return payCalculator.usePoint(price, point)
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            return usePoint(price, payCalculator)
+        }
+    }
+
+    fun getUsePayMethod(): PayMethodDiscountPolicy {
+        try {
+            val payMethod = inputView.readPayMethod()
+            return when (payMethod) {
+                PayMethod.CARD -> cardDiscountPolicy
+                PayMethod.CASH -> cashDiscountPolicy
+            }
         } catch (e: IllegalArgumentException) {
             println(e.message)
             return getUsePayMethod()
         }
+    }
+
+    fun applyPayMethodDiscount(
+        price: Money,
+        payCalculator: PayCalculator,
+    ): Money {
+        val payMethodDiscountPolicy = getUsePayMethod()
+        return payCalculator.usePayMethod(price, payMethodDiscountPolicy)
     }
 }

@@ -1,51 +1,54 @@
 package domain.paycalculator
 
-import domain.discountpolicy.CardDiscountPolicy
-import domain.discountpolicy.CashDiscountPolicy
-import domain.discountpolicy.MovieDayDiscountPolicy
-import domain.discountpolicy.PayMethod
-import domain.discountpolicy.TimeDiscountPolicy
+import domain.discountpolicy.DiscountPolicy
+import domain.discountpolicy.PayMethodDiscountPolicy
 import domain.money.Money
+import domain.point.Point
 import domain.reservations.items.Reservation
 
-class PayCalculator(
-    private val reservations: List<Reservation>,
-) {
-    private var totalPrice: Money = Money(0)
-    private val timeDiscountPolicy = TimeDiscountPolicy()
-    private val movieDayDiscountPolicy = MovieDayDiscountPolicy()
-    private val cardDiscountPolicy = CardDiscountPolicy()
-    private val cashDiscountPolicy = CashDiscountPolicy()
+class PayCalculator {
+    fun calculateInitPrice(reservations: List<Reservation>): Money {
+        var initPrice = Money(0)
 
-    init {
-        calculateInitPrice()
-    }
-
-    fun calculateInitPrice() {
         for (reservation in reservations) {
             val info = reservation.getReservationInfo()
-            totalPrice = info.price
+            initPrice += info.price
         }
+
+        return initPrice
     }
 
-    fun calculateTotalPrice() {
+    fun calculateTimeDiscountedPrice(
+        price: Money,
+        reservations: List<Reservation>,
+        discountPolicies: List<DiscountPolicy>,
+    ): Money {
+        var discountedPrice = price
         for (reservation in reservations) {
-            totalPrice = movieDayDiscountPolicy.applyDiscount(totalPrice, reservation)
-            totalPrice = timeDiscountPolicy.applyDiscount(totalPrice, reservation)
-        }
-    }
-
-    fun usePoint(point: Int) {
-        totalPrice -= Money(point)
-    }
-
-    fun pay(payMethod: PayMethod) {
-        totalPrice =
-            when (payMethod) {
-                PayMethod.CARD -> cardDiscountPolicy.applyDiscount(totalPrice)
-                PayMethod.CASH -> cashDiscountPolicy.applyDiscount(totalPrice)
+            for (discountPolicy in discountPolicies) {
+                discountedPrice = discountPolicy.applyDiscount(discountedPrice, reservation)
             }
+        }
+
+        return discountedPrice
     }
 
-    fun getTotalPrice(): Money = totalPrice
+    fun usePoint(
+        price: Money,
+        point: Point,
+    ): Money {
+        if (price < point.exchangeToMoney()) {
+            throw IllegalArgumentException("$TOO_MUCH_POINT $price")
+        }
+        return price - point.exchangeToMoney()
+    }
+
+    fun usePayMethod(
+        price: Money,
+        payMethodDiscountPolicy: PayMethodDiscountPolicy,
+    ): Money = payMethodDiscountPolicy.applyDiscount(price)
+
+    companion object {
+        const val TOO_MUCH_POINT = "사용할 포인트는 결제할 금액보다 클 수 없습니다. 현재 금액:"
+    }
 }
