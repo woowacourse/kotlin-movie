@@ -47,6 +47,22 @@ object OutputView {
             }
     }
 
+    fun showShoppingCart(successResults: List<MovieReservationResult.Success>) {
+        println("장바구니")
+        successResults
+            .groupBy { it.movie.name to it.screenTime.start }
+            .forEach { (key, results) ->
+                val (movieName, startTime) = key
+                val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+            }
+    }
+
+    fun showTotalPrice(totalPrice: Int) {
+        println(Message.TOTAL_PRICE_TITLE)
+        println("${Message.TOTAL_PRICE} ${totalPrice}원")
+    }
+
     fun end() {
         println("감사합니다.")
     }

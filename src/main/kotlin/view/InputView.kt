@@ -61,8 +61,8 @@ object InputView {
         return point.toInt()
     }
 
-    fun inputPaymentMethod(): Int {
-        println(Message.SELECT_PAYMENT_METHOD)
+    fun inputPayType(): Int {
+        println(Message.SELECT_PAY_TYPE)
         PayType.entries.forEach { payType ->
             println(displayPayType(payType))
         }

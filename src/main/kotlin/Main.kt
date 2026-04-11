@@ -317,6 +317,11 @@ fun main() {
                             id = MovieId(movieId1),
                             runningTime = RunningTime(minute = 60),
                         ),
+                        Movie(
+                            name = MovieName(name = "F4 꽃보다 남자"),
+                            id = MovieId(movieId2),
+                            runningTime = RunningTime(minute = 60),
+                        ),
                     ),
             ),
     ).run()

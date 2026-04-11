@@ -8,7 +8,7 @@ import model.seat.SeatRow
 class CinemaKiosk(
     val cinemaSchedule: CinemaSchedule,
 ) {
-    var reserveResults: MutableList<MovieReservationResult.Success> = mutableListOf()
+    val reserveResults: MutableList<MovieReservationResult.Success> = mutableListOf()
 
     fun reserve(
         movieScreening: MovieScreening,

@@ -11,8 +11,9 @@ object Message {
     const val SHOW_RESERVATION_INFO = "장바구니에 추가됨"
     const val INPUT_CONTINUE = "다른 영화를 추가하시겠습니까? (Y/N)"
     const val INPUT_POINT = "사용할 포인트를 입력하세요 (없으면 0):"
-    const val SELECT_PAYMENT_METHOD = "결제 수단을 선택하세요:"
+    const val SELECT_PAY_TYPE = "결제 수단을 선택하세요:"
+    const val INVALID_PAY_TYPE = "존재하지 않는 결제 수단입니다."
     const val TOTAL_PRICE_TITLE = "가격 계산"
-    const val TOTAL_PRICE = "최종 결제 금액: "
+    const val TOTAL_PRICE = "최종 결제 금액:"
     const val INPUT_CONFIRM_PAYMENT = "위 금액으로 결제하시겠습니까? (Y/N)"
 }

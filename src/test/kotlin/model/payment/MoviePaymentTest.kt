@@ -7,8 +7,6 @@ import model.movie.Movie
 import model.movie.MovieId
 import model.movie.MovieName
 import model.movie.RunningTime
-import model.payment.MoviePayment
-import model.payment.PayType
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
@@ -65,12 +63,12 @@ class MoviePaymentTest {
                                     ),
                             ),
                         ),
-                ).calculateTotalPrice,
+                ).originalPrice,
             ).isEqualTo(33_000)
     }
 
     @Test
-    fun `무비데이(매월 10일, 20일, 30일)에 상영되는 영화는 10% 할인된다`() {
+    fun `무비데이(매월 10일, 20일, 30일)에 상영되는 영화를 신용카드로 결제 시 무비데이 10% 할인과 신용카드 결제 5% 할인이 적용된다`() {
         val screenTime =
             CinemaTimeRange(
                 CinemaTime(LocalDateTime.of(2026, 4, 10, 13, 0)),
@@ -105,15 +103,101 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyDiscount()
+
         Assertions
             .assertThat(
-                moviePayment.currentPrice,
-            ).isEqualTo(29_700)
+                moviePayment.getFinalPrice(payType = PayType.CREDIT_CARD, point = 0),
+            ).isEqualTo(28_215)
     }
 
     @Test
-    fun `오전 11시까지 시작하는 상영은 2,000원이 할인된다`() {
+    fun `무비데이(매월 10일, 20일, 30일)에 상영되는 영화를 현금으로 결제 시 무비데이 10% 할인과 현금 결제 2% 할인이 적용된다`() {
+        val screenTime =
+            CinemaTimeRange(
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 13, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 14, 0)),
+            )
+
+        val moviePayment =
+            MoviePayment(
+                reservations =
+                    listOf(
+                        MovieReservationResult.Success(
+                            movie = movieOne,
+                            screenTime = screenTime,
+                            seat =
+                                Seat(
+                                    row = SeatRow("A"),
+                                    column = SeatColumn(1),
+                                    grade = SeatGrade.A,
+                                    state = SeatState.RESERVED,
+                                ),
+                        ),
+                        MovieReservationResult.Success(
+                            movie = movieOne,
+                            screenTime = screenTime,
+                            seat =
+                                Seat(
+                                    row = SeatRow("A"),
+                                    column = SeatColumn(2),
+                                    grade = SeatGrade.S,
+                                    state = SeatState.RESERVED,
+                                ),
+                        ),
+                    ),
+            )
+
+        Assertions
+            .assertThat(
+                moviePayment.getFinalPrice(payType = PayType.CASH, point = 0),
+            ).isEqualTo(29_106)
+    }
+
+    @Test
+    fun `무비데이(매월 10일, 20일, 30일)에 상영되는 영화를 현금과 포인트를 사용하여 결제 시 무비데이 10% 할인과 현금 결제 2% 할인, 포인트가 적용된다`() {
+        val screenTime =
+            CinemaTimeRange(
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 13, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 14, 0)),
+            )
+
+        val moviePayment =
+            MoviePayment(
+                reservations =
+                    listOf(
+                        MovieReservationResult.Success(
+                            movie = movieOne,
+                            screenTime = screenTime,
+                            seat =
+                                Seat(
+                                    row = SeatRow("A"),
+                                    column = SeatColumn(1),
+                                    grade = SeatGrade.A,
+                                    state = SeatState.RESERVED,
+                                ),
+                        ),
+                        MovieReservationResult.Success(
+                            movie = movieOne,
+                            screenTime = screenTime,
+                            seat =
+                                Seat(
+                                    row = SeatRow("A"),
+                                    column = SeatColumn(2),
+                                    grade = SeatGrade.S,
+                                    state = SeatState.RESERVED,
+                                ),
+                        ),
+                    ),
+            )
+
+        Assertions
+            .assertThat(
+                moviePayment.getFinalPrice(payType = PayType.CASH, point = 3000),
+            ).isEqualTo(26_166)
+    }
+
+    @Test
+    fun `무비데이가 아닌 날 오전 11시 전에 상영되는 영화를 신용카드로 결제하면 2000원 할인 + 5% 할인이 적용된다`() {
         val screenTime =
             CinemaTimeRange(
                 CinemaTime(LocalDateTime.of(2026, 4, 15, 10, 0)),
@@ -137,19 +221,18 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyDiscount()
         Assertions
             .assertThat(
-                moviePayment.currentPrice,
-            ).isEqualTo(15_000 - 2_000)
+                moviePayment.getFinalPrice(payType = PayType.CREDIT_CARD, point = 0),
+            ).isEqualTo(12_350)
     }
 
     @Test
-    fun `오후 8시부터 시작하는 상영은 2,000원이 할인된다`() {
+    fun `무비데이가 아닌 날 오후 8시 후에 상영되는 영화를 신용카드로 결제하면 2000원 할인 + 5% 할인이 적용된다`() {
         val screenTime =
             CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 13, 20, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 13, 21, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 15, 20, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 15, 21, 0)),
             )
 
         val moviePayment =
@@ -169,19 +252,24 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyDiscount()
         Assertions
             .assertThat(
-                moviePayment.currentPrice,
-            ).isEqualTo(15_000 - 2_000)
+                moviePayment.getFinalPrice(payType = PayType.CREDIT_CARD, point = 0),
+            ).isEqualTo(12_350)
     }
 
     @Test
-    fun `무비데이이면서 시간 조건을 만족하면 무비데이 할인이 먼저 적용된 후 시간 조건 할인이 적용된다`() {
-        val screenTime =
+    fun `무비데이인 날과 무비데이가 아닌 날의 영화를 동시 예매했을 때 무비데이 예약건만 할인이 진행된다`() {
+        val movieDayScreenTime =
             CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 20, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 21, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 15, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 10, 16, 0)),
+            )
+
+        val noMovieDayScreenTime =
+            CinemaTimeRange(
+                CinemaTime(LocalDateTime.of(2026, 4, 15, 15, 0)),
+                CinemaTime(LocalDateTime.of(2026, 4, 15, 16, 0)),
             )
 
         val moviePayment =
@@ -190,7 +278,18 @@ class MoviePaymentTest {
                     listOf(
                         MovieReservationResult.Success(
                             movie = movieOne,
-                            screenTime = screenTime,
+                            screenTime = movieDayScreenTime,
+                            seat =
+                                Seat(
+                                    row = SeatRow("A"),
+                                    column = SeatColumn(1),
+                                    grade = SeatGrade.A,
+                                    state = SeatState.RESERVED,
+                                ),
+                        ),
+                        MovieReservationResult.Success(
+                            movie = movieOne,
+                            screenTime = noMovieDayScreenTime,
                             seat =
                                 Seat(
                                     row = SeatRow("A"),
@@ -201,139 +300,9 @@ class MoviePaymentTest {
                         ),
                     ),
             )
-        moviePayment.applyDiscount()
         Assertions
             .assertThat(
-                moviePayment.currentPrice,
-            ).isEqualTo(11_500)
-    }
-
-    @Test
-    fun `포인트를 사용하면 예매 금액에서 차감된다`() {
-        val screenTime =
-            CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 20, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 21, 0)),
-            )
-
-        val moviePayment =
-            MoviePayment(
-                reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
-                        ),
-                    ),
-            )
-        moviePayment.applyPoint(5000)
-        Assertions
-            .assertThat(
-                moviePayment.currentPrice,
-            ).isEqualTo(10_000)
-    }
-
-    @Test
-    fun `신용카드로 결제하면 포인트 적용 후 금액에서 5% 할인된다`() {
-        val screenTime =
-            CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 20, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 21, 0)),
-            )
-
-        val moviePayment =
-            MoviePayment(
-                reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
-                        ),
-                    ),
-            )
-        moviePayment.applyPoint(5000)
-        Assertions
-            .assertThat(
-                moviePayment.pay(PayType.CREDIT_CARD),
-            ).isEqualTo(9_500)
-    }
-
-    @Test
-    fun `현금으로 결제하면 포인트 적용 후 금액에서 2% 할인된다`() {
-        val screenTime =
-            CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 20, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 10, 21, 0)),
-            )
-
-        val moviePayment =
-            MoviePayment(
-                reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
-                        ),
-                    ),
-            )
-        moviePayment.applyPoint(5000)
-        Assertions
-            .assertThat(
-                moviePayment.pay(PayType.CASH),
-            ).isEqualTo(9_800)
-    }
-
-    @Test
-    fun `할인 조건이 없으면 기본 금액이 그대로 적용된다`() {
-        val screenTime =
-            CinemaTimeRange(
-                CinemaTime(LocalDateTime.of(2026, 4, 13, 13, 0)),
-                CinemaTime(LocalDateTime.of(2026, 4, 13, 14, 0)),
-            )
-
-        val moviePayment =
-            MoviePayment(
-                reservations =
-                    listOf(
-                        MovieReservationResult.Success(
-                            movie = movieOne,
-                            screenTime = screenTime,
-                            seat =
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(1),
-                                    grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
-                                ),
-                        ),
-                    ),
-            )
-        moviePayment.applyDiscount()
-        moviePayment.applyPoint(0)
-        Assertions
-            .assertThat(
-                moviePayment.calculateTotalPrice,
-            ).isEqualTo(moviePayment.currentPrice)
+                moviePayment.getFinalPrice(payType = PayType.CREDIT_CARD, point = 0),
+            ).isEqualTo(27_075)
     }
 }

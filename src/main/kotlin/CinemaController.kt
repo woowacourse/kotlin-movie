@@ -3,6 +3,8 @@ import model.CinemaTime
 import model.MovieReservationResult
 import model.movie.Movie
 import model.movie.MovieCatalog
+import model.payment.MoviePayment
+import model.payment.PayType
 import model.schedule.MovieScreening
 import model.schedule.onDate
 import view.InputView
@@ -28,8 +30,9 @@ class CinemaController(
 
             reserveSeats(selectMovieScreening)
         } while (InputView.askReserveMore())
-
         // 결제
+        val totalPrice = processPayment(cinemaKiosk)
+        OutputView.showTotalPrice(totalPrice)
     }
 
     private fun startReservation(): Boolean = InputView.askStartReservation()
@@ -80,6 +83,24 @@ class CinemaController(
                     )
                 OutputView.showReservationInfo(reservations)
                 return reservations
+            } catch (e: IllegalArgumentException) {
+                OutputView.showErrorMessage(e.message)
+            }
+        }
+    }
+
+    private fun processPayment(cinemaKiosk: CinemaKiosk): Int {
+        val moviePayment = MoviePayment(cinemaKiosk.reserveResults)
+        while (true) {
+            try {
+                OutputView.showShoppingCart(successResults = cinemaKiosk.reserveResults)
+                val point = InputView.inputPoint()
+                val selectedPayType = InputView.inputPayType()
+                val payType = PayType.fromId(selectedPayType)
+                return moviePayment.getFinalPrice(
+                    payType = payType,
+                    point = point,
+                )
             } catch (e: IllegalArgumentException) {
                 OutputView.showErrorMessage(e.message)
             }
