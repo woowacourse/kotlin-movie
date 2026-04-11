@@ -59,14 +59,14 @@ class ScreeningScheduleTest {
 
     @Test
     fun `입력된 영화 제목이 소유하고 있는 영화 제목과 같다면 true를 반환받는다`() {
-        val result = schedule.isScreeningMovieTitle("신바드의 모험")
+        val result = schedule.isScreeningMovieTitle(Title("신바드의 모험"))
 
         assertThat(result).isTrue()
     }
 
     @Test
     fun `입력된 영화 제목이 소유하고 있는 영화 제목과 다르다면 false를 반환받는다`() {
-        val result = schedule.isScreeningMovieTitle("신밧드의 모험")
+        val result = schedule.isScreeningMovieTitle(Title("신밧드의 모험"))
 
         assertThat(result).isFalse()
     }
@@ -153,7 +153,7 @@ class ScreeningScheduleTest {
             )
         reservationSchedule.reserveSeat(reserveSeat)
 
-        val result = reservationSchedule.isReservedSeat("A1")
+        val result = reservationSchedule.isReservedSeat(SeatPosition.of("A1"))
 
         assertThat(result).isTrue()
     }
@@ -212,7 +212,7 @@ class ScreeningScheduleTest {
             )
         reservationSchedule.reserveSeat(reserveSeat)
 
-        val result = reservationSchedule.isReservedSeat("B1")
+        val result = reservationSchedule.isReservedSeat(SeatPosition.of("B1"))
 
         assertThat(result).isFalse()
     }

@@ -23,7 +23,7 @@ class SeatTest {
                 seatGrade = GradeS(),
             )
 
-        val result = seat.isExist("A1")
+        val result = seat.isExistSeatPosition(SeatPosition.of("A1"))
 
         assertThat(result).isTrue()
     }
@@ -40,7 +40,7 @@ class SeatTest {
                 seatGrade = GradeS(),
             )
 
-        val result = seat.isExist("B2")
+        val result = seat.isExistSeatPosition(SeatPosition.of("B2"))
 
         assertThat(result).isFalse()
     }

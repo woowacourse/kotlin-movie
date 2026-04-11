@@ -15,7 +15,7 @@ class TitleTest {
     fun `입력받은 영화 제목이 Title과 같으면 True를 반환한다`() {
         val title = Title("신바드의 모험")
 
-        val result = title.isSame("신바드의 모험")
+        val result = title.isSame(Title("신바드의 모험"))
 
         assertThat(result).isTrue()
     }
@@ -24,7 +24,7 @@ class TitleTest {
     fun `입력받은 영화 제목이 Title과 같지 않으면 false를 반환한다`() {
         val title = Title("신바드의 모험")
 
-        val result = title.isSame("신밧드의 모험")
+        val result = title.isSame(Title("신밧드의 모험"))
 
         assertThat(result).isFalse()
     }

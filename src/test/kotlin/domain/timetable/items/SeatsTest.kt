@@ -19,7 +19,7 @@ class SeatsTest {
         val seats = listOf(seatA, seatB)
         val screenSeats = Seats(seats)
 
-        val result = screenSeats.isExistSeatNumber("A1")
+        val result = screenSeats.isExistSeatNumber(SeatPosition.of("A1"))
 
         assertThat(result).isTrue()
     }
@@ -32,7 +32,7 @@ class SeatsTest {
         val seats = listOf(seatA, seatB)
         val screenSeats = Seats(seats)
 
-        val result = screenSeats.isExistSeatNumber("Z11111")
+        val result = screenSeats.isExistSeatNumber(SeatPosition.of("Z11111"))
 
         assertThat(result).isFalse()
     }
@@ -45,7 +45,7 @@ class SeatsTest {
         val seats = listOf(seatA, seatB)
         val screenSeats = Seats(seats)
 
-        val result = screenSeats.findSeat("A1")
+        val result = screenSeats.findSeat(SeatPosition.of("A1"))
 
         assertThat(result).isEqualTo(seatA)
     }
@@ -58,7 +58,7 @@ class SeatsTest {
         val seats = listOf(seatA, seatB)
         val screenSeats = Seats(seats)
 
-        assertThrows<IllegalArgumentException> { screenSeats.findSeat("ZZ11234") }
+        assertThrows<IllegalArgumentException> { screenSeats.findSeat(SeatPosition.of("ZZ11234")) }
     }
 
     private fun createSeat(

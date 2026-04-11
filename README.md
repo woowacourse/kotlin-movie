@@ -64,8 +64,11 @@
 
 ### 4. reserved seats
 
-- [ ] 입력된 좌석 번호가 reserved seats에 있다면 true를 반환한다.
-- [ ] 입력된 좌석 번호가 reserved seats에 없다면 false를 반환한다.
+- [x] 입력된 좌석 번호가 reserved seats에 있다면 true를 반환한다
+- [x] 입력된 좌석 번호가 reserved seats에 없다면 false를 반환한다
+- [ ] 입력된 좌석 번호를 reserved seats에 추가한다
+- [ ] 입력된 좌석이 reserved seats에 이미 있다면 예외를 발생한다
+- [ ] 예약된 좌석들의 가격의 합계를 반환한다
 
 ### 5. timetable
 

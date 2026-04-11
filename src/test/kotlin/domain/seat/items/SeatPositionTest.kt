@@ -12,7 +12,7 @@ class SeatPositionTest {
                 columnNumber = ColumnNumber(1),
             )
 
-        val result = seatPosition.isExistSeatPosition("A1")
+        val result = seatPosition.isExistSeatPosition(SeatPosition.of("A1"))
 
         assertThat(result).isTrue()
     }
@@ -25,7 +25,7 @@ class SeatPositionTest {
                 columnNumber = ColumnNumber(1),
             )
 
-        val result = seatPosition.isExistSeatPosition("A2")
+        val result = seatPosition.isExistSeatPosition(SeatPosition.of("A2"))
 
         assertThat(result).isFalse()
     }

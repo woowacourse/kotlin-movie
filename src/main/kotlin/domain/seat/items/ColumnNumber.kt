@@ -4,5 +4,5 @@ package domain.seat.items
 value class ColumnNumber(
     private val columnNumber: Int,
 ) {
-    fun isSame(number: Int) = columnNumber == number
+    fun isSame(number: ColumnNumber) = columnNumber == number.columnNumber
 }

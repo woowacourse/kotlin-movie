@@ -4,5 +4,5 @@ package domain.seat.items
 value class RowNumber(
     private val rowNumber: String,
 ) {
-    fun isSame(number: String): Boolean = rowNumber == number
+    fun isSame(number: RowNumber): Boolean = rowNumber == number.rowNumber
 }

@@ -40,7 +40,7 @@ class ScreenTest {
                 seats = seats,
             )
 
-        val result = screen.findSeat("A1")
+        val result = screen.findSeat(SeatPosition.of("A1"))
         assertThat(result).isTrue()
     }
 
@@ -51,7 +51,7 @@ class ScreenTest {
                 seats = seats,
             )
 
-        val result = screen.findSeat("F1")
+        val result = screen.findSeat(SeatPosition.of("F1"))
         assertThat(result).isFalse()
     }
 }
