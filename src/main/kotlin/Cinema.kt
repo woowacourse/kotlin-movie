@@ -1,5 +1,7 @@
 import controller.CinemaController
+import controller.PaymentController
 import controller.ReservationController
+import domain.model.Payment.PaymentMethod
 import domain.model.screen.Screening
 import view.SeatLayoutView
 import java.time.LocalDate
@@ -12,6 +14,7 @@ private data class ReservedSelection(
 fun cinema() {
     val cinemaController = CinemaController()
     val reservationController = ReservationController()
+    val paymentController = PaymentController()
 
     println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
     if (!readYesNo()) {
@@ -56,6 +59,37 @@ fun cinema() {
         .forEach { summary ->
             println(summary)
         }
+
+    println("사용할 포인트를 입력하세요 (없으면 0):")
+    val point = readln().trim().toIntOrNull() ?: 0
+
+    println("결제 수단을 선택하세요:")
+    println("1. 신용카드")
+    println("2. 현금")
+    val paymentMethod = PaymentMethod.entries[readln().trim().toInt()-1]
+    paymentController.usePoint(point)
+    paymentController.selectPaymentMethod(paymentMethod)
+
+    println("가격계산")
+    val resultPrice = paymentController.payAmountApply(reservationController.reservationItems())
+    println("최종 결제 금액: $resultPrice")
+
+    println("위 금액으로 결제하시겠습니까? (Y/N)")
+    if(!readContinuePayment()){
+        return
+    }
+
+    println("예매 완료")
+    reservationController
+        .reservationSummaries()
+        .forEach { summary ->
+            println(summary)
+        }
+
+    println("결제 금액: $resultPrice  (포인트 ${point}원 사용)")
+
+    println("감사합니다")
+
 }
 
 // Y/N 값을 검증해서 반환한다.
@@ -200,5 +234,19 @@ private fun readSeatCodes(): List<String> {
         }
 
         return seats
+    }
+}
+
+// 좌석 코드를 리스트로 파싱한다.
+private fun readContinuePayment():Boolean {
+    while (true) {
+        val answer = readln().trim().uppercase()
+
+        if (answer == "Y") {
+            return true
+        }
+        if (answer == "N") {
+            return false
+        }
     }
 }
