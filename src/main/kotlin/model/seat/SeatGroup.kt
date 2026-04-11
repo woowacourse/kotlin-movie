@@ -12,8 +12,8 @@ class SeatGroup(
     fun getSeat(
         row: SeatRow,
         column: SeatColumn,
-    ): Seat {
-        val seat = seats.first { it.isSameSeat(row, column) }
+    ): Seat? {
+        val seat = seats.firstOrNull { it.isSameSeat(row, column) }
         return seat
     }
 

@@ -25,6 +25,7 @@ class CinemaController(
         val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
         OutputView.showMovieSeatGroup(selectMovieScreening)
 
+        val reservations = reserveSeats(selectMovieScreening)
         // 결제
     }
 
@@ -69,7 +70,11 @@ class CinemaController(
         while (true) {
             try {
                 val selectSeats = InputView.selectSeats()
-                val reservations = cinemaKiosk.reserveSeats(selectMovieScreening, selectSeats)
+                val reservations =
+                    cinemaKiosk.reserveSeats(
+                        movieScreening = selectMovieScreening,
+                        selectedSeats = selectSeats,
+                    )
                 OutputView.showReservationInfo(reservations)
                 return reservations
             } catch (e: IllegalArgumentException) {

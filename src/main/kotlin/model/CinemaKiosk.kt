@@ -46,7 +46,7 @@ class CinemaKiosk(
         positions: List<Pair<SeatRow, SeatColumn>>,
     ) {
         positions.forEach { (seatRow, seatColumn) ->
-            movieScreening.getSeat(seatRow, seatColumn).cancelReservation()
+            movieScreening.getSeat(seatRow, seatColumn)?.cancelReservation()
         }
     }
 
@@ -54,9 +54,17 @@ class CinemaKiosk(
         movieScreening: MovieScreening,
         selectedSeats: List<Pair<SeatRow, SeatColumn>>,
     ): List<MovieReservationResult.Success> {
+        selectedSeats.forEach { (seatRow, seatColumn) -> movieScreening.getSeat(seatRow, seatColumn) }
         val success = mutableListOf<MovieReservationResult.Success>()
         for ((row, col) in selectedSeats) {
-            when (val result = reserve(movieScreening, row, col)) {
+            when (
+                val result =
+                    reserve(
+                        movieScreening = movieScreening,
+                        seatRow = row,
+                        seatColumn = col,
+                    )
+            ) {
                 is MovieReservationResult.Success -> success.add(result)
                 is MovieReservationResult.Failed -> {
                     cancelReservations(movieScreening, success.map { it.seat.row to it.seat.column })

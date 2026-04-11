@@ -20,7 +20,9 @@ class MovieScreening(
     fun getSeat(
         seatRow: SeatRow,
         seatColumn: SeatColumn,
-    ): Seat = seatGroup.getSeat(seatRow, seatColumn)
+    ): Seat =
+        seatGroup.getSeat(seatRow, seatColumn)
+            ?: throw IllegalArgumentException(Message.NO_EXIST_SEAT)
 
     override fun equals(other: Any?): Boolean {
         if (other is MovieScreening) {
