@@ -18,5 +18,5 @@ class Movie(
         return false
     }
 
-    override fun hashCode(): Int = name.hashCode()
+    override fun hashCode(): Int = id.hashCode()
 }
