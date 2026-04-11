@@ -13,10 +13,10 @@ class ScreeningSeatMap(
         seatNumbers.forEach {
             require(!reservedSeats.seatNumbers.contains(it)) { "이미 예약된 좌석입니다." }
         }
-        val newReservedSeats = seatNumbers.map { screen.seats.findSeat(it) }
-        val combined = reservedSeats.value + newReservedSeats
-        return ScreeningSeatMap(screen, Seats(combined))
+        val newReservedSeats = Seats(seatNumbers.map { screen.seats.findSeat(it) })
+        val updatedSeats = reservedSeats.addSeats(newReservedSeats)
+        return ScreeningSeatMap(screen, updatedSeats)
     }
 
-    fun getAvailableSeats(): Seats = Seats(screen.seats.value - reservedSeats.value.toSet())
+    fun getAvailableSeats(): Seats = screen.seats.excludeReserved(reservedSeats)
 }

@@ -33,7 +33,7 @@ class SeatsTest {
         val seat2 = Seat(SeatNumber('A', 2), SeatGrade.B)
         val seats = Seats(listOf(seat1, seat2))
 
-        val available = seats.excludeReserved(setOf(SeatNumber('A', 1)))
+        val available = seats.excludeReserved(Seats(listOf(seat1)))
 
         assertThat(available.calculateTotalPrice()).isEqualTo(Money(12_000))
     }
