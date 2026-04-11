@@ -14,8 +14,7 @@ class Reservations(
         return Reservations(value + newReservation)
     }
 
-    fun hasOverlappingWith(screening: Screening): Boolean =
-        value.any { it.screening.hasOverlappingWith(screening) }
+    fun hasOverlappingWith(screening: Screening): Boolean = value.any { it.screening.hasOverlappingWith(screening) }
 
     fun isEmpty(): Boolean = value.isEmpty()
 }

@@ -7,9 +7,12 @@ import repository.ScreeningRepository
 import java.time.LocalDate
 
 class Scheduler(
-    private val screeningRepository: ScreeningRepository
+    private val screeningRepository: ScreeningRepository,
 ) {
     fun update(newScreening: Screening) = screeningRepository.update(newScreening)
 
-    fun findBy(movie: Movie, date: LocalDate): Screenings = screeningRepository.findBy(movie, date)
+    fun findBy(
+        movie: Movie,
+        date: LocalDate,
+    ): Screenings = screeningRepository.findBy(movie, date)
 }

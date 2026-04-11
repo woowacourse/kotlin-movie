@@ -46,14 +46,14 @@ class ScreeningTest {
         Screening(
             movie1,
             LocalDateTime.of(date, LocalTime.of(startHour, 0)),
-            ScreeningSeatMap(defaultScreen)
+            ScreeningSeatMap(defaultScreen),
         )
 
     private fun screening2(startHour: Int): Screening =
         Screening(
             movie2,
             LocalDateTime.of(date, LocalTime.of(startHour, 0)),
-            ScreeningSeatMap(defaultScreen)
+            ScreeningSeatMap(defaultScreen),
         )
 
     @Test

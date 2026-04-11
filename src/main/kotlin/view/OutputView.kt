@@ -31,10 +31,12 @@ object OutputView {
 
         println("    " + columns.joinToString(separator = "    ") { "$it" })
         rows.forEach { row ->
-            val rowString = "$row " + columns.joinToString(" ") { col ->
-                val seatNumber = SeatNumber(row, col)
-                printSeatMarker(seatNumber, defaultSeats, availableSeats)
-            }
+            val rowString =
+                "$row " +
+                    columns.joinToString(" ") { col ->
+                        val seatNumber = SeatNumber(row, col)
+                        printSeatMarker(seatNumber, defaultSeats, availableSeats)
+                    }
             println(rowString)
         }
     }

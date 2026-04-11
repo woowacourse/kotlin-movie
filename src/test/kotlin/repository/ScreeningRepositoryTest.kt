@@ -4,17 +4,12 @@ package repository
 
 import model.movie.Movie
 import model.movie.RunningTime
-import model.screening.Screening
-import model.screening.ScreeningSeatMap
-import model.screening.Screenings
 import model.seat.SeatNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import repository.MovieRepository.F1_THE_MOVIE
 import repository.MovieRepository.IRON_MAN
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class ScreeningRepositoryTest {
     private val baseDate: LocalDate = LocalDate.of(2025, 9, 20)
@@ -54,7 +49,7 @@ class ScreeningRepositoryTest {
         val repository = ScreeningRepository()
         val targetScreening = repository.findBy(IRON_MAN, baseDate).first()
         val seatNumber = SeatNumber('A', 1)
-        
+
         // 좌석 하나를 예약한 새로운 상태의 Screening 생성
         val updatedScreening = targetScreening.reserve(listOf(seatNumber)).screening
 
@@ -73,7 +68,7 @@ class ScreeningRepositoryTest {
         val fMovieScreenings = repository.findBy(F1_THE_MOVIE, baseDate)
         val targetScreening = fMovieScreenings.first()
         val otherScreeningBefore = fMovieScreenings.toList()[1]
-        
+
         val updatedScreening = targetScreening.reserve(listOf(SeatNumber('A', 1))).screening
 
         // when
