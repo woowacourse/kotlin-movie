@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.domain.seat.SeatNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -62,5 +63,26 @@ class ScheduleTest {
         )
 
         assertThat(schedule1.isDuplicateTime(schedule2)).isTrue
+    }
+
+    @Test
+    fun `유효하지 않은 좌석을 예매하려고 하면 예외가 발생한다`() {
+        val schedule = Schedule(
+            movie = Movie(
+                title = "시동",
+                runningTime = 120,
+            ),
+            startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
+            endTime = LocalDateTime.of(2026, 4, 10, 12, 0),
+        )
+
+        val seatNumbers = listOf(
+            SeatNumber(row = 'A', col = 1),
+            SeatNumber(row = 'Z', col = 1),
+        )
+
+        assertThrows<IllegalArgumentException> {
+            schedule.addSeats(seatNumbers)
+        }
     }
 }
