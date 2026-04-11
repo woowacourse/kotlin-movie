@@ -1,8 +1,7 @@
 package domain.reservations
 
 import domain.reservations.items.Reservation
-import java.time.LocalDate
-import java.time.LocalTime
+import domain.timetable.items.ScreenTime
 
 class Reservations {
     private val _reservations = mutableListOf<Reservation>()
@@ -13,13 +12,12 @@ class Reservations {
         _reservations.add(reservation)
     }
 
-    fun checkDuplicateTime(inputTime: LocalTime): Boolean =
-        _reservations.any {
-            it.isDuplicatedTime(inputTime)
-        }
+    fun checkDuplicate(screenTime: ScreenTime): Boolean {
+        val startTime = screenTime.getStartTime()
+        val screeningDate = screenTime.getScreeningDate()
 
-    fun checkDuplicateDate(inputDate: LocalDate): Boolean =
-        _reservations.any {
-            it.isDuplicatedDate(inputDate)
+        return _reservations.any {
+            it.isDuplicatedDate(screeningDate) && it.isDuplicatedTime(startTime)
         }
+    }
 }
