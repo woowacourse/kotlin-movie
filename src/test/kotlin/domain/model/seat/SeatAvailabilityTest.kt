@@ -1,9 +1,7 @@
-package domain.model
+package domain.model.seat
 
 import domain.RowLabel
 import domain.Seat
-import domain.model.seat.SeatAvailability
-import domain.model.seat.SeatStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
