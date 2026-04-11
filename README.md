@@ -7,7 +7,7 @@
 - [x] 일급 컬렉션 내부 리스트에 방어적 복사(`toList()`)를 적용하여 불변성 보장
 - [x] `RateDiscountEffect` 생성 시 비정상적인 할인율(`rate`) 값 입력을 막기 위한 유효성 검증 추가
 - [ ] `Scheduler` 클래스의 거대해진 역할과 책임을 분리하여 단일 책임 원칙(SRP) 준수
-- [ ] 할인 정책의 지속적인 확장성을 고려하여 `DiscountPolicy`를 `sealed interface`에서 일반 `interface`로 개방 (OCP 준수)
+- [x] 할인 정책의 지속적인 확장성을 고려하여 `DiscountPolicy`를 `sealed interface`에서 일반 `interface`로 개방 (OCP 준수)
 
 ### 가독성 및 네이밍
 
