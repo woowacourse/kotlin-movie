@@ -117,8 +117,8 @@
 
 ### 10. reservations
 
-- [ ] reservations 목록 중 입력받은 reservation과 겹치는 reservation이 없으면 추가한다
-- [ ] reservations 목록 중 입력받은 reservation과 겹치는 reservation이 있으면 에러를 발생한다
+- [x] reservations 목록 중 입력받은 reservation과 겹치는 reservation이 없으면 추가한다
+- [x] reservations 목록 중 입력받은 reservation과 겹치는 reservation이 있으면 에러를 발생한다
 
 ### 11. point
 

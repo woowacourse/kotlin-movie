@@ -14,16 +14,88 @@ import domain.seat.items.SeatPosition
 import domain.timetable.items.ScreenTime
 import domain.timetable.items.Seats
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationsTest {
     @Test
-    fun `reservations 목록 중 입력받은 reservation과 겹치는 reservation이 없으면 추가한다`() {
+    fun `reservations 목록 중 입력받은 reservation의 시간과 겹치는 reservation이 없으면 추가한다`() {
         val reservations = Reservations()
+
+        val reservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(11, 0),
+                        endTime = LocalTime.of(13, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+        val newReservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(7, 0),
+                        endTime = LocalTime.of(9, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+        reservations.addReservation(reservation)
+        assertDoesNotThrow { reservations.addReservation(newReservation) }
+    }
+
+    @Test
+    fun `reservations 목록 중 입력받은 reservation의 시간과 겹치는 reservation이 없으면 추가한다2`() {
+        val reservations = Reservations()
+
+        val reservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(11, 0),
+                        endTime = LocalTime.of(13, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+        val newReservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(11, 0),
+                        endTime = LocalTime.of(13, 0),
+                        screeningDate = LocalDate.of(2026, 4, 9),
+                    ),
+            )
+        reservations.addReservation(reservation)
+        assertDoesNotThrow { reservations.addReservation(newReservation) }
     }
 
     @Test
     fun `reservations 목록 중 입력받은 reservation과 겹치는 reservation이 있으면 에러를 발생한다`() {
+        val reservations = Reservations()
+
+        val reservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(11, 0),
+                        endTime = LocalTime.of(13, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+        val newReservation =
+            createReservation(
+                screenTime =
+                    ScreenTime(
+                        startTime = LocalTime.of(12, 0),
+                        endTime = LocalTime.of(15, 0),
+                        screeningDate = LocalDate.of(2026, 4, 10),
+                    ),
+            )
+        reservations.addReservation(reservation)
+        assertThrows<IllegalArgumentException> { reservations.addReservation(newReservation) }
     }
 
     private fun createReservation(screenTime: ScreenTime) =
