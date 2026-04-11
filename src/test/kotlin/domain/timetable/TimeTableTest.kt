@@ -48,14 +48,14 @@ class TimeTableTest {
 
     @Test
     fun `영화 제목을 입력받아 입력값과 같은 영화 제목을 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다`() {
-        val result = timeTable.getMovieSchedulesWithTitle("신바드의 모험")
+        val result = timeTable.getMovieSchedulesWithTitle(Title("신바드의 모험"))
 
         assertThat(result.countSchedule()).isEqualTo(2)
     }
 
     @Test
     fun `입력받은 영화 제목이 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다`() {
-        assertThrows<IllegalArgumentException> { timeTable.getMovieSchedulesWithTitle("심바드의 모험") }
+        assertThrows<IllegalArgumentException> { timeTable.getMovieSchedulesWithTitle(Title("심바드의 모험")) }
     }
 
     @Test
