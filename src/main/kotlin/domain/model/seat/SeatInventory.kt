@@ -1,7 +1,5 @@
 package domain.model.seat
 
-import domain.Seat
-
 // 상영 1건의 전체 좌석 상태를 관리한다.
 data class SeatInventory(
     private val seats: List<SeatAvailability>,

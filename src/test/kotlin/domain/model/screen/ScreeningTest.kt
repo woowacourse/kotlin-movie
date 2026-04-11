@@ -1,7 +1,7 @@
 package domain.model.screen
 
-import domain.RowLabel
-import domain.Seat
+import domain.model.seat.RowLabel
+import domain.model.seat.Seat
 import domain.model.Movie
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

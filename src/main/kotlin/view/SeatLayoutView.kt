@@ -1,6 +1,6 @@
 package view
 
-import domain.RowLabel
+import domain.model.seat.RowLabel
 import domain.model.seat.SeatAvailability
 
 object SeatLayoutView {

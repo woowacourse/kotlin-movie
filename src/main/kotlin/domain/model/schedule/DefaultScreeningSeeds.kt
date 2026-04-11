@@ -1,4 +1,4 @@
-package domain
+package domain.model.schedule
 
 import java.time.LocalDate
 import java.time.LocalTime

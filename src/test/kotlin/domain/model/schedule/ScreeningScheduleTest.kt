@@ -1,7 +1,9 @@
-package domain
+package domain.model.schedule
 
 import domain.model.Movie
 import domain.model.screen.Screening
+import domain.model.seat.RowLabel
+import domain.model.seat.Seat
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test

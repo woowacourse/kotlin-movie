@@ -1,4 +1,4 @@
-package domain
+package domain.model.seat
 
 // 좌석은 row(숫자) + column(알파벳) + 좌석 등급으로 구성된다.
 data class Seat(

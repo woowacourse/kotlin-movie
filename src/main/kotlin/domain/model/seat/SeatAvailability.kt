@@ -1,7 +1,5 @@
 package domain.model.seat
 
-import domain.Seat
-
 // 좌석과 예약 가능 상태를 함께 표현한다.
 data class SeatAvailability(
     val seat: Seat,

@@ -1,9 +1,9 @@
 package controller
 
-import domain.RowLabel
-import domain.ScreeningSchedule
-import domain.Seat
-import domain.defaultScreeningSeeds
+import domain.model.seat.RowLabel
+import domain.model.schedule.ScreeningSchedule
+import domain.model.seat.Seat
+import domain.model.schedule.defaultScreeningSeeds
 import domain.model.Movie
 import domain.model.screen.Screening
 import domain.model.seat.SeatAvailability

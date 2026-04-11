@@ -1,6 +1,6 @@
 package controller
 
-import domain.Cart
+import domain.model.cart.Cart
 import domain.model.cart.CartItem
 import domain.model.screen.Screening
 

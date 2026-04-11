@@ -1,8 +1,9 @@
-package domain
+package domain.model.schedule
 
 import domain.model.Movie
 import domain.model.screen.Screening
 import domain.model.seat.SeatAvailability
+import domain.model.seat.Seat
 import java.time.LocalDate
 import java.time.LocalTime
 
