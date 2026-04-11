@@ -9,8 +9,15 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class DiscountConditionTest {
-    val timeCondition = TimeCondition()
-    val movieDayCondition = MovieDayCondition()
+    val timeCondition =
+        TimeCondition(
+            beforeTime = LocalTime.of(11, 0),
+            afterTime = LocalTime.of(20, 0),
+        )
+    val movieDayCondition =
+        MovieDayCondition(
+            condition = listOf(10, 20, 30),
+        )
 
     @Test
     fun `입력된 일자가 10, 20, 30일 중 하나면 true를 반환한다`() {
