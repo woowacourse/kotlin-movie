@@ -5,9 +5,11 @@ import domain.seat.items.SeatPosition
 
 class Screen(
     private val name: ScreenName,
-    private val seats: List<Seat>,
+    private val seats: Seats,
 ) {
-    fun findSeat(number: SeatPosition): Boolean = seats.any { it.isExistSeatPosition(number) }
+    fun isExistSeat(number: SeatPosition): Boolean = seats.isExistSeatNumber(number)
+
+    fun findSeat(position: SeatPosition): Seat = seats.findSeat(position)
 }
 
 @JvmInline

@@ -12,6 +12,7 @@ import domain.seat.items.GradeS
 import domain.seat.items.RowNumber
 import domain.seat.items.SeatPosition
 import domain.timetable.items.ScreenTime
+import domain.timetable.items.Seats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -95,22 +96,24 @@ class ReservationsTest {
                                 ),
                         ),
                     seats =
-                        listOf<Seat>(
-                            Seat(
-                                seatPosition =
-                                    SeatPosition(
-                                        RowNumber("A"),
-                                        ColumnNumber(1),
-                                    ),
-                                seatGrade = GradeS(),
-                            ),
-                            Seat(
-                                seatPosition =
-                                    SeatPosition(
-                                        RowNumber("B"),
-                                        ColumnNumber(1),
-                                    ),
-                                seatGrade = GradeA(),
+                        Seats(
+                            listOf<Seat>(
+                                Seat(
+                                    seatPosition =
+                                        SeatPosition(
+                                            RowNumber("A"),
+                                            ColumnNumber(1),
+                                        ),
+                                    seatGrade = GradeS(),
+                                ),
+                                Seat(
+                                    seatPosition =
+                                        SeatPosition(
+                                            RowNumber("B"),
+                                            ColumnNumber(1),
+                                        ),
+                                    seatGrade = GradeA(),
+                                ),
                             ),
                         ),
                 ),

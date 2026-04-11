@@ -13,7 +13,7 @@ class ScreenTime(
     fun isScreeningAt(date: LocalDate): Boolean = screeningDate == date
 
     fun isDuplicatedScreenTime(otherTime: ScreenTime): Boolean {
-        if (this.screeningDate != otherTime.screeningDate) return true
+        if (this.screeningDate != otherTime.screeningDate) return false
 
         return this.startTime < otherTime.endTime && otherTime.startTime < this.endTime
     }

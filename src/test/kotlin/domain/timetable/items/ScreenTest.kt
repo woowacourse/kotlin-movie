@@ -16,11 +16,11 @@ class ScreenTest {
     fun `입력된 좌석 번호가 상영관에 존재하는 좌석이면 true가 반환된다`() {
         val screen =
             Screen(
-                seats = seats,
+                seats = Seats(seats),
                 name = ScreenName("1관"),
             )
 
-        val result = screen.findSeat(SeatPosition.of("A1"))
+        val result = screen.isExistSeat(SeatPosition.of("A1"))
         assertThat(result).isTrue()
     }
 
@@ -28,11 +28,11 @@ class ScreenTest {
     fun `입력된 좌석 번호가 상영관에 존재하지 않는 좌석이면 false가 반환된다`() {
         val screen =
             Screen(
-                seats = seats,
+                seats = Seats(seats),
                 name = ScreenName("1관"),
             )
 
-        val result = screen.findSeat(SeatPosition.of("F1"))
+        val result = screen.isExistSeat(SeatPosition.of("F1"))
         assertThat(result).isFalse()
     }
 }

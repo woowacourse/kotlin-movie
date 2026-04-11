@@ -4,8 +4,12 @@ import domain.movie.Movie
 import domain.movie.itmes.RunningTime
 import domain.movie.itmes.ScreeningPeriod
 import domain.movie.itmes.Title
+import domain.timetable.items.Screen
+import domain.timetable.items.ScreenName
+import domain.timetable.items.ScreenSeatMock
 import domain.timetable.items.ScreenTime
 import domain.timetable.items.ScreeningSchedule
+import domain.timetable.items.Seats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -94,5 +98,10 @@ class TimeTableTest {
                     ),
             ),
             screenTime = screenTime,
+            screen =
+                Screen(
+                    name = ScreenName("1관"),
+                    seats = Seats(ScreenSeatMock.seats),
+                ),
         )
 }

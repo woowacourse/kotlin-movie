@@ -2,15 +2,15 @@ package domain.reservations.items
 
 import domain.money.Money
 import domain.movie.Movie
-import domain.seat.Seat
 import domain.timetable.items.ScreenTime
+import domain.timetable.items.Seats
 import java.time.LocalDate
 import java.time.LocalTime
 
 class Reservation(
     private val movie: Movie,
     private val screenTime: ScreenTime,
-    private val seats: List<Seat>,
+    private val seats: Seats,
 ) {
     fun isDuplicatedDate(date: LocalDate): Boolean = screenTime.isScreeningAt(date)
 
@@ -18,14 +18,10 @@ class Reservation(
 
     fun getReservationInfo(): ReservationInfo {
         val money = Money(0)
-        val price =
-            seats.fold(money) { total, money ->
-                total + money.addSeatPrice(total)
-            }
 
         return ReservationInfo(
             screenTime = screenTime,
-            price = price,
+            price = money,
         )
     }
 }
