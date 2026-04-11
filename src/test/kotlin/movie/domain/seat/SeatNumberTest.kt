@@ -1,4 +1,4 @@
-package movie.domain
+package movie.domain.seat
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

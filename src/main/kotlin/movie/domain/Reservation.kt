@@ -1,5 +1,7 @@
 package movie.domain
 
+import movie.domain.seat.Seat
+
 class Reservation(
     val schedule: Schedule,
     val seats: List<Seat>,

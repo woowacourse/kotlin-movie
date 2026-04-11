@@ -1,4 +1,4 @@
-package movie.domain
+package movie.domain.seat
 
 data class SeatNumber(
     val row: Char,

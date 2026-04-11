@@ -1,5 +1,8 @@
 package movie.domain
 
+import movie.domain.seat.Seat
+import movie.domain.seat.SeatNumber
+import movie.domain.seat.SeatRank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

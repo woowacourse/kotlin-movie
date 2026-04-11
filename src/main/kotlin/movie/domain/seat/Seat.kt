@@ -1,4 +1,6 @@
-package movie.domain
+package movie.domain.seat
+
+import movie.domain.Price
 
 class Seat(
     val seatNumber: SeatNumber,

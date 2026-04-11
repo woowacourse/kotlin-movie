@@ -1,4 +1,6 @@
-package movie.domain
+package movie.domain.seat
+
+import movie.domain.Price
 
 enum class SeatRank(val price: Price) {
     S(Price(18_000)),
