@@ -8,6 +8,10 @@ class ScreeningDateTime(
     val startTime: LocalTime,
     val endTime: LocalTime,
 ) {
+    init {
+        require(endTime > startTime) { "상영 종료 시간은 시작 시간보다 이후여야 합니다." }
+    }
+
     fun isOverlapping(other: ScreeningDateTime): Boolean = date == other.date && (startTime < other.endTime && endTime > other.startTime)
 
     fun isMovieDay(): Boolean = date.dayOfMonth == 10 || date.dayOfMonth == 20 || date.dayOfMonth == 30
