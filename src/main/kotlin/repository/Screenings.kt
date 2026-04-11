@@ -3,8 +3,8 @@ package repository
 import domain.screening.Screening
 import java.time.LocalDate
 
-class CinemaRepository(
-    var screenings: List<Screening>,
+class Screenings(
+    val screenings: List<Screening>,
 ) {
     fun findByMovieTitleAndDate(
         title: String,
@@ -15,7 +15,5 @@ class CinemaRepository(
                 it.movie.title.value == title && it.startTime.value.toLocalDate() == date
             }.sortedBy { it.startTime.value }
 
-    fun updateScreening(updatedScreening: List<Screening>) {
-        screenings = updatedScreening
-    }
+    fun updateScreening(updatedScreening: List<Screening>): Screenings = Screenings(updatedScreening)
 }
