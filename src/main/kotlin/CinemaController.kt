@@ -13,19 +13,22 @@ class CinemaController(
     val movieCatalog: MovieCatalog,
 ) {
     fun run() {
-        // 영화 예매
         if (startReservation().not()) return
-        val selectedMovie = selectMovie(movieCatalog)
-        val movieScreening = getMovieSchedule(selectedMovie)
+        do {
+            // 영화 예매
+            val selectedMovie = selectMovie(movieCatalog)
+            val movieScreening = getMovieSchedule(selectedMovie)
 
-        // 날짜 선택하고 해당 날짜의 상영 일정 중 선택
-        val selectedDate = selectDate()
-        val onDateMovieScreening = movieScreening.onDate(selectedDate)
-        OutputView.showMovieScreenings(onDateMovieScreening)
-        val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
-        OutputView.showMovieSeatGroup(selectMovieScreening)
+            // 날짜 선택하고 해당 날짜의 상영 일정 중 선택
+            val selectedDate = selectDate()
+            val onDateMovieScreening = movieScreening.onDate(selectedDate)
+            OutputView.showMovieScreenings(onDateMovieScreening)
+            val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
+            OutputView.showMovieSeatGroup(selectMovieScreening)
 
-        val reservations = reserveSeats(selectMovieScreening)
+            reserveSeats(selectMovieScreening)
+        } while (InputView.askReserveMore())
+
         // 결제
     }
 

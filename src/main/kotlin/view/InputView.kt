@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter
 object InputView {
     fun askStartReservation(): Boolean = inputYesOrNo(Message.START_RESERVATION)
 
+    fun askReserveMore(): Boolean = inputYesOrNo(Message.INPUT_CONTINUE)
+
     private fun inputYesOrNo(text: String): Boolean {
         println(text)
         val input = readln()
@@ -50,13 +52,6 @@ object InputView {
         return rawSeats.map { rawSeat ->
             SeatRow(rawSeat[0].toString()) to SeatColumn(rawSeat[1].digitToInt())
         }
-    }
-
-    fun inputContinue(): Boolean {
-        println(Message.INPUT_CONTINUE)
-        val input = readln()
-        InputValidator.validateYesOrNo(input)
-        return input == "Y"
     }
 
     fun inputPoint(): Int {
