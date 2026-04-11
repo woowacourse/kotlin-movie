@@ -35,8 +35,8 @@ class MovieController(
     private val priceCalculator: PriceCalculator =
         PriceCalculator(
             DiscountPolicies(
-                percentagePolicies = listOf(MovieDayDiscount()),
-                fixedPolicies = listOf(TimeDiscount()),
+                listOf(MovieDayDiscount()),
+                listOf(TimeDiscount()),
             ),
         ),
 ) {
@@ -148,18 +148,17 @@ class MovieController(
             val number = inputView.inputScreeningNumber()
             require(number in 1..screenings.size) { "유효하지 않은 상영 번호입니다." }
 
-            val selected = screenings[number - 1]
-
+            val selectedScreening = screenings[number - 1]
             val hasOverlap =
                 existingReservations.any {
-                    it.isTimeOverlapping(selected)
+                    it.isTimeOverlapping(it)
                 }
 
             if (hasOverlap) {
                 outputView.printTimeOverlapMessage()
                 throw IllegalArgumentException()
             }
-            selected
+            selectedScreening
         }
 
     private fun selectSeats(screening: Screening): List<Seat> =

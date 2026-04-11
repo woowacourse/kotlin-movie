@@ -1,6 +1,8 @@
 package movie.domain.reservation
 
 import movie.domain.amount.Money
+import movie.domain.discount.DiscountPolicies
+import movie.domain.discount.TimeDiscount
 import movie.domain.movie.MovieTitle
 import movie.domain.screening.Screen
 import movie.domain.screening.ScreenId
@@ -98,12 +100,17 @@ class ReservationsTest {
     }
 
     @Test
-    fun `전체 원가는 각 예매 원가의 합이다`() {
+    fun `전체 결제 대상 금액은 예매별 할인 적용 금액의 합이다`() {
         // given
         val reservationData = ReservationData.reservations
         val reservations = Reservations(reservationData)
+        val discountPolicies =
+            DiscountPolicies(
+                percentagePolicies = emptyList(),
+                fixedPolicies = listOf(TimeDiscount()),
+            )
 
         // then
-        assert(reservations.totalPrice() == Money(60000))
+        assertThat(reservations.totalPrice(discountPolicies)).isEqualTo(Money(58000))
     }
 }

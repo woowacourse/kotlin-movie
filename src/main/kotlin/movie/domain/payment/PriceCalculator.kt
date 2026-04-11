@@ -13,16 +13,7 @@ class PriceCalculator(
         point: Point,
         paymentMethod: PaymentMethod,
     ): PaymentResult {
-        var totalPrice = Money(0)
-
-        reservations.forEach { reservation ->
-            val discounted =
-                discountPolicies.applyDiscount(
-                    reservation.calculatePrice(),
-                    reservation.getScreening().screeningDateTime,
-                )
-            totalPrice += discounted
-        }
+        var totalPrice = reservations.totalPrice(discountPolicies)
 
         val usagePoint = point.usableAmount(totalPrice)
         totalPrice = totalPrice.minus(Money(usagePoint.value))
