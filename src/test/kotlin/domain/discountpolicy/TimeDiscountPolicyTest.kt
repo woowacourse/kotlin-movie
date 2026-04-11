@@ -14,8 +14,23 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class TimeDiscountPolicyTest {
-    val timeDiscountPolicy = TimeDiscountPolicy()
-    val movieDayDiscountPolicy = MovieDayDiscountPolicy()
+    val timeDiscountPolicy =
+        TimeDiscountPolicy(
+            condition =
+                TimeCondition(
+                    beforeTime = LocalTime.of(11, 0),
+                    afterTime = LocalTime.of(20, 0),
+                ),
+            discountAmount = Money(2000),
+        )
+    val movieDayDiscountPolicy =
+        MovieDayDiscountPolicy(
+            condition =
+                MovieDayCondition(
+                    condition = listOf(10, 20, 30),
+                ),
+            discountRate = 0.9,
+        )
 
     @Test
     fun `예매의 시간이 11시 이전이면 2000원 할인된다`() {
