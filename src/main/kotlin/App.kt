@@ -22,4 +22,16 @@ fun main() {
     findScheduleTimeList.forEachIndexed { index, time ->
         println("[${index + 1}] $time")
     }
+    // 상영 시간들만 조회 중 상영 시간 선택
+    println("상영 번호를 선택해주세요.")
+    val timeIndexSelector: Int = readln().toInt()
+    val findScheduleTimeSeat = controller.findSeatStatuses(title, formattingDate, findScheduleTimeList[timeIndexSelector-1] )
+
+    println("좌석배치도")
+    SeatLayoutView.render(findScheduleTimeSeat)
+
+    println("예약할 좌석을 입력하세요 (A1, B2):")
+    val reserveSeats = readln().split(",").map { it.trim() }
+    controller.reserveSeats(title, formattingDate, findScheduleTimeList[timeIndexSelector-1], reserveSeats)
+
 }

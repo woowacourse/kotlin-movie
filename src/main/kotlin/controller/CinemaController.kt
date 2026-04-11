@@ -1,5 +1,6 @@
 package controller
 
+import domain.RowLabel
 import domain.ScreeningSchedule
 import domain.Seat
 import domain.defaultScreeningSeeds
@@ -22,6 +23,7 @@ class CinemaController(
             samples = defaultScreeningSeeds(),
         ),
 ) {
+
     // 상영 기간 내 특정 날짜/시간에 새 상영을 등록하고, 등록된 상영 객체를 반환한다.
     fun createScreening(
         movieTitle: String,
@@ -40,9 +42,7 @@ class CinemaController(
     ): List<Screening> = screeningSchedule.screeningsOfMovieDate(screening, date)
 
     // 상영 목록들 중에서 상영시간만 추출한다
-    fun findScreeningsTime(
-        screening: List<Screening>,
-    ): List<LocalTime> {
+    fun findScreeningsTime(screening: List<Screening>): List<LocalTime> {
         val timeList = mutableListOf<LocalTime>()
         screening.forEach {
             timeList.add(it.startTime)
@@ -62,6 +62,39 @@ class CinemaController(
         movieTitle: String,
         date: LocalDate,
         startTime: LocalTime,
-        seats: List<Seat>,
-    ): Screening = screeningSchedule.reserveSeats(movieTitle, date, startTime, seats)
+        seats: List<String>,
+    ): Screening =
+        screeningSchedule.reserveSeats(
+            movieTitle = movieTitle,
+            date = date,
+            startTime = startTime,
+            seats = parseSeats(seats),
+        )
+
+    // 입력받은 좌석 문자열 목록(A1, B12...)을 Seat 목록으로 변환한다.
+    private fun parseSeats(seatCodes: List<String>): List<Seat> =
+        seatCodes
+            .filter { seatCode ->
+                seatCode.isNotBlank()
+            }.map { seatCode ->
+                parseSeatCode(seatCode)
+            }
+
+    // 좌석 코드 하나를 파싱한다. (알파벳 1글자 + 숫자 1자리 이상)
+    private fun parseSeatCode(code: String): Seat {
+        val value = code.trim().uppercase()
+        require(value.isNotBlank()) { "좌석 값이 비어 있습니다." }
+
+        val rowPart = value.takeWhile { token -> token.isLetter() }
+        val columnPart = value.dropWhile { token -> token.isLetter() }
+
+        require(rowPart.length == 1) { "좌석 행은 알파벳 1글자여야 합니다: $code" }
+        require(columnPart.isNotEmpty()) { "좌석 번호가 없습니다: $code" }
+        require(columnPart.all { token -> token.isDigit() }) { "좌석 번호는 숫자여야 합니다: $code" }
+
+        val row = RowLabel.valueOf(rowPart)
+        val column = columnPart.toInt()
+
+        return Seat(column = column, row = row)
+    }
 }
