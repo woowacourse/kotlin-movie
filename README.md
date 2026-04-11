@@ -30,7 +30,7 @@
 - [x] 총 좌석 금액을 반환한다.
 
 ### Cart
-- [ ] Reservation를 가진다.
+- [x] Reservations를 가진다.
 
 ### Payment
 - [ ] 결제 수단 별 할인율을 가진다.
