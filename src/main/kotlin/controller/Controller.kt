@@ -28,9 +28,22 @@ class Controller(
     val timeTable: TimeTable = TimeTable(MockTimeTable.timeTable),
 ) {
     fun run() {
+        val reservations = Reservations()
+
         if (!startReserve()) return
 
-        val reservations = makeReserve()
+        do {
+            val reservation = makeReserve(reservations)
+            reservations.addReservation(reservation)
+        } while (continueReserve())
+
+        val reservation = makeReserve(reservations)
+        reservations.addReservation(reservation)
+
+        while (continueReserve()) {
+            val newReservation = makeReserve(reservations)
+            reservations.addReservation(newReservation)
+        }
 
         payProcessor(reservations)
     }
@@ -44,22 +57,18 @@ class Controller(
         }
     }
 
-    fun makeReserve(): Reservations {
-        val reservations = Reservations()
-
+    fun makeReserve(reservations: Reservations): Reservation {
         val titleSearchResult = searchMovieWithTitle()
         val dateSearchResult = searchMovieWithDate(titleSearchResult)
-        val selectedSchedule = selectMovieSchedule(dateSearchResult)
+        val selectedSchedule = selectMovieSchedule(dateSearchResult, reservations)
         val selectedSeats = selectSeats(selectedSchedule)
-        reservations.addReservation(
-            addReservation(
-                screeningSchedule = selectedSchedule,
-                selectedSeats = selectedSeats,
-            ),
+        val reservation = Reservation(
+            movie = selectedSchedule.getMovie(),
+            screenTime = selectedSchedule.getScreenTime(),
+            seats = selectedSeats
         )
 
-        if (!inputView.readContinue()) return reservations
-        return makeReserve()
+        return reservation
     }
 
     fun searchMovieWithTitle(): TimeTable {
@@ -83,14 +92,19 @@ class Controller(
         }
     }
 
-    fun selectMovieSchedule(timeTable: TimeTable): ScreeningSchedule {
+    fun selectMovieSchedule(timeTable: TimeTable, reservations: Reservations): ScreeningSchedule {
         outputView.printScreeningMovieTime(timeTable.getSchedules())
         try {
             val index = inputView.readScreeningNumber(timeTable.countSchedule())
-            return timeTable.getScheduleWithIndex(index - 1)
+            val selectedSchedule = timeTable.getScheduleWithIndex(index - 1)
+
+            if (reservations.checkDuplicate(selectedSchedule.getScreenTime())) {
+                throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.")
+            }
+            return selectedSchedule
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            return selectMovieSchedule(timeTable)
+            return selectMovieSchedule(timeTable, reservations)
         }
     }
 
@@ -114,21 +128,13 @@ class Controller(
         }
     }
 
-    fun addReservation(
-        screeningSchedule: ScreeningSchedule,
-        selectedSeats: List<Seat>,
-    ): Reservation {
-        val movie = screeningSchedule.getMovie()
-        val screenTime = screeningSchedule.getScreenTime()
-
-        val newReservation =
-            Reservation(
-                movie = movie,
-                screenTime = screenTime,
-                seats = selectedSeats,
-            )
-        outputView.printAddReservation(newReservation)
-        return newReservation
+    fun continueReserve(): Boolean {
+        try {
+            return inputView.readContinue()
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            return continueReserve()
+        }
     }
 
     fun payProcessor(reservations: Reservations) {
