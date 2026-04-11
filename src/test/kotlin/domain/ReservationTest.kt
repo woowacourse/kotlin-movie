@@ -62,6 +62,44 @@ class ReservationTest {
     }
 
     @Test
+    fun `해당 날짜에 상영이 있으면 선택한 번호의 상영을 반환한다`() {
+        // given : 해당 날짜에 상영이 있는 영화와 유효한 상영 번호를 준비한다.
+        val movie = TestFixtureData.movieTheater.movies.movies[2]
+        val movieTime = MovieTime.from("2026-04-10")
+
+        // when : 상영 번호로 상영을 조회하면
+        val result = TestFixtureData.movieTheater.showings.findAvailableShowing(
+            movie,
+            movieTime,
+            "1",
+            TestFixtureData.movieTheater.reservationInfos,
+        )
+
+        // then : 해당하는 상영이 반환된다.
+        assertEquals(TestFixtureData.movieTheater.showings[2], result)
+    }
+
+    @Test
+    fun `상영 번호가 유효 범위 밖이면 예외가 발생한다`() {
+        // given : 존재하는 영화와 날짜, 그리고 유효 범위 밖의 상영 번호를 준비한다.
+        val movie = TestFixtureData.movieTheater.movies.movies.first()
+        val movieTime = MovieTime.from("2026-04-10")
+
+        // when : 유효 범위 밖의 번호로 상영을 조회하면
+        val exception = assertThrows<IllegalArgumentException> {
+            TestFixtureData.movieTheater.showings.findAvailableShowing(
+                movie,
+                movieTime,
+                "2",
+                TestFixtureData.movieTheater.reservationInfos,
+            )
+        }
+
+        // then : 예외가 발생한다.
+        assertEquals("선택하신 상영 번호는 없는 상영 번호입니다.", exception.message)
+    }
+
+    @Test
     fun `동일한 시간대에 이미 예매한 내역이 있으면 예외가 발생한다`() {
         // given : 사용자의 id 는 1이다. 사용자는 해당 시간에 예매한 내역이 있다.
         val userId = 1

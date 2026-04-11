@@ -6,6 +6,7 @@ import domain.reservation.ReservationInfos
 import domain.user.User
 import view.InputView
 import view.OutputView
+import view.retryUntilValid
 
 class BookingController(
     private val reservationController: ReservationController,
@@ -15,15 +16,18 @@ class BookingController(
 ) {
     fun run() {
         var cart = Cart(ReservationInfos(emptyList()))
-        var answer = InputView.startTicketing()
+        var answer = retryUntilValid { InputView.startTicketing() }
         while (answer.isYes()) {
             val info = reservationController.run()
             cart = cartController.run(cart, info)
-            answer = InputView.continueTicketing()
+            answer = retryUntilValid { InputView.continueTicketing() }
         }
 
         val result = paymentController.run(Payment(cart, user))
-        if (!InputView.readPurchaseConfirm().isYes()) return
+        if (!retryUntilValid {
+                InputView.readPurchaseConfirm()
+            }.isYes()
+        ) return
 
         OutputView.printTotal(
             cart = cart,

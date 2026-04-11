@@ -50,6 +50,10 @@ object OutputView {
         return String.format("%,d", price)
     }
 
+    fun printError(message: String) {
+        println("[ERROR] $message")
+    }
+
     fun printTotal(
         cart: Cart,
         totalPrice: Price,
