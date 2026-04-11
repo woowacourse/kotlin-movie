@@ -62,8 +62,8 @@ class MovieReservationController(
         val discountSystem = DiscountSystem()
         val discountedPrice = discountSystem.discountPrice(reservations)
 
-        val paymentSystem = PaymentSystem(paymentMethod)
-        return paymentSystem.pay(discountedPrice, point)
+        val paymentSystem = PaymentSystem()
+        return paymentSystem.pay(paymentMethod, discountedPrice, point)
     }
 
     private fun makeReservation(currentReservations: Reservations): Reservation {
