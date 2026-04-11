@@ -5,6 +5,7 @@ object Message {
     const val INPUT_DATE = "날짜를 입력하세요 (YYYY-MM-DD):"
     const val MOVIE_SCREENINGS_LIST = "해당 날짜의 상영 목록"
     const val SELECT_MOVIE_SCREENING = "상영 번호를 선택하세요:"
+    const val SEAT_GROUP = "좌석 배치도"
     const val INPUT_CONTINUE = "다른 영화를 추가하시겠습니까? (Y/N)"
     const val INPUT_POINT = "사용할 포인트를 입력하세요 (없으면 0):"
     const val SELECT_PAYMENT_METHOD = "결제 수단을 선택하세요:"

@@ -22,7 +22,7 @@ class CinemaController(
         val onDateMovieScreening = movieScreening.onDate(selectedDate)
         OutputView.showMovieScreenings(onDateMovieScreening)
         val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
-
+        OutputView.showMovieSeatGroup(selectMovieScreening)
         // 결제
     }
 
