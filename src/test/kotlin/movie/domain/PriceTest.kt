@@ -28,4 +28,11 @@ class PriceTest {
 
         assertThat(price1 + price2).isEqualTo(Price(15_000))
     }
+
+    @Test
+    fun `할인율을 받아 할인된 가격을 반환한다`() {
+        val price = Price(10_000)
+
+        assertThat(price.getDiscountPrice(0.1f)).isEqualTo(Price(9000))
+    }
 }

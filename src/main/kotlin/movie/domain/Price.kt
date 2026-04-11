@@ -13,4 +13,9 @@ value class Price(val amount: Int) {
     operator fun plus(target: Price): Price {
         return Price(this.amount + target.amount)
     }
+
+    fun getDiscountPrice(rate: Float): Price {
+        val discountAmount = Price((this.amount * rate).toInt())
+        return this - discountAmount
+    }
 }
