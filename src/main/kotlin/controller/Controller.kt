@@ -63,11 +63,12 @@ class Controller(
         val dateSearchResult = searchMovieWithDate(titleSearchResult)
         val selectedSchedule = selectMovieSchedule(dateSearchResult, reservations)
         val selectedSeats = selectSeats(selectedSchedule)
-        val reservation = Reservation(
-            movie = selectedSchedule.getMovie(),
-            screenTime = selectedSchedule.getScreenTime(),
-            seats = selectedSeats
-        )
+        val reservation =
+            Reservation(
+                movie = selectedSchedule.getMovie(),
+                screenTime = selectedSchedule.getScreenTime(),
+                seats = selectedSeats,
+            )
 
         return reservation
     }
@@ -93,7 +94,10 @@ class Controller(
         }
     }
 
-    fun selectMovieSchedule(timeTable: TimeTable, reservations: Reservations): ScreeningSchedule {
+    fun selectMovieSchedule(
+        timeTable: TimeTable,
+        reservations: Reservations,
+    ): ScreeningSchedule {
         outputView.printScreeningMovieTime(timeTable.getSchedules())
         try {
             val index = inputView.readScreeningNumber(timeTable.countSchedule())
