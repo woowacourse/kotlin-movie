@@ -5,6 +5,7 @@ import model.movie.Movie
 import model.movie.MovieCatalog
 import model.payment.MoviePayment
 import model.payment.PayType
+import model.payment.Receipt
 import model.schedule.MovieScreening
 import model.schedule.onDate
 import view.InputView
@@ -32,9 +33,16 @@ class CinemaController(
         } while (InputView.askReserveMore())
         // 결제
         val totalPrice = processPayment(cinemaKiosk)
-        OutputView.showTotalPrice(totalPrice)
+        OutputView.showTotalPrice(totalPrice.finalPrice)
 
-        if (InputView.askPaymentConfirm().not()) return
+        if (InputView.askPaymentConfirm()) {
+            OutputView.totalReservation(
+                successResults = cinemaKiosk.reserveResults,
+                price = totalPrice.finalPrice,
+                point = totalPrice.usedPoint,
+            )
+        }
+        OutputView.end()
     }
 
     private fun startReservation(): Boolean = InputView.askStartReservation()
@@ -91,7 +99,7 @@ class CinemaController(
         }
     }
 
-    private fun processPayment(cinemaKiosk: CinemaKiosk): Int {
+    private fun processPayment(cinemaKiosk: CinemaKiosk): Receipt {
         val moviePayment = MoviePayment(cinemaKiosk.reserveResults)
         while (true) {
             try {
@@ -99,10 +107,7 @@ class CinemaController(
                 val point = InputView.inputPoint()
                 val selectedPayType = InputView.inputPayType()
                 val payType = PayType.fromId(selectedPayType)
-                return moviePayment.getFinalPrice(
-                    payType = payType,
-                    point = point,
-                )
+                return moviePayment.getReceipt(payType, point)
             } catch (e: IllegalArgumentException) {
                 OutputView.showErrorMessage(e.message)
             }

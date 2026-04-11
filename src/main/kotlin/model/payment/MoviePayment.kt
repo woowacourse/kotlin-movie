@@ -12,6 +12,18 @@ class MoviePayment(
 ) {
     val originalPrice: Int = reservations.sumOf { it.seat.price }
 
+    fun getReceipt(
+        payType: PayType,
+        point: Int,
+    ): Receipt {
+        val finalPrice =
+            getFinalPrice(
+                payType = payType,
+                point = point,
+            )
+        return Receipt(finalPrice = finalPrice, usedPoint = point)
+    }
+
     fun getFinalPrice(
         payType: PayType,
         point: Int,

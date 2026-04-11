@@ -16,4 +16,5 @@ object Message {
     const val TOTAL_PRICE_TITLE = "가격 계산"
     const val TOTAL_PRICE = "최종 결제 금액:"
     const val INPUT_CONFIRM_PAYMENT = "위 금액으로 결제하시겠습니까? (Y/N)"
+    const val THANK_YOU = "감사합니다."
 }

@@ -63,7 +63,24 @@ object OutputView {
         println("${Message.TOTAL_PRICE} ${"%,d".format(totalPrice)}원")
     }
 
+    fun totalReservation(
+        successResults: List<MovieReservationResult.Success>,
+        price: Int,
+        point: Int,
+    ) {
+        println("예매 완료")
+        println("내역:")
+        successResults
+            .groupBy { it.movie.name to it.screenTime.start }
+            .forEach { (key, results) ->
+                val (movieName, startTime) = key
+                val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
+                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+            }
+        println("결제 금액: %,d원 (포인트: %,d원 사용)".format(price, point))
+    }
+
     fun end() {
-        println("감사합니다.")
+        println(Message.THANK_YOU)
     }
 }
