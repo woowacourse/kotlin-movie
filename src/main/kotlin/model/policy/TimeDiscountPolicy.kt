@@ -12,13 +12,13 @@ object TimeDiscountPolicy : DiscountPolicy {
     override val priority: Int
         get() = 2
 
-    override fun getDiscountEffect(screening: Screening): DiscountEffect {
+    override fun getDiscountEffect(screening: Screening): Discount {
         val startTime = screening.startShowTime
         if (startTime <= MORNING_CUTOFF || startTime >= EVENING_CUTOFF) {
-            return AmountDiscountEffect(
+            return AmountDiscount(
                 DISCOUNT_AMOUNT,
             )
         }
-        return NoDiscountEffect
+        return NoDiscount
     }
 }

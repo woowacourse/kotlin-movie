@@ -29,12 +29,12 @@ class DiscountSystem(
 
     private fun getDiscountPrice(
         price: Money,
-        discountEffect: DiscountEffect,
+        discount: Discount,
         seatCount: Double,
     ): Money =
-        when (discountEffect) {
-            is AmountDiscountEffect -> discountEffect.amount * seatCount
-            is RateDiscountEffect -> price * discountEffect.rate
-            NoDiscountEffect -> Money(0)
+        when (discount) {
+            is AmountDiscount -> discount.amount * seatCount
+            is RateDiscount -> price * discount.rate
+            NoDiscount -> Money(0)
         }
 }

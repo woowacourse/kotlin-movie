@@ -42,8 +42,8 @@ class TimeDiscountPolicyTest {
     fun `오전 11시 이전 상영에 2000원 할인이 적용된다`() {
         val discountEffect = TimeDiscountPolicy.getDiscountEffect(screeningAt(10))
 
-        assertThat(discountEffect).isInstanceOf(AmountDiscountEffect::class.java)
-        discountEffect as AmountDiscountEffect
+        assertThat(discountEffect).isInstanceOf(AmountDiscount::class.java)
+        discountEffect as AmountDiscount
         assertThat(discountEffect.amount).isEqualTo(Money(2_000))
     }
 
@@ -51,8 +51,8 @@ class TimeDiscountPolicyTest {
     fun `오후 8시 이후 상영에 2000원 할인이 적용된다`() {
         val discountEffect = TimeDiscountPolicy.getDiscountEffect(screeningAt(21))
 
-        assertThat(discountEffect).isInstanceOf(AmountDiscountEffect::class.java)
-        discountEffect as AmountDiscountEffect
+        assertThat(discountEffect).isInstanceOf(AmountDiscount::class.java)
+        discountEffect as AmountDiscount
         assertThat(discountEffect.amount).isEqualTo(Money(2_000))
     }
 
@@ -60,8 +60,8 @@ class TimeDiscountPolicyTest {
     fun `오후 8시 정각 상영에 2000원 할인이 적용된다`() {
         val discountEffect = TimeDiscountPolicy.getDiscountEffect(screeningAt(20))
 
-        assertThat(discountEffect).isInstanceOf(AmountDiscountEffect::class.java)
-        discountEffect as AmountDiscountEffect
+        assertThat(discountEffect).isInstanceOf(AmountDiscount::class.java)
+        discountEffect as AmountDiscount
         assertThat(discountEffect.amount).isEqualTo(Money(2_000))
     }
 
@@ -69,6 +69,6 @@ class TimeDiscountPolicyTest {
     fun `해당하지 않는 시간대에는 할인이 적용되지 않는다`() {
         val discountEffect = TimeDiscountPolicy.getDiscountEffect(screeningAt(14))
 
-        assertThat(discountEffect).isInstanceOf(NoDiscountEffect::class.java)
+        assertThat(discountEffect).isInstanceOf(NoDiscount::class.java)
     }
 }

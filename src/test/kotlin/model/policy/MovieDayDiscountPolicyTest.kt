@@ -37,8 +37,8 @@ class MovieDayDiscountPolicyTest {
     fun `10일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(10))
 
-        assertThat(discountEffect).isInstanceOf(RateDiscountEffect::class.java)
-        discountEffect as RateDiscountEffect
+        assertThat(discountEffect).isInstanceOf(RateDiscount::class.java)
+        discountEffect as RateDiscount
         assertThat(discountEffect.rate).isEqualTo(0.1)
     }
 
@@ -46,8 +46,8 @@ class MovieDayDiscountPolicyTest {
     fun `20일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(20))
 
-        assertThat(discountEffect).isInstanceOf(RateDiscountEffect::class.java)
-        discountEffect as RateDiscountEffect
+        assertThat(discountEffect).isInstanceOf(RateDiscount::class.java)
+        discountEffect as RateDiscount
         assertThat(discountEffect.rate).isEqualTo(0.1)
     }
 
@@ -55,8 +55,8 @@ class MovieDayDiscountPolicyTest {
     fun `30일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(30))
 
-        assertThat(discountEffect).isInstanceOf(RateDiscountEffect::class.java)
-        discountEffect as RateDiscountEffect
+        assertThat(discountEffect).isInstanceOf(RateDiscount::class.java)
+        discountEffect as RateDiscount
         assertThat(discountEffect.rate).isEqualTo(0.1)
     }
 
@@ -64,6 +64,6 @@ class MovieDayDiscountPolicyTest {
     fun `해당하지 않는 날짜에는 할인이 적용되지 않는다`() {
         val discountEffect = MovieDayDiscountPolicy.getDiscountEffect(screeningOn(1))
 
-        assertThat(discountEffect).isInstanceOf(NoDiscountEffect::class.java)
+        assertThat(discountEffect).isInstanceOf(NoDiscount::class.java)
     }
 }
