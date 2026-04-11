@@ -52,56 +52,68 @@ class TimeTableTest {
 
     @Test
     fun `영화 제목을 입력받아 입력값과 같은 영화 제목을 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다`() {
-        val result = timeTable.getMovieSchedulesWithTitle(Title("신바드의 모험"))
+        val filterTable = timeTable.filterByTitle(Title("신바드의 모험"))
 
-        assertThat(result.countSchedule()).isEqualTo(2)
-    }
+        val selectSchedule = filterTable.selectSchedule(1)
 
-    @Test
-    fun `입력받은 영화 제목이 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다`() {
-        assertThrows<IllegalArgumentException> { timeTable.getMovieSchedulesWithTitle(Title("심바드의 모험")) }
+        val result = selectSchedule.isScreeningMovieTitle(Title("신바드의 모험"))
+
+        assertThat(result).isTrue()
     }
 
     @Test
     fun `상영 일자를 입력받아 입력값과 같은 상영 일자를 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다`() {
-        val result = timeTable.getMovieSchedulesWithDate(LocalDate.of(2026, 4, 9))
-        assertThat(result.countSchedule()).isEqualTo(2)
+        val filterTable = timeTable.filterByDate(LocalDate.of(2026, 4, 9))
+
+        val selectSchedule = filterTable.selectSchedule(1)
+
+        val result = selectSchedule.isScreeningDate(LocalDate.of(2026, 4, 9))
+
+        assertThat(result).isTrue()
     }
 
     @Test
-    fun `입력받은 상영 일자가 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다`() {
-        assertThrows<IllegalArgumentException> { timeTable.getMovieSchedulesWithDate(LocalDate.of(2020, 2, 2)) }
+    fun `schedule 리스트의 번호를 입력받아 해당 Schedule를 반환한다`() {
+        val filterTable = timeTable.filterByTitle(Title("신바드의 모험"))
+
+        val selectSchedule = filterTable.selectSchedule(1)
+
+        val result = selectSchedule.isScreeningMovieTitle(Title("신바드의 모험"))
+
+        assertThat(result).isTrue()
+    }
+
+    @Test
+    fun `schedule 리스트의 올바르지 않은 번호를 입력받으면 예외를 발생한다`() {
+        val filterTable = timeTable.filterByTitle(Title("신바드의 모험"))
+
+        assertThrows<IllegalArgumentException> { filterTable.selectSchedule(1000000) }
     }
 
     private fun createSchedule(
-        movieTitle: Title,
-        screenTime: ScreenTime,
-    ): ScreeningSchedule =
-        ScreeningSchedule(
+        movieTitle: Title = Title("신바드의 모험"),
+        screenTime: ScreenTime =
+            ScreenTime(
+                startTime = LocalTime.of(11, 0),
+                endTime = LocalTime.of(13, 0),
+                screeningDate = LocalDate.of(2026, 4, 10),
+            ),
+    ) = ScreeningSchedule(
+        movie =
             Movie(
                 title = movieTitle,
                 runningTime = RunningTime(120),
                 screeningPeriod =
                     ScreeningPeriod(
-                        startDate =
-                            LocalDate.of(
-                                2026,
-                                4,
-                                1,
-                            ),
-                        endDate =
-                            LocalDate.of(
-                                2026,
-                                4,
-                                30,
-                            ),
+                        startDate = LocalDate.of(2026, 1, 1),
+                        endDate = LocalDate.of(2026, 6, 1),
                     ),
             ),
-            screenTime = screenTime,
-            screen =
-                Screen(
-                    name = ScreenName("1관"),
-                    seats = Seats(ScreenSeatMock.seats),
-                ),
-        )
+        screen =
+            Screen(
+                name = ScreenName("1관"),
+                seats = Seats(ScreenSeatMock.seats),
+            ),
+        screenTime = screenTime,
+    )
 }

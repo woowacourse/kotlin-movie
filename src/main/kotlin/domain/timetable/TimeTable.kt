@@ -7,17 +7,19 @@ import java.time.LocalDate
 class TimeTable(
     private val schedules: List<ScreeningSchedule>,
 ) {
-    fun getMovieSchedulesWithTitle(title: Title): TimeTable {
-        val findedSchedules = schedules.filter { it.isScreeningMovieTitle(title) }
-        if (findedSchedules.isEmpty()) throw IllegalArgumentException("해당 영화는 사영하고 있지 않습니다.")
-        return TimeTable(findedSchedules)
+    fun filterByTitle(title: Title): TimeTable {
+        val filterSchedules = schedules.filter { it.isScreeningMovieTitle(title) }
+        return TimeTable(filterSchedules)
     }
 
-    fun getMovieSchedulesWithDate(date: LocalDate): TimeTable {
-        val findedSchedules = schedules.filter { it.isScreeningDate(date) }
-        if (findedSchedules.isEmpty()) throw IllegalArgumentException("해당 일자는 상영 계획이 없습니다.")
-        return TimeTable(findedSchedules)
+    fun filterByDate(date: LocalDate): TimeTable {
+        val filterSchedules = schedules.filter { it.isScreeningDate(date) }
+        return TimeTable(filterSchedules)
     }
 
-    fun countSchedule(): Int = schedules.size
+    fun selectSchedule(number: Int): ScreeningSchedule {
+        require(number in 1..schedules.size) { "잘못된 상영 번호입니다." }
+
+        return schedules[number - 1]
+    }
 }

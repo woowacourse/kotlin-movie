@@ -71,9 +71,9 @@
 ### 5. timetable
 
 - [x] 영화 제목을 입력받아 입력값과 같은 영화 제목을 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다.
-- [x] 입력받은 영화 제목이 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다.
 - [x] 상영 일자를 입력받아 입력값과 같은 상영 일자를 갖는 screening schedule의 목록을 TimeTable 형태로 반환한다.
-- [x] 입력받은 상영 일자가 screening schedule의 목록 중 일치하는 스케쥴이 없다면 예외를 발생시킨다.
+- [x] schedule 리스트의 올바른 번호를 입력받으면 Schedule을 반환한다
+- [x] schedule 리스트의 올바르지 않은 번호를 입력받으면 예외를 발생한다
 
 ### 6. screen
 
