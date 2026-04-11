@@ -3,6 +3,7 @@ package controller
 import domain.model.cart.Cart
 import domain.model.cart.CartItem
 import domain.model.screen.Screening
+import domain.parseSeats
 
 class ReservationController(
     private val cart: Cart = Cart(),
@@ -15,7 +16,7 @@ class ReservationController(
         val item =
             CartItem(
                 screening = screening,
-                seatCodes = normalizeSeatCodes(seatCodes),
+                seats = parseSeats(seatCodes),
             )
         cart.add(item)
         return item
@@ -30,9 +31,9 @@ class ReservationController(
     // 사용자가 고른 상영 시간이 기존 장바구니와 겹치는지 확인한다.
     fun hasOverlapping(screening: Screening): Boolean = cart.hasOverlapping(screening)
 
-    // 좌석 문자열 입력값을 공백 제거 + 대문자로 통일한다.
-    private fun normalizeSeatCodes(seatCodes: List<String>): List<String> =
-        seatCodes.map { seatCode ->
-            seatCode.trim().uppercase()
-        }
+    // 장바구니 항목 원본 목록을 조회한다.
+    fun reservationItems(): List<CartItem> = cart.items()
+
+    // 장바구니에 담긴 좌석 총 금액을 반환한다.
+    fun totalSeatAmount(): Int = cart.totalSeatAmount()
 }

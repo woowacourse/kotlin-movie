@@ -35,7 +35,7 @@ class ReservationControllerTest {
                 seatCodes = listOf(" c2 ", "a12"),
             )
 
-        assertThat(item.seatCodes).containsExactly("C2", "A12")
+        assertThat(item.seats.map { seat -> "${seat.row.name}${seat.column}" }).containsExactly("C2", "A12")
     }
 
     @Test
@@ -88,5 +88,19 @@ class ReservationControllerTest {
         val result = reservationController.hasOverlapping(overlappedCandidate)
 
         assertThat(result).isTrue()
+    }
+
+    @Test
+    fun `totalSeatAmount는 장바구니에 담긴 좌석 총 금액을 반환한다`() {
+        val reservationController = ReservationController()
+        val first = screening(startTime = LocalTime.of(13, 0), title = "F1 더 무비")
+        val second = screening(startTime = LocalTime.of(16, 0), title = "토이 스토리", runningMinutes = 100)
+
+        reservationController.reserve(first, listOf("D1", "D2"))
+        reservationController.reserve(second, listOf("C2"))
+
+        val result = reservationController.totalSeatAmount()
+
+        assertThat(result).isEqualTo(51000)
     }
 }
