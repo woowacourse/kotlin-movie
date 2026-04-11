@@ -1,14 +1,14 @@
 package domain.model.pay
 
 import domain.model.Movie
-import domain.model.Payment.Discount
+import domain.model.payment.Discount
 import domain.model.screen.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
 
-class discountTest {
+class DiscountTest {
     private fun screening(
         day: Int,
         startTime: LocalTime,

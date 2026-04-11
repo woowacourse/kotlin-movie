@@ -1,15 +1,14 @@
 package controller
 
-import domain.model.Payment.Discount
-import domain.model.Payment.Pay
-import domain.model.Payment.PaymentMethod
 import domain.model.cart.CartItem
+import domain.model.payment.Discount
+import domain.model.payment.Pay
+import domain.model.payment.PaymentMethod
 
 class PaymentController(
     private var point: Int = 0,
     private var paymentMethod: PaymentMethod = PaymentMethod.CARD,
 ) {
-
     // 사용할 포인트를 설정한다.
     fun usePoint(point: Int) {
         require(point >= 0) { "포인트는 0 이상이어야 합니다." }

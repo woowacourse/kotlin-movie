@@ -1,8 +1,8 @@
 package domain.model.cart
 
+import domain.model.screen.Screening
 import domain.model.seat.Seat
 import domain.model.seat.SeatClass
-import domain.model.screen.Screening
 
 // 장바구니 항목 1건(상영 + 선택 좌석 목록)을 표현한다.
 data class CartItem(

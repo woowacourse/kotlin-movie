@@ -1,4 +1,4 @@
-package domain.model.Payment
+package domain.model.payment
 
 data class Pay(
     private val point: Int,
@@ -28,8 +28,9 @@ enum class PaymentMethod {
     CASH,
     ;
 
-    fun methodDiscountAmount(): Double = when (this) {
-        CARD -> 0.05
-        CASH -> 0.02
-    }
+    fun methodDiscountAmount(): Double =
+        when (this) {
+            CARD -> 0.05
+            CASH -> 0.02
+        }
 }

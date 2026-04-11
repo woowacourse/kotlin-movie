@@ -30,10 +30,14 @@ data class SeatInventory(
     companion object {
         // 스크린당 좌석의 초기세팅
         fun defaultSeatAvailabilities(): List<SeatAvailability> =
-            Seat.columns.flatMap { row ->
-                Seat.rows.map { column ->
+            Seat.columns.flatMap { column ->
+                Seat.rows.map { row ->
                     SeatAvailability(
-                        seat = Seat(row, column),
+                        seat =
+                            Seat(
+                                column = column,
+                                row = row,
+                            ),
                     )
                 }
             }

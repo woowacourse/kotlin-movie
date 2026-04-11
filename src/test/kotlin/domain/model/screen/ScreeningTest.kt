@@ -1,8 +1,8 @@
 package domain.model.screen
 
+import domain.model.Movie
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
-import domain.model.Movie
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -38,20 +38,22 @@ class ScreeningTest {
 
     @Test
     fun `영화 러닝타임이 0분 이하이면 상영은 생성되지 않는다`() {
-        Assertions.assertThatThrownBy {
-            screening(movie = movie(title = "러닝타임 오류", runningMinutes = 0))
-        }.isInstanceOf(IllegalArgumentException::class.java)
+        Assertions
+            .assertThatThrownBy {
+                screening(movie = movie(title = "러닝타임 오류", runningMinutes = 0))
+            }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("0보다 커야")
     }
 
     @Test
     fun `하루 스케줄 영화관 영업시간은 0~24시로 상영 종료 시간이 24시를 넘어가면 생성되지 않는다`() {
-        Assertions.assertThatThrownBy {
-            screening(
-                startTime = LocalTime.of(23, 30),
-                movie = movie(title = "심야 상영", runningMinutes = 120),
-            )
-        }.isInstanceOf(IllegalArgumentException::class.java)
+        Assertions
+            .assertThatThrownBy {
+                screening(
+                    startTime = LocalTime.of(23, 30),
+                    movie = movie(title = "심야 상영", runningMinutes = 120),
+                )
+            }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("시작 시간 이후")
     }
 

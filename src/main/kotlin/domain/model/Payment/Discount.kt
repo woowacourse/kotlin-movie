@@ -1,4 +1,4 @@
-package domain.model.Payment
+package domain.model.payment
 
 import domain.model.screen.Screening
 import java.time.LocalTime
@@ -22,8 +22,7 @@ data class Discount(
             .toDiscount(AMOUNT_2000)
     }
 
-    private fun Boolean.toDiscount(value: Int): Int =
-        takeIf { this }?.let { value } ?: 0
+    private fun Boolean.toDiscount(value: Int): Int = takeIf { this }?.let { value } ?: 0
 
     private companion object {
         val MOVIE_DAYS = setOf(10, 20, 30)

@@ -1,6 +1,6 @@
 package domain.model.seat
 
-// 좌석은 row(숫자) + column(알파벳) + 좌석 등급으로 구성된다.
+// 좌석은 row(알파벳) + column(숫자) + 좌석 등급으로 구성된다.
 data class Seat(
     val column: Int,
     val row: RowLabel,
@@ -12,10 +12,10 @@ data class Seat(
     }
 
     companion object {
-        // 좌석 행 범위: 1 ~ 12
+        // 좌석 번호 범위: 1 ~ 12
         val columns = (1..12).toList()
 
-        // 좌석 열 범위: A ~ E
+        // 좌석 행 범위: A ~ E
         val rows = RowLabel.entries
     }
 }
@@ -27,9 +27,9 @@ enum class SeatClass {
     S, ;
 
     companion object {
-        // 열 기준으로 좌석 등급을 결정한다.
-        fun from(column: RowLabel): SeatClass =
-            when (column) {
+        // 행 기준으로 좌석 등급을 결정한다.
+        fun from(row: RowLabel): SeatClass =
+            when (row) {
                 RowLabel.A, RowLabel.B -> B
                 RowLabel.C -> A
                 RowLabel.D, RowLabel.E -> S

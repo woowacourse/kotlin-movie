@@ -1,7 +1,7 @@
 import controller.CinemaController
 import controller.PaymentController
 import controller.ReservationController
-import domain.model.Payment.PaymentMethod
+import domain.model.payment.PaymentMethod
 import domain.model.screen.Screening
 import view.SeatLayoutView
 import java.time.LocalDate
@@ -38,8 +38,8 @@ fun cinema() {
         println("좌석 배치도")
         SeatLayoutView.render(seatStatuses)
 
-        // 좌석 입력을 받아 실제 예약하고, 실패하면 같은 상영에서 다시 입력 받는다.
-        val reserved = reserveSeatsWithRetry(cinemaController, selectedScreening, title, screeningDate)
+        // 좌석 입력을 받아 실제 예약한다.
+        val reserved = reserveSeatsForSelection(cinemaController, selectedScreening, title, screeningDate)
         val item = reservationController.reserve(reserved.screening, reserved.seatCodes)
 
         println()
@@ -66,7 +66,7 @@ fun cinema() {
     println("결제 수단을 선택하세요:")
     println("1. 신용카드")
     println("2. 현금")
-    val paymentMethod = PaymentMethod.entries[readln().trim().toInt()-1]
+    val paymentMethod = PaymentMethod.entries[readln().trim().toInt() - 1]
     paymentController.usePoint(point)
     paymentController.selectPaymentMethod(paymentMethod)
 
@@ -75,7 +75,7 @@ fun cinema() {
     println("최종 결제 금액: $resultPrice")
 
     println("위 금액으로 결제하시겠습니까? (Y/N)")
-    if(!readContinuePayment()){
+    if (!readContinuePayment()) {
         return
     }
 
@@ -89,7 +89,6 @@ fun cinema() {
     println("결제 금액: $resultPrice  (포인트 ${point}원 사용)")
 
     println("감사합니다")
-
 }
 
 // Y/N 값을 검증해서 반환한다.
@@ -198,8 +197,8 @@ private fun readScreeningIndex(maxIndex: Int): Int {
     }
 }
 
-// 좌석 입력을 받아 실제 예약될 때까지 반복한다.
-private fun reserveSeatsWithRetry(
+// 좌석 입력을 받아 선택한 상영에 예약을 반영한다.
+private fun reserveSeatsForSelection(
     cinemaController: CinemaController,
     screening: Screening,
     movieTitle: String,
@@ -209,12 +208,13 @@ private fun reserveSeatsWithRetry(
         println("예약할 좌석을 입력하세요 (A1, B2):")
         val seatCodes = readSeatCodes()
 
-        val result = cinemaController.reserveSeats(
-            movieTitle = movieTitle,
-            date = screeningDate,
-            startTime = screening.startTime,
-            seats = seatCodes,
-        )
+        val result =
+            cinemaController.reserveSeats(
+                movieTitle = movieTitle,
+                date = screeningDate,
+                startTime = screening.startTime,
+                seats = seatCodes,
+            )
         return ReservedSelection(result, seatCodes)
     }
 }
@@ -237,8 +237,8 @@ private fun readSeatCodes(): List<String> {
     }
 }
 
-// 좌석 코드를 리스트로 파싱한다.
-private fun readContinuePayment():Boolean {
+// 결제 진행 여부(Y/N)를 입력받는다.
+private fun readContinuePayment(): Boolean {
     while (true) {
         val answer = readln().trim().uppercase()
 

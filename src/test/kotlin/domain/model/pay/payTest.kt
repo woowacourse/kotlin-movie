@@ -1,19 +1,19 @@
 package domain.model.pay
 
-import domain.model.Payment.Pay
-import domain.model.Payment.PaymentMethod
+import domain.model.payment.Pay
+import domain.model.payment.PaymentMethod
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
-class payTest {
-
+class PayTest {
     @Test
     fun `포인가 있을경우 포인트가 먼저 차감되고 차감된 가격에서 결제수단에 맞춰 할인률이 적용된다`() {
-        val pay = Pay(
-            point = 2000,
-            paymentMethod = PaymentMethod.CARD,
-        )
+        val pay =
+            Pay(
+                point = 2000,
+                paymentMethod = PaymentMethod.CARD,
+            )
 
         val result = pay.payAmountApply(10000)
 

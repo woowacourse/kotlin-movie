@@ -4,11 +4,13 @@ import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 
 // 입력받은 좌석 문자열 목록(A1, B12...)을 Seat 목록으로 변환한다.
-fun parseSeats(seatCodes: List<String>): List<Seat> = seatCodes.filter { seatCode ->
-        seatCode.isNotBlank()
-    }.map { seatCode ->
-        parseSeatCode(seatCode)
-    }
+fun parseSeats(seatCodes: List<String>): List<Seat> =
+    seatCodes
+        .filter { seatCode ->
+            seatCode.isNotBlank()
+        }.map { seatCode ->
+            parseSeatCode(seatCode)
+        }
 
 // 좌석 코드 하나를 파싱한다. (알파벳 1글자 + 숫자 1자리 이상)
 fun parseSeatCode(code: String): Seat {

@@ -1,10 +1,8 @@
 package controller
 
-import domain.model.seat.RowLabel
-import domain.model.schedule.ScreeningSchedule
-import domain.model.seat.Seat
-import domain.model.schedule.defaultScreeningSeeds
 import domain.model.Movie
+import domain.model.schedule.ScreeningSchedule
+import domain.model.schedule.defaultScreeningSeeds
 import domain.model.screen.Screening
 import domain.model.seat.SeatAvailability
 import domain.parseSeats
@@ -24,16 +22,14 @@ class CinemaController(
             samples = defaultScreeningSeeds(),
         ),
 ) {
-
     // 특정 제목의 영화 상영 목록을 조회한다.
-    fun findScreeningTitle(title: String): List<Screening> =
-        screeningSchedule.screeningsOfMovieTitle(title)
+    fun findScreeningTitle(title: String): List<Screening> = screeningSchedule.screeningsOfMovieTitle(title)
 
     // 특정 날짜의 특정 영화 상영 목록을 조회한다.
     fun findScreeningsDate(
-        screening: List<Screening>,
+        screenings: List<Screening>,
         date: LocalDate,
-    ): List<Screening> = screeningSchedule.screeningsOfMovieDate(screening, date)
+    ): List<Screening> = screeningSchedule.screeningsOfMovieDate(screenings, date)
 
     // 특정 상영의 좌석 상태를 조회한다.
     fun findSeatStatuses(

@@ -1,8 +1,8 @@
 package controller
 
 import domain.model.Movie
-import domain.model.Payment.PaymentMethod
 import domain.model.cart.CartItem
+import domain.model.payment.PaymentMethod
 import domain.model.screen.Screening
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat

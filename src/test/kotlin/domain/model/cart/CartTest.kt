@@ -1,9 +1,9 @@
 package domain.model.cart
 
 import domain.model.Movie
+import domain.model.screen.Screening
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
-import domain.model.screen.Screening
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate

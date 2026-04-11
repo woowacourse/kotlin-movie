@@ -1,7 +1,7 @@
 package domain.model.screen
 
-import domain.model.seat.Seat
 import domain.model.Movie
+import domain.model.seat.Seat
 import domain.model.seat.SeatAvailability
 import domain.model.seat.SeatInventory
 import java.time.LocalDate
