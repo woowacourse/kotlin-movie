@@ -157,8 +157,8 @@
    - [x] 예약 날자가 10, 20, 30일 중 하나라면 true를 반환한다
    - [x] 예약 날자가 10, 20, 30일이 아니라면 false를 반환한다
 2. payMethodDiscountCondition
-   - [ ] 입력받은 결제 방식이 CARD라면 true를 반환한다
-   - [ ] 입력받은 결제 방식이 CASH라면 true를 반환한다
+   - [x] 입력받은 결제 방식이 CARD라면 true를 반환한다
+   - [x] 입력받은 결제 방식이 CASH라면 true를 반환한다
 
 ### 15. Money
 
