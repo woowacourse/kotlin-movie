@@ -12,29 +12,29 @@ class CinemaScheduleTest {
     @Test
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
         assertThatCode {
-                val screenId = "1"
-                val cinemaTimeRange =
-                    CinemaTimeRange(
-                        CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
-                        CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
-                    )
-
-                val schedules =
-                    listOf(
-                        ScreenSchedule(
-                            screenId = screenId,
-                            servicePeriod = cinemaTimeRange,
-                            movieScreenings = emptyList(),
-                        ),
-                        ScreenSchedule(
-                            screenId = screenId,
-                            servicePeriod = cinemaTimeRange,
-                            movieScreenings = emptyList(),
-                        ),
-                    )
-                CinemaSchedule(
-                    screenSchedules = schedules,
+            val screenId = "1"
+            val cinemaTimeRange =
+                CinemaTimeRange(
+                    CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
+                    CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
                 )
-            }.isInstanceOf(IllegalArgumentException::class.java)
+
+            val schedules =
+                listOf(
+                    ScreenSchedule(
+                        screenId = screenId,
+                        servicePeriod = cinemaTimeRange,
+                        movieScreenings = emptyList(),
+                    ),
+                    ScreenSchedule(
+                        screenId = screenId,
+                        servicePeriod = cinemaTimeRange,
+                        movieScreenings = emptyList(),
+                    ),
+                )
+            CinemaSchedule(
+                screenSchedules = schedules,
+            )
+        }.isInstanceOf(IllegalArgumentException::class.java)
     }
 }

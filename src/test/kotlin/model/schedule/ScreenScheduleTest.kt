@@ -138,35 +138,36 @@ class ScreenScheduleTest {
     @Test
     fun `특정 영화를 요청받으면 해당하는 상영관의 영화 전체 일정을 반환한다`() {
         val movie = MovieFixture.create(runningTime = RunningTime(minute = 60))
-        val movieScreenings = listOf(
-            MovieScreening(
-                movie = movie,
-                screenTime =
-                    CinemaTimeRange(
-                        start = CinemaTime(LocalDateTime.of(2026, 4, 7, 6, 0)),
-                        end = CinemaTime(LocalDateTime.of(2026, 4, 7, 7, 0)),
-                    ),
-                seatGroup = SeatGroup(emptyList()),
-            ),
-            MovieScreening(
-                movie = movie,
-                screenTime =
-                    CinemaTimeRange(
-                        start = CinemaTime(LocalDateTime.of(2026, 4, 7, 7, 30)),
-                        end = CinemaTime(LocalDateTime.of(2026, 4, 7, 8, 30)),
-                    ),
-                seatGroup = SeatGroup(emptyList()),
-            ),
-            MovieScreening(
-                movie = movie,
-                screenTime =
-                    CinemaTimeRange(
-                        start = CinemaTime(LocalDateTime.of(2026, 4, 7, 9, 0)),
-                        end = CinemaTime(LocalDateTime.of(2026, 4, 7, 10, 0)),
-                    ),
-                seatGroup = SeatGroup(emptyList()),
-            ),
-        )
+        val movieScreenings =
+            listOf(
+                MovieScreening(
+                    movie = movie,
+                    screenTime =
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 7, 6, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 7, 7, 0)),
+                        ),
+                    seatGroup = SeatGroup(emptyList()),
+                ),
+                MovieScreening(
+                    movie = movie,
+                    screenTime =
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 7, 7, 30)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 7, 8, 30)),
+                        ),
+                    seatGroup = SeatGroup(emptyList()),
+                ),
+                MovieScreening(
+                    movie = movie,
+                    screenTime =
+                        CinemaTimeRange(
+                            start = CinemaTime(LocalDateTime.of(2026, 4, 7, 9, 0)),
+                            end = CinemaTime(LocalDateTime.of(2026, 4, 7, 10, 0)),
+                        ),
+                    seatGroup = SeatGroup(emptyList()),
+                ),
+            )
 
         assertThat(
             ScreenSchedule(
@@ -176,7 +177,7 @@ class ScreenScheduleTest {
                         CinemaTime(LocalDateTime.of(2026, 4, 7, 6, 0)),
                         CinemaTime(LocalDateTime.of(2026, 4, 7, 22, 0)),
                     ),
-                movieScreenings = movieScreenings
+                movieScreenings = movieScreenings,
             ).screeningOf(movie.id),
         ).isEqualTo(movieScreenings)
     }

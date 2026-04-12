@@ -12,7 +12,7 @@ object MovieFixture {
     fun create(
         name: MovieName = MovieName("혼자사는남자"),
         id: MovieId = MovieId(Uuid.generateV7()),
-        runningTime: RunningTime = RunningTime(30)
+        runningTime: RunningTime = RunningTime(30),
     ) = Movie(
         name = name,
         id = id,
