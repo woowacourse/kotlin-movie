@@ -72,4 +72,17 @@ object TestFixtureData {
     val cart: Cart = Cart(
         reservationInfos = reservationInfos,
     )
+
+    val firstShowing = showings.first()
+    val firstScreen = screens.first()
+    val seatB1 = seats.seats[2]
+    val seatB2 = seats.seats[3]
+
+    const val MOVIE_HARRY_POTTER = "해리 포터"
+    const val SEAT_A1 = "A1"
+    const val SEAT_B1 = "B1"
+    const val SEAT_B1_B2 = "B1,B2"
+    const val INVALID_SEAT_FORMAT = "F//10"
+    const val NON_EXISTENT_SEAT = "F10"
+    const val NON_EXISTENT_MOVIE = "X"
 }

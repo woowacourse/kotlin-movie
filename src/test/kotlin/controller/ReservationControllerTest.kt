@@ -12,8 +12,7 @@ class ReservationControllerTest {
     @Test
     fun `존재하지 않는 영화 제목이면 예외가 발생한다`() {
         // given : 존재하지 않는 영화 제목이 입력된다.
-        val input = "X"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        setInput(TestFixtureData.NON_EXISTENT_MOVIE)
 
         // when : 영화 제목을 처리하면
         val exception = assertThrows<IllegalArgumentException> {
@@ -27,8 +26,7 @@ class ReservationControllerTest {
     @Test
     fun `존재하는 영화 제목이면 해당 영화를 반환한다`() {
         // given : 존재하는 영화 제목이 입력된다.
-        val input = "해리 포터"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        setInput(TestFixtureData.MOVIE_HARRY_POTTER)
 
         // when : 영화 제목을 처리하면
         val result = controller.chooseMovie()
@@ -40,13 +38,11 @@ class ReservationControllerTest {
     @Test
     fun `좌석 입력 형식이 올바르지 않으면 예외가 발생한다`() {
         // given : 좌석을 입력받는다.
-        val input = "F//10"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val showing = TestFixtureData.showings.first()
+        setInput(TestFixtureData.INVALID_SEAT_FORMAT)
 
         // when : 상영을 확인한 뒤 상영 번호를 입력하면
         val exception = assertThrows<IllegalArgumentException> {
-            TestFixtureData.screens.first().seats.checkSeat(input)
+            TestFixtureData.firstScreen.seats.checkSeat(TestFixtureData.INVALID_SEAT_FORMAT)
         }
 
         // then : 예외가 발생한다.
@@ -56,13 +52,11 @@ class ReservationControllerTest {
     @Test
     fun `상영관에 존재하지 않는 좌석이면 예외가 발생한다`() {
         // given : 좌석을 입력받는다.
-        val input = "F10"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val showing = TestFixtureData.showings.first()
+        setInput(TestFixtureData.NON_EXISTENT_SEAT)
 
         // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.chooseSeat(showing)
+            controller.chooseSeat(TestFixtureData.firstShowing)
         }
 
         // then : 예외가 발생한다.
@@ -72,27 +66,23 @@ class ReservationControllerTest {
     @Test
     fun `쉼표로 구분된 여러 좌석을 파싱하면 좌석 리스트를 반환한다`() {
         // given : ,로 구분된 좌석 번호들을 입력한다
-        val input = "B1,B2"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val showing = TestFixtureData.showings.first()
+        setInput(TestFixtureData.SEAT_B1_B2)
 
         // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
-        val result = controller.chooseSeat(showing)
+        val result = controller.chooseSeat(TestFixtureData.firstShowing)
 
         // then : 좌석 리스트가 반환된다.
-        assertEquals(listOf(TestFixtureData.seats.seats[2], TestFixtureData.seats.seats[3]), result.seats)
+        assertEquals(listOf(TestFixtureData.seatB1, TestFixtureData.seatB2), result.seats)
     }
 
     @Test
     fun `이미 예약된 좌석이면 예외가 발생한다`() {
         // given : 좌석을 입력받는다.
-        val input = "A1"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val showing = TestFixtureData.showings.first()
+        setInput(TestFixtureData.SEAT_A1)
 
         // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
         val exception = assertThrows<IllegalArgumentException> {
-            controller.chooseSeat(showing)
+            controller.chooseSeat(TestFixtureData.firstShowing)
         }
 
         // then : 예외가 발생한다.
@@ -102,14 +92,16 @@ class ReservationControllerTest {
     @Test
     fun `예약되지 않고 존재하는 좌석이면 해당 좌석을 반환한다`() {
         // given : 좌석 번호를 입력한다.
-        val input = "B1"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-        val showing = TestFixtureData.showings.first()
+        setInput(TestFixtureData.SEAT_B1)
 
         // when : 좌석을 확인한 뒤 좌석 번호를 입력하면
-        val result = controller.chooseSeat(showing)
+        val result = controller.chooseSeat(TestFixtureData.firstShowing)
 
         // then : 좌석 리스트가 반환된다.
-        assertEquals(listOf(TestFixtureData.seats.seats[2]), result.seats)
+        assertEquals(listOf(TestFixtureData.seatB1), result.seats)
+    }
+
+    private fun setInput(input: String) {
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
     }
 }
