@@ -1,28 +1,30 @@
-package domain
+package domain.discount
 
+import domain.Money
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-
 interface EventDiscountPolicy {
-    fun discount(money: Money, dateTime: LocalDateTime): Money
-}
-
-interface PaymentDiscountPolicy {
-    fun discount(money: Money, type: PaymentType): Money
+    fun discount(
+        money: Money,
+        dateTime: LocalDateTime,
+    ): Money
 }
 
 class TheaterEventDiscount(
-    val policies: List<EventDiscountPolicy> = listOf(MovieDayEvent(), TimeEvent())
+    val policies: List<EventDiscountPolicy> = listOf(MovieDayEvent(), TimeEvent()),
 ) : EventDiscountPolicy {
-    override fun discount(money: Money, dateTime: LocalDateTime): Money {
-        return policies.fold(money) { acc, policy -> policy.discount(acc, dateTime) }
-    }
+    override fun discount(
+        money: Money,
+        dateTime: LocalDateTime,
+    ): Money = policies.fold(money) { acc, policy -> policy.discount(acc, dateTime) }
 }
 
 class MovieDayEvent : EventDiscountPolicy {
-
-    override fun discount(money: Money, dateTime: LocalDateTime): Money {
+    override fun discount(
+        money: Money,
+        dateTime: LocalDateTime,
+    ): Money {
         if (dateTime.toLocalDate().dayOfMonth % MOVIE_DAY_INTERVAL == 0) return money * (1 - DISCOUNT_RATE)
 
         return money
@@ -34,8 +36,11 @@ class MovieDayEvent : EventDiscountPolicy {
     }
 }
 
-class TimeEvent() : EventDiscountPolicy {
-    override fun discount(money: Money, dateTime: LocalDateTime): Money {
+class TimeEvent : EventDiscountPolicy {
+    override fun discount(
+        money: Money,
+        dateTime: LocalDateTime,
+    ): Money {
         if (dateTime.toLocalTime() !in DISCOUNT_BEFORE_TIME..<DISCOUNT_AFTER_TIME) return money - DISCOUNT_AMOUNT
 
         return money
@@ -46,11 +51,5 @@ class TimeEvent() : EventDiscountPolicy {
         private val DISCOUNT_AFTER_TIME = LocalTime.of(20, 0)
 
         private val DISCOUNT_AMOUNT = Money(2000)
-    }
-}
-
-class PaymentDiscount : PaymentDiscountPolicy {
-    override fun discount(money: Money, type: PaymentType): Money {
-        return money * (1 - type.discountRate)
     }
 }
