@@ -13,4 +13,10 @@ class Seat(
     fun isExistSeat(seat: Seat): Boolean = seatPosition.isExistSeatPosition(seat.seatPosition)
 
     fun addSeatPrice(money: Money): Money = seatGrade.addPrice(money)
+
+    fun getRow(): String = seatPosition.getRow()
+
+    fun getColumn(): Int = seatPosition.getColumn()
+
+    fun getName(): String = seatPosition.getName()
 }

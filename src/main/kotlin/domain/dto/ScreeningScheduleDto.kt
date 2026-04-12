@@ -1,5 +1,5 @@
 package domain.dto
 
 data class ScreeningScheduleDto(
-    val time: String
+    val time: String,
 )

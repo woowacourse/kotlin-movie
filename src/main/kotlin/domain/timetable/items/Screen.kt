@@ -10,6 +10,8 @@ class Screen(
     fun isExistSeat(number: SeatPosition): Boolean = seats.isExistSeatNumber(number)
 
     fun findSeat(position: SeatPosition): Seat = seats.findSeat(position)
+
+    fun getSeats() = seats.getSeats()
 }
 
 @JvmInline

@@ -7,6 +7,13 @@ class SeatPosition(
     fun isExistSeatPosition(seatNumber: SeatPosition): Boolean =
         rowNumber.isSame(seatNumber.rowNumber) && columnNumber.isSame(seatNumber.columnNumber)
 
+    fun getRow(): String = rowNumber.getRowNumberName()
+
+    fun getColumn(): Int = columnNumber.getColumnNumberName()
+
+    // 화면에 그릴 좌석 이름 ("A1")
+    fun getName(): String = "${getRow()}${getColumn()}"
+
     companion object {
         private const val SEAT_POSITION_REGEX = "^([A-Z]+)(\\d+)$"
         private val REGEX = Regex(SEAT_POSITION_REGEX)

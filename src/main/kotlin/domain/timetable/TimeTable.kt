@@ -1,5 +1,6 @@
 package domain.timetable
 
+import domain.dto.ScreeningScheduleDto
 import domain.movie.itmes.Title
 import domain.timetable.items.ScreeningSchedule
 import java.time.LocalDate
@@ -22,4 +23,6 @@ class TimeTable(
 
         return schedules[number - 1]
     }
+
+    fun toScreeningScheduleDto(): List<ScreeningScheduleDto> = schedules.map { it.toDto() }
 }

@@ -18,4 +18,6 @@ class Seats(
             seat.addSeatPrice(total)
         }
     }
+
+    fun getSeats() = seats
 }

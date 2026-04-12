@@ -5,11 +5,10 @@ import domain.dto.ReservationDto
 import domain.dto.ScreeningScheduleDto
 
 object OutputView {
-
     fun printSchedules(schedules: List<ScreeningScheduleDto>) {
         println("\n해당 날짜의 상영 목록")
         schedules.forEachIndexed { index, schedule ->
-            println("[${index}] ${schedule.time}")
+            println("[${index + 1}] ${schedule.time}")
         }
     }
 
@@ -42,7 +41,10 @@ object OutputView {
         println("최종 결제 금액: ${formattedPrice}원")
     }
 
-    fun printFinalReceipt(items: List<ReservationDto>, receipt: CalculatorDto) {
+    fun printFinalReceipt(
+        items: List<ReservationDto>,
+        receipt: CalculatorDto,
+    ) {
         println("\n예매 완료\n내역:")
         items.forEach { item ->
             println("- [${item.title}] ${item.dateTime}  좌석: ${item.seats}")

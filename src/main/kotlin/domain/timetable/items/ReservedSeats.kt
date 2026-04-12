@@ -1,6 +1,7 @@
 package domain.timetable.items
 
 import domain.seat.Seat
+import domain.seat.items.SeatPosition
 
 class ReservedSeats(
     private val reservedSeats: MutableList<Seat> = mutableListOf(),
@@ -11,4 +12,6 @@ class ReservedSeats(
     }
 
     fun isReserved(seat: Seat): Boolean = reservedSeats.any { it.isExistSeat(seat) }
+
+    fun isReservedSeatPosition(seatPosition: SeatPosition): Boolean = reservedSeats.any { it.isExistSeatPosition(seatPosition) }
 }
