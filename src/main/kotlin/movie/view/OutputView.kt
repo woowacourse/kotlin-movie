@@ -118,9 +118,12 @@ object OutputView {
 
     private fun printReservations(reservation: Reservation) {
         val screeningMovie = reservation.schedule
-        val movieTime =
-            "${"%02d".format(screeningMovie.startTime.hour)}:${"%02d".format((screeningMovie.startTime.minute))}"
+        val hour = "%02d".format(screeningMovie.startTime.hour)
+        val minute = "%02d".format((screeningMovie.startTime.minute))
+        val movieTime = "${hour}:${minute}"
+        val date = screeningMovie.startTime.toLocalDate()
         val seatNumbers = reservation.seats.joinToString(", ")
-        println("- [${screeningMovie.movie.title}] ${screeningMovie.startTime.toLocalDate()} $movieTime 좌석: $seatNumbers")
+
+        println("- [${screeningMovie.movie.title}] $date $movieTime 좌석: $seatNumbers")
     }
 }
