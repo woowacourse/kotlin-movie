@@ -20,13 +20,4 @@ class Reservation(
         this.screenTime.isDuplicatedScreenTime(otherReservation.screenTime)
 
     fun sumSeatPrice(): Money = seats.sumPrice()
-
-    fun getReservationInfo(): ReservationInfo {
-        val money = Money(0)
-
-        return ReservationInfo(
-            screenTime = screenTime,
-            price = money,
-        )
-    }
 }

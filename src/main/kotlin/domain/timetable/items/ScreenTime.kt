@@ -8,6 +8,10 @@ class ScreenTime(
     private val endTime: LocalTime,
     private val screeningDate: LocalDate,
 ) {
+    fun getStartTime(): LocalTime = startTime
+
+    fun getDate(): LocalDate = screeningDate
+
     fun isContainsTime(time: LocalTime): Boolean = time in startTime..endTime
 
     fun isScreeningAt(date: LocalDate): Boolean = screeningDate == date
