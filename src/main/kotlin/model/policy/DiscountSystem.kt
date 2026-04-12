@@ -5,7 +5,7 @@ import model.reservation.Reservations
 import model.screening.Screening
 
 class DiscountSystem(
-    discountPolicies: List<DiscountPolicy>
+    discountPolicies: List<DiscountPolicy>,
 ) {
     private val discountPolicies = discountPolicies.sortedBy { it.priority }
 

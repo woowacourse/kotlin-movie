@@ -26,11 +26,17 @@ class DiscountSystemTest {
     private val screening = Screening(movie, LocalDateTime.of(2026, 4, 13, 12, 0), ScreeningSeatMap(screen))
     private val reservations = Reservations(listOf(Reservation(screening, seats)))
 
-    class FakeAmountDiscountPolicy(private val amount: Int, override val priority: Int = 2) : DiscountPolicy {
+    class FakeAmountDiscountPolicy(
+        private val amount: Int,
+        override val priority: Int = 2,
+    ) : DiscountPolicy {
         override fun findDiscount(screening: Screening): Discount = AmountDiscount(Money(amount))
     }
 
-    class FakePercentDiscountPolicy(private val percent: Int, override val priority: Int = 1) : DiscountPolicy {
+    class FakePercentDiscountPolicy(
+        private val percent: Int,
+        override val priority: Int = 1,
+    ) : DiscountPolicy {
         override fun findDiscount(screening: Screening): Discount = PercentDiscount(percent)
     }
 

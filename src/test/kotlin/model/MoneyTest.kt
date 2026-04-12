@@ -18,7 +18,6 @@ class MoneyTest {
             .hasMessage("금액은 음수가 될 수 없습니다.")
     }
 
-
     @Test
     fun `초기 금액이 500일때 생성된 Money의 value가 500이다`() {
         // given & when

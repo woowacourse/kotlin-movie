@@ -3,13 +3,19 @@ package model.policy
 import model.Money
 
 sealed interface Discount {
-    fun calculateDiscount(currentPrice: Money, seatCount: Int): Money
+    fun calculateDiscount(
+        currentPrice: Money,
+        seatCount: Int,
+    ): Money
 }
 
 data class AmountDiscount(
     val amount: Money,
 ) : Discount {
-    override fun calculateDiscount(currentPrice: Money, seatCount: Int): Money = amount * seatCount
+    override fun calculateDiscount(
+        currentPrice: Money,
+        seatCount: Int,
+    ): Money = amount * seatCount
 }
 
 data class PercentDiscount(
@@ -21,9 +27,15 @@ data class PercentDiscount(
 
     private val rate = percent.toDouble() / 100
 
-    override fun calculateDiscount(currentPrice: Money, seatCount: Int): Money = currentPrice * rate
+    override fun calculateDiscount(
+        currentPrice: Money,
+        seatCount: Int,
+    ): Money = currentPrice * rate
 }
 
 data object NoDiscount : Discount {
-    override fun calculateDiscount(currentPrice: Money, seatCount: Int): Money = Money(0)
+    override fun calculateDiscount(
+        currentPrice: Money,
+        seatCount: Int,
+    ): Money = Money(0)
 }

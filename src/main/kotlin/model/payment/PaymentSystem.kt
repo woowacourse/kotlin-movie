@@ -14,6 +14,8 @@ class PaymentSystem {
         return PayResult(applyPaymentDiscount(paymentMethod, finalPrice), usedPoint)
     }
 
-    private fun applyPaymentDiscount(paymentMethod: PaymentMethod, price: Money): Money =
-        price - paymentMethod.calculateDiscountAmount(price)
+    private fun applyPaymentDiscount(
+        paymentMethod: PaymentMethod,
+        price: Money,
+    ): Money = price - paymentMethod.calculateDiscountAmount(price)
 }
