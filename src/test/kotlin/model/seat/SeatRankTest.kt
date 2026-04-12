@@ -10,8 +10,8 @@ class SeatRankTest {
         val seatARank = SeatRank.A_RANK
         val seatBRank = SeatRank.B_RANK
 
-        assertThat(seatSRank.price).isEqualTo(18000)
-        assertThat(seatARank.price).isEqualTo(15000)
-        assertThat(seatBRank.price).isEqualTo(12000)
+        assertThat(seatSRank.price.value).isEqualTo(18000)
+        assertThat(seatARank.price.value).isEqualTo(15000)
+        assertThat(seatBRank.price.value).isEqualTo(12000)
     }
 }

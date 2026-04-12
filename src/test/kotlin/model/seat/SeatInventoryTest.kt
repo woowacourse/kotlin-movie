@@ -46,6 +46,6 @@ class SeatInventoryTest {
 
         val totalPrice = seatInventory.calculatePrice(seatNames)
 
-        assertThat(totalPrice).isEqualTo(30_000)
+        assertThat(totalPrice.value).isEqualTo(30_000)
     }
 }
