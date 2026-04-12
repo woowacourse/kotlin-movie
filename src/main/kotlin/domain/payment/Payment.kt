@@ -45,7 +45,7 @@ class Payment(
         return totalAmount
     }
 
-    fun applyDiscounts(
+    private fun applyDiscounts(
         discountPolicy: DiscountPolicy,
         reservedScreen: ReservedScreen,
         money: Int,
@@ -53,7 +53,7 @@ class Payment(
         return discountPolicy.discount(reservedScreen, money)
     }
 
-    fun applyPoint(
+    private fun applyPoint(
         amount: Int,
         account: Account,
         point: Int,
@@ -62,7 +62,7 @@ class Payment(
         return amount - point
     }
 
-    fun selectPaymentMethod(
+    private fun selectPaymentMethod(
         amount: Int,
         paymentMethod: PaymentMethod,
     ): Int = paymentMethod.calculateDiscount(amount)

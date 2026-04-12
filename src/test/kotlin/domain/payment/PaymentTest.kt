@@ -32,34 +32,6 @@ class PaymentTest {
         )
 
     @Test
-    fun `포인트 사용액이 결제 금액 이하이면 해당 금액만큼 차감된다`() {
-        val account = Account(Point(2000))
-
-        val result =
-            payment.applyPoint(
-                amount = 10_000,
-                account = account,
-                point = 2_000,
-            )
-
-        assertEquals(8_000, result)
-    }
-
-    @Test
-    fun `포인트 사용액을 0으로 입렫하면 포인트를 차감하지 않는다`() {
-        val account = Account()
-
-        val result =
-            payment.applyPoint(
-                amount = 1_000,
-                account = account,
-                point = 0,
-            )
-
-        assertEquals(1000, result)
-    }
-
-    @Test
     fun `카트에 담긴 좌석들의 날짜 및 시간 할인 적용 금액을 계산한다`() {
         val newPayment =
             Payment(
