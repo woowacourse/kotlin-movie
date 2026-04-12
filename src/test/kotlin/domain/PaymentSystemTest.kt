@@ -126,15 +126,7 @@ class PaymentSystemTest {
                     TicketBucket(
                         listOf(
                             Ticket(
-                                screening = createScreening(
-                                    startTime = LocalDateTime.of(
-                                        2026,
-                                        4,
-                                        8,
-                                        10,
-                                        0
-                                    )
-                                ),
+                                screening = createScreening(startTime = LocalDateTime.of(2026, 4, 8, 10, 0)),
                                 seatPositions = createSeatPositions("A" to 1),
                             ),
                         ),
@@ -183,4 +175,3 @@ class PaymentSystemTest {
             )
     }
 }
-
