@@ -1,6 +1,5 @@
 package controller
 
-import model.Scheduler
 import model.movie.Movie
 import model.payment.PayResult
 import model.payment.PaymentSystem
@@ -10,11 +9,12 @@ import model.reservation.Reservations
 import model.screening.Screening
 import model.screening.Screenings
 import repository.MovieRepository
+import repository.ScreeningRepository
 import view.InputView
 import view.OutputView
 
 class MovieReservationController(
-    private val scheduler: Scheduler,
+    private val screeningRepo: ScreeningRepository,
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
@@ -46,7 +46,7 @@ class MovieReservationController(
 
         do {
             val reservation = makeReservation(reservations)
-            scheduler.update(reservation.screening)
+            screeningRepo.update(reservation.screening)
             reservations = reservations.add(reservation)
             outputView.printCartItem(reservation)
         } while (inputView.readAddMoreMovie())
@@ -93,7 +93,7 @@ class MovieReservationController(
     private fun searchScreenings(movie: Movie): Screenings =
         retryUntilValid {
             val date = inputView.readDate()
-            val screenings = scheduler.findBy(movie, date)
+            val screenings = screeningRepo.findBy(movie, date)
             if (screenings.isEmpty()) throw IllegalArgumentException("해당 날짜의 상영 목록이 없습니다.")
             screenings
         }

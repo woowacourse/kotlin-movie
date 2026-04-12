@@ -7,19 +7,19 @@
 - [ ] `RateDiscount` 생성 파라미터를 직관적인 백분율(Percent) 기준으로 받도록 개선
 - [ ] `DiscountSystem`의 DIP 위반 문제 해결 (할인 정책 구체 클래스 기본값 제거 및 외부 주입으로 변경)
 - [ ] 예매 도메인의 의미에 맞게 좌석 수(`seatCount`)를 `Int`로 변경 및 `Money` 객체에 정수형 곱셈(`times`) 연산자 오버로딩 추가
-- [ ] 불필요한 미들 맨(Middle Man) 역할을 하던 `Scheduler` 객체를 삭제하고 구조 단순화
+- [x] 불필요한 미들 맨(Middle Man) 역할을 하던 `Scheduler` 객체를 삭제하고 구조 단순화
 
 ### 가독성 및 네이밍
 
-- [ ] `DiscountPolicy`의 책임이 잘 드러나도록 메서드명 변경 (`getDiscountEffect` ➡ `findDiscount`)
+- [ ] `DiscountPolicy`의 책임이 잘 드러나도록 메서드명 변경 (`getDiscountEffect` ➡ `calculateDiscount`)
 - [ ] `PointTest`의 테스트 의도를 명확히 파악할 수 있도록 메서드명 구체화 (올바르게 변환한다 ➡ 포인트를 돈으로 변환할 수 있다)
 
 ### 테스트 코드 보완
 
 - [ ] `DiscountSystemTest`가 특정 구체 정책(Policy)의 변화에 영향을 받지 않도록 테스트 환경 격리
 - [ ] `ScreeningSeatMapTest`에서 중복되지 않은 좌석 예약 시, 실제로 예약이 완료되었는지 상태를 명확히 검증하도록 로직 보완
-- [ ] 프로덕션 코드(`Scheduler`) 삭제에 따른 `SchedulerTest` 제거
-- [ ] `MoneyTest`에 `@ParameterizedTest`를 도입하여 테스트 케이스의 중복 코드를 제거하고 가독성 향상
+- [x] 프로덕션 코드(`Scheduler`) 삭제에 따른 `SchedulerTest` 제거
+- [ ] `MoneyTest`에 @ParameterizedTest를 도입하여 테스트 케이스의 중복 코드를 제거하고 가독성 향상
 
 ## 1 & 2단계 리팩토링 목록 - 두번째
 
