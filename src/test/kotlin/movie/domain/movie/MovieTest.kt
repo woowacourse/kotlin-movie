@@ -1,5 +1,6 @@
 package movie.domain.movie
 
+import movie.data.SeatsData
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.ScreeningDateTime
@@ -21,7 +22,7 @@ class MovieTest {
             Screenings(
                 listOf(
                     Screening(
-                        screen = Screen(1, Seats.createDefault()),
+                        screen = Screen(1, SeatsData.seats),
                         screeningDateTime =
                             ScreeningDateTime(
                                 LocalDate.of(2026, 4, 9),

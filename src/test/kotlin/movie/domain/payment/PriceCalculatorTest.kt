@@ -1,5 +1,6 @@
 package movie.domain.payment
 
+import movie.data.SeatsData
 import movie.domain.amount.Point
 import movie.domain.amount.Price
 import movie.domain.discount.DiscountPolicies
@@ -28,7 +29,7 @@ class PriceCalculatorTest {
         // given
         val screening =
             Screening(
-                screen = Screen(1, Seats.createDefault()),
+                screen = Screen(1, SeatsData.seats),
                 screeningDateTime =
                     ScreeningDateTime(
                         LocalDate.of(2026, 1, 10),

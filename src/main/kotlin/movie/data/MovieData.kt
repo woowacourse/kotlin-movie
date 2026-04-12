@@ -20,7 +20,7 @@ object MovieData {
         val screen =
             Screen(
                 1,
-                Seats.createDefault(),
+                SeatsData.seats,
             )
 
         return listOf(

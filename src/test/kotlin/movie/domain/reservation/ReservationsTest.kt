@@ -1,5 +1,6 @@
 package movie.domain.reservation
 
+import movie.data.SeatsData
 import movie.domain.amount.Price
 import movie.domain.discount.DiscountPolicies
 import movie.domain.discount.MovieDayDiscount
@@ -37,7 +38,7 @@ class ReservationsTest {
 
         val screening =
             Screening(
-                Screen(1, Seats.createDefault()),
+                Screen(1, SeatsData.seats),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(13, 0),
@@ -79,7 +80,7 @@ class ReservationsTest {
 
         val screening =
             Screening(
-                Screen(1, Seats.createDefault()),
+                Screen(1, SeatsData.seats),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
@@ -109,7 +110,7 @@ class ReservationsTest {
     @Test
     fun `무비데이에 상영하는 영화의 A등급 좌석 2개, 시간 할인이 적용되는 영화의 A등급 좌석 2개를 구매했을 때의 가격은 55000원이다`() {
         // given
-        val screen = Screen(1, Seats.createDefault())
+        val screen = Screen(1, SeatsData.seats)
 
         val selectedSeats =
             SelectedSeats(

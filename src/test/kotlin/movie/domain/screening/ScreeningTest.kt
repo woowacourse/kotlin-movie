@@ -1,5 +1,6 @@
 package movie.domain.screening
 
+import movie.data.SeatsData
 import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
@@ -22,7 +23,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
-                Screen(1, Seats.createDefault()),
+                Screen(1, SeatsData.seats),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
@@ -59,7 +60,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
-                Screen(1, Seats.createDefault()),
+                Screen(1, SeatsData.seats),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
@@ -93,7 +94,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
-                Screen(1, Seats.createDefault()),
+                Screen(1, SeatsData.seats),
                 ScreeningDateTime(
                     LocalDate.of(2026, 1, 1),
                     LocalTime.of(10, 0),
