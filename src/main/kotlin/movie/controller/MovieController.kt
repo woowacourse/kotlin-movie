@@ -80,8 +80,7 @@ class MovieController(
     private fun inputPoint(): Point =
         executeWithRetry {
             val input = inputView.inputPoint()
-            require(input <= user.point.value) { "보유 포인트를 초과할 수 없습니다." }
-            Point(input)
+            user.usablePoint(input)
         }
 
     private fun selectPaymentMethod(): PaymentMethod {
