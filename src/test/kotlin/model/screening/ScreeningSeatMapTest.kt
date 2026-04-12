@@ -8,6 +8,7 @@ import model.seat.SeatGrade
 import model.seat.SeatNumber
 import model.seat.Seats
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -86,7 +87,13 @@ class ScreeningSeatMapTest {
         // when: seat2 을 예약
         val actual = screeningSeatMap.reserve(listOf(seat2.seatNumber))
 
-        // then: actual은 새로운 ScreeningSeatMap을 반환
+        // then1: actual은 새로운 ScreeningSeatMap을 반환, 예약 가능한 좌석에서 seat2 를 찾을 수 없음
         assertThat(actual).isInstanceOf(ScreeningSeatMap::class.java)
+        assertThat(actual.getAvailableSeats().seatNumbers).doesNotContain(seat2.seatNumber)
+
+        // then2: seat2를 다시 예약하려고 하면 오류가 발생
+        assertThatThrownBy { actual.reserve(listOf(seat2.seatNumber)) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("이미 예약된 좌석입니다.")
     }
 }

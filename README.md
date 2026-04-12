@@ -17,7 +17,7 @@
 ### 테스트 코드 보완
 
 - [ ] `DiscountSystemTest`가 특정 구체 정책(Policy)의 변화에 영향을 받지 않도록 테스트 환경 격리
-- [ ] `ScreeningSeatMapTest`에서 중복되지 않은 좌석 예약 시, 실제로 예약이 완료되었는지 상태를 명확히 검증하도록 로직 보완
+- [x] `ScreeningSeatMapTest`에서 중복되지 않은 좌석 예약 시, 실제로 예약이 완료되었는지 상태를 명확히 검증하도록 로직 보완
 - [x] 프로덕션 코드(`Scheduler`) 삭제에 따른 `SchedulerTest` 제거
 - [ ] `MoneyTest`에 `@ParameterizedTest`를 도입하여 테스트 케이스의 중복 코드를 제거하고 가독성 향상
 
