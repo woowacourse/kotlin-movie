@@ -8,11 +8,20 @@ class MovieManager(
 ) {
 
     fun getMovieStartTime(movieTitle: String, date: LocalDate): List<LocalDateTime> {
-        return schedules.getMovieSchedule(
+        return schedules.getMovieSchedules(
             movieTitle = movieTitle,
             date = date
         ).map { it.startTime }
     }
 
     fun getMovieTitle(): List<String> = schedules.getMovieTitles()
+
+    fun hasMovieTitle(title: String): Boolean {
+        return getMovieTitle().contains(title)
+
+    }
+
+    fun getSchedule(title: String, startTime: LocalDateTime): Schedule {
+        return schedules.getSchedule(movieTitle = title, startTime = startTime)
+    }
 }
