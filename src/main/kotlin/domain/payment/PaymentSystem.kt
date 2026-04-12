@@ -21,9 +21,7 @@ class PaymentSystem(
             ticket.seatPositions.positions.forEach { position ->
                 total +=
                     eventDiscountPolicy.discount(
-                        Money(
-                            SeatGrade.of(position).price,
-                        ),
+                        Money(position.price),
                         ticket.screening.startTime,
                     )
             }
