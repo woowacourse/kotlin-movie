@@ -12,7 +12,7 @@ enum class ErrorMessages(val message: String) {
     NOT_ENOUGH_POINT("보유 포인트가 부족합니다."),
     SHOULD_POINT_OVER_ZERO("포인트는 0원 이상이어야 합니다."),
     INVALID_PAYMENT_METHOD("올바른 결제 수단을 선택해 주세요."),
-    INVALID_ROW( "유효하지 않은 행 인덱스입니다."),
+    INVALID_ROW("유효하지 않은 행 인덱스입니다."),
     INVALID_COL("유효하지 않은 열 인덱스입니다."),
     INVALID_SEAT("유효하지 않은 좌석 위치입니다."),
     NOT_EXIST_SEAT("존재하지 않는 좌석입니다: "),

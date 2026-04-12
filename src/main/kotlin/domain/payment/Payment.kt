@@ -36,14 +36,20 @@ class Payment(
     fun discountedTotalAmount(): Int {
         var totalAmount = 0
         cart.items.forEach { reservedScreen ->
-            val discountedByDateAmount = applyDiscounts(MovieDayDiscountPolicy(), reservedScreen, reservedScreen.price())
-            val discountedByTimeAmount = applyDiscounts(TimeDiscountPolicy(), reservedScreen, discountedByDateAmount)
+            val discountedByDateAmount =
+                applyDiscounts(MovieDayDiscountPolicy(), reservedScreen, reservedScreen.price())
+            val discountedByTimeAmount =
+                applyDiscounts(TimeDiscountPolicy(), reservedScreen, discountedByDateAmount)
             totalAmount += discountedByTimeAmount
         }
         return totalAmount
     }
 
-    fun applyDiscounts(discountPolicy: DiscountPolicy, reservedScreen: ReservedScreen, money: Int): Int {
+    fun applyDiscounts(
+        discountPolicy: DiscountPolicy,
+        reservedScreen: ReservedScreen,
+        money: Int,
+    ): Int {
         return discountPolicy.discount(reservedScreen, money)
     }
 

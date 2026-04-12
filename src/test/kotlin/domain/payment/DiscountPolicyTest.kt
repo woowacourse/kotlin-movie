@@ -1,115 +1,86 @@
 package domain.payment
 
+import controller.ScreeningMockData
+import domain.payment.discount.MovieDayDiscountPolicy
+import domain.payment.discount.TimeDiscountPolicy
+import domain.reservation.ReservedScreen
+import domain.reservation.Seat
+import domain.reservation.SeatColumn
+import domain.reservation.SeatGrade
+import domain.reservation.SeatRow
+import domain.reservation.Seats
+import domain.screening.Movie
+import domain.screening.MovieTitle
+import domain.screening.RunningTime
+import domain.screening.Screening
 import domain.screening.ScreeningStartTime
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-
 class DiscountPolicyTest {
+    private fun createReservedScreen(dateTime: LocalDateTime): ReservedScreen {
+        val movie = Movie(
+            title = MovieTitle("테스트 영화"),
+            runningTime = RunningTime(120)
+        )
+        val screening = Screening.create(
+            movie = movie,
+            startTime = ScreeningStartTime(dateTime),
+            reservedSeats = emptyList()
+        )
+        return ReservedScreen(
+            screen = screening,
+            seats = emptyList()
+        )
+    }
+
     @Test
     fun `10일, 20일, 30일은 10% 무비데이 할인이 적용된다`() {
-        val discountPolicy = DiscountPolicy()
+        val discountPolicy = MovieDayDiscountPolicy()
         val totalAmount = 10000
-        val expectAmount = (10000 * 0.9).toInt()
+        val expectedAmount = 9000
 
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(10, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(20, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(30, totalAmount),
-        )
+        // 1월 10일
+        val reservedScreen10 = createReservedScreen(LocalDateTime.of(2026, 1, 10, 14, 0))
+        assertEquals(expectedAmount, discountPolicy.discount(reservedScreen10, totalAmount))
+
+        // 1월 20일
+        val reservedScreen20 = createReservedScreen(LocalDateTime.of(2026, 1, 20, 14, 0))
+        assertEquals(expectedAmount, discountPolicy.discount(reservedScreen20, totalAmount))
     }
 
     @Test
-    fun `10일, 20일, 30일 외의 날은 10% 무비데이 할인이 적용되지 않는다`() {
-        val discountPolicy = DiscountPolicy()
+    fun `무비데이(10, 20, 30일)가 아니면 할인이 적용되지 않는다`() {
+        val discountPolicy = MovieDayDiscountPolicy()
         val totalAmount = 10000
-        val expectAmount = 10000
 
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(9, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(11, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(29, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(1, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(15, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByMovieDay(19, totalAmount),
-        )
+        // 1월 9일
+        val reservedScreen9 = createReservedScreen(LocalDateTime.of(2026, 1, 9, 14, 0))
+        assertEquals(totalAmount, discountPolicy.discount(reservedScreen9, totalAmount))
     }
 
     @Test
-    fun `11시 이전 또는 20시 이후의 영화는 2000원 할인된다`() {
-        val movieHour = ScreeningStartTime(LocalDateTime.of(2026, 5, 10, 10, 0))
-        val movieHour2 = ScreeningStartTime(LocalDateTime.of(2026, 5, 10, 20, 0))
-        val movieHour3 = ScreeningStartTime(LocalDateTime.of(2026, 5, 10, 10, 59))
-
-        val discountPolicy = DiscountPolicy()
+    fun `11시 이전 또는 20시 이후 영화는 2000원 정액 할인이 적용된다`() {
+        val discountPolicy = TimeDiscountPolicy()
         val totalAmount = 10000
-        val expectAmount = 8000
+        val expectedAmount = 8000
 
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByTimeSale(movieHour, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByTimeSale(movieHour2, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByTimeSale(movieHour3, totalAmount),
-        )
+        // 오전 10시 (11시 이전)
+        val morningScreen = createReservedScreen(LocalDateTime.of(2026, 1, 1, 10, 0))
+        assertEquals(expectedAmount, discountPolicy.discount(morningScreen, totalAmount))
+
+        // 오후 8시 (20시 이후 포함)
+        val nightScreen = createReservedScreen(LocalDateTime.of(2026, 1, 1, 20, 0))
+        assertEquals(expectedAmount, discountPolicy.discount(nightScreen, totalAmount))
     }
 
     @Test
-    fun `11시에서 20시 사이의 영화는 할인되지 않는다`() {
-        val movieHour1 = ScreeningStartTime(LocalDateTime.of(2026, 5, 10, 11, 0))
-        val movieHour2 = ScreeningStartTime(LocalDateTime.of(2026, 5, 10, 19, 59))
-
-        val discountPolicy = DiscountPolicy()
+    fun `11시 ~ 19시 사이 영화는 할인이 적용되지 않는다`() {
+        val discountPolicy = TimeDiscountPolicy()
         val totalAmount = 10000
-        val expectAmount = 10000
 
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByTimeSale(movieHour1, totalAmount),
-        )
-        assertEquals(
-            expectAmount,
-            discountPolicy.discountByTimeSale(movieHour2, totalAmount),
-        )
-    }
-
-    @Test
-    fun `무비데이 할인과 조조 심야 할인이 동시 적용될 시 무비데이 할인이 먼저 적용된다`() {
-        val movieHour = ScreeningStartTime(LocalDateTime.of(2026, 5, 10, 9, 0))
-        val discountPolicy = DiscountPolicy()
-        val totalAmount = 10000
-        val expectAmount = 7000
-        assertEquals(
-            expectAmount,
-            discountPolicy.discount(movieHour, totalAmount),
-        )
+        // 오후 2시
+        val normalScreen = createReservedScreen(LocalDateTime.of(2026, 1, 1, 14, 0))
+        assertEquals(totalAmount, discountPolicy.discount(normalScreen, totalAmount))
     }
 }

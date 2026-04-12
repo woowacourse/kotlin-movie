@@ -37,7 +37,7 @@
 ### view
 - [x] `InputView`에 입력 받는 것마다 함수 분리
 - [x] 출력 함수 수정
-- [ ] 하드코딩 문자열 `companion object`로 이동 또는 view에서 출력하도록 수정
+- [x] 하드코딩 문자열 `companion object`로 이동 또는 view에서 출력하도록 수정
 
 ### controller
 - [x] Controller 책임 분리

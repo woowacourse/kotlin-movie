@@ -24,7 +24,7 @@ class ReservedScreeingTest {
                 reservedSeats = seats,
             )
 
-        assertTrue(reservedSeats.isReserved(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S)))
+        assertTrue(reservedSeats.isSeatReserved(Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S)))
     }
 
     @Test
@@ -41,6 +41,6 @@ class ReservedScreeingTest {
                 reservedSeats = seats,
             )
 
-        assertTrue(!reservedSeats.isReserved(Seat(SeatRow("B"), SeatColumn(1), SeatGrade.S)))
+        assertTrue(!reservedSeats.isSeatReserved(Seat(SeatRow("B"), SeatColumn(1), SeatGrade.S)))
     }
 }

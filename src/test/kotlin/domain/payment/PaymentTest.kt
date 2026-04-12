@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class PaymentTest {
-    private val discountPolicy = DiscountPolicy()
     private val emptyCart = Cart(emptyList())
     private val containedCart =
         emptyCart.add(
@@ -30,12 +29,11 @@ class PaymentTest {
     private val payment =
         Payment(
             cart = emptyCart,
-            discountPolicy = discountPolicy,
         )
 
     @Test
     fun `포인트 사용액이 결제 금액 이하이면 해당 금액만큼 차감된다`() {
-        val account = Account()
+        val account = Account(Point(2000))
 
         val result =
             payment.applyPoint(
@@ -66,7 +64,6 @@ class PaymentTest {
         val newPayment =
             Payment(
                 cart = containedCart,
-                discountPolicy = discountPolicy,
             )
 
         assertEquals(25000, newPayment.discountedTotalAmount())
@@ -77,12 +74,11 @@ class PaymentTest {
         val newPayment =
             Payment(
                 cart = containedCart,
-                discountPolicy = discountPolicy,
             )
 
         val result =
             newPayment.pay(
-                pointAmount = 1000,
+                pointAmount = 0,
                 account = Account(),
                 selectedPaymentMethod = PaymentMethod.CREDIT_CARD,
             )

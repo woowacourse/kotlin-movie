@@ -4,6 +4,7 @@ import controller.ScreeningMockData
 import domain.screening.Screening
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import repository.Screenings
 import java.time.LocalDate
 
@@ -38,9 +39,9 @@ class ScreeningsTest {
 
     @Test
     fun `해당하는 상영이 없다면 빈 리스트가 반환된다`() {
-        val resultScreening =
-            screenings.findByMovieTitleAndDate("어벤져스", LocalDate.of(2026, 4, 15))
+        val title = "어벤져스"
+        val time = LocalDate.of(2026, 4, 15)
 
-        assertEquals(emptyList<Screening>(), resultScreening)
+        assertThrows<IllegalArgumentException> { screenings.findByMovieTitleAndDate(title, time) }
     }
 }

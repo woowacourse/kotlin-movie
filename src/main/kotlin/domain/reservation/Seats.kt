@@ -33,5 +33,6 @@ class Seats private constructor(
         values.firstOrNull { it.seatNumber == seatNumber.trim().uppercase() }
             ?: throw IllegalArgumentException(ErrorMessages.NOT_EXIST_SEAT.message + seatNumber)
 
-    fun findAllBySeatNumbers(seatNumbers: List<String>): List<Seat> = seatNumbers.map { findBySeatNumber(it) }
+    fun findAllBySeatNumbers(seatNumbers: List<String>): List<Seat> =
+        seatNumbers.map { findBySeatNumber(it) }
 }

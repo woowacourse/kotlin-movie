@@ -12,7 +12,6 @@ import domain.screening.Screening
 import repository.Screenings
 import view.InputView
 import view.OutputView
-import java.lang.Exception
 import java.time.LocalDate
 
 class CinemaController(
@@ -67,7 +66,8 @@ class CinemaController(
             outputView.printScreenings(availableScreenings)
 
             val selectedNumber = inputView.readScreeningNumber()
-            val selectedScreening = screenings.findSelectedScreening(selectedNumber, availableScreenings)
+            val selectedScreening =
+                screenings.findSelectedScreening(selectedNumber, availableScreenings)
 
             cart.checkScreeningOverlap(selectedScreening)
             selectedScreening

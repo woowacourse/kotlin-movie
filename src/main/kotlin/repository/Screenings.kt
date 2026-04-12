@@ -19,7 +19,10 @@ class Screenings(
         return foundedScreenings
     }
 
-    fun findSelectedScreening(selectedNumber: Int, availableScreenings: List<Screening>): Screening {
+    fun findSelectedScreening(
+        selectedNumber: Int,
+        availableScreenings: List<Screening>,
+    ): Screening {
         require(selectedNumber in 1..availableScreenings.size) {
             ErrorMessages.INCORRECT_SCREENING_NUMBER.message
         }
