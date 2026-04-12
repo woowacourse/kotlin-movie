@@ -134,7 +134,11 @@
 - [ ] 포인트 사용을 적용한 결제 금액을 반환한 받는다.
 - [ ] 결제 수단 관련 할인 정책을 적용한 결제 금액을 반환 받는다.
 
-### 13. discount policy
+### 13. Price Discount Calculator
+
+- [x] 입력받은 금액을 시간 관련 할인 정책을 적용한 결제 금액을 반환한다
+
+### 14. discount policy
 
 1. timeDiscountPolicy
     - [x] 예약 시간이 오전 11이전 또는 오후 8시 이후라면 2,000 할인한 금액을 반환한다.
@@ -147,7 +151,7 @@
 4. cashDiscountPolicy
     - [x] 현금 결제시 2% 할인한 금액을 반환한다.
 
-### 14. discount condition
+### 15. discount condition
 
 1. timeDiscountCondition
    - [x] 예약 시간이 오전 11이전 또는 오후 8시 이후라면 true를 반환한다
@@ -158,6 +162,6 @@
    - [x] 입력받은 결제 방식이 CARD라면 true를 반환한다
    - [x] 입력받은 결제 방식이 CASH라면 true를 반환한다
 
-### 15. Money
+### 16. Money
 
 - [x] 입력된 값이 0보다 작으면 예외를 던진다.
