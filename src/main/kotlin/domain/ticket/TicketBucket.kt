@@ -5,7 +5,6 @@ import domain.common.Money
 data class TicketBucket(
     val tickets: List<Ticket> = emptyList(),
 ) {
-    val totalPrice get() = calculate()
 
     fun addTicket(newTicket: Ticket): TicketBucket {
         for (ticket in tickets) {
