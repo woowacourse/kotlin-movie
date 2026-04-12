@@ -40,11 +40,11 @@
 - [ ] 하드코딩 문자열 `companion object`로 이동 또는 view에서 출력하도록 수정
 
 ### controller
-- [ ] Controller 책임 분리
+- [x] Controller 책임 분리
   - [x] View 책임 분리
-  - [ ] Domain 책임 분리
+  - [x] Domain 책임 분리
 - [x] 에러 메세지 상수 분리
 
 ### domain
   - [x] DiscountPolicy 인터페이스 분리
-  - [ ] Cart가 예약을 담당하도록 변경
+  - [x] 기본으로 주어지는 포인트 변경
