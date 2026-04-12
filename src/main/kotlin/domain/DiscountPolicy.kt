@@ -1,45 +1,56 @@
 package domain
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class DiscountPolicy {
-    fun calculateDiscountResult(
-        money: Money,
-        point: Point,
-        dateTime: LocalDateTime,
-        paymentType: PaymentType,
-    ): Money {
-        var result = money
-        result -= movieDayDiscount(result, dateTime.toLocalDate())
-        result -= timeDiscount(result, dateTime.toLocalTime())
-        result -= point.amount
-        result -= paymentDiscount(result, paymentType)
 
-        return result
+interface EventDiscountPolicy {
+    fun discount(money: Money, dateTime: LocalDateTime): Money
+}
+
+interface PaymentDiscountPolicy {
+    fun discount(money: Money, type: PaymentType): Money
+}
+
+class TheaterEventDiscount(
+    val policies: List<EventDiscountPolicy> = listOf(MovieDayEvent(), TimeEvent())
+) : EventDiscountPolicy {
+    override fun discount(money: Money, dateTime: LocalDateTime): Money {
+        return policies.fold(money) { acc, policy -> policy.discount(acc, dateTime) }
+    }
+}
+
+class MovieDayEvent : EventDiscountPolicy {
+
+    override fun discount(money: Money, dateTime: LocalDateTime): Money {
+        if (dateTime.toLocalDate().dayOfMonth % MOVIE_DAY_INTERVAL == 0) return money * (1 - DISCOUNT_RATE)
+
+        return money
     }
 
-    fun movieDayDiscount(
-        money: Money,
-        date: LocalDate,
-    ): Money {
-        if (date.dayOfMonth % 10 == 0) return Money((money.amount * 0.1).toInt())
+    companion object {
+        private const val MOVIE_DAY_INTERVAL = 10
+        private const val DISCOUNT_RATE = 0.1
+    }
+}
 
-        return Money(0)
+class TimeEvent() : EventDiscountPolicy {
+    override fun discount(money: Money, dateTime: LocalDateTime): Money {
+        if (dateTime.toLocalTime() !in DISCOUNT_BEFORE_TIME..<DISCOUNT_AFTER_TIME) return money - DISCOUNT_AMOUNT
+
+        return money
     }
 
-    fun timeDiscount(
-        money: Money,
-        time: LocalTime,
-    ): Money {
-        if (time.hour !in 12..<20) return Money(2000)
+    companion object {
+        private val DISCOUNT_BEFORE_TIME = LocalTime.of(11, 0)
+        private val DISCOUNT_AFTER_TIME = LocalTime.of(20, 0)
 
-        return Money(0)
+        private val DISCOUNT_AMOUNT = Money(2000)
     }
+}
 
-    fun paymentDiscount(
-        money: Money,
-        paymentType: PaymentType,
-    ): Money = money * paymentType.discountRate
+class PaymentDiscount : PaymentDiscountPolicy {
+    override fun discount(money: Money, type: PaymentType): Money {
+        return money * (1 - type.discountRate)
+    }
 }
