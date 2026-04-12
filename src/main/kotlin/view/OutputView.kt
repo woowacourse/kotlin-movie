@@ -1,6 +1,5 @@
 package view
 
-import domain.dto.CalculatorDto
 import domain.dto.ReservationDto
 import domain.dto.ScreeningScheduleDto
 
@@ -35,23 +34,24 @@ object OutputView {
         }
     }
 
-    fun printPaymentAmount(receipt: CalculatorDto) {
+    fun printPaymentAmount(price: Int) {
         println("\n가격 계산")
-        val formattedPrice = "%,d".format(receipt.price)
+        val formattedPrice = "%,d".format(price)
         println("최종 결제 금액: ${formattedPrice}원")
     }
 
     fun printFinalReceipt(
         items: List<ReservationDto>,
-        receipt: CalculatorDto,
+        price: Int,
+        point: Int,
     ) {
         println("\n예매 완료\n내역:")
         items.forEach { item ->
             println("- [${item.title}] ${item.dateTime}  좌석: ${item.seats}")
         }
 
-        val formattedPrice = "%,d".format(receipt.price)
-        val formattedPoint = "%,d".format(receipt.point)
+        val formattedPrice = "%,d".format(price)
+        val formattedPoint = "%,d".format(point)
         println("결제 금액: ${formattedPrice}원  (포인트 ${formattedPoint}원 사용)")
         println("\n감사합니다.")
     }

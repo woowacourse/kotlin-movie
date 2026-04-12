@@ -65,6 +65,35 @@ class MovieReservationController(
     }
 
     private fun processPayment(reservations: Reservations) {
+        try {
+            val usePoint = InputView.readUsePoint()
+
+            val usePayMethod = InputView.readPayMethod()
+
+            val finalMoney =
+                payCalculator
+                    .calculate(
+                        reservations = reservations,
+                        inputPoint = Point(usePoint),
+                        payMethod = usePayMethod,
+                    ).getAmount()
+
+            OutputView.printPaymentAmount(finalMoney)
+
+            val isPay = InputView.readConfirmPayment()
+            if (!isPay) return
+
+            point = point.subtractPoint(Point(usePoint))
+
+            OutputView.printFinalReceipt(
+                items = reservations.toReservationDtoList(),
+                price = finalMoney,
+                point = usePoint,
+            )
+        } catch (e: Exception) {
+            println(e.message)
+            return processPayment(reservations)
+        }
     }
 
     private fun readDateWithLocalDate(): LocalDate {
