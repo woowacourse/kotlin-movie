@@ -138,6 +138,10 @@
 
 - [x] 입력받은 금액을 시간 관련 할인 정책을 적용한 결제 금액을 반환한다
 
+### 14. PayMethod Discount Calculator
+
+- [x] 입력받은 금액을 입력받은 결제 방식을 적용한 결제 금액을 반환한다
+
 ### 14. discount policy
 
 1. timeDiscountPolicy
