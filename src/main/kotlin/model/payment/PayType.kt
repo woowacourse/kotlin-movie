@@ -11,7 +11,8 @@ enum class PayType(
     CASH(
         id = 2,
         discountRate = DiscountPolicy.CASH_DISCOUNT_RATE,
-    );
+    ),
+    ;
 
     companion object {
         fun fromId(id: Int): PayType =
