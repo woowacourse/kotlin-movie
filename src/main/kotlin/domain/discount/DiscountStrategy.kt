@@ -4,12 +4,13 @@ import domain.common.Money
 import domain.payment.PaymentType
 import java.time.LocalDateTime
 
-interface DiscountStrategy {
-    fun apply(money: Money, context: DiscountContext): Money
+interface TicketDiscountStrategy {
+    fun apply(money: Money, context: TicketDiscountContext): Money
+}
+interface TotalDiscountStrategy {
+    fun apply(money: Money, context: PaymentDiscountContext): Money
 }
 
-data class DiscountContext(
-    val dateTime: LocalDateTime,
-    val paymentType: PaymentType
-)
+data class TicketDiscountContext(val dateTime: LocalDateTime)
 
+data class PaymentDiscountContext(val paymentType: PaymentType)

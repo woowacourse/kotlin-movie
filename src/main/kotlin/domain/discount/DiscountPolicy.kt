@@ -1,23 +1,23 @@
 package domain.discount
 
 import domain.common.Money
-import domain.payment.Point
 
-class DiscountPolicy(
-    private val strategies: List<DiscountStrategy>,
-) {
-    fun calculateDiscountResult(
-        money: Money,
-        point: Point,
-        context: DiscountContext
-    ): Money {
+class TicketDiscountPolicy(private val strategies: List<TicketDiscountStrategy>) {
+    fun calculateDiscountResult(money: Money, context: TicketDiscountContext): Money {
         var result = money
-
         for (strategy in strategies) {
-            val discountResult = strategy.apply(result, context)
-            result -= discountResult
+            result -= strategy.apply(result, context)
         }
-        result -= point.amount
+        return result
+    }
+}
+
+class TotalDiscountPolicy(private val strategies: List<TotalDiscountStrategy>) {
+    fun calculateDiscountResult(money: Money, context: PaymentDiscountContext): Money {
+        var result = money
+        for (strategy in strategies) {
+            result -= strategy.apply(result, context)
+        }
         return result
     }
 }
