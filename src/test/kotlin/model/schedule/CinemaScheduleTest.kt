@@ -9,13 +9,11 @@ import kotlin.uuid.ExperimentalUuidApi
 
 @OptIn(ExperimentalUuidApi::class)
 class CinemaScheduleTest {
-    private val uuidOne = "1"
-    private val uuidTwo = "2"
-
     @Test
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
         Assertions
             .assertThatThrownBy {
+                val screenId = "1"
                 val cinemaTimeRange =
                     CinemaTimeRange(
                         CinemaTime(LocalDateTime.of(2026, 4, 7, 21, 50)),
@@ -25,12 +23,12 @@ class CinemaScheduleTest {
                 val schedules =
                     listOf(
                         ScreenSchedule(
-                            screenId = uuidOne,
+                            screenId = screenId,
                             servicePeriod = cinemaTimeRange,
                             movieScreenings = emptyList(),
                         ),
                         ScreenSchedule(
-                            screenId = uuidOne,
+                            screenId = screenId,
                             servicePeriod = cinemaTimeRange,
                             movieScreenings = emptyList(),
                         ),

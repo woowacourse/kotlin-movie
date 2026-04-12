@@ -3,6 +3,7 @@ package model.payment
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.MovieReservationResult
+import model.fixture.MovieFixture
 import model.movie.Movie
 import model.movie.MovieId
 import model.movie.MovieName
@@ -20,12 +21,7 @@ import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MoviePaymentTest {
-    private val movieOne =
-        Movie(
-            name = MovieName("혼자사는남자"),
-            id = MovieId(Uuid.generateV7()),
-            runningTime = RunningTime(60),
-        )
+    private val movie = MovieFixture.create()
 
     @Test
     fun `좌석 등급과 예약한 좌석 수에 따라서 가격이 계산된다`() {
@@ -41,7 +37,7 @@ class MoviePaymentTest {
                     reservations =
                         listOf(
                             MovieReservationResult.Success(
-                                movie = movieOne,
+                                movie = movie,
                                 screenTime = screenTime,
                                 seat =
                                     Seat(
@@ -52,7 +48,7 @@ class MoviePaymentTest {
                                     ),
                             ),
                             MovieReservationResult.Success(
-                                movie = movieOne,
+                                movie = movie,
                                 screenTime = screenTime,
                                 seat =
                                     Seat(
@@ -80,7 +76,7 @@ class MoviePaymentTest {
                 reservations =
                     listOf(
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -91,7 +87,7 @@ class MoviePaymentTest {
                                 ),
                         ),
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -123,7 +119,7 @@ class MoviePaymentTest {
                 reservations =
                     listOf(
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -134,7 +130,7 @@ class MoviePaymentTest {
                                 ),
                         ),
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -166,7 +162,7 @@ class MoviePaymentTest {
                 reservations =
                     listOf(
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -177,7 +173,7 @@ class MoviePaymentTest {
                                 ),
                         ),
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -209,7 +205,7 @@ class MoviePaymentTest {
                 reservations =
                     listOf(
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -240,7 +236,7 @@ class MoviePaymentTest {
                 reservations =
                     listOf(
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = screenTime,
                             seat =
                                 Seat(
@@ -277,7 +273,7 @@ class MoviePaymentTest {
                 reservations =
                     listOf(
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = movieDayScreenTime,
                             seat =
                                 Seat(
@@ -288,7 +284,7 @@ class MoviePaymentTest {
                                 ),
                         ),
                         MovieReservationResult.Success(
-                            movie = movieOne,
+                            movie = movie,
                             screenTime = noMovieDayScreenTime,
                             seat =
                                 Seat(
