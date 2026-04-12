@@ -46,7 +46,7 @@ object OutputView {
             println(
                 "- [${ticket.screening.movie.title}] ${ticket.screening.startTime.toUiString()} 좌석: ${
                     ticket.seatPositions.positions.joinToString {
-                        "${it.row.value}${it.column.value}"
+                        "${it.row}${it.column.value}"
                     }}",
             )
         }
@@ -95,7 +95,7 @@ object OutputView {
     }
 
     private fun displaySeats(seats: Seats) {
-        val grouped = seats.seats.groupBy { it.position.row.value }
+        val grouped = seats.seats.groupBy { it.position.row }
         val columns =
             seats.seats
                 .map { it.position.column.value }

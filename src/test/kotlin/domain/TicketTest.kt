@@ -47,7 +47,7 @@ class TicketTest {
                                         Seat(
                                             position =
                                                 SeatPosition(
-                                                    Row("A"),
+                                                    Row.A,
                                                     Column(1),
                                                 ),
                                         ),
@@ -56,7 +56,7 @@ class TicketTest {
                         ),
                     startTime = LocalDateTime.of(2026, 4, 8, 10, 0),
                 ),
-            seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
+            seatPositions = SeatPositions(listOf(SeatPosition(Row.A, Column(1)))),
         )
     }
 
@@ -86,7 +86,7 @@ class TicketTest {
                                             Seat(
                                                 position =
                                                     SeatPosition(
-                                                        Row("A"),
+                                                        Row.A,
                                                         Column(1),
                                                     ),
                                             ),
@@ -98,8 +98,8 @@ class TicketTest {
                 seatPositions =
                     SeatPositions(
                         listOf(
-                            SeatPosition(Row("A"), Column(1)),
-                            SeatPosition(Row("A"), Column(1)),
+                            SeatPosition(Row.A, Column(1)),
+                            SeatPosition(Row.A, Column(1)),
                         ),
                     ),
             )

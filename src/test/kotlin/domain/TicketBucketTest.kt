@@ -21,7 +21,7 @@ class TicketBucketTest {
                 listOf(
                     Ticket(
                         screening = createScreening(),
-                        seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
+                        seatPositions = SeatPositions(listOf(SeatPosition(Row.A, Column(1)))),
                     ),
                 ),
         )
@@ -39,7 +39,7 @@ class TicketBucketTest {
                                 SeatPositions(
                                     listOf(
                                         SeatPosition(
-                                            Row("A"),
+                                            Row.A,
                                             Column(1),
                                         ),
                                     ),

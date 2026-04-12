@@ -21,7 +21,7 @@ import java.time.LocalTime
 fun createSeatPosition(
     row: String = "A",
     column: Int = 1,
-) = SeatPosition(Row(row), Column(column))
+) = SeatPosition(Row.valueOf(row.uppercase()), Column(column))
 
 fun createSeatPositions(vararg positions: Pair<String, Int> = arrayOf("A" to 1)): SeatPositions =
     SeatPositions(positions.map { (row, col) -> createSeatPosition(row, col) })

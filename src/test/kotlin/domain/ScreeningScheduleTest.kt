@@ -47,7 +47,7 @@ class ScreeningScheduleTest {
                                             Seat(
                                                 position =
                                                     SeatPosition(
-                                                        Row("A"),
+                                                        Row.A,
                                                         Column(1),
                                                     ),
                                             ),
@@ -91,7 +91,7 @@ class ScreeningScheduleTest {
                                                 Seat(
                                                     position =
                                                         SeatPosition(
-                                                            Row("A"),
+                                                            Row.A,
                                                             Column(1),
                                                         ),
                                                 ),
@@ -125,7 +125,7 @@ class ScreeningScheduleTest {
                                                 Seat(
                                                     position =
                                                         SeatPosition(
-                                                            Row("A"),
+                                                            Row.A,
                                                             Column(1),
                                                         ),
                                                 ),

@@ -56,7 +56,7 @@ class ScreeningTest {
     @Test
     fun `좌석을 예약 시 좌석의 상태가 바뀐다`() {
         val screening = createScreening()
-        val position = SeatPosition(Row("A"), Column(1))
+        val position = SeatPosition(Row.A, Column(1))
         val result =
             screening.reserve(positions = SeatPositions(listOf(position)))
 
