@@ -16,6 +16,6 @@ class Cart(val reservationInfos: ReservationInfos) {
     }
 
     fun getDiscountedItems(): Int {
-        return reservationInfos.applyDiscount()
+        return reservationInfos.applyAllDiscount()
     }
 }
