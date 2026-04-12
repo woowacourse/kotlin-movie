@@ -4,6 +4,8 @@ import model.movie.Movie
 import model.payment.PayResult
 import model.payment.PaymentSystem
 import model.policy.DiscountSystem
+import model.policy.MovieDayDiscountPolicy
+import model.policy.TimeDiscountPolicy
 import model.reservation.Reservation
 import model.reservation.Reservations
 import model.screening.Screening
@@ -56,13 +58,13 @@ class MovieReservationController(
 
     private fun purchase(reservations: Reservations): PayResult {
         val point = retryUntilValid { inputView.readPoint() }
-
         val paymentMethod = retryUntilValid { inputView.readPaymentMethod() }
 
-        val discountSystem = DiscountSystem()
-        val discountedPrice = discountSystem.discountPrice(reservations)
-
+        val discountPolicies = listOf(MovieDayDiscountPolicy, TimeDiscountPolicy)
+        val discountSystem = DiscountSystem(discountPolicies)
         val paymentSystem = PaymentSystem()
+
+        val discountedPrice = discountSystem.discountPrice(reservations)
         return paymentSystem.pay(paymentMethod, discountedPrice, point)
     }
 

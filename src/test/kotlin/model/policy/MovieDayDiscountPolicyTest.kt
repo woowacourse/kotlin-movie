@@ -23,7 +23,6 @@ class MovieDayDiscountPolicyTest {
             title = "테스트 영화",
             runningTime = RunningTime(120),
         )
-
     private val screen = Screen("테스트관", Seats(listOf(Seat(SeatNumber('A', 1), SeatGrade.B))))
 
     private fun screeningOn(day: Int) =
@@ -37,27 +36,27 @@ class MovieDayDiscountPolicyTest {
     fun `10일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.findDiscount(screeningOn(10))
 
-        assertThat(discountEffect).isInstanceOf(RateDiscount::class.java)
-        discountEffect as RateDiscount
-        assertThat(discountEffect.rate).isEqualTo(0.1)
+        assertThat(discountEffect).isInstanceOf(PercentDiscount::class.java)
+        discountEffect as PercentDiscount
+        assertThat(discountEffect.percent).isEqualTo(10)
     }
 
     @Test
     fun `20일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.findDiscount(screeningOn(20))
 
-        assertThat(discountEffect).isInstanceOf(RateDiscount::class.java)
-        discountEffect as RateDiscount
-        assertThat(discountEffect.rate).isEqualTo(0.1)
+        assertThat(discountEffect).isInstanceOf(PercentDiscount::class.java)
+        discountEffect as PercentDiscount
+        assertThat(discountEffect.percent).isEqualTo(10)
     }
 
     @Test
     fun `30일에 10퍼센트 할인이 적용된다`() {
         val discountEffect = MovieDayDiscountPolicy.findDiscount(screeningOn(30))
 
-        assertThat(discountEffect).isInstanceOf(RateDiscount::class.java)
-        discountEffect as RateDiscount
-        assertThat(discountEffect.rate).isEqualTo(0.1)
+        assertThat(discountEffect).isInstanceOf(PercentDiscount::class.java)
+        discountEffect as PercentDiscount
+        assertThat(discountEffect.percent).isEqualTo(10)
     }
 
     @Test
