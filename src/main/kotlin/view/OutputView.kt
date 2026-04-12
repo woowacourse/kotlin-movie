@@ -1,8 +1,6 @@
 package view
 
-import model.payment.Money
 import model.payment.MoviePaymentResult
-import model.payment.Point
 import model.reservation.MovieReservationGroup
 import model.schedule.MovieSchedule
 import model.seat.SeatGroup
@@ -10,6 +8,10 @@ import kotlin.collections.component1
 import kotlin.collections.component2
 
 object OutputView {
+    fun showErrorMessage(errorMessage: String) {
+        println(errorMessage)
+    }
+
     fun showMovieSchedule(movieSchedule: MovieSchedule) {
         val timeTable = movieSchedule.map { it.screenTime }.sortedBy { it.start }
         timeTable.forEachIndexed { index, time ->
@@ -39,29 +41,12 @@ object OutputView {
     ) {
         println(initialMessage)
         reservationGroup
-            .groupBy { it.movie.name to it.startTime }
+            .groupBy { it.movie.name to it.screenTime }
             .forEach { (key, results) ->
                 val (movieName, startTime) = key
                 val seats = results.joinToString(", ") { "${it.seat.position.row}${it.seat.position.column}" }
-                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
+                println("- [$movieName] ${startTime.start.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
             }
-    }
-
-    fun totalReservation(
-        movieReservationGroup: MovieReservationGroup,
-        price: Money,
-        point: Point,
-    ) {
-        println("예매 완료")
-        println("내역:")
-        movieReservationGroup
-            .groupBy { it.movie.name to it.startTime }
-            .forEach { (key, results) ->
-                val (movieName, startTime) = key
-                val seats = results.joinToString(", ") { "${it.seat.position.row}${it.seat.position.column}" }
-                println("- [$movieName] ${startTime.format("yyyy-MM-dd HH:mm")} 좌석: $seats")
-            }
-        println("결제 금액: %,d원 (포인트: %,d원 사용)".format(price.toInt(), point.toInt()))
     }
 
     fun printTotalPrice(moviePaymentResult: MoviePaymentResult) {

@@ -23,7 +23,7 @@ data class SequentialMovieDiscount(
 
 class EarlyMorningDiscount : MovieDiscountable {
     override fun getDiscountAmount(movieReservationResult: MovieReservationResult): Money {
-        val time = movieReservationResult.startTime.toLocalTime()
+        val time = movieReservationResult.screenTime.start.toLocalTime()
         if (time.isAfter(LocalTime.of(11, 0))) {
             return Money(0)
         }
@@ -33,7 +33,7 @@ class EarlyMorningDiscount : MovieDiscountable {
 
 class LateNightDiscount : MovieDiscountable {
     override fun getDiscountAmount(movieReservationResult: MovieReservationResult): Money {
-        val time = movieReservationResult.startTime.toLocalTime()
+        val time = movieReservationResult.screenTime.end.toLocalTime()
         if (time.isBefore(LocalTime.of(20, 0))) {
             return Money(0)
         }
@@ -45,7 +45,7 @@ class MovieDayDiscount : MovieDiscountable {
     override fun getDiscountAmount(movieReservationResult: MovieReservationResult): Money {
         val originalPrice = movieReservationResult.seat.grade.price
         val discountDays = setOf(10, 20, 30)
-        if (discountDays.contains(movieReservationResult.startTime.dayOfMonth)) {
+        if (discountDays.contains(movieReservationResult.screenTime.start.dayOfMonth)) {
             return originalPrice applyRate 0.1
         }
         return Money(0)

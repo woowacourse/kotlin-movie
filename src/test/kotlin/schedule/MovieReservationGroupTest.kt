@@ -6,9 +6,7 @@ import model.movie.MovieName
 import model.movie.RunningTime
 import model.reservation.MovieReservationGroup
 import model.reservation.MovieReservationResult
-import model.schedule.CinemaSchedule
 import model.schedule.MovieScreening
-import model.schedule.ScreenSchedule
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
@@ -35,9 +33,10 @@ class MovieReservationGroupTest {
                                     name = MovieName("자취하는남자"),
                                     runningTime = RunningTime(60),
                                 ),
-                            startTime =
-                                CinemaTime(
-                                    time = LocalDateTime.of(2026, 4, 10, 15, 30),
+                            screenTime =
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 10, 15, 30)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 10, 16, 30)),
                                 ),
                             seat =
                                 Seat(
@@ -51,75 +50,48 @@ class MovieReservationGroupTest {
                         ),
                     ),
             ).reserve(
-                cinemaSchedule =
-                    CinemaSchedule(
-                        screenSchedules =
-                            listOf(
-                                ScreenSchedule(
-                                    screenId = "1",
-                                    servicePeriod =
-                                        CinemaTimeRange(
-                                            start =
-                                                CinemaTime(
-                                                    LocalDateTime.of(2026, 4, 10, 15, 30),
-                                                ),
-                                            end =
-                                                CinemaTime(
-                                                    LocalDateTime.of(2027, 4, 10, 16, 30),
-                                                ),
+                movieScreening =
+                    MovieScreening(
+                        movie =
+                            Movie(
+                                name = MovieName("자취하는남자"),
+                                runningTime = RunningTime(60),
+                            ),
+                        screenTime =
+                            CinemaTimeRange(
+                                start =
+                                    CinemaTime(
+                                        LocalDateTime.of(
+                                            2026,
+                                            4,
+                                            10,
+                                            15,
+                                            30,
                                         ),
-                                    movieScreenings =
-                                        listOf(
-                                            MovieScreening(
-                                                movie =
-                                                    Movie(
-                                                        name = MovieName("자취하는남자"),
-                                                        runningTime = RunningTime(60),
-                                                    ),
-                                                screenTime =
-                                                    CinemaTimeRange(
-                                                        start =
-                                                            CinemaTime(
-                                                                LocalDateTime.of(
-                                                                    2026,
-                                                                    4,
-                                                                    10,
-                                                                    15,
-                                                                    30,
-                                                                ),
-                                                            ),
-                                                        end =
-                                                            CinemaTime(
-                                                                LocalDateTime.of(
-                                                                    2026,
-                                                                    4,
-                                                                    10,
-                                                                    16,
-                                                                    30,
-                                                                ),
-                                                            ),
-                                                    ),
-                                                seatGroup =
-                                                    SeatGroup(
-                                                        listOf(
-                                                            Seat(
-                                                                SeatPosition(
-                                                                    SeatRow("A"),
-                                                                    SeatColumn(1),
-                                                                ),
-                                                                grade = SeatGrade.A,
-                                                            ),
-                                                        ),
-                                                    ),
-                                            ),
+                                    ),
+                                end =
+                                    CinemaTime(
+                                        LocalDateTime.of(
+                                            2026,
+                                            4,
+                                            10,
+                                            16,
+                                            30,
                                         ),
+                                    ),
+                            ),
+                        seatGroup =
+                            SeatGroup(
+                                listOf(
+                                    Seat(
+                                        SeatPosition(
+                                            SeatRow("A"),
+                                            SeatColumn(1),
+                                        ),
+                                        grade = SeatGrade.A,
+                                    ),
                                 ),
                             ),
-                    ),
-                movieName = MovieName("자취하는남자"),
-                startTime =
-                    CinemaTime(
-                        time = LocalDateTime.of(2026, 4, 10, 15, 30),
                     ),
                 seatPosition =
                     SeatPosition(
@@ -142,9 +114,10 @@ class MovieReservationGroupTest {
                                     name = MovieName("자취하는남자"),
                                     runningTime = RunningTime(60),
                                 ),
-                            startTime =
-                                CinemaTime(
-                                    time = LocalDateTime.of(2026, 4, 10, 15, 30),
+                            screenTime =
+                                CinemaTimeRange(
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 10, 15, 30)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 10, 16, 30)),
                                 ),
                             seat =
                                 Seat(
@@ -158,75 +131,48 @@ class MovieReservationGroupTest {
                         ),
                     ),
             ).reserve(
-                cinemaSchedule =
-                    CinemaSchedule(
-                        screenSchedules =
-                            listOf(
-                                ScreenSchedule(
-                                    screenId = "1",
-                                    servicePeriod =
-                                        CinemaTimeRange(
-                                            start =
-                                                CinemaTime(
-                                                    LocalDateTime.of(2026, 4, 10, 15, 30),
-                                                ),
-                                            end =
-                                                CinemaTime(
-                                                    LocalDateTime.of(2027, 4, 10, 16, 30),
-                                                ),
+                movieScreening =
+                    MovieScreening(
+                        movie =
+                            Movie(
+                                name = MovieName("자취하는남자"),
+                                runningTime = RunningTime(60),
+                            ),
+                        screenTime =
+                            CinemaTimeRange(
+                                start =
+                                    CinemaTime(
+                                        LocalDateTime.of(
+                                            2026,
+                                            4,
+                                            10,
+                                            15,
+                                            30,
                                         ),
-                                    movieScreenings =
-                                        listOf(
-                                            MovieScreening(
-                                                movie =
-                                                    Movie(
-                                                        name = MovieName("자취하는남자"),
-                                                        runningTime = RunningTime(60),
-                                                    ),
-                                                screenTime =
-                                                    CinemaTimeRange(
-                                                        start =
-                                                            CinemaTime(
-                                                                LocalDateTime.of(
-                                                                    2026,
-                                                                    4,
-                                                                    10,
-                                                                    15,
-                                                                    30,
-                                                                ),
-                                                            ),
-                                                        end =
-                                                            CinemaTime(
-                                                                LocalDateTime.of(
-                                                                    2026,
-                                                                    4,
-                                                                    10,
-                                                                    16,
-                                                                    30,
-                                                                ),
-                                                            ),
-                                                    ),
-                                                seatGroup =
-                                                    SeatGroup(
-                                                        listOf(
-                                                            Seat(
-                                                                SeatPosition(
-                                                                    SeatRow("A"),
-                                                                    SeatColumn(1),
-                                                                ),
-                                                                grade = SeatGrade.A,
-                                                            ),
-                                                        ),
-                                                    ),
-                                            ),
+                                    ),
+                                end =
+                                    CinemaTime(
+                                        LocalDateTime.of(
+                                            2026,
+                                            4,
+                                            10,
+                                            16,
+                                            30,
                                         ),
+                                    ),
+                            ),
+                        seatGroup =
+                            SeatGroup(
+                                listOf(
+                                    Seat(
+                                        SeatPosition(
+                                            SeatRow("A"),
+                                            SeatColumn(1),
+                                        ),
+                                        grade = SeatGrade.A,
+                                    ),
                                 ),
                             ),
-                    ),
-                movieName = MovieName("자취하는남자"),
-                startTime =
-                    CinemaTime(
-                        time = LocalDateTime.of(2026, 4, 10, 15, 30),
                     ),
                 seatPosition =
                     SeatPosition(
@@ -242,63 +188,48 @@ class MovieReservationGroupTest {
         MovieReservationGroup(
             movieReservations = emptySet(),
         ).reserve(
-            cinemaSchedule =
-                CinemaSchedule(
-                    screenSchedules =
-                        listOf(
-                            ScreenSchedule(
-                                screenId = "1",
-                                servicePeriod =
-                                    CinemaTimeRange(
-                                        start =
-                                            CinemaTime(
-                                                LocalDateTime.of(2026, 4, 10, 15, 30),
-                                            ),
-                                        end =
-                                            CinemaTime(
-                                                LocalDateTime.of(2027, 4, 10, 16, 30),
-                                            ),
+            movieScreening =
+                MovieScreening(
+                    movie =
+                        Movie(
+                            name = MovieName("자취하는남자"),
+                            runningTime = RunningTime(60),
+                        ),
+                    screenTime =
+                        CinemaTimeRange(
+                            start =
+                                CinemaTime(
+                                    LocalDateTime.of(
+                                        2026,
+                                        4,
+                                        10,
+                                        15,
+                                        30,
                                     ),
-                                movieScreenings =
-                                    listOf(
-                                        MovieScreening(
-                                            movie =
-                                                Movie(
-                                                    name = MovieName("자취하는남자"),
-                                                    runningTime = RunningTime(60),
-                                                ),
-                                            screenTime =
-                                                CinemaTimeRange(
-                                                    start =
-                                                        CinemaTime(
-                                                            LocalDateTime.of(2026, 4, 10, 15, 30),
-                                                        ),
-                                                    end =
-                                                        CinemaTime(
-                                                            LocalDateTime.of(2026, 4, 10, 16, 30),
-                                                        ),
-                                                ),
-                                            seatGroup =
-                                                SeatGroup(
-                                                    listOf(
-                                                        Seat(
-                                                            SeatPosition(
-                                                                SeatRow("A"),
-                                                                SeatColumn(1),
-                                                            ),
-                                                            grade = SeatGrade.A,
-                                                        ),
-                                                    ),
-                                                ),
-                                        ),
+                                ),
+                            end =
+                                CinemaTime(
+                                    LocalDateTime.of(
+                                        2026,
+                                        4,
+                                        10,
+                                        16,
+                                        30,
                                     ),
+                                ),
+                        ),
+                    seatGroup =
+                        SeatGroup(
+                            listOf(
+                                Seat(
+                                    SeatPosition(
+                                        SeatRow("A"),
+                                        SeatColumn(1),
+                                    ),
+                                    grade = SeatGrade.A,
+                                ),
                             ),
                         ),
-                ),
-            movieName = MovieName("자취하는남자"),
-            startTime =
-                CinemaTime(
-                    time = LocalDateTime.of(2026, 4, 10, 15, 30),
                 ),
             seatPosition =
                 SeatPosition(
@@ -315,9 +246,28 @@ class MovieReservationGroupTest {
                                     name = MovieName("자취하는남자"),
                                     runningTime = RunningTime(60),
                                 ),
-                            startTime =
-                                CinemaTime(
-                                    time = LocalDateTime.of(2026, 4, 10, 15, 30),
+                            screenTime =
+                                CinemaTimeRange(
+                                    start =
+                                        CinemaTime(
+                                            LocalDateTime.of(
+                                                2026,
+                                                4,
+                                                10,
+                                                15,
+                                                30,
+                                            ),
+                                        ),
+                                    end =
+                                        CinemaTime(
+                                            LocalDateTime.of(
+                                                2026,
+                                                4,
+                                                10,
+                                                16,
+                                                30,
+                                            ),
+                                        ),
                                 ),
                             seat =
                                 Seat(
@@ -331,22 +281,5 @@ class MovieReservationGroupTest {
                         ),
                     ),
             )
-    }
-
-    @Test
-    fun `예약 가능한 상태의 영화 예약 결과가 있으면 예외가 발생한다`() {
-        assertThatThrownBy {
-            MovieReservationGroup(
-                movieReservations =
-                    setOf(
-                        MovieReservationResult(
-                            movie = Movie(name = MovieName("혼자사는 남자"), runningTime = RunningTime(100)),
-                            startTime = CinemaTime(LocalDateTime.now()),
-                            seat = Seat(SeatPosition(SeatRow("A"), SeatColumn(1)), SeatGrade.A),
-                            state = SeatState.AVAILABLE,
-                        ),
-                    ),
-            )
-        }
     }
 }

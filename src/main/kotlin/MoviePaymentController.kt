@@ -1,0 +1,49 @@
+import model.payment.DefaultMoviePayment
+import model.payment.MoviePaymentResult
+import model.payment.PayType
+import model.payment.PayTypeDiscount
+import model.payment.Point
+import model.payment.PointDiscount
+import model.payment.SequentialMovieDiscount
+import model.reservation.MovieReservationGroup
+import view.InputView
+import view.OutputView
+
+class MoviePaymentController(
+    val sequentialMovieDiscount: SequentialMovieDiscount,
+) {
+    fun handleMoviePayment(movieReservationGroup: MovieReservationGroup): MoviePaymentResult {
+        val point = getPoint()
+        val payType = getPayType()
+        return DefaultMoviePayment(
+            reservations = movieReservationGroup,
+            sequentialMovieDiscount = sequentialMovieDiscount,
+            pointDiscount = PointDiscount(point),
+            payTypeDiscount = PayTypeDiscount(payType),
+        ).calculate()
+    }
+
+    fun getPoint(): Point {
+        while (true) {
+            try {
+                return InputView.getPoint()
+            } catch (_: NumberFormatException) {
+                OutputView.showErrorMessage("숫자만 입력 가능합니다.")
+            } catch (err: IllegalArgumentException) {
+                OutputView.showErrorMessage(err.message ?: "알 수 없는 에러가 발생했습니다.")
+            }
+        }
+    }
+
+    fun getPayType(): PayType {
+        while (true) {
+            try {
+                return InputView.getPayType()
+            } catch (_: NumberFormatException) {
+                OutputView.showErrorMessage("숫자만 입력 가능합니다.")
+            } catch (err: IllegalArgumentException) {
+                OutputView.showErrorMessage(err.message ?: "알 수 없는 에러가 발생했습니다.")
+            }
+        }
+    }
+}

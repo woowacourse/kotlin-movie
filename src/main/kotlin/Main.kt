@@ -1,6 +1,10 @@
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
+import model.payment.EarlyMorningDiscount
+import model.payment.LateNightDiscount
+import model.payment.MovieDayDiscount
+import model.payment.SequentialMovieDiscount
 import model.schedule.CinemaSchedule
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
@@ -15,6 +19,25 @@ import model.time.CinemaTimeRange
 import java.time.LocalDateTime
 
 fun main() {
+    CinemaController(
+        moviePaymentController = createMoviePaymentController(),
+        movieReservationController = creatMovieReservationController(),
+    ).run()
+}
+
+private fun createMoviePaymentController(): MoviePaymentController =
+    MoviePaymentController(
+        sequentialMovieDiscount =
+            SequentialMovieDiscount(
+                listOf(
+                    MovieDayDiscount(),
+                    EarlyMorningDiscount(),
+                    LateNightDiscount(),
+                ),
+            ),
+    )
+
+private fun creatMovieReservationController(): MovieReservationController {
     val screenSchedules =
         listOf(
             ScreenSchedule(
@@ -97,8 +120,8 @@ fun main() {
                                 ),
                             screenTime =
                                 CinemaTimeRange(
-                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 14, 10)),
-                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 15, 10)),
+                                    start = CinemaTime(LocalDateTime.of(2026, 4, 8, 10, 30)),
+                                    end = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 30)),
                                 ),
                             seatGroup = createSeatGroup(),
                         ),
@@ -119,11 +142,11 @@ fun main() {
             ),
         )
 
-    val cinemaSchedule =
+    return MovieReservationController(
         CinemaSchedule(
             screenSchedules = screenSchedules,
-        )
-    CinemaController(cinemaSchedule = cinemaSchedule).run()
+        ),
+    )
 }
 
 private fun createSeatGroup(

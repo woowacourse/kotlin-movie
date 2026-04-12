@@ -1,21 +1,12 @@
 package model.reservation
 
-import model.movie.MovieName
-import model.reservation.MovieReservationResult
-import model.schedule.CinemaSchedule
+import model.schedule.MovieScreening
 import model.seat.SeatPosition
 import model.seat.SeatState
-import model.time.CinemaTime
 
 class MovieReservationGroup(
     movieReservations: Set<MovieReservationResult>,
 ) : Iterable<MovieReservationResult> {
-    init {
-        require(movieReservations.all { it.state != SeatState.AVAILABLE }) {
-            "예약 가능 상태의 예약 결과를 가질 수 없습니다. "
-        }
-    }
-
     private val movieReservationGroup = movieReservations.toSet()
 
     override fun equals(other: Any?): Boolean {
@@ -30,16 +21,47 @@ class MovieReservationGroup(
 
     override fun iterator(): Iterator<MovieReservationResult> = movieReservationGroup.iterator()
 
+    fun isReservable(movieScreening: MovieScreening): Boolean =
+        !movieReservationGroup.any {
+            movieScreening.screenTime.overlaps(it.screenTime) &&
+                !it.isEqual(
+                    movieScreening,
+                )
+        }
+
+    fun hasAvailableSeat(movieScreening: MovieScreening): Boolean {
+        val reservedSeatCount =
+            movieReservationGroup.count {
+                it.isEqual(movieScreening)
+            }
+
+        return reservedSeatCount < movieScreening.seatGroup.size
+    }
+
     fun reserve(
-        cinemaSchedule: CinemaSchedule,
-        movieName: MovieName,
-        startTime: CinemaTime,
+        movieScreening: MovieScreening,
         seatPosition: SeatPosition,
     ): MovieReservationGroup {
-        val movieSchedule = cinemaSchedule[movieName]
-        val movieScreening = movieSchedule[startTime]
-        val movieReservationResult = movieScreening.reserve(seatPosition)
-        if (movieReservationGroup.any { movieReservationResult.isEqual(it.movie, it.startTime, it.seat) }) {
+        val movieReservationResult =
+            MovieReservationResult(
+                movie = movieScreening.movie,
+                screenTime = movieScreening.screenTime,
+                seat = movieScreening.getSeat(seatPosition),
+                state = SeatState.RESERVED,
+            )
+
+        if (!isReservable(movieScreening)) {
+            throw IllegalArgumentException("서로 시간이 겹치는 상영은 함께 예매할 수 없습니다.")
+        }
+
+        if (movieReservationGroup.any {
+                movieReservationResult.isEqual(
+                    it.movie,
+                    it.screenTime,
+                    it.seat,
+                )
+            }
+        ) {
             throw IllegalArgumentException("이미 예약된 좌석입니다.")
         }
         return MovieReservationGroup(movieReservationGroup + movieReservationResult)

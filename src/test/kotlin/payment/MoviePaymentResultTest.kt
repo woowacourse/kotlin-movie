@@ -14,7 +14,6 @@ import model.payment.PayTypeDiscount
 import model.payment.Point
 import model.payment.PointDiscount
 import model.payment.SequentialMovieDiscount
-import model.payment.SequentialPaymentDiscount
 import model.reservation.MovieReservationGroup
 import model.reservation.MovieReservationResult
 import model.seat.Seat
@@ -53,7 +52,7 @@ class MoviePaymentResultTest {
                         setOf(
                             MovieReservationResult(
                                 movie = movieOne,
-                                startTime = screenTime.start,
+                                screenTime = screenTime,
                                 seat =
                                     Seat(
                                         position = SeatPosition(SeatRow("A"), SeatColumn(2)),
@@ -64,7 +63,8 @@ class MoviePaymentResultTest {
                         ),
                     ),
                 sequentialMovieDiscount = SequentialMovieDiscount(emptyList()),
-                sequentialPaymentDiscount = SequentialPaymentDiscount(emptyList()),
+                pointDiscount = PointDiscount(Point(0)),
+                payTypeDiscount = null,
             ).calculate(),
         ).isEqualTo(MoviePaymentResult(Money(18_000), Money(18_000)))
     }
@@ -84,7 +84,7 @@ class MoviePaymentResultTest {
                         setOf(
                             MovieReservationResult(
                                 movie = movieOne,
-                                startTime = screenTime.start,
+                                screenTime = screenTime,
                                 seat =
                                     Seat(
                                         position = SeatPosition(SeatRow("A"), SeatColumn(1)),
@@ -95,7 +95,8 @@ class MoviePaymentResultTest {
                         ),
                     ),
                 sequentialMovieDiscount = SequentialMovieDiscount(listOf(MovieDayDiscount())),
-                sequentialPaymentDiscount = SequentialPaymentDiscount(emptyList()),
+                pointDiscount = PointDiscount(Point(0)),
+                payTypeDiscount = null,
             )
         assertThat(defaultMoviePayment.calculate()).isEqualTo(
             MoviePaymentResult(
@@ -120,7 +121,7 @@ class MoviePaymentResultTest {
                         setOf(
                             MovieReservationResult(
                                 movie = movieOne,
-                                startTime = screenTime.start,
+                                screenTime = screenTime,
                                 seat =
                                     Seat(
                                         position = SeatPosition(SeatRow("A"), SeatColumn(1)),
@@ -131,7 +132,8 @@ class MoviePaymentResultTest {
                         ),
                     ),
                 sequentialMovieDiscount = SequentialMovieDiscount(listOf(EarlyMorningDiscount())),
-                sequentialPaymentDiscount = SequentialPaymentDiscount(emptyList()),
+                pointDiscount = PointDiscount(Point(0)),
+                payTypeDiscount = null,
             )
         assertThat(
             defaultMoviePayment.calculate(),
@@ -153,7 +155,7 @@ class MoviePaymentResultTest {
                         setOf(
                             MovieReservationResult(
                                 movie = movieOne,
-                                startTime = screenTime.start,
+                                screenTime = screenTime,
                                 seat =
                                     Seat(
                                         position = SeatPosition(SeatRow("A"), SeatColumn(1)),
@@ -164,7 +166,8 @@ class MoviePaymentResultTest {
                         ),
                     ),
                 sequentialMovieDiscount = SequentialMovieDiscount(listOf(LateNightDiscount())),
-                sequentialPaymentDiscount = SequentialPaymentDiscount(emptyList()),
+                pointDiscount = PointDiscount(Point(0)),
+                payTypeDiscount = null,
             )
         assertThat(
             defaultMoviePayment.calculate(),
@@ -186,7 +189,7 @@ class MoviePaymentResultTest {
                         setOf(
                             MovieReservationResult(
                                 movie = movieOne,
-                                startTime = screenTime.start,
+                                screenTime = screenTime,
                                 seat =
                                     Seat(
                                         position = SeatPosition(SeatRow("A"), SeatColumn(1)),
@@ -197,16 +200,8 @@ class MoviePaymentResultTest {
                         ),
                     ),
                 sequentialMovieDiscount = SequentialMovieDiscount(emptyList()),
-                sequentialPaymentDiscount =
-                    SequentialPaymentDiscount(
-                        listOf(
-                            PointDiscount(
-                                Point(
-                                    5000,
-                                ),
-                            ),
-                        ),
-                    ),
+                pointDiscount = PointDiscount(Point(5000)),
+                payTypeDiscount = null,
             )
         assertThat(
             defaultMoviePayment.calculate(),
@@ -235,7 +230,7 @@ class MoviePaymentResultTest {
                         setOf(
                             MovieReservationResult(
                                 movie = movieOne,
-                                startTime = screenTime.start,
+                                screenTime = screenTime,
                                 seat =
                                     Seat(
                                         position = SeatPosition(SeatRow("A"), SeatColumn(1)),
@@ -246,7 +241,8 @@ class MoviePaymentResultTest {
                         ),
                     ),
                 sequentialMovieDiscount = SequentialMovieDiscount(emptyList()),
-                sequentialPaymentDiscount = SequentialPaymentDiscount(listOf(PayTypeDiscount(payType))),
+                pointDiscount = PointDiscount(Point(0)),
+                payTypeDiscount = PayTypeDiscount(payType),
             )
         assertThat(
             defaultMoviePayment.calculate(),
