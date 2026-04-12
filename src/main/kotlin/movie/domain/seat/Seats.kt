@@ -27,8 +27,6 @@ class Seats(
 
     fun isAvailable(seat: Seat): Boolean = seats.none { it.row == seat.row && it.column == seat.column }
 
-    fun isNotEmpty(): Boolean = seats.isNotEmpty()
-
     fun distinct(): Set<Seat> = seats.toSet()
 
     companion object {
