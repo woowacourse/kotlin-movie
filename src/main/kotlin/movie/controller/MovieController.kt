@@ -99,24 +99,29 @@ class MovieController(
 
     // 예매 로직
     private fun collectReservations(): Reservations {
-        val reservationList = mutableListOf<Reservation>()
+        var reservations = Reservations(emptyList())
         do {
-            val reservation = selectMovieAndSeats(reservationList)
-            reservationList.add(reservation)
+            reservations = addReservation(reservations)
         } while (askAddMore())
 
-        return Reservations(reservationList)
+        return reservations
     }
 
-    private fun selectMovieAndSeats(existingReservations: List<Reservation>): Reservation {
+    private fun addReservation(existingReservations: Reservations): Reservations =
+        executeWithRetry {
+            val reservation = selectMovieAndSeats()
+            val updatedReservations = existingReservations.add(reservation)
+            outputView.printAddedToCart(reservation)
+            updatedReservations
+        }
+
+    private fun selectMovieAndSeats(): Reservation {
         val movie = selectMovie()
         val date = selectDate(movie)
-        val screening = selectScreening(movie, date, existingReservations)
+        val screening = selectScreening(movie, date)
         val seats = selectSeats(screening)
         val reservedScreening = screening.reserve(seats)
-        val reservation = reservedScreening.createReservation(seats)
-        outputView.printAddedToCart(reservation)
-        return reservation
+        return reservedScreening.createReservation(seats)
     }
 
     // 예매 상세 로직
@@ -137,7 +142,6 @@ class MovieController(
     private fun selectScreening(
         movie: Movie,
         date: LocalDate,
-        existingReservations: List<Reservation>,
     ): Screening =
         executeWithRetry {
             val screenings = movie.getScreeningsByDate(date)
@@ -145,15 +149,7 @@ class MovieController(
 
             val number = inputView.inputScreeningNumber()
             val selectedScreening = screenings.findByNumber(number)
-            val hasOverlap =
-                existingReservations.any {
-                    it.isTimeOverlapping(selectedScreening)
-                }
 
-            if (hasOverlap) {
-                outputView.printTimeOverlapMessage()
-                throw IllegalArgumentException()
-            }
             selectedScreening
         }
 
