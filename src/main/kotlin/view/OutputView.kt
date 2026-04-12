@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter
 class OutputView {
     // 에러 메세지 출력 함수
     fun printErrorMessage(message: String) {
-        println(message)
+        println("\n$message")
     }
 
     // 해당 날짜의 상영 목록 출력 함수

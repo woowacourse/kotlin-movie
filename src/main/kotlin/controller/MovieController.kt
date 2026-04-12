@@ -19,10 +19,10 @@ import java.time.LocalDate
 class MovieController {
     val inputView = InputView()
     val outputView = OutputView()
-    val selectedScreenings = mutableListOf<Screening>()
 
     val movies = MockData.movies
     var schedule = MockData.mockSchedule
+    var cart = Cart()
 
     // 시작 시 실행 여부를 받는 함수
     fun checkMovieReserve(): Boolean {
@@ -89,7 +89,7 @@ class MovieController {
             val date = inputDate()
             screenings = getScreenings(movie = movie, date = date)
             if (screenings.isNotEmpty()) {
-                return selectMovieTime(screenings)
+                return selectMovieTime(cart, screenings)
             }
         }
     }
@@ -113,25 +113,22 @@ class MovieController {
     }
 
     // 상영 시간대를 고르는 함수
-    fun selectMovieTime(screenings: List<Screening>): Screening {
+    fun selectMovieTime(
+        cart: Cart,
+        screenings: List<Screening>,
+    ): Screening {
         var selectedScreening: Screening
 
         return try {
             val number = inputView.screeningNumberInput(screenings.size)
             selectedScreening = screenings[number - 1]
 
-            if (selectedScreenings.any {
-                    it.movie.movieTitle != selectedScreening.movie.movieTitle &&
-                        it.isOverlapping(selectedScreening)
-                }
-            ) {
-                throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.")
-            }
+            cart.isOverlapping(selectedScreening)
 
             selectedScreening
         } catch (e: IllegalArgumentException) {
             outputView.printErrorMessage(e.message.toString())
-            selectMovieTime(screenings)
+            selectMovieTime(cart, screenings)
         }
     }
 
@@ -222,12 +219,10 @@ class MovieController {
     // 장바구니 안의 값들을 계산하는 함수
     fun run() {
         if (!checkMovieReserve()) return
-        var cart = Cart()
 
         do {
             // 제목과 날짜를 받아 영화 리스트를 받아온다
             val selectedScreening: Screening = getScreeningsOfDateAndTitle()
-            selectedScreenings.add(selectedScreening)
 
             // 좌석 배치도 출력 후 좌석 선택
             outputView.printSeatInventory(selectedScreening.seatInventory)
