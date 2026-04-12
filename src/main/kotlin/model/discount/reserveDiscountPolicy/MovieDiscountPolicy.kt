@@ -1,14 +1,15 @@
 package model.discount.reserveDiscountPolicy
 
+import model.seat.Price
 import java.time.LocalDateTime
 
 class MovieDiscountPolicy(
     private val movieDiscountPolicies: List<ReserveDiscountPolicy>,
 ) : ReserveDiscountPolicy {
     override fun calculatePrice(
-        price: Int,
+        price: Price,
         reservedDateTime: LocalDateTime,
-    ): Int =
+    ): Price =
         movieDiscountPolicies.fold(price) { acc, policy ->
             policy.calculatePrice(acc, reservedDateTime)
         }

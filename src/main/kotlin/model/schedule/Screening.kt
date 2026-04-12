@@ -1,6 +1,7 @@
 package model.schedule
 
 import model.movie.Movie
+import model.seat.Price
 import model.seat.SeatInventory
 import java.time.Duration
 import java.time.LocalDateTime
@@ -15,8 +16,8 @@ data class Screening(
         require(
             Duration.between(
                 startDateTime,
-                endDateTime
-            ) >= Duration.ofMinutes(movie.movieRunningTime)
+                endDateTime,
+            ) >= Duration.ofMinutes(movie.movieRunningTime),
         ) { "상영 시간이 영화 러닝타임보다 짧습니다" }
     }
 
@@ -29,9 +30,8 @@ data class Screening(
         )
 
     // 좌석의 총액을 계산하는 함수
-    fun calculatePrice(seatNames: List<String>): Int = seatInventory.calculatePrice(seatNames)
+    fun calculatePrice(seatNames: List<String>): Price = seatInventory.calculatePrice(seatNames)
 
     // 시간표 겹침을 검사하는 함수
-    fun isOverlapping(screening: Screening): Boolean =
-        startDateTime < screening.endDateTime && endDateTime > screening.startDateTime
+    fun isOverlapping(screening: Screening): Boolean = startDateTime < screening.endDateTime && endDateTime > screening.startDateTime
 }

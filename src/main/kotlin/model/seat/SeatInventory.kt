@@ -32,10 +32,12 @@ data class SeatInventory(
     }
 
     // 좌석의 총액을 계산하는 함수
-    fun calculatePrice(seatNames: List<String>): Int =
-        seatNames.sumOf {
-            findSeat(it).seatRank.price
-        }
+    fun calculatePrice(seatNames: List<String>): Price =
+        Price(
+            seatNames.sumOf {
+                findSeat(it).seatRank.price.value
+            },
+        )
 
     companion object {
         // 세로 범위

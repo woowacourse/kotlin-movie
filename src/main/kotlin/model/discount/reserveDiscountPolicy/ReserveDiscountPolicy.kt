@@ -1,10 +1,11 @@
 package model.discount.reserveDiscountPolicy
 
+import model.seat.Price
 import java.time.LocalDateTime
 
 interface ReserveDiscountPolicy {
     fun calculatePrice(
-        price: Int,
+        price: Price,
         reservedDateTime: LocalDateTime,
-    ): Int
+    ): Price
 }

@@ -1,9 +1,9 @@
 package model.seat
 
 enum class SeatRank(
-    val price: Int,
+    val price: Price,
 ) {
-    S_RANK(18_000),
-    A_RANK(15_000),
-    B_RANK(12_000),
+    S_RANK(Price(18_000)),
+    A_RANK(Price(15_000)),
+    B_RANK(Price(12_000)),
 }

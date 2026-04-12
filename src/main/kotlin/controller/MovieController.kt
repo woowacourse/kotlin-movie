@@ -277,13 +277,13 @@ class MovieController {
                     ),
             ).calculatePrice(moviePrice)
 
-        outputView.printTotalPrice(totalPrice)
+        outputView.printTotalPrice(totalPrice.value)
 
         // 결제 확인
         if (checkPayment()) {
             outputView.printReservationComplete(
                 cart,
-                totalPrice,
+                totalPrice.value,
                 usePoint,
             )
         }
