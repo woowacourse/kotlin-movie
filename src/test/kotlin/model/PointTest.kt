@@ -16,7 +16,7 @@ class PointTest {
     }
 
     @Test
-    fun `포인트를 Money로 올바르게 변환한다`() {
+    fun `포인트를 돈으로 변환할 수 있다`() {
         // given
         val value = 500
         val expect = Money(value)

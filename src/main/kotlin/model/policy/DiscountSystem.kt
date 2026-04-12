@@ -23,8 +23,8 @@ class DiscountSystem(
         seatCount: Double,
     ): Money =
         discountPolicies.fold(price) { current, policy ->
-            val discountEffect = policy.getDiscountEffect(screening)
-            current - getDiscountPrice(current, discountEffect, seatCount)
+            val discount = policy.findDiscount(screening)
+            current - getDiscountPrice(current, discount, seatCount)
         }
 
     private fun getDiscountPrice(

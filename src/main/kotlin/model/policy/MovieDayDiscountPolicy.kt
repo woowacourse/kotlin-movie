@@ -9,7 +9,7 @@ object MovieDayDiscountPolicy : DiscountPolicy {
     override val priority: Int
         get() = 1
 
-    override fun getDiscountEffect(screening: Screening): Discount {
+    override fun findDiscount(screening: Screening): Discount {
         val day = screening.showDate.dayOfMonth
         if (DISCOUNT_DAYS.contains(day)) return RateDiscount(DISCOUNT_RATE)
         return NoDiscount

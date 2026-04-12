@@ -11,8 +11,8 @@
 
 ### 가독성 및 네이밍
 
-- [ ] `DiscountPolicy`의 책임이 잘 드러나도록 메서드명 변경 (`getDiscountEffect` ➡ `calculateDiscount`)
-- [ ] `PointTest`의 테스트 의도를 명확히 파악할 수 있도록 메서드명 구체화 (올바르게 변환한다 ➡ 포인트를 돈으로 변환할 수 있다)
+- [x] `DiscountPolicy`의 책임이 잘 드러나도록 메서드명 변경 (`getDiscountEffect` ➡ `findDiscount`)
+- [x] `PointTest`의 테스트 의도를 명확히 파악할 수 있도록 메서드명 구체화 (올바르게 변환한다 ➡ 포인트를 돈으로 변환할 수 있다)
 
 ### 테스트 코드 보완
 
