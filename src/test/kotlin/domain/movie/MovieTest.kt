@@ -1,8 +1,5 @@
-package domain
+package domain.movie
 
-import domain.movie.Movie
-import domain.movie.RunningTime
-import domain.movie.Title
 import domain.screening.ScreeningPeriod
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
