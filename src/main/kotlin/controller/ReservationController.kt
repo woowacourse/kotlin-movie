@@ -37,6 +37,7 @@ class ReservationController(val movieTheater: MovieTheater) {
 
     fun chooseSeat(showing: Showing): Seats {
         OutputView.printSeats(showing.screen)
-        return showing.screen.selectSeats(InputView.readSeat())
+        val inputs = InputView.readSeat()
+        return showing.screen.selectSeats(inputs)
     }
 }

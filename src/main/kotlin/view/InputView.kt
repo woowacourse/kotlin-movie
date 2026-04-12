@@ -36,10 +36,11 @@ object InputView {
         return input
     }
 
-    fun readSeat(): String {
+    fun readSeat(): List<String> {
         println("예약할 좌석을 입력하세요 (A1, B2):")
         val input = readLine()
-        return input
+        val inputs = input.split(',').map { it.trim() }
+        return inputs
     }
 
     fun readPurchaseConfirm(): YesNo {
