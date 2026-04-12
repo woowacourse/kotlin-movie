@@ -16,5 +16,10 @@ value class Money(
 
     fun toInt(): Int = value
 
+    fun minusWithMinimum(
+        money: Money,
+        minimum: Money,
+    ): Money = Money(maxOf(value - money.value, minimum.value))
+
     infix fun applyRate(rate: Double): Money = Money((value * rate).toInt())
 }

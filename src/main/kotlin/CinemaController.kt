@@ -1,7 +1,14 @@
 import model.movie.MovieName
-import model.payment.MoviePayment
+import model.payment.DefaultMoviePayment
+import model.payment.EarlyMorningDiscount
+import model.payment.LateNightDiscount
+import model.payment.MovieDayDiscount
 import model.payment.PayType
+import model.payment.PayTypeDiscount
 import model.payment.Point
+import model.payment.PointDiscount
+import model.payment.SequentialMovieDiscount
+import model.payment.SequentialPaymentDiscount
 import model.reservation.MovieReservationGroup
 import model.schedule.CinemaSchedule
 import model.schedule.MovieSchedule
@@ -36,13 +43,26 @@ class CinemaController(
         OutputView.showMovieReservationResult("장바구니", movieReservationGroup)
         val point = Point(inputPoint())
         val payType = inputPayType()
-        val payment =
-            MoviePayment(
+        val defaultMoviePayment =
+            DefaultMoviePayment(
                 reservations = movieReservationGroup,
+                sequentialMovieDiscount =
+                    SequentialMovieDiscount(
+                        listOf(
+                            MovieDayDiscount(),
+                            EarlyMorningDiscount(),
+                            LateNightDiscount(),
+                        ),
+                    ),
+                sequentialPaymentDiscount =
+                    SequentialPaymentDiscount(
+                        listOf(
+                            PointDiscount(point = point),
+                            PayTypeDiscount(payType),
+                        ),
+                    ),
             )
-        payment.discount()
-        payment.applyPoint(point)
-        OutputView.printTotalPrice(payment.pay(payType))
+        OutputView.printTotalPrice(defaultMoviePayment.calculate())
         val confirm = inputConfirmPayment()
         if (confirm) {
             OutputView.showMovieReservationResult("예매 완료\n내역:", movieReservationGroup)

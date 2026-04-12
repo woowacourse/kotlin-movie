@@ -1,6 +1,7 @@
 package view
 
 import model.payment.Money
+import model.payment.MoviePaymentResult
 import model.payment.Point
 import model.reservation.MovieReservationGroup
 import model.schedule.MovieSchedule
@@ -63,10 +64,10 @@ object OutputView {
         println("결제 금액: %,d원 (포인트: %,d원 사용)".format(price.toInt(), point.toInt()))
     }
 
-    fun printTotalPrice(price: Money) {
+    fun printTotalPrice(moviePaymentResult: MoviePaymentResult) {
         println("가격 계산")
         print("최종 결제 금액: ")
-        println("${"%,d".format(price.toInt())}원")
+        println("${"%,d".format(moviePaymentResult.finalPrice.toInt())}원")
     }
 
     fun end() {

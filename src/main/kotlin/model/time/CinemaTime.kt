@@ -8,13 +8,13 @@ import java.time.format.DateTimeFormatter
 value class CinemaTime(
     private val time: LocalDateTime,
 ) : Comparable<CinemaTime> {
+    val dayOfMonth get() = time.dayOfMonth
+
     fun isBefore(other: CinemaTime): Boolean = time.isBefore(other.time)
 
     fun isAfter(other: CinemaTime): Boolean = time.isAfter(other.time)
 
     fun isEqual(other: CinemaTime): Boolean = time.isEqual(other.time)
-
-    fun isSameDay(dayOfMonth: Int): Boolean = time.dayOfMonth == dayOfMonth
 
     fun toLocalTime() = time.toLocalTime()
 
