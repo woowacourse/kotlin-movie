@@ -27,4 +27,9 @@ class MoneyTest {
     fun `1000원을 3배하면 3000원이된다`() {
         Money(1000) * 3 shouldBe Money(3000)
     }
+
+    @Test
+    fun `1000원에 10% 비율은 100원이 된다`() {
+        Money(1000) applyRate 0.1 shouldBe Money(100)
+    }
 }
