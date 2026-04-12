@@ -1,10 +1,11 @@
 package domain
 
+import domain.fixture.createMovie
+import domain.fixture.createScreening
+import domain.fixture.createSeatPositions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class TicketBucketTest {
     @Test
@@ -13,41 +14,7 @@ class TicketBucketTest {
             tickets =
                 listOf(
                     Ticket(
-                        screening =
-                            Screening(
-                                movie =
-                                    Movie(
-                                        title = Title("허닛"),
-                                        runningTime = RunningTime(167),
-                                        screeningPeriod =
-                                            ScreeningPeriod(
-                                                startDate = LocalDate.of(2026, 4, 8),
-                                                endDate = LocalDate.of(2026, 4, 9),
-                                            ),
-                                    ),
-                                room =
-                                    ScreeningRoom(
-                                        name = ScreeningRoomName("커피"),
-                                        operatingTime =
-                                            TimeRange(
-                                                LocalTime.of(10, 0),
-                                                LocalTime.of(18, 0),
-                                            ),
-                                        seats =
-                                            Seats(
-                                                listOf(
-                                                    Seat(
-                                                        position =
-                                                            SeatPosition(
-                                                                Row("A"),
-                                                                Column(1),
-                                                            ),
-                                                    ),
-                                                ),
-                                            ),
-                                    ),
-                                startTime = LocalDateTime.of(2026, 4, 8, 10, 0),
-                            ),
+                        screening = createScreening(),
                         seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
                     ),
                 ),
@@ -61,194 +28,39 @@ class TicketBucketTest {
                 tickets =
                     listOf(
                         Ticket(
-                            screening =
-                                Screening(
-                                    movie =
-                                        Movie(
-                                            title = Title("허닛"),
-                                            runningTime = RunningTime(167),
-                                            screeningPeriod =
-                                                ScreeningPeriod(
-                                                    startDate = LocalDate.of(2026, 4, 8),
-                                                    endDate = LocalDate.of(2026, 4, 9),
-                                                ),
-                                        ),
-                                    room =
-                                        ScreeningRoom(
-                                            name = ScreeningRoomName("커피"),
-                                            operatingTime =
-                                                TimeRange(
-                                                    LocalTime.of(10, 0),
-                                                    LocalTime.of(18, 0),
-                                                ),
-                                            seats =
-                                                Seats(
-                                                    listOf(
-                                                        Seat(
-                                                            position =
-                                                                SeatPosition(
-                                                                    Row("A"),
-                                                                    Column(1),
-                                                                ),
-                                                        ),
-                                                    ),
-                                                ),
-                                        ),
-                                    startTime = LocalDateTime.of(2026, 4, 8, 10, 0),
-                                ),
-                            seatPositions =
-                                SeatPositions(
-                                    listOf(
-                                        SeatPosition(
-                                            Row("A"),
-                                            Column(1),
-                                        ),
-                                    ),
-                                ),
+                            screening = createScreening(movie = createMovie(title = "허닛")),
+                            seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
                         ),
                     ),
             )
 
         assertThrows(IllegalArgumentException::class.java) {
             bucket.addTicket(
-                newTicket =
-                    Ticket(
-                        screening =
-                            Screening(
-                                movie =
-                                    Movie(
-                                        title = Title("Cㅓ비"),
-                                        runningTime = RunningTime(178),
-                                        screeningPeriod =
-                                            ScreeningPeriod(
-                                                startDate = LocalDate.of(2026, 4, 8),
-                                                endDate = LocalDate.of(2026, 4, 9),
-                                            ),
-                                    ),
-                                room =
-                                    ScreeningRoom(
-                                        name = ScreeningRoomName("커피샵"),
-                                        operatingTime =
-                                            TimeRange(
-                                                LocalTime.of(10, 0),
-                                                LocalTime.of(18, 0),
-                                            ),
-                                        seats =
-                                            Seats(
-                                                listOf(
-                                                    Seat(
-                                                        position =
-                                                            SeatPosition(
-                                                                Row("A"),
-                                                                Column(1),
-                                                            ),
-                                                    ),
-                                                ),
-                                            ),
-                                    ),
-                                startTime = LocalDateTime.of(2026, 4, 8, 10, 30),
-                            ),
-                        seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
-                    ),
+                screening = createScreening(movie = createMovie(title = "Cㅓ비")),
+                positions = createSeatPositions(),
             )
         }
     }
 
     @Test
     fun `티켓을 추가하면 티켓이 추가된 장바구니를 반환한다`() {
+        val screening = createScreening()
         val bucket =
             TicketBucket(
                 tickets =
                     listOf(
                         Ticket(
-                            screening =
-                                Screening(
-                                    movie =
-                                        Movie(
-                                            title = Title("허닛"),
-                                            runningTime = RunningTime(167),
-                                            screeningPeriod =
-                                                ScreeningPeriod(
-                                                    startDate = LocalDate.of(2026, 4, 8),
-                                                    endDate = LocalDate.of(2026, 4, 9),
-                                                ),
-                                        ),
-                                    room =
-                                        ScreeningRoom(
-                                            name = ScreeningRoomName("커피"),
-                                            operatingTime =
-                                                TimeRange(
-                                                    LocalTime.of(10, 0),
-                                                    LocalTime.of(18, 0),
-                                                ),
-                                            seats =
-                                                Seats(
-                                                    listOf(
-                                                        Seat(
-                                                            position =
-                                                                SeatPosition(
-                                                                    Row("A"),
-                                                                    Column(1),
-                                                                ),
-                                                        ),
-                                                    ),
-                                                ),
-                                        ),
-                                    startTime = LocalDateTime.of(2026, 4, 8, 10, 0),
-                                ),
-                            seatPositions =
-                                SeatPositions(
-                                    listOf(
-                                        SeatPosition(
-                                            Row("A"),
-                                            Column(1),
-                                        ),
-                                    ),
-                                ),
+                            screening = screening,
+                            seatPositions = createSeatPositions(),
                         ),
                     ),
             )
 
-        bucket.addTicket(
-            newTicket =
-                Ticket(
-                    screening =
-                        Screening(
-                            movie =
-                                Movie(
-                                    title = Title("Cㅓ비"),
-                                    runningTime = RunningTime(178),
-                                    screeningPeriod =
-                                        ScreeningPeriod(
-                                            startDate = LocalDate.of(2026, 4, 8),
-                                            endDate = LocalDate.of(2026, 4, 9),
-                                        ),
-                                ),
-                            room =
-                                ScreeningRoom(
-                                    name = ScreeningRoomName("커피샵"),
-                                    operatingTime =
-                                        TimeRange(
-                                            LocalTime.of(10, 0),
-                                            LocalTime.of(18, 0),
-                                        ),
-                                    seats =
-                                        Seats(
-                                            listOf(
-                                                Seat(
-                                                    position =
-                                                        SeatPosition(
-                                                            Row("A"),
-                                                            Column(1),
-                                                        ),
-                                                ),
-                                            ),
-                                        ),
-                                ),
-                            startTime = LocalDateTime.of(2026, 4, 8, 14, 30),
-                        ),
-                    seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
-                ),
-        )
+        val result =
+            bucket.addTicket(
+                screening = screening,
+                positions = createSeatPositions("B" to 1),
+            )
+        assertThat(result.tickets.size).isEqualTo(2)
     }
 }
