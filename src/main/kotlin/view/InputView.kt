@@ -1,5 +1,9 @@
 package view
 
+import constants.ErrorMessages
+import controller.CinemaController.Companion.SEAT_NUMBER_PARSER
+import java.time.LocalDate
+
 class InputView {
     fun readConfirmTicketingStart(): String {
         println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
@@ -23,7 +27,13 @@ class InputView {
 
     fun readDate(): String {
         println("날짜를 입력하세요 (YYYY-MM-DD):")
-        return readln().trim()
+        val date = readln().trim()
+        try {
+            LocalDate.parse(date)
+        } catch (e: Exception) {
+            throw IllegalArgumentException(ErrorMessages.INVALID_DATE_FORMAT.message)
+        }
+        return date
     }
 
     fun readScreeningNumber(): Int {
@@ -31,9 +41,21 @@ class InputView {
         return readln().trim().toInt()
     }
 
-    fun readSeatNumbers(): String {
+    fun readSeatNumbers(): List<String> {
         println("예약할 좌석을 입력하세요 (A1, B2):")
-        return readln().trim()
+        val input = readln().trim()
+        require(input.isNotBlank()) { ErrorMessages.INCORRECT_SEAT_NUMBER.message }
+
+        val convertedInput = input
+            .split(SEAT_NUMBER_PARSER)
+            .map { it.trim().uppercase() }
+            .filter { it.isNotBlank() }
+
+        require(convertedInput.toSet().size == convertedInput.size) {
+            ErrorMessages.SELECT_SAME_SEAT.message
+        }
+
+        return convertedInput
     }
 
     fun readPointAmount(): Int {

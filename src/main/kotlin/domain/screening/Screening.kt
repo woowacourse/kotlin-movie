@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 class Screening private constructor(
     val movie: Movie,
     val startTime: ScreeningStartTime,
-    private val reservedSeats: List<Seat>,
+    val reservedSeats: List<Seat>,
 ) {
     companion object {
         fun create(
@@ -22,10 +22,14 @@ class Screening private constructor(
             )
     }
 
-    fun isReserved(seat: Seat): Boolean = reservedSeats.contains(seat)
+    fun isSeatReserved(seat: Seat): Boolean = reservedSeats.contains(seat)
+
+    fun isReserved(seats: List<Seat>) {
+        require(seats.none { reservedSeats.contains(it) }) { ErrorMessages.SELECTED_RESERVED_SEAT.message }
+    }
 
     fun reserve(seats: List<Seat>): Screening {
-        require(seats.none { isReserved(it) }) { ErrorMessages.SELECTED_RESERVED_SEAT.message }
+        require(seats.none { isSeatReserved(it) }) { ErrorMessages.SELECTED_RESERVED_SEAT.message }
         return Screening(
             movie = movie,
             startTime = startTime,

@@ -1,6 +1,5 @@
 package controller
 
-import constants.ErrorMessages
 import domain.account.Account
 import domain.payment.PayResult
 import domain.payment.Payment
@@ -35,25 +34,15 @@ class CinemaController(
         proceedPayment()
     }
 
-//    private fun reserveMovies() {
-//        val tmpCart = retryPrompt { Reservation.reserve() }
-//    }
-
-    private fun isReservationStarted(): Boolean = inputView.readConfirmTicketingStart().uppercase() == CONFIRM_INPUT
-
     private fun reserveMovies() {
         do {
             retryPrompt { reserveOneMovie() }
         } while (askToAddMoreMovie())
     }
 
-    private fun askToAddMoreMovie(): Boolean = inputView.readConfirmAddOtherMovie().uppercase() == CONFIRM_INPUT
-
     private fun reserveOneMovie() {
-        val title = inputView.readMovieTitle()
-        val date = readDate()
-        val availableScreenings = findAvailableScreenings(title, date)
-        val selectedScreening = readAvailableScreening(availableScreenings)
+        val foundedScreenings = retryPrompt { inputMovieInfo() }
+        val selectedScreening = retryPrompt { readAvailableScreening(foundedScreenings) }
         val selectedSeats = retryPrompt { readAvailableSeats(selectedScreening) }
 
         val reservedItem =
@@ -66,20 +55,11 @@ class CinemaController(
         outputView.printCartAdded(reservedItem)
     }
 
-    private fun readDate(): LocalDate =
-        try {
-            LocalDate.parse(inputView.readDate())
-        } catch (e: Exception) {
-            throw IllegalArgumentException(ErrorMessages.INVALID_DATE_FORMAT.message)
-        }
+    private fun inputMovieInfo(): List<Screening> {
+        val title = retryPrompt { inputView.readMovieTitle() }
+        val date = retryPrompt { LocalDate.parse(inputView.readDate()) }
 
-    private fun findAvailableScreenings(
-        title: String,
-        date: LocalDate,
-    ): List<Screening> {
-        val screenings = screenings.findByMovieTitleAndDate(title, date)
-        require(screenings.isNotEmpty()) { ErrorMessages.SCREENING_DOES_NOT_EXIST.message }
-        return screenings
+        return screenings.findByMovieTitleAndDate(title, date)
     }
 
     private fun readAvailableScreening(availableScreenings: List<Screening>): Screening =
@@ -87,20 +67,19 @@ class CinemaController(
             outputView.printScreenings(availableScreenings)
 
             val selectedNumber = inputView.readScreeningNumber()
-            require(selectedNumber in 1..availableScreenings.size) {
-                ErrorMessages.INCORRECT_SCREENING_NUMBER.message
-            }
+            val selectedScreening = screenings.findSelectedScreening(selectedNumber, availableScreenings)
 
-            val selectedScreening = availableScreenings[selectedNumber - 1]
-            validateScreeningOverlap(selectedScreening)
+            cart.checkScreeningOverlap(selectedScreening)
             selectedScreening
         }
 
     private fun readAvailableSeats(screening: Screening): List<Seat> {
-        outputView.printSeatLayout(allSeats, selectedScreeningReservedSeats(screening))
+        outputView.printSeatLayout(allSeats, screening.reservedSeats)
 
-        val selectedSeats = readSeats()
-        validateSeatsNotReserved(screening, selectedSeats)
+        val inputSeat = retryPrompt { inputView.readSeatNumbers() }
+        val selectedSeats = allSeats.findAllBySeatNumbers(inputSeat)
+        screening.isReserved(selectedSeats)
+
         return selectedSeats
     }
 
@@ -134,39 +113,6 @@ class CinemaController(
         outputView.printCancelPay()
     }
 
-    private fun validateScreeningOverlap(target: Screening) {
-        cart.items.forEach {
-            require(!it.screen.overlaps(target)) {
-                ErrorMessages.OVERLAP_MOVIE_TIME.message
-            }
-        }
-    }
-
-    private fun readSeats(): List<Seat> {
-        val input = inputView.readSeatNumbers()
-        require(input.isNotBlank()) { ErrorMessages.INCORRECT_SEAT_NUMBER.message }
-        val seatNumbers =
-            input
-                .split(SEAT_NUMBER_PARSER)
-                .map { it.trim().uppercase() }
-                .filter { it.isNotBlank() }
-
-        require(seatNumbers.toSet().size == seatNumbers.size) {
-            ErrorMessages.SELECT_SAME_SEAT.message
-        }
-
-        return allSeats.findAllBySeatNumbers(seatNumbers)
-    }
-
-    private fun validateSeatsNotReserved(
-        screening: Screening,
-        seats: List<Seat>,
-    ) {
-        require(seats.none { screening.isReserved(it) }) {
-            ErrorMessages.SELECTED_RESERVED_SEAT.message
-        }
-    }
-
     private fun printReservationResult(result: PayResult.Success) {
         outputView.printFinishReservationMessage()
 
@@ -175,15 +121,6 @@ class CinemaController(
         }
 
         outputView.printPaymentResult(result.paidAmount, result.usedPoint)
-    }
-
-    private fun selectedScreeningReservedSeats(screening: Screening): List<Seat> {
-        val sameScreen =
-            this@CinemaController.screenings.screenings.firstOrNull {
-                it.movie == screening.movie && it.startTime == screening.startTime
-            } ?: screening
-
-        return allSeats.allSeats().filter { sameScreen.isReserved(it) }
     }
 
     private fun updateScreeningReservation(
@@ -201,6 +138,12 @@ class CinemaController(
         )
     }
 
+    private fun isReservationStarted(): Boolean =
+        inputView.readConfirmTicketingStart().uppercase() == CONFIRM_INPUT
+
+    private fun askToAddMoreMovie(): Boolean =
+        inputView.readConfirmAddOtherMovie().uppercase() == CONFIRM_INPUT
+
     private fun <T> retryPrompt(action: () -> T): T {
         while (true) {
             try {
@@ -213,6 +156,6 @@ class CinemaController(
 
     companion object {
         private const val CONFIRM_INPUT = "Y"
-        private const val SEAT_NUMBER_PARSER = ","
+        const val SEAT_NUMBER_PARSER = ","
     }
 }
