@@ -8,7 +8,7 @@ class CreditCardTest {
     @Test
     fun `5% 할인을 적용한다`() {
         // given
-        val creditCard = CreditCard()
+        val creditCard = PaymentMethod.CreditCard()
 
         // when
         val result = creditCard.applyDiscount(Price(10000))

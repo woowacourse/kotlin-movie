@@ -7,8 +7,6 @@ import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
 import movie.domain.movie.Movies
-import movie.domain.payment.Cash
-import movie.domain.payment.CreditCard
 import movie.domain.payment.PaymentMethod
 import movie.domain.payment.PriceCalculator
 import movie.domain.reservation.Reservation
@@ -92,8 +90,8 @@ class MovieController(
         val input = executeWithRetry { inputView.inputPayment() }
 
         return when (input) {
-            1 -> CreditCard()
-            2 -> Cash()
+            1 -> PaymentMethod.CreditCard()
+            2 -> PaymentMethod.Cash()
             else -> throw IllegalArgumentException("유효하지 않은 결제 수단입니다.")
         }
     }

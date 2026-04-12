@@ -73,7 +73,7 @@ class PriceCalculatorTest {
             priceCalculator.calculate(
                 totalPrice,
                 Point(1000),
-                CreditCard(),
+                PaymentMethod.CreditCard(),
             )
 
         assertThat(result.totalPrice).isEqualTo(Price(12540))

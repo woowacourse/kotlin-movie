@@ -8,7 +8,7 @@ class CashTest {
     @Test
     fun `2% 할인을 적용한다`() {
         // given
-        val cash = Cash()
+        val cash = PaymentMethod.Cash()
 
         // when
         val result = cash.applyDiscount(Price(10000))
