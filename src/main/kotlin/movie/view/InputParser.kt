@@ -10,8 +10,6 @@ object InputParser {
 
     fun parseDate(input: String): LocalDate = LocalDate.parse(input)
 
-    fun parseNumber(input: String): Int = input.toInt()
-
     fun parsePoint(input: String): Point = Point(input.toInt())
 
     fun parseSeatNumbers(input: String): List<SeatNumber> =
