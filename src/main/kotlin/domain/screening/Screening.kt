@@ -14,9 +14,8 @@ class Screening(
     val movie: Movie,
     val room: ScreeningRoom,
     val startTime: LocalDateTime,
+    val seats: Seats = room.seats
 ) {
-    var seats: Seats = room.seats
-        private set
 
     val screenTimeRange: TimeRange =
         TimeRange(
@@ -34,9 +33,14 @@ class Screening(
         }
     }
 
-    fun reserve(position: SeatPosition) {
-        seats = seats.updateState(position, ReserveState.RESERVED)
-    }
+    fun reserve(position: SeatPosition): Screening =
+        Screening(
+                id = id,
+                movie = movie,
+                room = room,
+                startTime = startTime,
+                seats = seats.updateState(position, ReserveState.RESERVED)
+        )
 
     fun canReserve(positions: SeatPositions) {
         require(positions.positions.all { seats.canReserve(it) }) { "이미 예약된 좌석입니다." }
