@@ -37,7 +37,7 @@ class PaymentSystem(
             )
         }
 
-        total -= point.amount
+        total = applyPoint(total, point)
 
         total = totalDiscountStrategy.calculateDiscountResult(
             money = total,
@@ -45,4 +45,7 @@ class PaymentSystem(
         )
         return total
     }
+
+    private fun applyPoint(total: Money, point: Point): Money =
+        total - point.amount
 }
