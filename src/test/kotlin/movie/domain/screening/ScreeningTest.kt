@@ -14,8 +14,10 @@ class ScreeningTest {
     @Test
     fun `존재하지 하지 않는 좌석은 예약할 수 없다`() {
         val selectedSeats =
-            setOf(
-                Seat("A", 1, SeatGrade.S),
+            Seats(
+                setOf(
+                    Seat("A", 1, SeatGrade.S),
+                ),
             )
 
         val screening =
@@ -27,10 +29,12 @@ class ScreeningTest {
                     LocalTime.of(12, 0),
                 ),
                 ReservedSeats(
-                    setOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                    Seats(
+                        setOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                            Seat("E", 1, SeatGrade.A),
+                        ),
                     ),
                 ),
             )
@@ -45,10 +49,12 @@ class ScreeningTest {
     @Test
     fun `이미 예약된 좌석들은 예약이 불가능하다`() {
         val selectedSeats =
-            setOf(
-                Seat("C", 1, SeatGrade.S),
-                Seat("C", 2, SeatGrade.S),
-                Seat("E", 1, SeatGrade.A),
+            Seats(
+                setOf(
+                    Seat("C", 1, SeatGrade.S),
+                    Seat("C", 2, SeatGrade.S),
+                    Seat("E", 1, SeatGrade.A),
+                ),
             )
 
         val screening =
@@ -60,10 +66,12 @@ class ScreeningTest {
                     LocalTime.of(12, 0),
                 ),
                 ReservedSeats(
-                    setOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                    Seats(
+                        setOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                            Seat("E", 1, SeatGrade.A),
+                        ),
                     ),
                 ),
             )
@@ -77,8 +85,10 @@ class ScreeningTest {
     @Test
     fun `존재하는 좌석이며 예약이 되지 않은 좌석은 예약이 가능하다`() {
         val selectedSeats =
-            setOf(
-                Seat("A", 1, SeatGrade.B),
+            Seats(
+                setOf(
+                    Seat("A", 1, SeatGrade.B),
+                ),
             )
 
         val screening =
@@ -90,15 +100,17 @@ class ScreeningTest {
                     LocalTime.of(12, 0),
                 ),
                 ReservedSeats(
-                    setOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                    Seats(
+                        setOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                            Seat("E", 1, SeatGrade.A),
+                        ),
                     ),
                 ),
             )
 
         val result = screening.reserve(selectedSeats)
-        assertThat(result.reservedSeats.getSeats()).containsAll(selectedSeats + screening.reservedSeats.getSeats())
+        assertThat(result.reservedSeats.getSeats()).containsAll(selectedSeats.seats + screening.reservedSeats.getSeats())
     }
 }

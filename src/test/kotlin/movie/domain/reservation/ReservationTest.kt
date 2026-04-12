@@ -22,9 +22,11 @@ class ReservationTest {
         // given
         val selectedSeats =
             SelectedSeats(
-                setOf(
-                    Seat("A", 1, SeatGrade.B),
-                    Seat("C", 1, SeatGrade.S),
+                Seats(
+                    setOf(
+                        Seat("A", 1, SeatGrade.B),
+                        Seat("C", 1, SeatGrade.S),
+                    ),
                 ),
             )
 
@@ -37,10 +39,12 @@ class ReservationTest {
                     LocalTime.of(12, 0),
                 ),
                 ReservedSeats(
-                    setOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                    Seats(
+                        setOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                            Seat("E", 1, SeatGrade.A),
+                        ),
                     ),
                 ),
             )

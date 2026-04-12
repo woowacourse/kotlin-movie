@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test
 
 class ReservedSeatsTest {
     private val seats =
-        setOf(
-            Seat("C", 1, SeatGrade.S),
-            Seat("C", 2, SeatGrade.S),
-            Seat("E", 1, SeatGrade.A),
+        Seats(
+            setOf(
+                Seat("C", 1, SeatGrade.S),
+                Seat("C", 2, SeatGrade.S),
+                Seat("E", 1, SeatGrade.A),
+            ),
         )
 
     @Test
@@ -42,7 +44,7 @@ class ReservedSeatsTest {
 
         // when
         val newReservatedSeats = reservedSeats.add(setOf(Seat("A", 1, SeatGrade.B)))
-        val result = ReservedSeats(newReservatedSeats.getSeats()).isAvailable(Seat("A", 1, SeatGrade.B))
+        val result = newReservatedSeats.isAvailable(Seat("A", 1, SeatGrade.B))
 
         // then
         assertThat(result).isFalse()

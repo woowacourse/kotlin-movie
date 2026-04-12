@@ -14,6 +14,7 @@ import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.seat.Seat
+import movie.domain.seat.Seats
 import movie.domain.seat.SelectedSeats
 import movie.domain.user.User
 import movie.view.InputView
@@ -159,12 +160,12 @@ class MovieController(
             selected
         }
 
-    private fun selectSeats(screening: Screening): Set<Seat> =
+    private fun selectSeats(screening: Screening): Seats =
         executeWithRetry {
             outputView.printSeatLayout(screening.screen, screening.reservedSeats)
             val input = inputView.inputSeat()
             val seats = parseSeatInput(input, screening.screen)
-            seats
+            Seats(seats)
         }
 
     private fun parseSeatInput(

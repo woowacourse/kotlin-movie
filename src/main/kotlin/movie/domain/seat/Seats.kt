@@ -1,11 +1,18 @@
 package movie.domain.seat
 
+import movie.domain.amount.Price
+
 class Seats(
-    private val seats: Set<Seat>,
+    val seats: Set<Seat>,
 ) {
-    init {
-        require(seats.isNotEmpty()) { "좌석 목록은 비어 있을 수 없습니다." }
-    }
+    val size: Int
+        get() = seats.size
+
+    val totalPrice: Price
+        get() =
+            seats
+                .map { it.grade.price }
+                .reduce { acc, price -> acc + price }
 
     fun hasSeat(seat: Seat): Boolean = seats.contains(seat)
 
@@ -17,6 +24,12 @@ class Seats(
     ): Seat =
         seats.find { it.row == row && it.column == column }
             ?: throw IllegalArgumentException("존재하지 않는 좌석입니다.")
+
+    fun isAvailable(seat: Seat): Boolean = seats.none { it.row == seat.row && it.column == seat.column }
+
+    fun isNotEmpty(): Boolean = seats.isNotEmpty()
+
+    fun distinct(): Set<Seat> = seats.toSet()
 
     companion object {
         fun createDefault(): Seats {

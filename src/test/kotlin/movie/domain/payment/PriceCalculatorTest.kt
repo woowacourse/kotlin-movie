@@ -37,17 +37,21 @@ class PriceCalculatorTest {
                     ),
                 reservedSeats =
                     ReservedSeats(
-                        setOf(
-                            Seat("C", 1, SeatGrade.S),
-                            Seat("C", 2, SeatGrade.S),
+                        Seats(
+                            setOf(
+                                Seat("C", 1, SeatGrade.S),
+                                Seat("C", 2, SeatGrade.S),
+                            ),
                         ),
                     ),
             )
 
         val selectedSeats =
             SelectedSeats(
-                setOf(
-                    Seat("C", 1, SeatGrade.S),
+                Seats(
+                    setOf(
+                        Seat("C", 1, SeatGrade.S),
+                    ),
                 ),
             )
         val movie = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening)))

@@ -27,9 +27,11 @@ class ReservationsTest {
         val reservationData = ReservationData.reservations
         val selectedSeats =
             SelectedSeats(
-                setOf(
-                    Seat("A", 1, SeatGrade.B),
-                    Seat("C", 1, SeatGrade.S),
+                Seats(
+                    setOf(
+                        Seat("A", 1, SeatGrade.B),
+                        Seat("C", 1, SeatGrade.S),
+                    ),
                 ),
             )
 
@@ -42,10 +44,12 @@ class ReservationsTest {
                     LocalTime.of(14, 0),
                 ),
                 ReservedSeats(
-                    setOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                    Seats(
+                        setOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                            Seat("E", 1, SeatGrade.A),
+                        ),
                     ),
                 ),
             )
@@ -65,9 +69,11 @@ class ReservationsTest {
         val reservationData = ReservationData.reservations
         val selectedSeats =
             SelectedSeats(
-                setOf(
-                    Seat("A", 1, SeatGrade.B),
-                    Seat("C", 1, SeatGrade.S),
+                Seats(
+                    setOf(
+                        Seat("A", 1, SeatGrade.B),
+                        Seat("C", 1, SeatGrade.S),
+                    ),
                 ),
             )
 
@@ -80,10 +86,12 @@ class ReservationsTest {
                     LocalTime.of(13, 0),
                 ),
                 ReservedSeats(
-                    setOf(
-                        Seat("C", 1, SeatGrade.S),
-                        Seat("C", 2, SeatGrade.S),
-                        Seat("E", 1, SeatGrade.A),
+                    Seats(
+                        setOf(
+                            Seat("C", 1, SeatGrade.S),
+                            Seat("C", 2, SeatGrade.S),
+                            Seat("E", 1, SeatGrade.A),
+                        ),
                     ),
                 ),
             )
@@ -105,9 +113,11 @@ class ReservationsTest {
 
         val selectedSeats =
             SelectedSeats(
-                setOf(
-                    Seat("E", 1, SeatGrade.A),
-                    Seat("E", 2, SeatGrade.A),
+                Seats(
+                    setOf(
+                        Seat("E", 1, SeatGrade.A),
+                        Seat("E", 2, SeatGrade.A),
+                    ),
                 ),
             )
 
@@ -119,7 +129,7 @@ class ReservationsTest {
                     LocalTime.of(12, 0),
                     LocalTime.of(14, 0),
                 ),
-                ReservedSeats(emptySet()),
+                ReservedSeats(Seats(emptySet())),
             )
 
         val screening2 =
@@ -130,7 +140,7 @@ class ReservationsTest {
                     LocalTime.of(9, 0),
                     LocalTime.of(12, 0),
                 ),
-                ReservedSeats(emptySet()),
+                ReservedSeats(Seats(emptySet())),
             )
 
         val movie1 = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
