@@ -96,4 +96,4 @@
 ## Controller
 
 ### MovieController
-- [ ] 영화 예매를 진행할 수 있다.
+- [x] 영화 예매를 진행할 수 있다.
