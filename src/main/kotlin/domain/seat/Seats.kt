@@ -13,7 +13,7 @@ data class Seats(
         val target =
             seats.find { it.position == position }
                 ?: throw IllegalArgumentException("존재하지 않는 좌석입니다")
-        return target.state == ReserveState.AVAILABLE
+        return target.canReserve()
     }
 
     fun updateState(

@@ -8,6 +8,7 @@ data class Seat(
         get() = SeatGrade.of(position)
 
     fun changeState(state: ReserveState): Seat = this.copy(state = state)
+    fun canReserve(): Boolean = state == ReserveState.AVAILABLE
 }
 
 enum class ReserveState {

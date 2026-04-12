@@ -74,4 +74,16 @@ class SeatTest {
         val expected = ReserveState.AVAILABLE
         assertThat(given.state).isEqualTo(expected)
     }
+
+    @Test
+    fun `좌석은 자신이 예약가능한지를 판단할 수 있다`() {
+        val given = Seat(
+            position = SeatPosition(
+                row = Row("A"),
+                column = Column(1)
+            )
+        )
+        val expected = true
+        assertThat(given.canReserve()).isEqualTo(expected)
+    }
 }
