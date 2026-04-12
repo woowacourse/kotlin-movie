@@ -1,6 +1,6 @@
 package movie.domain.discount
 
-import movie.MovieTitle
+import movie.domain.MovieTitle
 import movie.domain.Movie
 import movie.domain.Price
 import movie.domain.Schedule

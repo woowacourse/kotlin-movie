@@ -1,6 +1,6 @@
 package movie.domain
 
-import movie.MovieTitle
+import movie.domain.MovieTitle
 import java.time.LocalDate
 import java.time.LocalDateTime
 

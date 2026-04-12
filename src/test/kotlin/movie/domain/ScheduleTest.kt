@@ -1,6 +1,6 @@
 package movie.domain
 
-import movie.MovieTitle
+import movie.domain.MovieTitle
 import movie.domain.seat.SeatNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

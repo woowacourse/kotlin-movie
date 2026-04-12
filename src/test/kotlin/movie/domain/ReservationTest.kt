@@ -1,6 +1,6 @@
 package movie.domain
 
-import movie.MovieTitle
+import movie.domain.MovieTitle
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatNumber
 import movie.domain.seat.SeatRank

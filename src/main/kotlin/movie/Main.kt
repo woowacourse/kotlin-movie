@@ -3,6 +3,7 @@ package movie
 import movie.controller.MovieController
 import movie.domain.Movie
 import movie.domain.MovieManager
+import movie.domain.MovieTitle
 import movie.domain.Schedule
 import movie.domain.Schedules
 import java.time.LocalDateTime

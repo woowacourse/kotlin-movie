@@ -1,6 +1,6 @@
 package movie.controller
 
-import movie.MovieTitle
+import movie.domain.MovieTitle
 import movie.domain.Cart
 import movie.domain.MovieManager
 import movie.domain.PaymentManager

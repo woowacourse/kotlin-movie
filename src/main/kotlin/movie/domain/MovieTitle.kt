@@ -1,4 +1,4 @@
-package movie
+package movie.domain
 
 @JvmInline
 value class MovieTitle(

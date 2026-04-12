@@ -1,6 +1,6 @@
 package movie.view
 
-import movie.MovieTitle
+import movie.domain.MovieTitle
 import movie.domain.point.Point
 import movie.domain.seat.SeatNumber
 import java.time.LocalDate
