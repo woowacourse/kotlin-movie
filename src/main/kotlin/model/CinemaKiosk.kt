@@ -18,10 +18,7 @@ class CinemaKiosk(
         val seat = movieScreening.getSeat(seatRow, seatColumn)
 
         if (reserveResults.any {
-                it.screenTime
-                    .isEqual(
-                        movieScreening.screenTime,
-                    ).not() &&
+                it.screenTime != movieScreening.screenTime &&
                     it.screenTime.overlaps(movieScreening.screenTime)
             }
         ) {
