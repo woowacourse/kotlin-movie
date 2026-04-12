@@ -6,4 +6,8 @@ class SelectedSeats(selectedSeats: List<SeatNumber> = emptyList()) {
     fun addSelectedSeats(seats: List<SeatNumber>) {
         _selectedSeats.addAll(seats)
     }
+
+    fun isReservationSeat(seatNumber: SeatNumber): Boolean {
+        return _selectedSeats.contains(seatNumber)
+    }
 }

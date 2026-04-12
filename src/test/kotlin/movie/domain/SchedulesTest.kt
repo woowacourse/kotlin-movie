@@ -29,7 +29,7 @@ class SchedulesTest {
         val scheduleList = listOf(schedule1, schedule2)
         val schedules = Schedules(scheduleList)
 
-        val movieSchedules = schedules.getMovieSchedule(
+        val movieSchedules = schedules.getMovieSchedules(
             movieTitle = "시동",
             date = LocalDate.of(2026, 4, 10)
         )
