@@ -13,7 +13,8 @@ enum class SeatGrade(
             when (position.row) {
                 Row("A"), Row("B") -> B
                 Row("C"), Row("D") -> S
-                else -> A
+                Row("E") -> A
+                else -> throw IllegalArgumentException("존재하지 않는 좌석입니다.")
             }
     }
 }
