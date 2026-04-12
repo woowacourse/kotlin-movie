@@ -27,9 +27,7 @@ data class ScreeningSchedule(
                 screenings.find { screening -> screening.id == ticket.screening.id }
                     ?: throw IllegalArgumentException("존재하지 않는 상영 입니다.")
 
-            ticket.seatPositions.positions.forEach {
-                target.reserve(it)
-            }
+            target.reserve(ticket.seatPositions)
         }
     }
 }

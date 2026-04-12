@@ -14,15 +14,12 @@ data class Seats(
         return target.canReserve()
     }
 
-    fun updateState(
-        position: SeatPosition,
-        state: ReserveState,
-    ): Seats =
+    fun reserve(positions: SeatPositions): Seats =
         Seats(
             seats =
                 seats.map { seat ->
-                    if (seat.position == position) {
-                        seat.changeState(state)
+                    if (positions.contains(seat.position)) {
+                        seat.changeState(ReserveState.RESERVED)
                     } else {
                         seat
                     }
