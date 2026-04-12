@@ -2,6 +2,7 @@ package domain.reservations.items
 
 import domain.money.Money
 import domain.movie.Movie
+import domain.paycalculator.items.PriceDiscountCalculator
 import domain.timetable.items.ScreenTime
 import domain.timetable.items.Seats
 import java.time.LocalDate
@@ -20,4 +21,9 @@ class Reservation(
         this.screenTime.isDuplicatedScreenTime(otherReservation.screenTime)
 
     fun sumSeatPrice(): Money = seats.sumPrice()
+
+    fun calculateDiscountPrice(calculator: PriceDiscountCalculator): Money {
+        val price = sumSeatPrice()
+        return calculator.calculate(price, screenTime)
+    }
 }

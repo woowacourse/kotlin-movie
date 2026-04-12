@@ -1,6 +1,9 @@
 package domain.reservations
 
+import domain.money.Money
+import domain.paycalculator.items.PriceDiscountCalculator
 import domain.reservations.items.Reservation
+import kotlin.collections.fold
 
 class Reservations(
     private val reservations: MutableList<Reservation> = mutableListOf(),
@@ -11,5 +14,12 @@ class Reservations(
         require(!duplicated) { "선택하신 상영 시간이 겹칩니다." }
 
         reservations.add(reservation)
+    }
+
+    fun calculateTotalDiscountPrice(priceDiscountCalculator: PriceDiscountCalculator): Money {
+        val price = Money(0)
+        return reservations.fold(price) { total, reservation ->
+            total + reservation.calculateDiscountPrice(priceDiscountCalculator)
+        }
     }
 }

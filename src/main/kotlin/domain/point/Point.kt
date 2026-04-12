@@ -10,14 +10,14 @@ value class Point(
         require(amount >= 0) { "포인트는 0보다 작을 수 없습니다. (입력값: $amount)" }
     }
 
-    fun toMoney(useAmount: Int): Money {
-        validate(useAmount)
-        return Money(useAmount)
+    fun toMoney(useAmount: Point): Money {
+        validate(useAmount.amount)
+        return Money(useAmount.amount)
     }
 
-    fun subtractPoint(useAmount: Int): Point {
-        validate(useAmount)
-        return Point(amount - useAmount)
+    fun subtractPoint(useAmount: Point): Point {
+        validate(useAmount.amount)
+        return Point(amount - useAmount.amount)
     }
 
     private fun validate(useAmount: Int) {
