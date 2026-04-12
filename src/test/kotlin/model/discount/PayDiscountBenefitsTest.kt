@@ -1,19 +1,20 @@
 package model.discount
 
+import model.discount.payDiscountPolicy.PayDiscountBenefits
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
 import java.time.LocalTime
 
-class DiscountBenefitsTest {
+class PayDiscountBenefitsTest {
     @Test
     fun `매월 10, 20, 30일에 상영되는 영화는 10% 할인된다`() {
         val price = 24_000
         val reservedDate = LocalDate.of(2026, 4, 10)
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        val movieDayDiscountPrice = discountBenefits.movieDay(price, reservedDate)
+        val movieDayDiscountPrice = payDiscountBenefits.movieDay(price, reservedDate)
 
         assertThat(movieDayDiscountPrice).isEqualTo(21_600)
     }
@@ -22,9 +23,9 @@ class DiscountBenefitsTest {
     fun `매월 10, 20, 30일에 상영되는 영화가 아니면 할인이 안된다`() {
         val price = 24_000
         val reservedDate = LocalDate.of(2026, 4, 11)
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        val movieDayDiscountPrice = discountBenefits.movieDay(price, reservedDate)
+        val movieDayDiscountPrice = payDiscountBenefits.movieDay(price, reservedDate)
 
         assertThat(movieDayDiscountPrice).isEqualTo(24_000)
     }
@@ -34,19 +35,19 @@ class DiscountBenefitsTest {
         val price = 24_000
         val earlyTime = LocalTime.of(10, 40)
         val lateTime = LocalTime.of(20, 10)
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        assertThat(discountBenefits.timeDiscount(price, earlyTime)).isEqualTo(22_000)
-        assertThat(discountBenefits.timeDiscount(price, lateTime)).isEqualTo(22_000)
+        assertThat(payDiscountBenefits.timeDiscount(price, earlyTime)).isEqualTo(22_000)
+        assertThat(payDiscountBenefits.timeDiscount(price, lateTime)).isEqualTo(22_000)
     }
 
     @Test
     fun `오전 11시와 오후 8시 사이에 시작하는 영화는 할인되지 않는다`() {
         val price = 24_000
         val reservedTime = LocalTime.of(11, 40)
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        val timeDiscountPrice = discountBenefits.timeDiscount(price, reservedTime)
+        val timeDiscountPrice = payDiscountBenefits.timeDiscount(price, reservedTime)
 
         assertThat(timeDiscountPrice).isEqualTo(24_000)
     }
@@ -56,11 +57,11 @@ class DiscountBenefitsTest {
         val price = 18_000
         val movieDayDate = LocalDate.of(2026, 4, 10)
         val earlyTime = LocalTime.of(10, 0)
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
         val result =
-            discountBenefits.timeDiscount(
-                discountBenefits.movieDay(price, movieDayDate),
+            payDiscountBenefits.timeDiscount(
+                payDiscountBenefits.movieDay(price, movieDayDate),
                 earlyTime,
             )
 
@@ -72,17 +73,17 @@ class DiscountBenefitsTest {
         val price = 18_000
         val movieDayDate = LocalDate.of(2026, 4, 10)
         val earlyTime = LocalTime.of(10, 0)
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
         val percentFirst =
-            discountBenefits.timeDiscount(
-                discountBenefits.movieDay(price, movieDayDate),
+            payDiscountBenefits.timeDiscount(
+                payDiscountBenefits.movieDay(price, movieDayDate),
                 earlyTime,
             )
 
         val fixedFirst =
-            discountBenefits.movieDay(
-                discountBenefits.timeDiscount(price, earlyTime),
+            payDiscountBenefits.movieDay(
+                payDiscountBenefits.timeDiscount(price, earlyTime),
                 movieDayDate,
             )
 
@@ -95,9 +96,9 @@ class DiscountBenefitsTest {
     fun `포인트 할인 시 예매 금액에서 포인트만큼의 금액이 차감된다`() {
         val price = 24_000
         val usePoint = 2_000
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        val pointDiscount = discountBenefits.pointDiscount(price, usePoint)
+        val pointDiscount = payDiscountBenefits.pointDiscount(price, usePoint)
 
         assertThat(pointDiscount).isEqualTo(22_000)
     }
@@ -106,19 +107,19 @@ class DiscountBenefitsTest {
     fun `포인트는 예매 금액보다 크게 사용할 수 없다`() {
         val price = 24_000
         val usePoint = 25_000
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
         assertThrows<IllegalArgumentException> {
-            discountBenefits.pointDiscount(price, usePoint)
+            payDiscountBenefits.pointDiscount(price, usePoint)
         }
     }
 
     @Test
     fun `신용카드로 결제 시 5% 할인된다`() {
         val price = 24_000
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        val cardDiscount = discountBenefits.cardDiscount(price)
+        val cardDiscount = payDiscountBenefits.cardDiscount(price)
 
         assertThat(cardDiscount).isEqualTo(22_800)
     }
@@ -126,9 +127,9 @@ class DiscountBenefitsTest {
     @Test
     fun `현금으로 결제 시 2% 할인된다`() {
         val price = 24_000
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
-        val cashDiscount = discountBenefits.cashDiscount(price)
+        val cashDiscount = payDiscountBenefits.cashDiscount(price)
 
         assertThat(cashDiscount).isEqualTo(23_520)
     }
@@ -137,16 +138,16 @@ class DiscountBenefitsTest {
     fun `결제방식 할인은 포인트 할인이 적용된 후에 적용된다`() {
         val price = 24_000
         val usePoint = 4_000
-        val discountBenefits = DiscountBenefits()
+        val payDiscountBenefits = PayDiscountBenefits()
 
         val pointFirst =
-            discountBenefits.cardDiscount(
-                discountBenefits.pointDiscount(price, usePoint),
+            payDiscountBenefits.cardDiscount(
+                payDiscountBenefits.pointDiscount(price, usePoint),
             )
 
         val cardFirst =
-            discountBenefits.pointDiscount(
-                discountBenefits.cardDiscount(price),
+            payDiscountBenefits.pointDiscount(
+                payDiscountBenefits.cardDiscount(price),
                 usePoint,
             )
 

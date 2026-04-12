@@ -2,8 +2,13 @@ package controller
 
 import model.cart.Cart
 import model.cart.CartItem
-import model.discount.DiscountBenefits
 import model.discount.PaymentMethod
+import model.discount.payDiscountPolicy.PayDiscountBenefits
+import model.discount.payDiscountPolicy.PaymentPayDiscountPolicy
+import model.discount.payDiscountPolicy.PointPayDiscountPolicy
+import model.discount.reserveDiscountPolicy.MovieDayDiscountPolicy
+import model.discount.reserveDiscountPolicy.MovieDiscountPolicy
+import model.discount.reserveDiscountPolicy.TimeDiscountPolicy
 import model.movie.Movie
 import model.movie.Movies
 import model.schedule.Schedule
@@ -17,7 +22,6 @@ class MovieController {
     val inputView = InputView()
     val outputView = OutputView()
     val movies = Movies.createMovies()
-    val discountBenefits = DiscountBenefits()
 
     val selectedScreenings = mutableListOf<Screening>()
 
@@ -126,7 +130,7 @@ class MovieController {
 
             if (selectedScreenings.any {
                     it.movie.movieTitle != selectedScreening.movie.movieTitle &&
-                            it.isOverlapping(selectedScreening)
+                        it.isOverlapping(selectedScreening)
                 }
             ) {
                 throw IllegalArgumentException("선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요.")
@@ -250,13 +254,29 @@ class MovieController {
         val usePoint = usePoint()
         val paymentMethod = selectPaymentMethod()
 
-        // 가격 계산 및 출력
-        val totalPrice =
-            cart.calculateTotalPrice(
-                discountBenefits = discountBenefits,
-                usePoint = usePoint,
-                paymentMethod = paymentMethod,
+        // 영화 시간에 따른 가격 계산
+        val moviePrice =
+            cart.calculateItemsPrice(
+                reserveDiscountPolicy =
+                    MovieDiscountPolicy(
+                        movieDiscountPolicies =
+                            listOf(
+                                MovieDayDiscountPolicy(), // 영화 할인 정책
+                                TimeDiscountPolicy(), // 시간 할인 정책
+                            ),
+                    ),
             )
+
+        // 포인트 및 현금, 카드 할인 계산
+        val totalPrice =
+            PayDiscountBenefits(
+                payDiscountPolicies =
+                    listOf(
+                        PointPayDiscountPolicy(usePoint),
+                        PaymentPayDiscountPolicy(paymentMethod),
+                    ),
+            ).calculatePrice(moviePrice)
+
         outputView.printTotalPrice(totalPrice)
 
         // 결제 확인
