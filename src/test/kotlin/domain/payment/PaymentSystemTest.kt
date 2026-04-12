@@ -9,6 +9,10 @@ import domain.screening.ScreeningPeriod
 import domain.screening.ScreeningRoom
 import domain.screening.ScreeningRoomName
 import domain.common.TimeRange
+import domain.discount.DiscountPolicy
+import domain.discount.MovieDayDiscount
+import domain.discount.PaymentDiscount
+import domain.discount.TimeDiscount
 import domain.seat.Column
 import domain.seat.Row
 import domain.seat.Seat
@@ -27,7 +31,7 @@ import java.time.LocalTime
 class PaymentSystemTest {
     @Test
     fun `총 결제 금액이 올바르게 계산된다`() {
-        val paymentSystem = PaymentSystem(discountPolicy = DiscountPolicy())
+        val paymentSystem = PaymentSystem(discountPolicy = discountPolicy)
         val result =
             paymentSystem.calculate(
                 point = Point(800),
@@ -110,7 +114,7 @@ class PaymentSystemTest {
 
     @Test
     fun `할인 적용 후 금액이 0보다 작을 경우 예외를 던진다`() {
-        val paymentSystem = PaymentSystem(discountPolicy = DiscountPolicy())
+        val paymentSystem = PaymentSystem(discountPolicy = discountPolicy)
         assertThrows(IllegalArgumentException::class.java) {
             paymentSystem.calculate(
                 point = Point(10001),
@@ -190,4 +194,12 @@ class PaymentSystemTest {
             )
         }
     }
+    private val discountPolicy = DiscountPolicy(
+        strategies = listOf(
+            MovieDayDiscount(),
+            TimeDiscount(),
+            PaymentDiscount(),
+        )
+    )
+
 }
