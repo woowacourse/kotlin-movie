@@ -9,4 +9,6 @@ value class Title(
     }
 
     fun isSame(other: Title): Boolean = title == other.title
+
+    fun getTitle() = title
 }

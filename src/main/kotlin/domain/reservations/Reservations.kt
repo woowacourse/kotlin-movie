@@ -1,5 +1,6 @@
 package domain.reservations
 
+import domain.dto.ReservationDto
 import domain.money.Money
 import domain.paycalculator.items.PriceDiscountCalculator
 import domain.reservations.items.Reservation
@@ -22,4 +23,6 @@ class Reservations(
             total + reservation.calculateDiscountPrice(priceDiscountCalculator)
         }
     }
+
+    fun toReservationDtoList(): List<ReservationDto> = reservations.map { it.toDto() }
 }

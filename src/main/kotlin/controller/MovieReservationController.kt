@@ -18,6 +18,7 @@ class MovieReservationController(
     fun run() {
         try {
             val isStart = InputView.readReservation()
+            if (!isStart) return
         } catch (e: Exception) {
             println("[ERROR] ${e.message}")
             return run()
@@ -50,6 +51,8 @@ class MovieReservationController(
             reservations.addReservation(reservation)
 
             selectedSchedule.addReserveSeat(seatInput)
+
+            OutputView.printCartAdded(reservation.toDto())
         } catch (e: Exception) {
             println("[ERROR] ${e.message}")
             return reserveMovie(reservations)
@@ -57,6 +60,8 @@ class MovieReservationController(
 
         val isContinue = InputView.readAddMovie()
         if (isContinue) return reserveMovie(reservations)
+
+        OutputView.printCartList(reservations.toReservationDtoList())
     }
 
     private fun processPayment(reservations: Reservations) {

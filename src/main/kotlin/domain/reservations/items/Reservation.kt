@@ -1,5 +1,6 @@
 package domain.reservations.items
 
+import domain.dto.ReservationDto
 import domain.money.Money
 import domain.movie.Movie
 import domain.paycalculator.items.PriceDiscountCalculator
@@ -25,5 +26,16 @@ class Reservation(
     fun calculateDiscountPrice(calculator: PriceDiscountCalculator): Money {
         val price = sumSeatPrice()
         return calculator.calculate(price, screenTime)
+    }
+
+    fun toDto(): ReservationDto {
+        val date = screenTime.getDate()
+        val time = screenTime.getStartTime()
+        val seatNames = seats.getSeats().map { it.getName() }
+        return ReservationDto(
+            title = movie.getMovieTitle(),
+            dateTime = "$date $time",
+            seats = seatNames.joinToString(", "),
+        )
     }
 }

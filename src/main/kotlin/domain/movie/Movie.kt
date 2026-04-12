@@ -13,4 +13,6 @@ class Movie(
     fun isValidTitle(other: Title): Boolean = title.isSame(other)
 
     fun isScreening(date: LocalDate): Boolean = screeningPeriod.isContain(date)
+
+    fun getMovieTitle() = title.getTitle()
 }
