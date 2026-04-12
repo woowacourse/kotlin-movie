@@ -2,8 +2,8 @@ import view.InputView
 import view.OutputView
 
 class CinemaController(
-    val movieReservationController: MovieReservationController,
-    val moviePaymentController: MoviePaymentController,
+    private val movieReservationController: MovieReservationController,
+    private val moviePaymentController: MoviePaymentController,
 ) {
     fun run() {
         if (!getStartRequest()) return

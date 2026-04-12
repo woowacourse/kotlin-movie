@@ -7,9 +7,11 @@ interface MovieDiscountable {
     fun getDiscountAmount(movieReservationResult: MovieReservationResult): Money
 }
 
-data class SequentialMovieDiscount(
-    val discountableGroup: List<MovieDiscountable>,
+class SequentialMovieDiscount(
+    discountableGroup: List<MovieDiscountable>,
 ) {
+    private val discountableGroup: List<MovieDiscountable> = discountableGroup.toList()
+
     fun getDiscountedPrice(movieReservationResult: MovieReservationResult): Money {
         val originalPrice = movieReservationResult.seat.grade.price
         return discountableGroup.fold(originalPrice) { nextPrice, movieDiscountable ->

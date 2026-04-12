@@ -10,7 +10,7 @@ import view.InputView
 import view.OutputView
 
 class MoviePaymentController(
-    val sequentialMovieDiscount: SequentialMovieDiscount,
+    private val sequentialMovieDiscount: SequentialMovieDiscount,
 ) {
     fun handleMoviePayment(movieReservationGroup: MovieReservationGroup): MoviePaymentResult {
         val point = getPoint()

@@ -9,6 +9,4 @@ value class Point(
     }
 
     fun toMoney(): Money = Money(value)
-
-    fun toInt(): Int = value
 }

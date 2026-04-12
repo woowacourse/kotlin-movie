@@ -10,7 +10,7 @@ data class MovieReservationResult(
     val movie: Movie,
     val screenTime: CinemaTimeRange,
     val seat: Seat,
-    val state: SeatState,
+    private val state: SeatState,
 ) {
     fun isEqual(
         movie: Movie,

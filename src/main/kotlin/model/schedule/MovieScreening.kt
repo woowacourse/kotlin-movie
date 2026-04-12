@@ -16,8 +16,6 @@ class MovieScreening(
         require(movie.isSameDuration(screenTime)) { "영화의 러닝타임과 상영관의 상영 시간이 일치하지 않습니다." }
     }
 
-    fun getSeat(seatPosition: SeatPosition): Seat = seatGroup[seatPosition]
-
     override fun equals(other: Any?): Boolean {
         if (other is MovieScreening) {
             return movie == other.movie && screenTime == other.screenTime
@@ -26,4 +24,6 @@ class MovieScreening(
     }
 
     override fun hashCode(): Int = Objects.hash(movie.hashCode(), screenTime.hashCode())
+
+    fun getSeat(seatPosition: SeatPosition): Seat = seatGroup[seatPosition]
 }

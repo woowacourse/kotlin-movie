@@ -8,10 +8,10 @@ data class MoviePaymentResult(
 )
 
 class DefaultMoviePayment(
-    val reservations: MovieReservationGroup,
-    val sequentialMovieDiscount: SequentialMovieDiscount,
-    val pointDiscount: PaymentDiscountable,
-    val payTypeDiscount: PaymentDiscountable?,
+    private val reservations: MovieReservationGroup,
+    private val sequentialMovieDiscount: SequentialMovieDiscount,
+    private val pointDiscount: PaymentDiscountable,
+    private val payTypeDiscount: PaymentDiscountable?,
 ) {
     fun calculate(): MoviePaymentResult {
         val totalPrice =

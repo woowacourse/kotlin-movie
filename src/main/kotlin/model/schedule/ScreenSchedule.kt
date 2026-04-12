@@ -23,8 +23,6 @@ class ScreenSchedule(
         }
     }
 
-    fun isContainServicePeriod(time: CinemaTime): Boolean = servicePeriod.contains(time)
-
     override fun equals(other: Any?): Boolean {
         if (other is ScreenSchedule) {
             return this.screenId == other.screenId
@@ -35,4 +33,6 @@ class ScreenSchedule(
     override fun hashCode(): Int = screenId.hashCode()
 
     operator fun get(movie: MovieName): MovieSchedule = MovieSchedule(movieScreenings.filter { it.movie.isEqual(movie) })
+
+    fun isContainServicePeriod(time: CinemaTime): Boolean = servicePeriod.contains(time)
 }

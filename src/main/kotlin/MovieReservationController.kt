@@ -8,7 +8,7 @@ import view.OutputView
 import java.time.format.DateTimeParseException
 
 class MovieReservationController(
-    val cinemaSchedule: CinemaSchedule,
+    private val cinemaSchedule: CinemaSchedule,
     private var movieReservationGroup: MovieReservationGroup =
         MovieReservationGroup(
             emptySet(),
