@@ -89,12 +89,7 @@ class MovieController(
 
     private fun selectPaymentMethod(): PaymentMethod {
         val input = executeWithRetry { inputView.inputPayment() }
-
-        return when (input) {
-            1 -> CreditCard()
-            2 -> Cash()
-            else -> throw IllegalArgumentException("유효하지 않은 결제 수단입니다.")
-        }
+        return PaymentMethod.from(input)
     }
 
     // 예매 로직
