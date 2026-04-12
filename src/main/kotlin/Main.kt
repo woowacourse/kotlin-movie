@@ -1,10 +1,6 @@
 import model.movie.Movie
 import model.movie.MovieName
 import model.movie.RunningTime
-import model.payment.EarlyMorningDiscount
-import model.payment.LateNightDiscount
-import model.payment.MovieDayDiscount
-import model.payment.SequentialMovieDiscount
 import model.schedule.CinemaSchedule
 import model.schedule.MovieScreening
 import model.schedule.ScreenSchedule
@@ -20,22 +16,10 @@ import java.time.LocalDateTime
 
 fun main() {
     CinemaController(
-        moviePaymentController = createMoviePaymentController(),
+        moviePaymentController = MoviePaymentController(),
         movieReservationController = creatMovieReservationController(),
     ).run()
 }
-
-private fun createMoviePaymentController(): MoviePaymentController =
-    MoviePaymentController(
-        sequentialMovieDiscount =
-            SequentialMovieDiscount(
-                listOf(
-                    MovieDayDiscount(),
-                    EarlyMorningDiscount(),
-                    LateNightDiscount(),
-                ),
-            ),
-    )
 
 private fun creatMovieReservationController(): MovieReservationController {
     val screenSchedules =

@@ -1,12 +1,23 @@
 package model.payment
 
-interface PaymentDiscountable {
+interface PurchaseDiscountable {
     fun applyDiscount(originalMoney: Money): Money
+}
+
+class SequentialPurchaseDiscount(
+    discountableGroup: List<PurchaseDiscountable>,
+) {
+    private val discountableGroup: List<PurchaseDiscountable> = discountableGroup.toList()
+
+    fun getDiscountedPrice(originalMoney: Money): Money =
+        discountableGroup.fold(originalMoney) { discountedMoney, discountable ->
+            discountable.applyDiscount(discountedMoney)
+        }
 }
 
 class PayTypeDiscount(
     private val payType: PayType,
-) : PaymentDiscountable {
+) : PurchaseDiscountable {
     override fun applyDiscount(originalMoney: Money): Money =
         when (payType) {
             PayType.CREDIT_CARD -> originalMoney applyRate (1 - CREDIT_CARD_DISCOUNT_RATIO)
@@ -21,7 +32,7 @@ class PayTypeDiscount(
 
 class PointDiscount(
     private val point: Point,
-) : PaymentDiscountable {
+) : PurchaseDiscountable {
     override fun applyDiscount(originalMoney: Money): Money =
         originalMoney.minusWithMinimum(
             money = point.toMoney(),

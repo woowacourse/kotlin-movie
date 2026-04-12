@@ -13,7 +13,6 @@ import model.payment.PayType
 import model.payment.PayTypeDiscount
 import model.payment.Point
 import model.payment.PointDiscount
-import model.payment.SequentialMovieDiscount
 import model.reservation.MovieReservationGroup
 import model.reservation.MovieReservationResult
 import model.seat.Seat
@@ -32,35 +31,35 @@ import java.time.LocalDateTime
 class MoviePaymentResultTest {
     @Test
     fun `좌석 등급과 예약한 좌석 수에 따라서 가격이 계산된다`() {
-        DefaultMoviePayment(
-            reservations =
-                MovieReservationGroup(
-                    setOf(
-                        MovieReservationResult(
-                            movie = Movie(MovieName("옥탑방에사는남자"), RunningTime(60)),
-                            screenTime =
-                                CinemaTimeRange(
-                                    start = CinemaTime(LocalDateTime.of(2026, 4, 10, 10, 30)),
-                                    end = CinemaTime(LocalDateTime.of(2026, 4, 10, 11, 30)),
-                                ),
-                            seat = Seat(SeatPosition(SeatRow("A"), SeatColumn(1)), SeatGrade.A),
-                            state = SeatState.RESERVED,
-                        ),
-                        MovieReservationResult(
-                            movie = Movie(MovieName("옥탑방에사는남자"), RunningTime(60)),
-                            screenTime =
-                                CinemaTimeRange(
-                                    start = CinemaTime(LocalDateTime.of(2026, 4, 11, 10, 30)),
-                                    end = CinemaTime(LocalDateTime.of(2026, 4, 11, 11, 30)),
-                                ),
-                            seat = Seat(SeatPosition(SeatRow("A"), SeatColumn(1)), SeatGrade.A),
-                            state = SeatState.RESERVED,
-                        ),
+        val reservations =
+            MovieReservationGroup(
+                setOf(
+                    MovieReservationResult(
+                        movie = Movie(MovieName("옥탑방에사는남자"), RunningTime(60)),
+                        screenTime =
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 10, 10, 30)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 10, 11, 30)),
+                            ),
+                        seat = Seat(SeatPosition(SeatRow("A"), SeatColumn(1)), SeatGrade.A),
+                        state = SeatState.RESERVED,
+                    ),
+                    MovieReservationResult(
+                        movie = Movie(MovieName("옥탑방에사는남자"), RunningTime(60)),
+                        screenTime =
+                            CinemaTimeRange(
+                                start = CinemaTime(LocalDateTime.of(2026, 4, 11, 10, 30)),
+                                end = CinemaTime(LocalDateTime.of(2026, 4, 11, 11, 30)),
+                            ),
+                        seat = Seat(SeatPosition(SeatRow("A"), SeatColumn(1)), SeatGrade.A),
+                        state = SeatState.RESERVED,
                     ),
                 ),
-            sequentialMovieDiscount = SequentialMovieDiscount(emptyList()),
-            pointDiscount = PointDiscount(Point(0)),
-            payTypeDiscount = PayTypeDiscount(PayType.CREDIT_CARD),
+            )
+        DefaultMoviePayment(
+            reservations = reservations,
+            point = Point(0),
+            payType = PayType.CREDIT_CARD,
         ).calculate().totalPrice shouldBe Money(30_000)
     }
 

@@ -1,25 +1,20 @@
 import model.payment.DefaultMoviePayment
 import model.payment.MoviePaymentResult
 import model.payment.PayType
-import model.payment.PayTypeDiscount
 import model.payment.Point
-import model.payment.PointDiscount
-import model.payment.SequentialMovieDiscount
 import model.reservation.MovieReservationGroup
 import view.InputView
 import view.OutputView
 
-class MoviePaymentController(
-    private val sequentialMovieDiscount: SequentialMovieDiscount,
-) {
+class MoviePaymentController {
     fun handleMoviePayment(movieReservationGroup: MovieReservationGroup): MoviePaymentResult {
         val point = getPoint()
         val payType = getPayType()
+        // DefaultMoviePayment의 인터페이스를 만들어서 파라미터로 주입받아 확장성을 가져가 볼 수도 있을 것 같습니다!
         return DefaultMoviePayment(
             reservations = movieReservationGroup,
-            sequentialMovieDiscount = sequentialMovieDiscount,
-            pointDiscount = PointDiscount(point),
-            payTypeDiscount = PayTypeDiscount(payType),
+            point = point,
+            payType = payType,
         ).calculate()
     }
 

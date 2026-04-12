@@ -9,10 +9,26 @@ data class MoviePaymentResult(
 
 class DefaultMoviePayment(
     private val reservations: MovieReservationGroup,
-    private val sequentialMovieDiscount: SequentialMovieDiscount,
-    private val pointDiscount: PaymentDiscountable,
-    private val payTypeDiscount: PaymentDiscountable?,
+    payType: PayType,
+    point: Point,
 ) {
+    private val sequentialMovieDiscount =
+        SequentialMovieDiscount(
+            listOf(
+                MovieDayDiscount(),
+                EarlyMorningDiscount(),
+                LateNightDiscount(),
+            ),
+        )
+
+    val sequentialPurchaseDiscount =
+        SequentialPurchaseDiscount(
+            listOf(
+                PointDiscount(point),
+                PayTypeDiscount(payType),
+            ),
+        )
+
     fun calculate(): MoviePaymentResult {
         val totalPrice =
             reservations.fold(Money(0)) { nextPrice, reservation ->
@@ -22,10 +38,9 @@ class DefaultMoviePayment(
             reservations.fold(Money(0)) { nextPrice, reservation ->
                 nextPrice + sequentialMovieDiscount.getDiscountedPrice(reservation)
             }
-        val pointAppliedPrice = pointDiscount.applyDiscount(movieDiscountedPrice)
         return MoviePaymentResult(
             totalPrice = totalPrice,
-            finalPrice = payTypeDiscount?.applyDiscount(pointAppliedPrice) ?: pointAppliedPrice,
+            finalPrice = sequentialPurchaseDiscount.getDiscountedPrice(movieDiscountedPrice),
         )
     }
 }
