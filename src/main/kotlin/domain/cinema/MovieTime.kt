@@ -5,7 +5,6 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format.char
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
@@ -24,23 +23,9 @@ data class MovieTime(val value: LocalDateTime) : Comparable<MovieTime> {
 
     fun isOnSameDate(other: MovieTime): Boolean = date == other.date
 
-    fun format(): String = displayFormatter.format(value)
-
     override fun compareTo(other: MovieTime): Int = value.compareTo(other.value)
 
     companion object {
-        private val displayFormatter = LocalDateTime.Format {
-            year()
-            char('-')
-            monthNumber()
-            char('-')
-            day()
-            char(' ')
-            hour()
-            char(':')
-            minute()
-        }
-
         operator fun invoke(
             year: Int,
             month: Int,

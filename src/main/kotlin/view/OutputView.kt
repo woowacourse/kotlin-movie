@@ -1,10 +1,14 @@
 package view
 
 import domain.cart.Cart
+import domain.cinema.MovieTime
 import domain.cinema.Screen
 import domain.cinema.Showings
 import domain.purchase.Price
+import domain.reservation.ReservationInfo
 import domain.user.Point
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.format.char
 
 object OutputView {
     fun printShowing(showings: Showings) {
@@ -34,10 +38,31 @@ object OutputView {
         }
     }
 
-    fun printCart(items: List<String>) {
+    fun printCart(items: List<ReservationInfo>) {
         println("장바구니")
-        println(items)
+        items.forEach { println(formatReservationInfo(it)) }
         println()
+    }
+
+    private fun formatReservationInfo(info: ReservationInfo): String {
+        val time = formatMovieTime(info.showing.startTime)
+        val seats = info.seats.seats.joinToString(", ") { it.coordinate.toString() }
+        return "- [${info.showing.movie.title}] $time 좌석: $seats"
+    }
+
+    private fun formatMovieTime(movieTime: MovieTime): String {
+        val formatter = LocalDateTime.Format {
+            year()
+            char('-')
+            monthNumber()
+            char('-')
+            day()
+            char(' ')
+            hour()
+            char(':')
+            minute()
+        }
+        return formatter.format(movieTime.value)
     }
 
     fun printTotalPrice(price: Int) {

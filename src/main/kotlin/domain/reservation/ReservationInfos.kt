@@ -5,10 +5,8 @@ import domain.discount.MovieDayDiscount
 import domain.discount.TimeDiscount
 
 class ReservationInfos(val infos: List<ReservationInfo>) {
-    fun getAllInfos(): List<String> {
-        return infos.map { item ->
-            item.toString()
-        }
+    fun getAllInfos(): List<ReservationInfo> {
+        return infos.toList()
     }
 
     fun checkReservationHistory(showing: Showing) {
