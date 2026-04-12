@@ -1,4 +1,4 @@
-package domain
+package domain.payment
 
 data class Money(
     val amount: Int,

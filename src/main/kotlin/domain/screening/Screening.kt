@@ -1,5 +1,8 @@
-package domain
+package domain.screening
 
+import domain.movie.Movie
+import domain.seat.SeatPositions
+import domain.seat.Seats
 import java.time.LocalDateTime
 import java.util.UUID
 

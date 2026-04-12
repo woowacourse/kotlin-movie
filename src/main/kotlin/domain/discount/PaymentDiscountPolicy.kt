@@ -1,7 +1,7 @@
 package domain.discount
 
-import domain.Money
-import domain.PaymentType
+import domain.payment.Money
+import domain.payment.PaymentType
 
 interface PaymentDiscountPolicy {
     fun discount(

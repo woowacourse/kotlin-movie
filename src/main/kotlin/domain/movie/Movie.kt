@@ -1,4 +1,4 @@
-package domain
+package domain.movie
 
 data class Movie(
     val title: Title,

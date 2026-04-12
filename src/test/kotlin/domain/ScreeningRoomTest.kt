@@ -1,5 +1,13 @@
 package domain
 
+import domain.screening.ScreeningRoom
+import domain.screening.ScreeningRoomName
+import domain.screening.TimeRange
+import domain.seat.Column
+import domain.seat.Row
+import domain.seat.Seat
+import domain.seat.SeatPosition
+import domain.seat.Seats
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.time.LocalTime

@@ -1,5 +1,20 @@
 package domain
 
+import domain.movie.Movie
+import domain.movie.RunningTime
+import domain.movie.ScreeningPeriod
+import domain.movie.Title
+import domain.reservation.Ticket
+import domain.screening.Screening
+import domain.screening.ScreeningRoom
+import domain.screening.ScreeningRoomName
+import domain.screening.TimeRange
+import domain.seat.Column
+import domain.seat.Row
+import domain.seat.Seat
+import domain.seat.SeatPosition
+import domain.seat.SeatPositions
+import domain.seat.Seats
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.time.LocalDate

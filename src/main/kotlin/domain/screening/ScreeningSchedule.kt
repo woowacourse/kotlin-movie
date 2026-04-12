@@ -1,5 +1,7 @@
-package domain
+package domain.screening
 
+import domain.movie.Title
+import domain.reservation.TicketBucket
 import java.time.LocalDate
 
 data class ScreeningSchedule(

@@ -1,4 +1,7 @@
-package domain
+package domain.reservation
+
+import domain.screening.Screening
+import domain.seat.SeatPositions
 
 data class TicketBucket(
     val tickets: List<Ticket> = emptyList(),

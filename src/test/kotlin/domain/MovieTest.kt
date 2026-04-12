@@ -1,5 +1,9 @@
 package domain
 
+import domain.movie.Movie
+import domain.movie.RunningTime
+import domain.movie.ScreeningPeriod
+import domain.movie.Title
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.time.LocalDate

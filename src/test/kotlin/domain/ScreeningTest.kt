@@ -3,6 +3,13 @@ package domain
 import domain.fixture.createMovie
 import domain.fixture.createScreening
 import domain.fixture.createScreeningRoom
+import domain.movie.RunningTime
+import domain.screening.Screening
+import domain.seat.Column
+import domain.seat.ReserveState
+import domain.seat.Row
+import domain.seat.SeatPosition
+import domain.seat.SeatPositions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test

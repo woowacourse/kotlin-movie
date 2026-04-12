@@ -1,5 +1,19 @@
 package domain
 
+import domain.movie.Movie
+import domain.movie.RunningTime
+import domain.movie.ScreeningPeriod
+import domain.movie.Title
+import domain.screening.Screening
+import domain.screening.ScreeningRoom
+import domain.screening.ScreeningRoomName
+import domain.screening.ScreeningSchedule
+import domain.screening.TimeRange
+import domain.seat.Column
+import domain.seat.Row
+import domain.seat.Seat
+import domain.seat.SeatPosition
+import domain.seat.Seats
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -66,7 +80,11 @@ class ScreeningScheduleTest {
                             room =
                                 ScreeningRoom(
                                     name = ScreeningRoomName("커피"),
-                                    operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(18, 0)),
+                                    operatingTime =
+                                        TimeRange(
+                                            LocalTime.of(10, 0),
+                                            LocalTime.of(18, 0),
+                                        ),
                                     seats =
                                         Seats(
                                             listOf(
@@ -96,7 +114,11 @@ class ScreeningScheduleTest {
                             room =
                                 ScreeningRoom(
                                     name = ScreeningRoomName("커피샵"),
-                                    operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(18, 0)),
+                                    operatingTime =
+                                        TimeRange(
+                                            LocalTime.of(10, 0),
+                                            LocalTime.of(18, 0),
+                                        ),
                                     seats =
                                         Seats(
                                             listOf(

@@ -1,4 +1,4 @@
-package domain
+package domain.seat
 
 data class Seats(
     val seats: List<Seat>,

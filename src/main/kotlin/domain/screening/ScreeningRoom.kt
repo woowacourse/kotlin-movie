@@ -1,4 +1,7 @@
-package domain
+package domain.screening
+
+import domain.seat.SeatPositions
+import domain.seat.Seats
 
 data class ScreeningRoom(
     val name: ScreeningRoomName,

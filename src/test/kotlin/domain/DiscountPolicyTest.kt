@@ -4,6 +4,8 @@ import domain.discount.MovieDayEvent
 import domain.discount.PaymentDiscount
 import domain.discount.TheaterEventDiscount
 import domain.discount.TimeEvent
+import domain.payment.Money
+import domain.payment.PaymentType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

@@ -1,12 +1,12 @@
 package controller
 
-import domain.Column
-import domain.PaymentType
-import domain.Point
-import domain.Row
-import domain.SeatPosition
-import domain.SeatPositions
-import domain.Title
+import domain.movie.Title
+import domain.payment.PaymentType
+import domain.payment.Point
+import domain.seat.Column
+import domain.seat.Row
+import domain.seat.SeatPosition
+import domain.seat.SeatPositions
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 

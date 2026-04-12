@@ -1,4 +1,4 @@
-package domain
+package domain.seat
 
 @JvmInline
 value class Row(

@@ -1,6 +1,6 @@
 package domain.discount
 
-import domain.Money
+import domain.payment.Money
 import java.time.LocalDateTime
 import java.time.LocalTime
 

@@ -1,10 +1,10 @@
 package view
 
-import domain.Money
-import domain.Point
-import domain.ScreeningSchedule
-import domain.Seats
-import domain.TicketBucket
+import domain.payment.Money
+import domain.payment.Point
+import domain.reservation.TicketBucket
+import domain.screening.ScreeningSchedule
+import domain.seat.Seats
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

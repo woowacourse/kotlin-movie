@@ -1,4 +1,4 @@
-package domain
+package domain.screening
 
 import java.time.LocalTime
 

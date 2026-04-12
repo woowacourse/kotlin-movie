@@ -3,6 +3,12 @@ package domain
 import domain.fixture.createMovie
 import domain.fixture.createScreening
 import domain.fixture.createSeatPositions
+import domain.payment.Money
+import domain.payment.PaymentSystem
+import domain.payment.PaymentType
+import domain.payment.Point
+import domain.reservation.Ticket
+import domain.reservation.TicketBucket
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -126,7 +132,17 @@ class PaymentSystemTest {
                     TicketBucket(
                         listOf(
                             Ticket(
-                                screening = createScreening(startTime = LocalDateTime.of(2026, 4, 8, 10, 0)),
+                                screening =
+                                    createScreening(
+                                        startTime =
+                                            LocalDateTime.of(
+                                                2026,
+                                                4,
+                                                8,
+                                                10,
+                                                0,
+                                            ),
+                                    ),
                                 seatPositions = createSeatPositions("A" to 1),
                             ),
                         ),

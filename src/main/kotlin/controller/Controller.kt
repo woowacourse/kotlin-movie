@@ -1,13 +1,13 @@
 package controller
 
-import domain.Money
-import domain.PaymentSystem
-import domain.PaymentType
-import domain.Point
-import domain.Screening
-import domain.ScreeningSchedule
-import domain.TicketBucket
-import domain.Title
+import domain.movie.Title
+import domain.payment.Money
+import domain.payment.PaymentSystem
+import domain.payment.PaymentType
+import domain.payment.Point
+import domain.reservation.TicketBucket
+import domain.screening.Screening
+import domain.screening.ScreeningSchedule
 import view.InputView
 import view.OutputView
 import java.time.LocalDate

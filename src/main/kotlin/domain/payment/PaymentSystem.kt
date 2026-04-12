@@ -1,9 +1,11 @@
-package domain
+package domain.payment
 
 import domain.discount.EventDiscountPolicy
 import domain.discount.PaymentDiscount
 import domain.discount.PaymentDiscountPolicy
 import domain.discount.TheaterEventDiscount
+import domain.reservation.TicketBucket
+import domain.seat.SeatGrade
 
 class PaymentSystem(
     private val eventDiscountPolicy: EventDiscountPolicy = TheaterEventDiscount(),

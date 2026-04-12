@@ -1,4 +1,4 @@
-package domain
+package domain.movie
 
 @JvmInline
 value class RunningTime(

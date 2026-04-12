@@ -3,6 +3,12 @@ package domain
 import domain.fixture.createMovie
 import domain.fixture.createScreening
 import domain.fixture.createSeatPositions
+import domain.reservation.Ticket
+import domain.reservation.TicketBucket
+import domain.seat.Column
+import domain.seat.Row
+import domain.seat.SeatPosition
+import domain.seat.SeatPositions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -29,7 +35,15 @@ class TicketBucketTest {
                     listOf(
                         Ticket(
                             screening = createScreening(movie = createMovie(title = "허닛")),
-                            seatPositions = SeatPositions(listOf(SeatPosition(Row("A"), Column(1)))),
+                            seatPositions =
+                                SeatPositions(
+                                    listOf(
+                                        SeatPosition(
+                                            Row("A"),
+                                            Column(1),
+                                        ),
+                                    ),
+                                ),
                         ),
                     ),
             )
