@@ -18,5 +18,8 @@ value class Price(
         return Price(result)
     }
 
-    fun percentOf(percent: Int): Price = Price(this.value * percent / 100)
+    fun percentOf(percent: Int): Price {
+        require(percent in 0..100) { "퍼센트는 0~100 사이여야 합니다." }
+        return Price(this.value * percent / 100)
+    }
 }

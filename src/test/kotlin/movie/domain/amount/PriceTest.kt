@@ -2,8 +2,9 @@ package movie.domain.amount
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-class MoneyTest {
+class PriceTest {
     @Test
     fun `금액끼리 더할 수 있다`() {
         // given
@@ -50,5 +51,15 @@ class MoneyTest {
 
         // then
         assertThat(result).isEqualTo(Price(0))
+    }
+
+    @Test
+    fun `퍼센트가 0에서 100 사이여야 한다`() {
+        val price = Price(10000)
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                price.percentOf(101)
+            }
+        assertThat(exception.message).isEqualTo("퍼센트는 0~100 사이여야 합니다.")
     }
 }
