@@ -11,7 +11,6 @@ class SeatPosition(
 
     fun getColumn(): Int = columnNumber.getColumnNumberName()
 
-    // 화면에 그릴 좌석 이름 ("A1")
     fun getName(): String = "${getRow()}${getColumn()}"
 
     companion object {

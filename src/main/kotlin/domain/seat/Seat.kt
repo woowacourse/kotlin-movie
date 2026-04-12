@@ -10,8 +10,6 @@ class Seat(
 ) {
     fun isExistSeatPosition(otherSeatPosition: SeatPosition): Boolean = seatPosition.isExistSeatPosition(otherSeatPosition)
 
-    fun isExistSeat(seat: Seat): Boolean = seatPosition.isExistSeatPosition(seat.seatPosition)
-
     fun addSeatPrice(money: Money): Money = seatGrade.addPrice(money)
 
     fun getRow(): String = seatPosition.getRow()
