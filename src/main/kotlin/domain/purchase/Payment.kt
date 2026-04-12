@@ -4,7 +4,7 @@ import domain.cart.Cart
 import domain.user.Point
 import domain.user.User
 
-class Payment(val cart: Cart, val user: User) {
+class Payment(private val cart: Cart, private val user: User) {
     fun calculate(
         usedPoint: Point,
         method: PaymentMethod,

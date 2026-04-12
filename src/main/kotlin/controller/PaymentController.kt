@@ -17,9 +17,7 @@ class PaymentController {
         return result
     }
 
-    fun getPaymentMethod(): Int {
-        val input = InputView.readPaymentMethod()
-        require(input.toInt() in 1..2) { "유효하지 않은 결제 수단입니다." }
-        return input.toInt()
+    private fun getPaymentMethod(): Int {
+        return InputView.readPaymentMethod().toInt()
     }
 }

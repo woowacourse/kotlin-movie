@@ -9,7 +9,7 @@ import view.InputView
 import view.OutputView
 import view.retryUntilValid
 
-class ReservationController(val movieTheater: MovieTheater) {
+class ReservationController(private val movieTheater: MovieTheater) {
     fun run(): ReservationInfo {
         val movie = retryUntilValid { chooseMovie() }
         val (movieTime, candidates) = retryUntilValid {
@@ -30,12 +30,12 @@ class ReservationController(val movieTheater: MovieTheater) {
         return ReservationInfo(showing, seats)
     }
 
-    fun chooseMovie(): Movie {
+    private fun chooseMovie(): Movie {
         val input = InputView.readMovieTitle()
         return movieTheater.movies.findMovieByTitle(input)
     }
 
-    fun chooseSeat(showing: Showing): Seats {
+    private fun chooseSeat(showing: Showing): Seats {
         OutputView.printSeats(showing.screen)
         val inputs = InputView.readSeat()
         return showing.screen.selectSeats(inputs)

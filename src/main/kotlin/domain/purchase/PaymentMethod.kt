@@ -16,7 +16,8 @@ enum class PaymentMethod {
         const val CARD_DISCOUNT_PERCENT = 0.05
         const val CASH_DISCOUNT_PERCENT = 0.02
         fun from(index: Int): PaymentMethod {
-            return PaymentMethod.entries.first { (it.ordinal + 1) == index }
+            require(index in 1..entries.size) { "유효하지 않은 결제 수단입니다." }
+            return entries[index - 1]
         }
     }
 }
