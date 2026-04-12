@@ -31,11 +31,12 @@ fun createSeats(vararg positions: Pair<String, Int> = arrayOf("A" to 1)): Seats 
 
 fun createMovie(
     title: String = "영화 1",
+    runningTime: RunningTime = RunningTime(160),
     startDate: LocalDate = LocalDate.of(2026, 4, 10),
     endDate: LocalDate = LocalDate.of(2026, 4, 11),
 ) = Movie(
     title = Title(title),
-    runningTime = RunningTime(160),
+    runningTime = runningTime,
     screeningPeriod = ScreeningPeriod(startDate, endDate),
 )
 
