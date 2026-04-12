@@ -11,7 +11,7 @@ class Cart(
     // 선택한 영화 시간이 장바구니의 다른 영화 시간과 겹치는지 확인하는 함수
     fun isOverlapping(selectedScreening: Screening) {
         if (items.any {
-                it.screening.movie.movieTitle != selectedScreening.movie.movieTitle &&
+                it.screening.movie.title != selectedScreening.movie.title &&
                     it.screening.isOverlapping(selectedScreening)
             }
         ) {

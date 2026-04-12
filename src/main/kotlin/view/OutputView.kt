@@ -86,7 +86,7 @@ class OutputView {
     }
 
     private fun formatCartItem(cartItem: CartItem): String {
-        val title = cartItem.screening.movie.movieTitle
+        val title = cartItem.screening.movie.title
         val date = cartItem.screening.startDateTime.toLocalDate()
         val time = cartItem.screening.startDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
         val seats = cartItem.seatNames.joinToString(", ")

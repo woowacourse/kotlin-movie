@@ -12,64 +12,64 @@ import java.time.LocalTime
 object MockData {
     val TOP_GUN_MAVERICK =
         Movie(
-            movieTitle = "탑건: 매버릭",
-            movieRunningTime = 130,
+            title = "탑건: 매버릭",
+            runningTime = 130,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val MATHER =
         Movie(
-            movieTitle = "마더",
-            movieRunningTime = 100,
+            title = "마더",
+            runningTime = 100,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val THE_LAST_10_YEARS =
         Movie(
-            movieTitle = "남은 인생 10년",
-            movieRunningTime = 120,
+            title = "남은 인생 10년",
+            runningTime = 120,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val SPIDER_MAN_NO_WAY_HOME =
         Movie(
-            movieTitle = "스파이더맨: 노 웨이 홈",
-            movieRunningTime = 140,
+            title = "스파이더맨: 노 웨이 홈",
+            runningTime = 140,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val IRON_MAN_3 =
         Movie(
-            movieTitle = "아이언맨 3",
-            movieRunningTime = 120,
+            title = "아이언맨 3",
+            runningTime = 120,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val EVEN_IF_THIS_LOVE_DISAPPEARS_TO_THE_WORLD_TONIGHT =
         Movie(
-            movieTitle = "오늘 밤 이세상에서 사랑이 사라진다 해도",
-            movieRunningTime = 100,
+            title = "오늘 밤 이세상에서 사랑이 사라진다 해도",
+            runningTime = 100,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val CHAIN_SO_MAN =
         Movie(
-            movieTitle = "체인소맨",
-            movieRunningTime = 100,
+            title = "체인소맨",
+            runningTime = 100,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )
 
     val HOPPERS =
         Movie(
-            movieTitle = "호퍼스",
-            movieRunningTime = 100,
+            title = "호퍼스",
+            runningTime = 100,
             startDate = LocalDate.of(2026, 4, 1),
             endDate = LocalDate.of(2026, 4, 30),
         )

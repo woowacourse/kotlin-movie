@@ -10,8 +10,8 @@ class MovieTest {
     fun `영화는 제목과 상영시간을 가지고 있다`() {
         val movie = createMovie()
 
-        assertThat(movie.movieTitle).isEqualTo("인터스텔라")
-        assertThat(movie.movieRunningTime).isEqualTo(170L)
+        assertThat(movie.title).isEqualTo("인터스텔라")
+        assertThat(movie.runningTime).isEqualTo(170L)
     }
 
     @Test

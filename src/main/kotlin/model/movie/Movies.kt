@@ -8,6 +8,6 @@ class Movies(
     }
 
     fun findMovie(movieTitle: String): Movie =
-        value.find { it.movieTitle == movieTitle }
+        value.find { it.title == movieTitle }
             ?: throw IllegalArgumentException("존재하지 않는 영화입니다")
 }

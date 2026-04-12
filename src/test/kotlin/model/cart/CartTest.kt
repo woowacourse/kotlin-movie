@@ -171,8 +171,8 @@ class CartTest {
         Screening(
             movie =
                 Movie(
-                    movieTitle = "인터스텔라",
-                    movieRunningTime = 130,
+                    title = "인터스텔라",
+                    runningTime = 130,
                     startDate = LocalDate.of(2026, 4, 1),
                     endDate = LocalDate.of(2026, 4, 30),
                 ),

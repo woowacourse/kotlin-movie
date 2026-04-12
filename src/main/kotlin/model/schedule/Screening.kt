@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 data class Screening(
     val movie: Movie,
     val startDateTime: LocalDateTime,
-    val endDateTime: LocalDateTime = startDateTime.plus(Duration.ofMinutes(movie.movieRunningTime)),
+    val endDateTime: LocalDateTime = startDateTime.plus(Duration.ofMinutes(movie.runningTime)),
     val seatInventory: SeatInventory,
 ) {
     init {
@@ -17,7 +17,7 @@ data class Screening(
             Duration.between(
                 startDateTime,
                 endDateTime,
-            ) >= Duration.ofMinutes(movie.movieRunningTime),
+            ) >= Duration.ofMinutes(movie.runningTime),
         ) { "상영 시간이 영화 러닝타임보다 짧습니다" }
     }
 
