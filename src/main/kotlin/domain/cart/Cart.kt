@@ -11,16 +11,7 @@ class Cart(val reservationInfos: ReservationInfos) {
             ),
         )
     }
-
-    fun addInfos(infos: ReservationInfo): Cart {
-        return Cart(
-            ReservationInfos(
-                reservationInfos.infos + infos,
-            ),
-        )
-    }
-
-    fun showItems(): List<String> {
+    fun showItems(): List<ReservationInfo> {
         return reservationInfos.getAllInfos()
     }
 

@@ -9,7 +9,7 @@ class CartController {
         cart: Cart,
         info: ReservationInfo,
     ): Cart {
-        val newCart = cart.addInfos(info)
+        val newCart = cart.addInfo(info)
         OutputView.printCart(newCart.showItems())
         return newCart
     }

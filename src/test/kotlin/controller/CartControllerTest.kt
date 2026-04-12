@@ -18,7 +18,7 @@ class CartControllerTest {
         val cart = Cart(ReservationInfos(emptyList()))
 
         // when : 장바구니에 예매 항목을 추가하면
-        val result = cart.addInfos(
+        val result = cart.addInfo(
             ReservationInfo(
                 showing = showing,
                 seats = seats,
@@ -37,7 +37,7 @@ class CartControllerTest {
         val cart = Cart(ReservationInfos(emptyList()))
 
         // when : 장바구니에 담긴 전체 항목을 조회하면
-        val result = cart.addInfos(
+        val result = cart.addInfo(
             ReservationInfo(
                 showing = showing,
                 seats = seats,
@@ -47,6 +47,8 @@ class CartControllerTest {
         val actual = result.reservationInfos.getAllInfos()
 
         // then : 전체 항목이 반환된다.
-        assertEquals(listOf("- [해리 포터] 2026-04-10 10:00 좌석: B1, B2"), actual)
+        assertEquals(1, actual.size)
+        assertEquals("해리 포터", actual.first().showing.movie.title)
+        assertEquals(2, actual.first().seats.seats.size)
     }
 }
