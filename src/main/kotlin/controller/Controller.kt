@@ -6,7 +6,6 @@ import domain.PaymentType
 import domain.Point
 import domain.Screening
 import domain.ScreeningSchedule
-import domain.Ticket
 import domain.TicketBucket
 import domain.Title
 import view.InputView
@@ -83,7 +82,7 @@ class Controller(
             val selectedSeats = InputParser.parseSeats(input)
             screening.canReserve(selectedSeats)
 
-            ticketBucket.addTicket(Ticket(screening, selectedSeats))
+            ticketBucket.addTicket(screening, selectedSeats)
         }
 
     private fun confirmAddExtraMovie(): Boolean =
