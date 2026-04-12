@@ -13,9 +13,13 @@ class Schedules(
     }
 
     fun getMovieSchedules(movieTitle: String, date: LocalDate): List<Schedule> {
-        return _schedules.filter {
+        val schedules = _schedules.filter {
             it.movie.title == movieTitle && it.startTime.toLocalDate() == date
         }
+
+        require(schedules.isNotEmpty()) { "해당 영화가 해당 날짜에 상영하지 않습니다" }
+
+        return schedules
     }
 
     fun getMovieTitles(): List<String> {
