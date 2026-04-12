@@ -9,6 +9,4 @@ value class Column(
             "열은 1~12 사이의 숫자여야 합니다."
         }
     }
-
-    override fun toString(): String = value.toString()
 }

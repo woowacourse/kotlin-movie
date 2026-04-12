@@ -47,7 +47,8 @@ object OutputView {
                 "- [${ticket.screening.movie.title}] ${ticket.screening.startTime.toUiString()} 좌석: ${
                     ticket.seatPositions.positions.joinToString {
                         "${it.row.value}${it.column.value}"
-                    }}",
+                    }
+                }",
             )
         }
     }
@@ -79,7 +80,7 @@ object OutputView {
                 "- [${ticket.screening.movie.title}] ${ticket.screening.startTime.toUiString()} 좌석: ${
                     ticket.seatPositions.positions.joinToString(
                         " ",
-                    ) { it.toString() }
+                    ) { "${it.row.value}${it.column.value}" }
                 }",
             )
         }
