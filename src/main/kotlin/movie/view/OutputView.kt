@@ -7,6 +7,7 @@ import movie.domain.Schedule
 import movie.domain.point.Point
 import movie.domain.seat.SeatNumber
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 object OutputView {
     fun printErrorMessage(message: String?) {
@@ -71,10 +72,12 @@ object OutputView {
 
     fun printReservationAddMessage(schedule: Schedule, seats: List<SeatNumber>) {
         val seatNumbers = seats.joinToString(", ")
-
+        val startTime = schedule.startTime.format(
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        )
         println("장바구니에 추가됨")
 
-        println("- [${schedule.movie.title}] ${schedule.startTime} 좌석: $seatNumbers")
+        println("- [${schedule.movie.title.value}] $startTime 좌석: $seatNumbers")
     }
 
     fun printCart(cart: Cart) {
@@ -124,6 +127,6 @@ object OutputView {
         val date = screeningMovie.startTime.toLocalDate()
         val seatNumbers = reservation.seats.joinToString(", ")
 
-        println("- [${screeningMovie.movie.title}] $date $movieTime 좌석: $seatNumbers")
+        println("- [${screeningMovie.movie.title.value}] $date $movieTime 좌석: $seatNumbers")
     }
 }
