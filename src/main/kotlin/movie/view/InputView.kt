@@ -1,35 +1,43 @@
 package movie.view
 
 import movie.domain.payment.PaymentMethod
+
 object InputView {
     fun readReservationStart(): String {
         println("영화 예매를 시작합니다. 새 예매를 생성하시겠습니까? (Y/N)")
         return readln()
     }
+
     fun readMovieTitle(): String {
         println("예매할 영화 제목을 입력하세요:")
         return readln()
     }
+
     fun readMovieDate(): String {
         println("날짜를 입력하세요 (YYYY-MM-DD):")
         return readln()
     }
+
     fun readSelectedMovieTimeNumber(): String {
         println("상영 번호를 선택하세요:")
         return readln()
     }
+
     fun readReservationSeat(): String {
         println("예약할 좌석을 입력하세요 (A1, B2):")
         return readln()
     }
+
     fun readContinueReservation(): String {
         println("다른 영화를 추가하시겠습니까? (Y/N)")
         return readln()
     }
+
     fun readUsePoint(): String {
         println("사용할 포인트를 입력하세요 (없으면 0):")
         return readln()
     }
+
     fun readPaymentType(paymentMethods: List<PaymentMethod>): String {
         println("결제 수단을 선택하세요:")
         paymentMethods.forEachIndexed { index, method ->
@@ -38,6 +46,7 @@ object InputView {
         }
         return readln()
     }
+
     fun readUserPayment(): String {
         println("위 금액으로 결제하시겠습니까? (Y/N)")
         return readln()

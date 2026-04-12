@@ -20,7 +20,7 @@ object OutputView {
             val hour = "%02d".format(time.hour)
             val minute = "%02d".format(time.minute)
 
-            println("[${index + 1}] ${hour}:${minute}")
+            println("[${index + 1}] $hour:$minute")
         }
     }
 
@@ -70,11 +70,15 @@ object OutputView {
         }
     }
 
-    fun printReservationAddMessage(schedule: Schedule, seats: List<SeatNumber>) {
+    fun printReservationAddMessage(
+        schedule: Schedule,
+        seats: List<SeatNumber>,
+    ) {
         val seatNumbers = seats.joinToString(", ")
-        val startTime = schedule.startTime.format(
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        )
+        val startTime =
+            schedule.startTime.format(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
+            )
         println("장바구니에 추가됨")
 
         println("- [${schedule.movie.title.value}] $startTime 좌석: $seatNumbers")
@@ -123,7 +127,7 @@ object OutputView {
         val screeningMovie = reservation.schedule
         val hour = "%02d".format(screeningMovie.startTime.hour)
         val minute = "%02d".format((screeningMovie.startTime.minute))
-        val movieTime = "${hour}:${minute}"
+        val movieTime = "$hour:$minute"
         val date = screeningMovie.startTime.toLocalDate()
         val seatNumbers = reservation.seats.joinToString(", ")
 

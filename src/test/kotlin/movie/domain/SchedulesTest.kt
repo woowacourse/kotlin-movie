@@ -30,39 +30,46 @@ class SchedulesTest {
         val scheduleList = listOf(schedule1, schedule2)
         val schedules = Schedules(scheduleList)
 
-        val movieSchedules = schedules.getMovieSchedules(
-            movieTitle = MovieTitle("시동"),
-            date = LocalDate.of(2026, 4, 10)
-        )
+        val movieSchedules =
+            schedules.getMovieSchedules(
+                movieTitle = MovieTitle("시동"),
+                date = LocalDate.of(2026, 4, 10),
+            )
 
         assertThat(movieSchedules).isEqualTo(scheduleList)
     }
 
     companion object {
-        val schedule1 = Schedule(
-            movie = Movie(
-                title = MovieTitle("시동"),
-                runningTime = 120,
-            ),
-            startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
-            endTime = LocalDateTime.of(2026, 4, 10, 12, 0),
-        )
-        val schedule2 = Schedule(
-            movie = Movie(
-                title = MovieTitle("시동"),
-                runningTime = 120,
-            ),
-            startTime = LocalDateTime.of(2026, 4, 10, 11, 0),
-            endTime = LocalDateTime.of(2026, 4, 10, 13, 0),
-        )
+        val schedule1 =
+            Schedule(
+                movie =
+                    Movie(
+                        title = MovieTitle("시동"),
+                        runningTime = 120,
+                    ),
+                startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
+                endTime = LocalDateTime.of(2026, 4, 10, 12, 0),
+            )
+        val schedule2 =
+            Schedule(
+                movie =
+                    Movie(
+                        title = MovieTitle("시동"),
+                        runningTime = 120,
+                    ),
+                startTime = LocalDateTime.of(2026, 4, 10, 11, 0),
+                endTime = LocalDateTime.of(2026, 4, 10, 13, 0),
+            )
 
-        val schedule3 = Schedule(
-            movie = Movie(
-                title = MovieTitle("토토로"),
-                runningTime = 120,
-            ),
-            startTime = LocalDateTime.of(2026, 4, 10, 14, 0),
-            endTime = LocalDateTime.of(2026, 4, 10, 19, 0),
-        )
+        val schedule3 =
+            Schedule(
+                movie =
+                    Movie(
+                        title = MovieTitle("토토로"),
+                        runningTime = 120,
+                    ),
+                startTime = LocalDateTime.of(2026, 4, 10, 14, 0),
+                endTime = LocalDateTime.of(2026, 4, 10, 19, 0),
+            )
     }
 }

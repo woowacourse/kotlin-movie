@@ -1,8 +1,8 @@
 package movie.controller
 
-import movie.domain.MovieTitle
 import movie.domain.Cart
 import movie.domain.MovieManager
+import movie.domain.MovieTitle
 import movie.domain.PaymentManager
 import movie.domain.Schedule
 import movie.domain.payment.Card
@@ -44,11 +44,12 @@ class MovieController(
         val usePoint = getUsePoint()
         val paymentMethod = getPaymentMethod()
 
-        val paymentPrice = paymentManager.calculateFinalPrice(
-            cart = cart,
-            usePoint = usePoint,
-            paymentMethod = paymentMethod,
-        )
+        val paymentPrice =
+            paymentManager.calculateFinalPrice(
+                cart = cart,
+                usePoint = usePoint,
+                paymentMethod = paymentMethod,
+            )
 
         OutputView.printTotalPrice(paymentPrice)
 
@@ -71,8 +72,8 @@ class MovieController(
         OutputView.printReservationAddMessage(schedule, seats)
     }
 
-    private fun getSeats(schedule: Schedule): List<SeatNumber> {
-        return whileGetInput {
+    private fun getSeats(schedule: Schedule): List<SeatNumber> =
+        whileGetInput {
             val input = InputView.readReservationSeat()
             InputValidator.validateSeatNumbers(input)
 
@@ -81,18 +82,19 @@ class MovieController(
 
             seats
         }
-    }
 
-    private fun getMovieTimes(title: MovieTitle): List<LocalDateTime> {
-        return whileGetInput {
+    private fun getMovieTimes(title: MovieTitle): List<LocalDateTime> =
+        whileGetInput {
             val date = getDate()
             val movieTimes = movieManager.getMovieStartTime(title, date)
 
             movieTimes
         }
-    }
 
-    private fun getSchedule(title: MovieTitle, movieTimes: List<LocalDateTime>): Schedule {
+    private fun getSchedule(
+        title: MovieTitle,
+        movieTimes: List<LocalDateTime>,
+    ): Schedule {
         OutputView.printMovieStartTimes(movieTimes)
 
         return whileGetInput {
@@ -112,18 +114,17 @@ class MovieController(
         }
     }
 
-    private fun getDate(): LocalDate {
-        return whileGetInput {
+    private fun getDate(): LocalDate =
+        whileGetInput {
             val date = InputView.readMovieDate()
 
             InputValidator.validateDate(date)
 
             InputParser.parseDate(date)
         }
-    }
 
-    private fun getTitle(): MovieTitle {
-        return whileGetInput {
+    private fun getTitle(): MovieTitle =
+        whileGetInput {
             val input = InputView.readMovieTitle()
             val title = InputParser.parseMovieTitle(input)
 
@@ -131,7 +132,6 @@ class MovieController(
 
             title
         }
-    }
 
     private fun getReservationStart(): Boolean =
         whileGetInput {

@@ -6,7 +6,5 @@ class Payment {
     fun paymentPrice(
         method: PaymentMethod,
         totalPrice: Price,
-    ): Price {
-        return totalPrice.getDiscountPrice(method.discountRate)
-    }
+    ): Price = totalPrice.getDiscountPrice(method.discountRate)
 }

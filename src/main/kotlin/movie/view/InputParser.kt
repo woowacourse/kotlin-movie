@@ -28,7 +28,6 @@ object InputParser {
                 )
             }
 
-
     fun parseIndex(
         input: String,
         size: Int,
@@ -39,7 +38,5 @@ object InputParser {
         return index - 1
     }
 
-    fun parseMovieTitle(input: String): MovieTitle {
-        return MovieTitle(input)
-    }
+    fun parseMovieTitle(input: String): MovieTitle = MovieTitle(input)
 }

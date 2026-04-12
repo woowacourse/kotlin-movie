@@ -4,5 +4,8 @@ import movie.domain.Price
 import movie.domain.Schedule
 
 interface DateDiscountPolicy {
-    fun discount(price: Price, schedule: Schedule): Price
+    fun discount(
+        price: Price,
+        schedule: Schedule,
+    ): Price
 }
