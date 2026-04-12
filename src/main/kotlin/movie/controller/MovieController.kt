@@ -53,8 +53,9 @@ class MovieController(
     ): PaymentResult {
         val point = inputPoint()
         val paymentMethod = selectPaymentMethod()
+        val totalPrice = reservations.discountedTotalPrice(discountPolicies)
 
-        val paymentResult = priceCalculator.calculate(discountPolicies, reservations, point, paymentMethod)
+        val paymentResult = priceCalculator.calculate(totalPrice, point, paymentMethod)
 
         outputView.printFinalPrice(paymentResult.totalPrice)
         return paymentResult

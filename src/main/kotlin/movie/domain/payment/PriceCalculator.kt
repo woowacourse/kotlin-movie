@@ -3,17 +3,14 @@ package movie.domain.payment
 import movie.domain.amount.PaymentResult
 import movie.domain.amount.Point
 import movie.domain.amount.Price
-import movie.domain.discount.DiscountPolicies
-import movie.domain.reservation.Reservations
 
 class PriceCalculator {
     fun calculate(
-        discountPolicies: DiscountPolicies,
-        reservations: Reservations,
+        seatsTotalPrice: Price,
         point: Point,
         paymentMethod: PaymentMethod,
     ): PaymentResult {
-        var totalPrice = reservations.discountedTotalPrice(discountPolicies)
+        var totalPrice = seatsTotalPrice
 
         val usagePoint = point.usableAmount(totalPrice)
         totalPrice = totalPrice.minus(Price(usagePoint.value))

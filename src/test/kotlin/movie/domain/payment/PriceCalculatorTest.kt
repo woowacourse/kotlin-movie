@@ -67,11 +67,11 @@ class PriceCalculatorTest {
             )
 
         val priceCalculator = PriceCalculator()
+        val totalPrice = reservations.discountedTotalPrice(discountPolicies)
 
         val result =
             priceCalculator.calculate(
-                discountPolicies,
-                reservations,
+                totalPrice,
                 Point(1000),
                 CreditCard(),
             )
