@@ -4,10 +4,6 @@ import model.CinemaTime
 import model.CinemaTimeRange
 import model.MovieReservationResult
 import model.fixture.MovieFixture
-import model.movie.Movie
-import model.movie.MovieId
-import model.movie.MovieName
-import model.movie.RunningTime
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
@@ -17,7 +13,6 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MoviePaymentTest {

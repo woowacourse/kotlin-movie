@@ -1,11 +1,5 @@
 package model.seat
 
-import model.seat.Seat
-import model.seat.SeatColumn
-import model.seat.SeatGrade
-import model.seat.SeatGroup
-import model.seat.SeatRow
-import model.seat.SeatState
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test

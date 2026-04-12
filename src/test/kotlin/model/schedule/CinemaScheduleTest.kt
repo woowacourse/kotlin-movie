@@ -2,7 +2,7 @@ package model.schedule
 
 import model.CinemaTime
 import model.CinemaTimeRange
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
@@ -11,8 +11,7 @@ import kotlin.uuid.ExperimentalUuidApi
 class CinemaScheduleTest {
     @Test
     fun `동일한 ScreenSchedule이 들어오면 예외를 반환한다`() {
-        Assertions
-            .assertThatThrownBy {
+        assertThatCode {
                 val screenId = "1"
                 val cinemaTimeRange =
                     CinemaTimeRange(

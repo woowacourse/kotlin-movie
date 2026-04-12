@@ -1,6 +1,5 @@
 package model.seat
 
-import model.seat.SeatRow
 import org.assertj.core.api.Assertions.assertThatCode
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest

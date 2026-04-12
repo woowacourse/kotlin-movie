@@ -1,10 +1,6 @@
 package model.movie
 
 import model.fixture.MovieFixture
-import model.movie.Movie
-import model.movie.MovieId
-import model.movie.MovieName
-import model.movie.RunningTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import kotlin.uuid.ExperimentalUuidApi

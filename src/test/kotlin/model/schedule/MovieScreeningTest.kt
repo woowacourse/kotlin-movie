@@ -3,22 +3,13 @@ package model.schedule
 import model.CinemaTime
 import model.CinemaTimeRange
 import model.fixture.MovieFixture
-import model.movie.Movie
-import model.movie.MovieId
-import model.movie.MovieName
 import model.movie.RunningTime
-import model.schedule.MovieScreening
 import model.seat.SeatGroup
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.provider.Arguments
 import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieScreeningTest {
