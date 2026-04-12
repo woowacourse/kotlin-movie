@@ -5,8 +5,6 @@ import domain.movie.itmes.RunningTime
 import domain.movie.itmes.ScreeningPeriod
 import domain.movie.itmes.Title
 import domain.reservations.items.Reservation
-import domain.seat.Seat
-import domain.seat.items.GradeB
 import domain.seat.items.SeatPosition
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -51,50 +49,10 @@ class ScreeningScheduleTest {
     }
 
     @Test
-    fun `입력된 좌석 번호가 reservedSeats에 있다면 true를 반환한다`() {
-        val schedule = createScreeningSchedule()
-
-        val seat =
-            Seat(
-                seatPosition = SeatPosition.of("A1"),
-                seatGrade = GradeB(),
-            )
-        schedule.addReserveSeat(seat)
-        val result = schedule.isReservedSeat(seat)
-
-        assertThat(result).isTrue()
-    }
-
-    @Test
-    fun `입력된 좌석 번호가 reservedSeats에 없다면 false를 반환한다`() {
-        val schedule = createScreeningSchedule()
-
-        val seat =
-            Seat(
-                seatPosition = SeatPosition.of("A1"),
-                seatGrade = GradeB(),
-            )
-
-        val newSeat =
-            Seat(
-                seatPosition = SeatPosition.of("B1"),
-                seatGrade = GradeB(),
-            )
-        schedule.addReserveSeat(seat)
-        val result = schedule.isReservedSeat(newSeat)
-
-        assertThat(result).isFalse()
-    }
-
-    @Test
     fun `입력된 좌석을 예약 목록에 추가한다`() {
         val schedule = createScreeningSchedule()
 
-        val seat =
-            Seat(
-                seatPosition = SeatPosition.of("A1"),
-                seatGrade = GradeB(),
-            )
+        val seat = listOf(SeatPosition.of("A1"))
 
         assertDoesNotThrow { schedule.addReserveSeat(seat) }
     }

@@ -4,7 +4,6 @@ import domain.dto.ScreeningScheduleDto
 import domain.movie.Movie
 import domain.movie.itmes.Title
 import domain.reservations.items.Reservation
-import domain.seat.Seat
 import domain.seat.items.SeatPosition
 import java.time.LocalDate
 
@@ -19,11 +18,8 @@ class ScreeningSchedule(
 
     fun isScreeningDate(date: LocalDate) = screenTime.isScreeningAt(date)
 
-    fun isReservedSeat(seat: Seat) = reservedSeat.isReserved(seat)
-
     fun addReserveSeat(positions: List<SeatPosition>) {
-        val seats = positions.map { screen.findSeat(it) }
-        seats.forEach { reservedSeat.addSeat(it) }
+        positions.forEach { reservedSeat.addSeat(it) }
     }
 
     fun makeReservation(positions: List<SeatPosition>): Reservation {
