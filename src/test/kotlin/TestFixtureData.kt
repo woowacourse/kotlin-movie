@@ -78,6 +78,12 @@ object TestFixtureData {
     val seatB1 = seats.seats[2]
     val seatB2 = seats.seats[3]
 
+    val emptyMovieTheater = MovieTheater(
+        movies,
+        showings,
+        ReservationInfos(emptyList()),
+    )
+
     const val MOVIE_HARRY_POTTER = "해리 포터"
     const val SEAT_A1 = "A1"
     const val SEAT_B1 = "B1"

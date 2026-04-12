@@ -3,7 +3,6 @@ package controller
 import domain.cart.Cart
 import domain.purchase.Payment
 import domain.purchase.PaymentMethod
-import domain.purchase.Price
 import domain.reservation.ReservationInfos
 import domain.user.Point
 import java.io.ByteArrayInputStream
@@ -44,17 +43,13 @@ class PaymentControllerTest {
 
     @Test
     fun `결제 수단 입력이 유효하지 않으면 예외가 발생한다`() {
-        // given : 3을 입력한다
-        val input = "3"
-        val price = Price(27_700)
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
+        // given : 유효하지 않은 결제 수단 번호가 입력된다.
+        val invalidMethod = 3
 
-        // when : 포인트를 처리하면
+        // when & then : 예외가 발생한다.
         val exception = assertThrows<IllegalArgumentException> {
-            controller.getPaymentMethod()
+            PaymentMethod.from(invalidMethod)
         }
-
-        // then : 예외가 발생한다.
         assertEquals("유효하지 않은 결제 수단입니다.", exception.message)
     }
 
