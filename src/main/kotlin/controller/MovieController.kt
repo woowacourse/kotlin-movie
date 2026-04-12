@@ -1,5 +1,6 @@
 package controller
 
+import model.MockData
 import model.cart.Cart
 import model.cart.CartItem
 import model.discount.PaymentMethod
@@ -10,27 +11,18 @@ import model.discount.reserveDiscountPolicy.MovieDayDiscountPolicy
 import model.discount.reserveDiscountPolicy.MovieDiscountPolicy
 import model.discount.reserveDiscountPolicy.TimeDiscountPolicy
 import model.movie.Movie
-import model.movie.Movies
-import model.schedule.Schedule
 import model.schedule.Screening
 import view.InputView
 import view.OutputView
 import java.time.LocalDate
-import java.time.LocalTime
 
 class MovieController {
     val inputView = InputView()
     val outputView = OutputView()
-    val movies = Movies.createMovies()
-
     val selectedScreenings = mutableListOf<Screening>()
 
-    var schedule =
-        Schedule(
-            openTime = LocalTime.of(9, 0),
-            closeTime = LocalTime.of(23, 59),
-            screenings = Schedule.screenings,
-        )
+    val movies = MockData.movies
+    var schedule = MockData.mockSchedule
 
     // 시작 시 실행 여부를 받는 함수
     fun checkMovieReserve(): Boolean {
