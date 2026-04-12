@@ -93,15 +93,11 @@ class OutputView {
 
     private fun Reservations.toDisplayText(): String = getReservations().joinToString("\n") { it.toDisplayText() }
 
-    private fun Reservation.toDisplayText(): String {
-        val movie = getMovie()
-        val screening = getScreening()
-        val selectedSeats = getSelectedSeats()
-        return movie.toDisplayTitle() +
+    private fun Reservation.toDisplayText(): String =
+        movie.toDisplayTitle() +
             " ${screening.screeningDateTime.date} " +
             "${screening.screeningDateTime.startTime}  " +
             "좌석: ${selectedSeats.toDisplayText()}"
-    }
 
     private fun Movie.toDisplayTitle(): String = "- [$title]"
 

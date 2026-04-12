@@ -15,7 +15,7 @@ class Reservations(
     fun discountedTotalPrice(discountPolicies: DiscountPolicies): Price {
         var price = Price(0)
         reservations.forEach { reservation ->
-            val screeningDateTime = reservation.getScreening().screeningDateTime
+            val screeningDateTime = reservation.screening.screeningDateTime
             val discounted =
                 discountPolicies.applyDiscount(
                     reservation.calculatePrice(),
@@ -32,7 +32,7 @@ class Reservations(
         reservations.forEachIndexed { index, reservation ->
             val hasOverlap =
                 reservations.drop(index + 1).any { other ->
-                    reservation.isTimeOverlapping(other.getScreening())
+                    reservation.isTimeOverlapping(other.screening)
                 }
 
             require(!hasOverlap) { "상영 시간이 겹치는 예매가 존재합니다." }
