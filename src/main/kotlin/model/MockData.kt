@@ -85,6 +85,7 @@ object MockData {
                     EVEN_IF_THIS_LOVE_DISAPPEARS_TO_THE_WORLD_TONIGHT,
                     CHAIN_SO_MAN,
                     HOPPERS,
+                    THE_LAST_10_YEARS,
                 ),
         )
 
@@ -119,6 +120,11 @@ object MockData {
                     Screening(
                         movie = HOPPERS,
                         startDateTime = LocalDateTime.of(2026, 4, 10, 21, 0),
+                        seatInventory = SeatInventory.createDefaultSeatInventory(),
+                    ),
+                    Screening(
+                        movie = THE_LAST_10_YEARS,
+                        startDateTime = LocalDateTime.of(2026, 4, 10, 9, 30),
                         seatInventory = SeatInventory.createDefaultSeatInventory(),
                     ),
                 ),
