@@ -7,6 +7,8 @@ abstract class SeatGrade(
     private val price: Money,
 ) {
     fun addPrice(money: Money): Money = price + money
+
+    fun getGradeName() = seatGradeName.getGradeName()
 }
 
 class GradeS : SeatGrade(SeatGradeName("S"), Money(18_000))
@@ -17,4 +19,6 @@ class GradeB : SeatGrade(SeatGradeName("B"), Money(12_000))
 
 class SeatGradeName(
     private val name: String,
-)
+) {
+    fun getGradeName() = name
+}

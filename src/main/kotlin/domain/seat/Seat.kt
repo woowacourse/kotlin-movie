@@ -17,4 +17,6 @@ class Seat(
     fun getColumn(): Int = seatPosition.getColumn()
 
     fun getName(): String = seatPosition.getName()
+
+    fun getSeatGradeName(): String = seatGrade.getGradeName()
 }

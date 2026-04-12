@@ -49,7 +49,7 @@ class ScreeningSchedule(
                         if (reservedSeat.isReservedSeatPosition(SeatPosition.of(seat.getName()))) {
                             "XX"
                         }
-                        seat.getName()
+                        seat.getSeatGradeName()
                     }
             }
     }
