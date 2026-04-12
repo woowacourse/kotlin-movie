@@ -3,29 +3,21 @@
 package model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class MoneyTest {
-    @Test
-    fun `금액이 0 미만이면 예외가 발생한다`() {
+    @ParameterizedTest
+    @ValueSource(ints = [-1, -10, -100, -9999])
+    fun `금액이 0 미만이면 올바른 예외 메시지와 함께 예외가 발생한다`(invalidValue: Int) {
         // given & when & then
-        assertThrows(IllegalArgumentException::class.java) {
-            Money(-1)
-        }
+        assertThatThrownBy { Money(invalidValue) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("금액은 음수가 될 수 없습니다.")
     }
 
-    @Test
-    fun `금액이 0 미만일때 옳바른 예외 메세지가 출력된다`() {
-        // given & when
-        val errorMessage =
-            assertThrows(IllegalArgumentException::class.java) {
-                Money(-1)
-            }.message
-
-        // then
-        assertThat(errorMessage).isEqualTo("금액은 음수가 될 수 없습니다.")
-    }
 
     @Test
     fun `초기 금액이 500일때 생성된 Money의 value가 500이다`() {
