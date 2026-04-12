@@ -1,4 +1,4 @@
-package domain.discount
+package domain.payment.discount
 
 import domain.reservation.ReservedScreen
 

@@ -2,9 +2,9 @@ package domain.payment
 
 import constants.ErrorMessages
 import domain.account.Account
-import domain.discount.DiscountPolicy
-import domain.discount.MovieDayDiscountPolicy
-import domain.discount.TimeDiscountPolicy
+import domain.payment.discount.DiscountPolicy
+import domain.payment.discount.MovieDayDiscountPolicy
+import domain.payment.discount.TimeDiscountPolicy
 import domain.reservation.Cart
 import domain.reservation.ReservedScreen
 
