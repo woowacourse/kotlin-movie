@@ -4,7 +4,7 @@ import domain.reservation.ReservedScreen
 
 class MovieDayDiscountPolicy : DiscountPolicy {
     override fun discount(reservedScreen: ReservedScreen, money: Int): Int {
-        if (checkMovieDay(reservedScreen.screen.startTime.value.dayOfYear)) return (money * 0.9).toInt()
+        if (checkMovieDay(reservedScreen.screen.startTime.value.dayOfMonth)) return (money * 0.9).toInt()
         return money
     }
 

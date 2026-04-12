@@ -83,7 +83,7 @@ class PaymentTest {
                 selectedPaymentMethod = PaymentMethod.CREDIT_CARD,
             )
 
-        assertEquals(22_800, (result as PayResult.Success).paidAmount)
+        assertEquals(23_750, (result as PayResult.Success).paidAmount)
     }
 
     @Test
