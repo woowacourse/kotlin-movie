@@ -1,7 +1,13 @@
 package domain
 
+import domain.discount.EventDiscountPolicy
+import domain.discount.PaymentDiscount
+import domain.discount.PaymentDiscountPolicy
+import domain.discount.TheaterEventDiscount
+
 class PaymentSystem(
-    private val discountPolicy: DiscountPolicy = DiscountPolicy(),
+    private val eventDiscountPolicy: EventDiscountPolicy = TheaterEventDiscount(),
+    private val paymentDiscountPolicy: PaymentDiscountPolicy = PaymentDiscount(),
 ) {
     fun calculate(
         point: Point,
@@ -9,10 +15,18 @@ class PaymentSystem(
         ticketBucket: TicketBucket,
     ): Money {
         var total = Money(0)
-
         ticketBucket.tickets.forEach { ticket ->
-            total += discountPolicy.calculateDiscountResult(ticket.totalPrice, point, ticket.screening.startTime, payment)
+            ticket.seatPositions.positions.forEach { position ->
+                total +=
+                    eventDiscountPolicy.discount(
+                        Money(
+                            SeatGrade.of(position).price,
+                        ),
+                        ticket.screening.startTime,
+                    )
+            }
         }
-        return total
+        total -= point.amount
+        return paymentDiscountPolicy.discount(total, payment)
     }
 }
