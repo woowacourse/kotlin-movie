@@ -1,11 +1,15 @@
 package domain.payment
 
+import constants.ErrorMessages
 import domain.account.Account
+import domain.discount.DiscountPolicy
+import domain.discount.MovieDayDiscountPolicy
+import domain.discount.TimeDiscountPolicy
 import domain.reservation.Cart
+import domain.reservation.ReservedScreen
 
 class Payment(
     val cart: Cart,
-    val discountPolicy: DiscountPolicy,
 ) {
     fun pay(
         pointAmount: Int = 0,
@@ -13,8 +17,8 @@ class Payment(
         selectedPaymentMethod: PaymentMethod,
     ): PayResult =
         runCatching {
-            val discountedTotalAmount = discountedTotalAmount()
-            val amountAfterPoint = applyPoint(discountedTotalAmount, account, pointAmount)
+            val discountedByDateAmount = discountedTotalAmount()
+            val amountAfterPoint = applyPoint(discountedByDateAmount, account, pointAmount)
             val paidAmount = selectPaymentMethod(amountAfterPoint, selectedPaymentMethod)
 
             PayResult.Success(
@@ -25,17 +29,29 @@ class Payment(
             )
         }.getOrElse { exception ->
             PayResult.Failure(
-                message = exception.message ?: "결제에 실패했습니다.",
+                message = exception.message ?: ErrorMessages.PAY_FAIL.message,
             )
         }
+
+    fun discountedTotalAmount(): Int {
+        var totalAmount = 0
+        cart.items.forEach { reservedScreen ->
+            val discountedByDateAmount = applyDiscounts(MovieDayDiscountPolicy(), reservedScreen, reservedScreen.price())
+            val discountedByTimeAmount = applyDiscounts(TimeDiscountPolicy(), reservedScreen, discountedByDateAmount)
+            totalAmount += discountedByTimeAmount
+        }
+        return totalAmount
+    }
+
+    fun applyDiscounts(discountPolicy: DiscountPolicy, reservedScreen: ReservedScreen, money: Int): Int {
+        return discountPolicy.discount(reservedScreen, money)
+    }
 
     fun applyPoint(
         amount: Int,
         account: Account,
         point: Int,
     ): Int {
-        require(amount >= point) { "포인트 사용액수는 구매금액을 초과할 수 없습니다." }
-
         account.useMyPoint(point)
         return amount - point
     }
@@ -44,11 +60,6 @@ class Payment(
         amount: Int,
         paymentMethod: PaymentMethod,
     ): Int = paymentMethod.calculateDiscount(amount)
-
-    fun discountedTotalAmount(): Int =
-        cart.items.sumOf { reserved ->
-            discountPolicy.discount(reserved.screen.startTime, reserved.price())
-        }
 }
 
 sealed interface PayResult {

@@ -46,5 +46,5 @@
 - [x] 에러 메세지 상수 분리
 
 ### domain
-  - [ ] DiscountPolicy 인터페이스 분리
-  - [ ] Reservation 객체 생성
+  - [x] DiscountPolicy 인터페이스 분리
+  - [ ] Cart가 예약을 담당하도록 변경

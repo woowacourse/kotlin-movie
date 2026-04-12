@@ -15,5 +15,7 @@ enum class ErrorMessages(val message: String) {
     INVALID_ROW( "유효하지 않은 행 인덱스입니다."),
     INVALID_COL("유효하지 않은 열 인덱스입니다."),
     INVALID_SEAT("유효하지 않은 좌석 위치입니다."),
-    NOT_EXIST_SEAT("존재하지 않는 좌석입니다: ")
+    NOT_EXIST_SEAT("존재하지 않는 좌석입니다: "),
+    PAY_FAIL("결제에 실패했습니다."),
+
 }

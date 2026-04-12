@@ -2,7 +2,6 @@ package controller
 
 import constants.ErrorMessages
 import domain.account.Account
-import domain.payment.DiscountPolicy
 import domain.payment.PayResult
 import domain.payment.Payment
 import domain.payment.PaymentMethod
@@ -35,6 +34,10 @@ class CinemaController(
         reserveMovies()
         proceedPayment()
     }
+
+//    private fun reserveMovies() {
+//        val tmpCart = retryPrompt { Reservation.reserve() }
+//    }
 
     private fun isReservationStarted(): Boolean = inputView.readConfirmTicketingStart().uppercase() == CONFIRM_INPUT
 
@@ -111,7 +114,7 @@ class CinemaController(
 
         val point = retryPrompt { inputView.readPointAmount() }
         val paymentMethod = retryPrompt { PaymentMethod.validate(inputView.readPaymentMethod()) }
-        val payment = Payment(cart, DiscountPolicy())
+        val payment = Payment(cart)
 
         when (val result = payment.pay(point, account, paymentMethod)) {
             is PayResult.Success -> confirmPayment(result)
@@ -124,7 +127,7 @@ class CinemaController(
 
         val confirm = inputView.readConfirmPay().uppercase()
         if (confirm == CONFIRM_INPUT) {
-            printReservationHistory(result)
+            printReservationResult(result)
             return
         }
 
@@ -164,7 +167,7 @@ class CinemaController(
         }
     }
 
-    private fun printReservationHistory(result: PayResult.Success) {
+    private fun printReservationResult(result: PayResult.Success) {
         outputView.printFinishReservationMessage()
 
         result.cart.items.forEach {
