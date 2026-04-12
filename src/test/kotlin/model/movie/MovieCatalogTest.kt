@@ -1,5 +1,6 @@
 package model.movie
 
+import model.fixture.MovieFixture
 import model.movie.Movie
 import model.movie.MovieCatalog
 import model.movie.MovieId
@@ -12,24 +13,11 @@ import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 class MovieCatalogTest {
+    private val movie1 = MovieFixture.create(name = MovieName("영화1"))
+    private val movie2 = MovieFixture.create(name = MovieName("영화2"))
+
     @Test
     fun `영화 목록에 포함된 영화 제목을 입력하면 영화를 반환한다`() {
-        val id1 = MovieId(Uuid.generateV7())
-        val id2 = MovieId(Uuid.generateV7())
-        val movie1 =
-            Movie(
-                id = id1,
-                name = MovieName("영화1"),
-                runningTime = RunningTime(100),
-            )
-
-        val movie2 =
-            Movie(
-                id = id2,
-                name = MovieName("영화2"),
-                runningTime = RunningTime(30),
-            )
-
         val movieCatalog =
             MovieCatalog(
                 movies =
@@ -43,22 +31,6 @@ class MovieCatalogTest {
 
     @Test
     fun `영화 목록에 포함되어 있지 않은 영화 제목을 입력하면 null을 반환한다`() {
-        val id1 = MovieId(Uuid.generateV7())
-        val id2 = MovieId(Uuid.generateV7())
-        val movie1 =
-            Movie(
-                id = id1,
-                name = MovieName("영화1"),
-                runningTime = RunningTime(100),
-            )
-
-        val movie2 =
-            Movie(
-                id = id2,
-                name = MovieName("영화2"),
-                runningTime = RunningTime(30),
-            )
-
         val movieCatalog =
             MovieCatalog(
                 movies =
