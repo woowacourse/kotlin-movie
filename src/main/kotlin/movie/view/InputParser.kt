@@ -1,5 +1,6 @@
 package movie.view
 
+import movie.MovieTitle
 import movie.domain.point.Point
 import movie.domain.seat.SeatNumber
 import java.time.LocalDate
@@ -36,5 +37,9 @@ object InputParser {
         require(index in 1..size) { "유효한 번호를 입력해주세요" }
 
         return index - 1
+    }
+
+    fun parseMovieTitle(input: String): MovieTitle {
+        return MovieTitle(input)
     }
 }

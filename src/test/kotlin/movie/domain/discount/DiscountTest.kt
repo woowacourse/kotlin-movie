@@ -1,5 +1,6 @@
 package movie.domain.discount
 
+import movie.MovieTitle
 import movie.domain.Movie
 import movie.domain.Price
 import movie.domain.Schedule
@@ -12,7 +13,7 @@ class DiscountTest {
     fun `무비데이 할인이 적용된 가격을 반환한다`() {
         val schedule = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 12, 0),
@@ -29,7 +30,7 @@ class DiscountTest {
     fun `타임 할인이 적용된 가격을 반환한다`() {
         val schedule = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 11, 7, 0),
@@ -46,7 +47,7 @@ class DiscountTest {
     fun `무비데이, 타임 할인이 동ㅇ시에 적용된 가격을 반환한다`() {
         val schedule = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 7, 0),

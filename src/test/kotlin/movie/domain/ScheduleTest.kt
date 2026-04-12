@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import movie.domain.seat.SeatNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,7 +13,7 @@ class ScheduleTest {
         assertThrows<IllegalArgumentException> {
             Schedule(
                 movie = Movie(
-                    title = "시동",
+                    title = MovieTitle("시동"),
                     runningTime = 120,
                 ),
                 startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -25,7 +26,7 @@ class ScheduleTest {
     fun `영화 시간이 겹치지 않는다면 False를 반환한다`() {
         val schedule1 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -33,7 +34,7 @@ class ScheduleTest {
         )
         val schedule2 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 12, 30),
@@ -47,7 +48,7 @@ class ScheduleTest {
     fun `영화 시간이 겹친다면 True를 반환한다`() {
         val schedule1 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -55,7 +56,7 @@ class ScheduleTest {
         )
         val schedule2 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 11, 0),
@@ -69,7 +70,7 @@ class ScheduleTest {
     fun `유효하지 않은 좌석을 예매하려고 하면 예외가 발생한다`() {
         val schedule = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),

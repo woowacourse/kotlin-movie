@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -12,7 +13,7 @@ class Schedules(
         _schedules.add(schedule)
     }
 
-    fun getMovieSchedules(movieTitle: String, date: LocalDate): List<Schedule> {
+    fun getMovieSchedules(movieTitle: MovieTitle, date: LocalDate): List<Schedule> {
         val schedules = _schedules.filter {
             it.movie.title == movieTitle && it.startTime.toLocalDate() == date
         }
@@ -22,12 +23,12 @@ class Schedules(
         return schedules
     }
 
-    fun getMovieTitles(): List<String> {
+    fun getMovieTitles(): List<MovieTitle> {
         return _schedules.map { it.movie.title }
             .distinct()
     }
 
-    fun getSchedule(movieTitle: String, startTime: LocalDateTime): Schedule {
+    fun getSchedule(movieTitle: MovieTitle, startTime: LocalDateTime): Schedule {
         return _schedules.firstOrNull {
             it.movie.title == movieTitle && it.startTime == startTime
         } ?: throw IllegalArgumentException("영화 제목 또는 시작 시간이 올바르지 않습니다.")

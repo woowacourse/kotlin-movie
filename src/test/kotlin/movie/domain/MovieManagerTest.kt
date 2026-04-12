@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -13,7 +14,7 @@ class MovieManagerTest {
         )
 
         val startTimes = movieManager.getMovieStartTime(
-            movieTitle = "시동",
+            movieTitle = MovieTitle("시동"),
             date = LocalDate.of(2026, 4, 10),
         )
 
@@ -28,7 +29,7 @@ class MovieManagerTest {
     companion object {
         val schedule1 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -36,7 +37,7 @@ class MovieManagerTest {
         )
         val schedule2 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 11, 0),
@@ -45,7 +46,7 @@ class MovieManagerTest {
 
         val schedule3 = Schedule(
             movie = Movie(
-                title = "토토로",
+                title = MovieTitle("토토로"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 14, 0),

@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatNumber
 import movie.domain.seat.SeatRank
@@ -36,7 +37,7 @@ class ReservationTest {
     }
 
     companion object {
-        private val movie = Movie("아이언맨", 200)
+        private val movie = Movie(MovieTitle("아이언맨"), 200)
         private val schedule = Schedule(
             movie = movie,
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),

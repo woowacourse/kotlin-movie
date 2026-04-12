@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -7,21 +8,21 @@ class MovieManager(
     val schedules: Schedules,
 ) {
 
-    fun getMovieStartTime(movieTitle: String, date: LocalDate): List<LocalDateTime> {
+    fun getMovieStartTime(movieTitle: MovieTitle, date: LocalDate): List<LocalDateTime> {
         return schedules.getMovieSchedules(
             movieTitle = movieTitle,
             date = date
         ).map { it.startTime }
     }
 
-    fun getMovieTitle(): List<String> = schedules.getMovieTitles()
+    fun getMovieTitle(): List<MovieTitle> = schedules.getMovieTitles()
 
-    fun hasMovieTitle(title: String): Boolean {
+    fun hasMovieTitle(title: MovieTitle): Boolean {
         return getMovieTitle().contains(title)
 
     }
 
-    fun getSchedule(title: String, startTime: LocalDateTime): Schedule {
+    fun getSchedule(title: MovieTitle, startTime: LocalDateTime): Schedule {
         return schedules.getSchedule(movieTitle = title, startTime = startTime)
     }
 }

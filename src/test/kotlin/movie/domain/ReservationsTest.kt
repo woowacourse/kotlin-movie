@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -46,7 +47,7 @@ class ReservationsTest {
     }
 
     companion object {
-        val movie = Movie("아이언맨", 200)
+        val movie = Movie(MovieTitle("아이언맨"), 200)
         val schedule = Schedule(
             movie = movie,
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),

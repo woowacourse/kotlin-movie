@@ -1,5 +1,6 @@
 package movie.controller
 
+import movie.MovieTitle
 import movie.domain.Cart
 import movie.domain.MovieManager
 import movie.domain.PaymentManager
@@ -82,7 +83,7 @@ class MovieController(
         }
     }
 
-    private fun getMovieTimes(title: String): List<LocalDateTime> {
+    private fun getMovieTimes(title: MovieTitle): List<LocalDateTime> {
         return whileGetInput {
             val date = getDate()
             val movieTimes = movieManager.getMovieStartTime(title, date)
@@ -91,7 +92,7 @@ class MovieController(
         }
     }
 
-    private fun getSchedule(title: String, movieTimes: List<LocalDateTime>): Schedule {
+    private fun getSchedule(title: MovieTitle, movieTimes: List<LocalDateTime>): Schedule {
         OutputView.printMovieStartTimes(movieTimes)
 
         return whileGetInput {
@@ -121,9 +122,10 @@ class MovieController(
         }
     }
 
-    private fun getTitle(): String {
+    private fun getTitle(): MovieTitle {
         return whileGetInput {
-            val title = InputView.readMovieTitle()
+            val input = InputView.readMovieTitle()
+            val title = InputParser.parseMovieTitle(input)
 
             require(movieManager.hasMovieTitle(title)) { "상영 중인 영화가 없습니다." }
 

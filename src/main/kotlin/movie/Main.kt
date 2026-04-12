@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 fun main() {
     val schedule1 = Schedule(
         movie = Movie(
-            title = "시동",
+            title = MovieTitle("시동"),
             runningTime = 120,
         ),
         startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -18,7 +18,7 @@ fun main() {
     )
     val schedule2 = Schedule(
         movie = Movie(
-            title = "시동",
+            title = MovieTitle("시동"),
             runningTime = 120,
         ),
         startTime = LocalDateTime.of(2026, 4, 10, 13, 0),
@@ -27,7 +27,7 @@ fun main() {
 
     val schedule3 = Schedule(
         movie = Movie(
-            title = "토토로",
+            title = MovieTitle("토토로"),
             runningTime = 120,
         ),
         startTime = LocalDateTime.of(2026, 4, 11, 14, 0),

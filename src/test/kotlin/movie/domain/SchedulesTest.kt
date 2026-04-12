@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.MovieTitle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -12,7 +13,7 @@ class SchedulesTest {
 
         val titles = schedules.getMovieTitles()
 
-        assertThat(titles).isEqualTo(listOf("시동", "토토로"))
+        assertThat(titles).isEqualTo(listOf(MovieTitle("시동"), MovieTitle("토토로")))
     }
 
     @Test
@@ -21,7 +22,7 @@ class SchedulesTest {
 
         val titles = schedules.getMovieTitles()
 
-        assertThat(titles).isEqualTo(listOf("시동"))
+        assertThat(titles).isEqualTo(listOf(MovieTitle("시동")))
     }
 
     @Test
@@ -30,7 +31,7 @@ class SchedulesTest {
         val schedules = Schedules(scheduleList)
 
         val movieSchedules = schedules.getMovieSchedules(
-            movieTitle = "시동",
+            movieTitle = MovieTitle("시동"),
             date = LocalDate.of(2026, 4, 10)
         )
 
@@ -40,7 +41,7 @@ class SchedulesTest {
     companion object {
         val schedule1 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
@@ -48,7 +49,7 @@ class SchedulesTest {
         )
         val schedule2 = Schedule(
             movie = Movie(
-                title = "시동",
+                title = MovieTitle("시동"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 11, 0),
@@ -57,7 +58,7 @@ class SchedulesTest {
 
         val schedule3 = Schedule(
             movie = Movie(
-                title = "토토로",
+                title = MovieTitle("토토로"),
                 runningTime = 120,
             ),
             startTime = LocalDateTime.of(2026, 4, 10, 14, 0),
