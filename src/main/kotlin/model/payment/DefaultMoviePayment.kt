@@ -2,11 +2,6 @@ package model.payment
 
 import model.reservation.MovieReservationGroup
 
-data class MoviePaymentResult(
-    val totalPrice: Money,
-    val finalPrice: Money,
-)
-
 class DefaultMoviePayment(
     private val reservations: MovieReservationGroup,
     payType: PayType,
