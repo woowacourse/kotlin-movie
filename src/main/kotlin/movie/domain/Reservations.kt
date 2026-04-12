@@ -1,19 +1,23 @@
 package movie.domain
 
+import movie.domain.seat.SeatNumber
+
 class Reservations(
     reservations: List<Reservation> = emptyList(),
 ) {
     private val _reservations = reservations.toMutableList()
 
-    fun addReservation(reservation: Reservation) {
-        require(!isDuplicateTime(reservation = reservation)) { "상영시간은 중복될 수 없습니다." }
+    fun getReservations(): List<Reservation> = _reservations.toList()
 
-        _reservations.add(reservation)
+    fun addReservation(schedule: Schedule, seats: List<SeatNumber>) {
+        require(!isDuplicateTime(schedule = schedule)) { "상영시간은 중복될 수 없습니다." }
+
+        _reservations.add(Reservation(schedule, seats))
     }
 
-    fun isDuplicateTime(reservation: Reservation): Boolean {
+    fun isDuplicateTime(schedule: Schedule): Boolean {
         return _reservations.any {
-            it.isDuplicateTime(reservation)
+            it.isDuplicateTime(schedule)
         }
     }
 }

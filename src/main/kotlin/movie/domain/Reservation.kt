@@ -1,18 +1,18 @@
 package movie.domain
 
-import movie.domain.seat.Seat
+import movie.domain.seat.SeatNumber
 
 class Reservation(
     val schedule: Schedule,
-    val seats: List<Seat>,
+    val seats: List<SeatNumber>,
 ) {
-    fun isDuplicateTime(target: Reservation): Boolean {
-        return schedule.isDuplicateTime(target.schedule)
+    fun isDuplicateTime(target: Schedule): Boolean {
+        return schedule.isDuplicateTime(target)
     }
 
     fun calculateTotalPrice(): Price {
-        return seats.fold(Price(0)) { totalPrice, seat ->
-            totalPrice + seat.getPrice()
+        return seats.fold(Price(0)) { totalPrice, seatNumber ->
+            totalPrice + schedule.getPrice(seatNumber)
         }
     }
 }
