@@ -9,11 +9,7 @@ data class Money(
 
     operator fun plus(other: Money): Money = Money(this.amount + other.amount)
 
-    operator fun plus(other: Int): Money = Money(this.amount + other)
-
     operator fun minus(other: Money): Money = Money(this.amount - other.amount)
-
-    operator fun minus(other: Int): Money = Money(this.amount - other)
 
     operator fun times(other: Double): Money = Money((this.amount * other).toInt())
 }

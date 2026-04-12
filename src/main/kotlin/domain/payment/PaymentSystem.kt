@@ -47,5 +47,5 @@ class PaymentSystem(
     }
 
     private fun applyPoint(total: Money, point: Point): Money =
-        total - point.amount
+        total - point.toMoney()
 }
