@@ -1,0 +1,244 @@
+package domain.payment
+
+import domain.common.Money
+import domain.common.TimeRange
+import domain.discount.MoviedayDiscount
+import domain.discount.PaymentDiscount
+import domain.discount.TicketDiscountPolicy
+import domain.discount.TimeDiscount
+import domain.discount.TotalDiscountPolicy
+import domain.movie.Movie
+import domain.movie.RunningTime
+import domain.movie.Title
+import domain.screening.Screening
+import domain.screening.ScreeningPeriod
+import domain.screening.ScreeningRoom
+import domain.screening.ScreeningRoomName
+import domain.seat.Column
+import domain.seat.Row
+import domain.seat.Seat
+import domain.seat.SeatPosition
+import domain.seat.SeatPositions
+import domain.seat.Seats
+import domain.ticket.Ticket
+import domain.ticket.TicketBucket
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+
+class PaymentSystemTest {
+
+    @Test
+    fun `무비데이, 시간 할인, 포인트 차감, 결제 수단 할인이 올바른 순서로 적용된다`() {
+        val paymentSystem = PaymentSystem(
+            ticketDiscountStrategy = ticketDiscountPolicy,
+            totalDiscountStrategy = totalDiscountPolicy
+        )
+        val result =
+            paymentSystem.calculate(
+                point = Point(5_000),
+                payment = PaymentType.CREDIT_CARD,
+                ticketBucket =
+                    TicketBucket(
+                        tickets =
+                            listOf(
+                                Ticket(
+                                    screening =
+                                        Screening(
+                                            movie =
+                                                Movie(
+                                                    title = Title("허닛"),
+                                                    runningTime = RunningTime(167),
+                                                    screeningPeriod =
+                                                        ScreeningPeriod(
+                                                            startDate = LocalDate.of(2026, 4, 8),
+                                                            endDate = LocalDate.of(2026, 4, 9),
+                                                        ),
+                                                ),
+                                            room =
+                                                ScreeningRoom(
+                                                    name = ScreeningRoomName("커피"),
+                                                    operatingTime =
+                                                        TimeRange(
+                                                            LocalTime.of(10, 0),
+                                                            LocalTime.of(18, 0),
+                                                        ),
+                                                    seats =
+                                                        Seats(
+                                                            listOf(
+                                                                Seat(
+                                                                    position =
+                                                                        SeatPosition(
+                                                                            Row("A"),
+                                                                            Column(1),
+                                                                        ),
+                                                                ),
+                                                            ),
+                                                        ),
+                                                ),
+                                            startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
+                                        ),
+                                    seatPositions =
+                                        SeatPositions(
+                                            listOf(
+                                                SeatPosition(
+                                                    Row("A"),
+                                                    Column(1),
+                                                ),
+                                            ),
+                                        ),
+                                ),
+                                Ticket(
+                                    screening =
+                                        Screening(
+                                            movie =
+                                                Movie(
+                                                    title = Title("허닛"),
+                                                    runningTime = RunningTime(167),
+                                                    screeningPeriod =
+                                                        ScreeningPeriod(
+                                                            startDate = LocalDate.of(2026, 4, 8),
+                                                            endDate = LocalDate.of(2026, 4, 9),
+                                                        ),
+                                                ),
+                                            room =
+                                                ScreeningRoom(
+                                                    name = ScreeningRoomName("커피"),
+                                                    operatingTime =
+                                                        TimeRange(
+                                                            LocalTime.of(10, 0),
+                                                            LocalTime.of(18, 0),
+                                                        ),
+                                                    seats =
+                                                        Seats(
+                                                            listOf(
+                                                                Seat(
+                                                                    position =
+                                                                        SeatPosition(
+                                                                            Row("A"),
+                                                                            Column(1),
+                                                                        ),
+                                                                ),
+                                                            ),
+                                                        ),
+                                                ),
+                                            startTime = LocalDateTime.of(2026, 4, 10, 10, 0),
+                                        ),
+                                    seatPositions =
+                                        SeatPositions(
+                                            listOf(
+                                                SeatPosition(
+                                                    Row("A"),
+                                                    Column(1),
+                                                ),
+                                            ),
+                                        ),
+                                )
+                            ),
+                    ),
+            )
+        assertThat(result).isEqualTo(Money(11_970))
+    }
+
+    @Test
+    fun `할인 적용 후 금액이 0보다 작을 경우 예외를 던진다`() {
+        val paymentSystem = PaymentSystem(
+            ticketDiscountStrategy = ticketDiscountPolicy,
+            totalDiscountStrategy = totalDiscountPolicy
+        )
+        assertThrows(IllegalArgumentException::class.java) {
+            paymentSystem.calculate(
+                point = Point(10001),
+                payment = PaymentType.CREDIT_CARD,
+                ticketBucket =
+                    TicketBucket(
+                        tickets =
+                            listOf(
+                                Ticket(
+                                    screening =
+                                        Screening(
+                                            movie =
+                                                Movie(
+                                                    title = Title("허닛"),
+                                                    runningTime = RunningTime(167),
+                                                    screeningPeriod =
+                                                        ScreeningPeriod(
+                                                            startDate = LocalDate.of(
+                                                                2026,
+                                                                4,
+                                                                8
+                                                            ),
+                                                            endDate = LocalDate.of(
+                                                                2026,
+                                                                4,
+                                                                9
+                                                            ),
+                                                        ),
+                                                ),
+                                            room =
+                                                ScreeningRoom(
+                                                    name = ScreeningRoomName("커피"),
+                                                    operatingTime =
+                                                        TimeRange(
+                                                            LocalTime.of(
+                                                                10,
+                                                                0
+                                                            ),
+                                                            LocalTime.of(
+                                                                18,
+                                                                0
+                                                            ),
+                                                        ),
+                                                    seats =
+                                                        Seats(
+                                                            listOf(
+                                                                Seat(
+                                                                    position =
+                                                                        SeatPosition(
+                                                                            Row("A"),
+                                                                            Column(1),
+                                                                        ),
+                                                                ),
+                                                            ),
+                                                        ),
+                                                ),
+                                            startTime = LocalDateTime.of(
+                                                2026,
+                                                4,
+                                                8,
+                                                10,
+                                                0
+                                            ),
+                                        ),
+                                    seatPositions =
+                                        SeatPositions(
+                                            listOf(
+                                                SeatPosition(
+                                                    Row("A"),
+                                                    Column(1),
+                                                ),
+                                            ),
+                                        ),
+                                ),
+                            ),
+                    ),
+            )
+        }
+    }
+    private val ticketDiscountPolicy = TicketDiscountPolicy(
+        strategies = listOf(
+            MoviedayDiscount(),
+            TimeDiscount(),
+        )
+    )
+
+    private val totalDiscountPolicy = TotalDiscountPolicy(
+        strategies = listOf(
+            PaymentDiscount(),
+        )
+    )
+
+}
