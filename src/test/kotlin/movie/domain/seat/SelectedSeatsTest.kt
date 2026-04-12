@@ -1,6 +1,7 @@
 package movie.domain.seat
 
 import movie.domain.amount.Money
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -43,5 +44,20 @@ class SelectedSeatsTest {
             }
 
         assert(exception.message == "중복된 좌석을 선택할 수 없습니다.")
+    }
+
+    @Test
+    fun `좌석 위치 목록과 상영관 좌석 목록으로 선택 좌석을 생성할 수 있다`() {
+        val positions =
+            SeatPositions(
+                listOf(
+                    SeatPosition(SeatRow("A"), SeatColumn(1)),
+                    SeatPosition(SeatRow("C"), SeatColumn(2)),
+                ),
+            )
+
+        val selectedSeats = SelectedSeats.from(positions, Seats.createDefault())
+
+        assertThat(selectedSeats.display()).isEqualTo("A1, C2")
     }
 }

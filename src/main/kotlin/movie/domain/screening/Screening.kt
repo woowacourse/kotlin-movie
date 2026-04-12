@@ -3,6 +3,7 @@ package movie.domain.screening
 import movie.domain.movie.MovieTitle
 import movie.domain.reservation.Reservation
 import movie.domain.seat.ReservatedSeats
+import movie.domain.seat.SeatPositions
 import movie.domain.seat.SelectedSeats
 
 class Screening(
@@ -31,6 +32,8 @@ class Screening(
             this,
             selectedSeats,
         )
+
+    fun toSelectedSeats(positions: SeatPositions): SelectedSeats = SelectedSeats.from(positions, slot.screen.seats)
 
     private fun isValidSeats(selectedSeats: SelectedSeats): Boolean = selectedSeats.all { slot.hasSeat(it) }
 }

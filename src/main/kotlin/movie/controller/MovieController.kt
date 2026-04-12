@@ -8,16 +8,12 @@ import movie.domain.discount.MovieDayDiscount
 import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
 import movie.domain.movie.Movies
-import movie.domain.payment.Cash
-import movie.domain.payment.CreditCard
 import movie.domain.payment.PaymentMethod
 import movie.domain.payment.PriceCalculator
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
-import movie.domain.screening.Screen
 import movie.domain.screening.Screening
-import movie.domain.seat.SeatColumn
-import movie.domain.seat.SeatRow
+import movie.domain.seat.SeatInputParser
 import movie.domain.seat.SelectedSeats
 import movie.domain.user.User
 import movie.view.InputView
@@ -27,6 +23,7 @@ import java.time.LocalDate
 class MovieController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
+    private val seatInputParser: SeatInputParser = SeatInputParser(),
     private val movies: Movies = MovieData.createMovies(),
     private val user: User = MovieData.createUser(),
     private val priceCalculator: PriceCalculator =
@@ -150,29 +147,14 @@ class MovieController(
 
     private fun selectSeats(screening: Screening): SelectedSeats =
         executeWithRetry {
-            outputView.printSeatLayout(screening.slot.screen, screening.reservatedSeats)
+            outputView.printSeatLayout(screening)
             val input = inputView.inputSeat()
-            val seats = parseSeatInput(input, screening.slot.screen)
+            val positions = seatInputParser.parse(input)
+            val seats = screening.toSelectedSeats(positions)
             val reserveAvailableSeats = screening.isReserveAvailable(seats)
             reserveAvailableSeats
         }
 
-    private fun parseSeatInput(
-        input: String,
-        screen: Screen,
-    ): SelectedSeats =
-        SelectedSeats(
-            input
-                .split(",")
-                .map { it.trim() }
-                .map { seatInput ->
-                    val row = SeatRow(seatInput.substring(0, 1).uppercase())
-                    val column =
-                        seatInput.substring(1).toIntOrNull()
-                            ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $seatInput")
-                    screen.seats.findSeat(row, SeatColumn(column))
-                },
-        )
 
     // 입력 로직
     private fun askStartReservation(): Boolean = executeWithRetry { inputView.startMessage() }

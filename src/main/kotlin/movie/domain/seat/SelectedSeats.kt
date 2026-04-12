@@ -20,4 +20,11 @@ class SelectedSeats(
     }
 
     fun display(): String = seats.joinToString(", ") { "${it.seatRow.value}${it.seatColumn.value}" }
+
+    companion object {
+        fun from(
+            positions: SeatPositions,
+            seats: Seats,
+        ): SelectedSeats = SelectedSeats(positions.toSeats(seats))
+    }
 }

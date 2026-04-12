@@ -5,6 +5,7 @@ import movie.domain.amount.Point
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
 import movie.domain.screening.Screen
+import movie.domain.screening.Screening
 import movie.domain.screening.Screenings
 import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.SeatColumn
@@ -41,6 +42,10 @@ class OutputView {
             }
             println()
         }
+    }
+
+    fun printSeatLayout(screening: Screening) {
+        printSeatLayout(screening.slot.screen, screening.reservatedSeats)
     }
 
     fun printAddedToCart(reservation: Reservation) {
