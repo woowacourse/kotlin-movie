@@ -19,8 +19,8 @@ class CartTest {
     ): Screening {
         val movie =
             Movie(
-                MovieTitle("테스트 영화"),
-                RunningTime(runningMinutes),
+                title = MovieTitle("테스트 영화"),
+                runningTime = RunningTime(runningMinutes),
             )
         return Screening(
             movie = movie,
@@ -75,7 +75,7 @@ class CartTest {
         // when & then
         val exception =
             assertThrows(IllegalArgumentException::class.java) {
-                newCart.add(reserved(screening2))
+                newCart.validateOverlap(screening2)
             }
 
         assertEquals(

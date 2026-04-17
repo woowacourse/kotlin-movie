@@ -1,8 +1,29 @@
 # kotlin-movie
 
 ## 기능 요구사항
+## Level 3/4 Production
+- [x] Repository 인터페이스 구현
+- [x] 기존 레포지토리 및 컨트롤러 수정
+  - [x] Screening Repository 인터페이스를 사용하도록 수정
+  - [x] 좌석 예약 및 결제 시점 분리
+- [x] Movie, Screening 식별자 부여
+- [x] JDBC ConnectProvider 작성
+- [x] 테이블 생성 SQL문 작성 
+- [x] DB 생성 및 초기화 로직 작성
+- [x] 데이터 삽입 SQL문 작성
+- [x] DB 내 데이터 삽입 로직 작성
+- [x] 데이터 조회 SQL문 작성
+- [x] DB 데이터 조회 로직 작성
+- [x] DB 데이터 저장 로직 작성
+- [x] DB 로직 테스트 코드 작성
+- [x] Application 진입점 구성
+- [x] DB Bean 등록
+- [x] GET /api/movies 구현
+- [x] 영화/상영 응답 DTO 구현
+- [x] POST /api/reservations 구현
+- [x] 예매 요청/응답 DTO 구현
 
-## Production
+## Level 1/2 Production
 ### view
 - [x] InputView, OutputView 구현
 ### domain
@@ -71,3 +92,14 @@
   - [x] ReservationService 분리
   - [x] Date 파서 분리
   - [x] Seat 파서 분리
+
+### 3차 리팩토링
+- [x] 추가 연산자 오버로딩 구현 및 수정
+- [x] 가시성 수정
+- [x] 신설된 도메인 로직에 대한 테스트 코드 작성
+- [x] 할인 금액 음수 방지 및 상수화 적용
+- [x] 중복 검증 로직 제거 및 Cart로의 책임 일원화
+- [x] 미사용 함수 제거 및 일급 컬렉션 활용
+- [x] Account / Point 수정
+- [x] Controller, Services, Repository 개선
+- [x] 객체 간 책임 분리 강화

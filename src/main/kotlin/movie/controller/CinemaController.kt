@@ -1,19 +1,20 @@
 package movie.controller
 
 import movie.controller.parser.DateParser
-import movie.controller.service.PaymentService
-import movie.controller.service.ReservationService
+import movie.controller.parser.SeatParser
 import movie.domain.account.Account
 import movie.domain.payment.PayResult
 import movie.domain.reservation.Cart
 import movie.domain.reservation.Seats
 import movie.domain.screening.Screening
-import movie.repository.CinemaRepository
+import movie.repository.ScreeningRepository
+import movie.service.PaymentService
+import movie.service.ReservationService
 import movie.view.InputView
 import movie.view.OutputView
 
 class CinemaController(
-    private val repository: CinemaRepository,
+    private val repository: ScreeningRepository,
     private val inputView: InputView,
     private val outputView: OutputView,
     private val account: Account = Account(),
@@ -50,17 +51,13 @@ class CinemaController(
         val date = DateParser.parse(inputView.readDate())
         val availableScreenings = reservationService.findAvailableScreenings(title, date)
         val selectedScreening = readAvailableScreening(availableScreenings)
-        val reservedSeats = reservationService.reservedSeats(selectedScreening)
-
-        outputView.printSeatLayout(allSeats, reservedSeats)
-
-        val seatNumbers =
-            retryPrompt {
-                reservationService.parseSeatNumbers(inputView.readSeatNumbers())
-            }
 
         val result =
             retryPrompt {
+                val reservedSeats = reservationService.reservedSeats(selectedScreening)
+                outputView.printSeatLayout(allSeats, reservedSeats)
+
+                val seatNumbers = parseSeatNumbers(inputView.readSeatNumbers())
                 reservationService.reserve(cart, selectedScreening, seatNumbers)
             }
 
@@ -78,9 +75,21 @@ class CinemaController(
             }
 
             val selectedScreening = availableScreenings[selectedNumber - 1]
-            reservationService.validateScreeningOverlap(cart, selectedScreening)
+            cart.validateOverlap(selectedScreening)
             selectedScreening
         }
+
+    private fun parseSeatNumbers(rawInput: String): List<String> {
+        require(rawInput.isNotBlank()) { "올바른 좌석 번호를 입력해주세요." }
+
+        val seatNumbers = SeatParser.parse(rawInput)
+
+        require(seatNumbers.toSet().size == seatNumbers.size) {
+            "동일 좌석을 중복 예약할 수 없습니다."
+        }
+
+        return seatNumbers
+    }
 
     private fun proceedPayment() {
         outputView.printCart(cart)
@@ -107,11 +116,21 @@ class CinemaController(
 
         val confirm = inputView.readYesOrNo("위 금액으로 결제하시겠습니까? (Y/N)").uppercase()
         if (confirm == "Y") {
+            persistReservations()
             outputView.printReservationHistory(result)
             return
         }
 
         outputView.printMessage("결제가 취소되었습니다.")
+    }
+
+    private fun persistReservations() {
+        cart.reservedScreens.forEach { reservedScreen ->
+            repository.reserveSeats(
+                screening = reservedScreen.screen,
+                selectedSeats = reservedScreen.seats,
+            )
+        }
     }
 
     private fun <T> retryPrompt(action: () -> T): T {
