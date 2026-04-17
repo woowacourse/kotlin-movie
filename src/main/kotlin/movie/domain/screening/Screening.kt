@@ -5,6 +5,7 @@ import movie.domain.seat.Seat
 import movie.domain.seat.Seats
 
 data class Screening(
+    val id: Long,
     val screen: Screen,
     val screeningDateTime: ScreeningDateTime,
     val reservedSeats: ReservedSeats,

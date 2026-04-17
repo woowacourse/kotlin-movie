@@ -11,8 +11,7 @@ import movie.domain.seat.Seat
 import movie.domain.seat.SeatGrade
 import movie.domain.seat.Seats
 import movie.domain.seat.SelectedSeats
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 object ReservationData {
     private val screen = Screen(1, SeatsData.seats)
@@ -29,28 +28,28 @@ object ReservationData {
 
     private val screening1 =
         Screening(
+            1L,
             screen,
             ScreeningDateTime(
-                LocalDate.of(2026, 1, 1),
-                LocalTime.of(10, 0),
-                LocalTime.of(12, 0),
+                LocalDateTime.of(2026, 1, 1, 10, 0),
+                LocalDateTime.of(2026, 1, 1, 12, 0),
             ),
             ReservedSeats(Seats(emptySet())),
         )
 
     private val screening2 =
         Screening(
+            2L,
             screen,
             ScreeningDateTime(
-                LocalDate.of(2026, 1, 1),
-                LocalTime.of(14, 0),
-                LocalTime.of(16, 0),
+                LocalDateTime.of(2026, 1, 1, 14, 0),
+                LocalDateTime.of(2026, 1, 1, 16, 0),
             ),
             ReservedSeats(Seats(emptySet())),
         )
 
-    val movie1 = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
-    val movie2 = Movie(title = "토이 스토리", screenings = Screenings(listOf(screening2)))
+    val movie1 = Movie(id = 1, title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
+    val movie2 = Movie(id = 2, title = "토이 스토리", screenings = Screenings(listOf(screening2)))
 
     val reservations =
         listOf(

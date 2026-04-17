@@ -14,7 +14,7 @@ class OutputView {
     fun printScreeningList(screenings: List<Screening>) {
         println(SCREENING_LIST_HEADER)
         screenings.forEachIndexed { index, screening ->
-            println("[${index + 1}] ${screening.screeningDateTime.startTime}")
+            println("[${index + 1}] ${screening.screeningDateTime.startAt}")
         }
     }
 
@@ -95,8 +95,8 @@ class OutputView {
 
     private fun Reservation.toDisplayText(): String =
         movie.toDisplayTitle() +
-            " ${screening.screeningDateTime.date} " +
-            "${screening.screeningDateTime.startTime}  " +
+            " ${screening.screeningDateTime.startAt.toLocalDate()} " +
+            "${screening.screeningDateTime.startAt}  " +
             "좌석: ${selectedSeats.toDisplayText()}"
 
     private fun Movie.toDisplayTitle(): String = "- [$title]"

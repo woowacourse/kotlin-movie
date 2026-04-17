@@ -5,6 +5,9 @@ import movie.domain.amount.Point
 import movie.domain.discount.DiscountPolicy
 import movie.domain.discount.DiscountPolicyAdapter
 import movie.domain.discount.MovieDayDiscount
+import movie.domain.discount.PaymentDiscountPolicy
+import movie.domain.discount.PaymentMethodDiscountPolicy
+import movie.domain.discount.PaymentMethodInputParser
 import movie.domain.discount.TimeDiscount
 import movie.domain.movie.Movie
 import movie.domain.movie.Movies
@@ -28,6 +31,7 @@ class MovieController(
     private val movies: Movies,
     private val user: User,
     private val priceCalculator: PriceCalculator,
+    private val onReservationComplete: (Reservations, PaymentResult, PaymentMethod) -> Unit = { _, _, _ -> },
 ) {
     fun run() {
         if (!askStartReservation()) return
@@ -38,35 +42,38 @@ class MovieController(
                 percentagePolicies = listOf(MovieDayDiscount()),
                 fixedPolicies = listOf(TimeDiscount()),
             )
+        val paymentDiscountPolicy = PaymentMethodDiscountPolicy()
 
         showCart(reservations)
 
-        val paymentResult = processPayment(discountPolicy, reservations)
+        val (paymentResult, paymentMethod) = processPayment(discountPolicy, paymentDiscountPolicy, reservations)
 
-        confirmAndComplete(reservations, paymentResult)
+        confirmAndComplete(reservations, paymentResult, paymentMethod)
     }
 
-    // 메인 로직
     private fun processPayment(
         discountPolicy: DiscountPolicy,
+        paymentDiscountPolicy: PaymentDiscountPolicy,
         reservations: Reservations,
-    ): PaymentResult {
+    ): Pair<PaymentResult, PaymentMethod> {
         val point = inputPoint()
         val paymentMethod = selectPaymentMethod()
 
-        val paymentResult = priceCalculator.calculate(reservations, discountPolicy, point, paymentMethod)
+        val paymentResult = priceCalculator.calculate(reservations, discountPolicy, paymentDiscountPolicy, point, paymentMethod)
 
         outputView.printFinalPrice(paymentResult.totalPrice)
-        return paymentResult
+        return Pair(paymentResult, paymentMethod)
     }
 
     private fun confirmAndComplete(
         reservations: Reservations,
         paymentResult: PaymentResult,
+        paymentMethod: PaymentMethod,
     ) {
         val confirm = executeWithRetry { inputView.confirmPayment() }
 
         if (confirm) {
+            onReservationComplete(reservations, paymentResult, paymentMethod)
             outputView.printComplete(
                 reservations,
                 paymentResult.totalPrice,
@@ -88,7 +95,7 @@ class MovieController(
 
     private fun selectPaymentMethod(): PaymentMethod {
         val input = executeWithRetry { inputView.inputPayment() }
-        return PaymentMethod.from(input)
+        return PaymentMethodInputParser.parse(input)
     }
 
     // 예매 로직

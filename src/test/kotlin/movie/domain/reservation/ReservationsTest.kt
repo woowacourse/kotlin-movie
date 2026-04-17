@@ -18,8 +18,7 @@ import movie.domain.seat.SelectedSeats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 class ReservationsTest {
     @Test
@@ -38,11 +37,11 @@ class ReservationsTest {
 
         val screening =
             Screening(
+                1L,
                 Screen(1, SeatsData.seats),
                 ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(13, 0),
-                    LocalTime.of(14, 0),
+                    LocalDateTime.of(2026, 1, 1, 13, 0),
+                    LocalDateTime.of(2026, 1, 1, 14, 0),
                 ),
                 ReservedSeats(
                     Seats(
@@ -54,7 +53,7 @@ class ReservationsTest {
                     ),
                 ),
             )
-        val movie = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening)))
+        val movie = Movie(id = 1, title = "F1 더 무비", screenings = Screenings(listOf(screening)))
         val addedReservation = Reservation(movie, screening, selectedSeats)
         val reservations = Reservations(reservationData)
 
@@ -80,11 +79,11 @@ class ReservationsTest {
 
         val screening =
             Screening(
+                1L,
                 Screen(1, SeatsData.seats),
                 ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(13, 0),
+                    LocalDateTime.of(2026, 1, 1, 10, 0),
+                    LocalDateTime.of(2026, 1, 1, 13, 0),
                 ),
                 ReservedSeats(
                     Seats(
@@ -96,7 +95,7 @@ class ReservationsTest {
                     ),
                 ),
             )
-        val movie = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening)))
+        val movie = Movie(id = 1, title = "F1 더 무비", screenings = Screenings(listOf(screening)))
         val addedReservation = Reservation(movie, screening, selectedSeats)
         val reservations = Reservations(reservationData)
 
@@ -124,28 +123,28 @@ class ReservationsTest {
 
         val screening1 =
             Screening(
+                1L,
                 screen,
                 ScreeningDateTime(
-                    LocalDate.of(2026, 1, 10),
-                    LocalTime.of(12, 0),
-                    LocalTime.of(14, 0),
+                    LocalDateTime.of(2026, 1, 10, 12, 0),
+                    LocalDateTime.of(2026, 1, 10, 14, 0),
                 ),
                 ReservedSeats(Seats(emptySet())),
             )
 
         val screening2 =
             Screening(
+                2L,
                 screen,
                 ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(9, 0),
-                    LocalTime.of(12, 0),
+                    LocalDateTime.of(2026, 1, 1, 9, 0),
+                    LocalDateTime.of(2026, 1, 1, 12, 0),
                 ),
                 ReservedSeats(Seats(emptySet())),
             )
 
-        val movie1 = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
-        val movie2 = Movie(title = "토이 스토리", screenings = Screenings(listOf(screening2)))
+        val movie1 = Movie(id = 1, title = "F1 더 무비", screenings = Screenings(listOf(screening1)))
+        val movie2 = Movie(id = 2, title = "토이 스토리", screenings = Screenings(listOf(screening2)))
 
         val reservations =
             Reservations(

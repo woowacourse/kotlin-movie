@@ -14,8 +14,7 @@ import movie.domain.seat.Seats
 import movie.domain.seat.SelectedSeats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 class ReservationTest {
     @Test
@@ -33,11 +32,11 @@ class ReservationTest {
 
         val screening =
             Screening(
+                1L,
                 Screen(1, SeatsData.seats),
                 ScreeningDateTime(
-                    LocalDate.of(2026, 1, 1),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
+                    LocalDateTime.of(2026, 1, 1, 10, 0),
+                    LocalDateTime.of(2026, 1, 1, 12, 0),
                 ),
                 ReservedSeats(
                     Seats(
@@ -49,7 +48,7 @@ class ReservationTest {
                     ),
                 ),
             )
-        val movie = Movie(title = "F1 더 무비", screenings = Screenings(listOf(screening)))
+        val movie = Movie(id = 1, title = "F1 더 무비", screenings = Screenings(listOf(screening)))
         val reservation = Reservation(movie, screening, selectedSeats)
 
         // when

@@ -9,25 +9,23 @@ import movie.domain.seat.ReservedSeats
 import movie.domain.seat.Seats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalTime
-import java.util.UUID
+import java.time.LocalDateTime
 
 class MovieTest {
     @Test
     fun `영화 ID와 제목, 상영 목록을 갖고 있다`() {
         // given
-        val id = UUID.randomUUID()
+        val id = 1L
         val screenings =
             Screenings(
                 listOf(
                     Screening(
+                        1L,
                         screen = Screen(1, SeatsData.seats),
                         screeningDateTime =
                             ScreeningDateTime(
-                                LocalDate.of(2026, 4, 9),
-                                LocalTime.of(10, 20),
-                                LocalTime.of(13, 0),
+                                LocalDateTime.of(2026, 4, 9, 10, 20),
+                                LocalDateTime.of(2026, 4, 9, 13, 0),
                             ),
                         reservedSeats = ReservedSeats(Seats(emptySet())),
                     ),

@@ -3,10 +3,9 @@ package movie.domain.movie
 import movie.domain.screening.Screening
 import movie.domain.screening.Screenings
 import java.time.LocalDate
-import java.util.UUID
 
 data class Movie(
-    val id: UUID = UUID.randomUUID(),
+    val id: Long,
     val title: String,
     val screenings: Screenings,
 ) {

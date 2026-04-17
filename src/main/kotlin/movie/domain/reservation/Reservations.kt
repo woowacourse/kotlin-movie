@@ -19,7 +19,7 @@ class Reservations(
             val discounted =
                 discountPolicy.applyDiscount(
                     reservation.calculatePrice(),
-                    screeningDateTime.date.atTime(screeningDateTime.startTime),
+                    screeningDateTime.startAt,
                 )
             price += discounted
         }
