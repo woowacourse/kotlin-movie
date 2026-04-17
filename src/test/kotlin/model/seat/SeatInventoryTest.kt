@@ -1,5 +1,6 @@
 package model.seat
 
+import api.exception.SeatAlreadyReservedException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -25,7 +26,7 @@ class SeatInventoryTest {
 
         val reservedInventory = seatInventory.reserveSeats(seatNames)
 
-        assertThrows<IllegalArgumentException> {
+        assertThrows<SeatAlreadyReservedException> {
             reservedInventory.reserveSeats(seatNames)
         }
     }

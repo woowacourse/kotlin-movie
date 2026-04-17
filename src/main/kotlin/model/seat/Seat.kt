@@ -1,5 +1,7 @@
 package model.seat
 
+import api.exception.SeatAlreadyReservedException
+
 data class Seat(
     val row: String,
     val column: Int,
@@ -9,7 +11,7 @@ data class Seat(
     fun getSeatName(): String = "$row$column"
 
     fun reserve(): Seat {
-        require(!isReserved) { "이미 예약된 좌석입니다" }
+        if (isReserved) throw SeatAlreadyReservedException()
         return copy(
             isReserved = true,
         )

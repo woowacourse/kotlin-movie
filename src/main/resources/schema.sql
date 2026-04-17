@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS MOVIE (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    running_time INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
+);
+
+-- 2. 상영 일정
+CREATE TABLE IF NOT EXISTS SCREENING (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    movie_id BIGINT NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES MOVIE (id)
+);
+
+-- 3. 예매 내역
+CREATE TABLE IF NOT EXISTS RESERVATION (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    payment_method VARCHAR(50) NOT NULL,
+    used_point INT DEFAULT 0,
+    total_price INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. 예매 상세 (예약된 좌석 하나당 행 하나)
+CREATE TABLE IF NOT EXISTS RESERVATION_ITEM (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    reservation_id BIGINT NOT NULL,
+    screening_id BIGINT NOT NULL,
+    seat_name VARCHAR(10) NOT NULL,
+    FOREIGN KEY (reservation_id) REFERENCES RESERVATION (id),
+    FOREIGN KEY (screening_id) REFERENCES SCREENING (id),
+    UNIQUE (screening_id, seat_name)
+);

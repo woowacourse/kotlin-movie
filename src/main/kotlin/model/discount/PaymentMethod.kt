@@ -1,6 +1,6 @@
 package model.discount
 
 enum class PaymentMethod {
-    CARD,
+    CREDIT_CARD,
     CASH,
 }

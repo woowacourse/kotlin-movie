@@ -1,4 +1,4 @@
-package view
+package console.view
 
 import model.cart.Cart
 import model.cart.CartItem

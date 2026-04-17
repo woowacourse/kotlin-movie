@@ -23,7 +23,7 @@ class PayDiscountBenefitsTest {
     fun `총 금액 계산 시 결제 수단 할인은 포인트 할인 후 금액에 적용된다`() {
         val moviePrice = Price(42_000)
         val usePoint = 2000
-        val paymentMethod = PaymentMethod.CARD
+        val paymentMethod = PaymentMethod.CREDIT_CARD
 
         val totalPrice =
             PayDiscountBenefits(

@@ -1,6 +1,7 @@
-package controller
+package console.controller
 
-import model.MockData
+import console.view.InputView
+import console.view.OutputView
 import model.cart.Cart
 import model.cart.CartItem
 import model.discount.PaymentMethod
@@ -12,16 +13,18 @@ import model.discount.reserveDiscountPolicy.MovieDiscountPolicy
 import model.discount.reserveDiscountPolicy.TimeDiscountPolicy
 import model.movie.Movie
 import model.schedule.Screening
-import view.InputView
-import view.OutputView
+import repository.MovieRepository
+import repository.ReservationRepository
+import repository.ScreeningRepository
 import java.time.LocalDate
 
 class MovieController {
     val inputView = InputView()
     val outputView = OutputView()
 
-    val movies = MockData.movies
-    var schedule = MockData.mockSchedule
+    val screeningRepository = ScreeningRepository()
+    val reservationRepository = ReservationRepository(screeningRepository)
+    val movieRepository = MovieRepository()
     var cart = Cart()
 
     fun checkMovieReserve(): Boolean {
@@ -48,7 +51,7 @@ class MovieController {
     fun searchMovie(): Movie =
         try {
             val input = inputView.movieTitleInput()
-            movies.getMovie(input)
+            movieRepository.findByTitle(input)
         } catch (e: IllegalArgumentException) {
             outputView.printErrorMessage(e.message.toString())
             searchMovie()
@@ -71,7 +74,8 @@ class MovieController {
 
         return try {
             val date = inputDate()
-            screenings = schedule.getScreeningsByMovieAndDate(movie = movie, date = date)
+            screenings = screeningRepository.findByMovieAndDate(movie = movie, date = date)
+            if (screenings.isEmpty()) throw IllegalArgumentException("해당 날짜에 상영 중인 영화가 없습니다.")
             outputView.printScreenings(screenings)
             return selectMovieTime(cart, screenings)
         } catch (e: IllegalArgumentException) {
@@ -123,11 +127,6 @@ class MovieController {
                 outputView.printErrorMessage(e.message.toString())
             }
         }
-        schedule =
-            schedule.updateScreening(
-                selectedScreening,
-                reservedScreening,
-            )
 
         return CartItem(
             reservedScreening,
@@ -210,11 +209,13 @@ class MovieController {
         outputView.printTotalPrice(totalPrice.value)
 
         if (checkPayment()) {
-            outputView.printReservationComplete(
-                cart,
-                totalPrice.value,
-                usePoint,
+            reservationRepository.save(
+                cart = cart,
+                paymentMethod = paymentMethod,
+                usedPoint = usePoint,
+                totalPrice = totalPrice.value,
             )
+            outputView.printReservationComplete(cart, totalPrice.value, usePoint)
         }
     }
 }

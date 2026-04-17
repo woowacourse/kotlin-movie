@@ -9,7 +9,7 @@ class PaymentPayDiscountPolicy(
     override fun calculatePrice(price: Price): Price =
         Price(
             when (paymentMethod) {
-                PaymentMethod.CARD -> (price.value * 0.95).toInt()
+                PaymentMethod.CREDIT_CARD -> (price.value * 0.95).toInt()
                 PaymentMethod.CASH -> (price.value * 0.98).toInt()
             },
         )
