@@ -1,9 +1,9 @@
 package domain.model.schedule
 
-import domain.model.Movie
+import domain.model.movie.Movie
 import domain.model.screeningschedule.Screening
 import domain.model.screeningschedule.ScreeningSchedule
-import domain.model.screeningschedule.ScreeningTemplate
+import domain.model.screeningschedule.policy.ScreenPeriod
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import domain.model.seat.SeatStatus
@@ -22,20 +22,12 @@ class ScreeningScheduleTest {
     ): ScreeningSchedule =
         ScreeningSchedule(
             movies = movies,
-            screeningPeriodStart = periodStart,
-            screeningPeriodEnd = periodEnd,
+            screenPeriod =
+                ScreenPeriod(
+                    screeningPeriodStart = periodStart,
+                    screeningPeriodEnd = periodEnd,
+                ),
             screenings = screenings,
-        )
-
-    private fun sample(
-        movieTitle: String,
-        date: LocalDate,
-        time: LocalTime,
-    ): ScreeningTemplate =
-        ScreeningTemplate(
-            movieTitle = movieTitle,
-            screeningDate = date,
-            startTime = time,
         )
 
     private fun screening(
@@ -46,7 +38,7 @@ class ScreeningScheduleTest {
         Screening(
             screeningDate = date,
             startTime = startTime,
-            movie = testMovies().first { movie -> movie.title == movieTitle },
+            movie = testMovies().first { movie -> movie.findMovieTitle() == movieTitle },
         )
 
     private fun testMovies(): List<Movie> =
@@ -202,7 +194,7 @@ class ScreeningScheduleTest {
                 startTime = LocalTime.of(11, 0),
             )
 
-        assertThat(screening.movie.title).isEqualTo("탑건: 매버릭")
+        assertThat(screening.movie.findMovieTitle()).isEqualTo("탑건: 매버릭")
         assertThat(screening.startTime).isEqualTo(LocalTime.of(11, 0))
         assertThat(screening.endTime).isEqualTo(LocalTime.of(13, 10))
     }
@@ -270,35 +262,5 @@ class ScreeningScheduleTest {
             )
 
         assertThat(created.startTime).isEqualTo(LocalTime.of(12, 10))
-    }
-
-    @Test
-    fun `withSamples의 샘플에 없는 영화 제목이 있으면 예외가 발생한다`() {
-        assertThrows(IllegalArgumentException::class.java) {
-            ScreeningSchedule.withSamples(
-                screeningPeriodStart = LocalDate.of(2026, 4, 6),
-                screeningPeriodEnd = LocalDate.of(2026, 4, 13),
-                movies = testMovies(),
-                samples =
-                    listOf(
-                        sample("없는 영화", LocalDate.of(2026, 4, 6), LocalTime.of(10, 0)),
-                    ),
-            )
-        }
-    }
-
-    @Test
-    fun `withSamples의 샘플 날짜가 상영 기간 밖이면 예외가 발생한다`() {
-        assertThrows(IllegalArgumentException::class.java) {
-            ScreeningSchedule.withSamples(
-                screeningPeriodStart = LocalDate.of(2026, 4, 6),
-                screeningPeriodEnd = LocalDate.of(2026, 4, 13),
-                movies = testMovies(),
-                samples =
-                    listOf(
-                        sample("탑건: 매버릭", LocalDate.of(2026, 4, 20), LocalTime.of(10, 0)),
-                    ),
-            )
-        }
     }
 }

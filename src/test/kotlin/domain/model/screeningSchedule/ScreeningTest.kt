@@ -1,6 +1,6 @@
 package domain.model.screeningschedule
 
-import domain.model.Movie
+import domain.model.movie.Movie
 import domain.model.seat.RowLabel
 import domain.model.seat.Seat
 import domain.model.seat.SeatStatus

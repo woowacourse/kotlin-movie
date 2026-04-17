@@ -1,23 +1,26 @@
 package domain.model.screeningschedule.policy
 
 import domain.model.screeningschedule.Screening
-import java.time.LocalDate
 
 class DefaultScreeningCreationPolicy : ScreeningCreationPolicy {
     override fun validate(
         candidate: Screening,
         existing: List<Screening>,
-        periodStart: LocalDate,
-        periodEnd: LocalDate,
+        screenPeriod: ScreenPeriod,
     ) {
-        require(!candidate.screeningDate.isBefore(periodStart) && !candidate.screeningDate.isAfter(periodEnd)) {
+        require(
+            !candidate.screeningDate.isBefore(screenPeriod.screeningPeriodStart) &&
+                !candidate.screeningDate.isAfter(
+                    screenPeriod.screeningPeriodEnd,
+                ),
+        ) {
             "상영 기간 밖의 날짜입니다."
         }
 
         val hasOverlapForSameMovie =
             existing
                 .filter { screening ->
-                    screening.isForMovie(candidate.movie.title)
+                    screening.isForMovie(candidate.movie.findMovieTitle())
                 }.any { screening ->
                     screening.overlapsWith(candidate)
                 }
