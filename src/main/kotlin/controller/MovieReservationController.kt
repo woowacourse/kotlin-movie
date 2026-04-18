@@ -9,6 +9,7 @@ import model.reservation.Reservation
 import model.reservation.Reservations
 import model.screening.Screening
 import model.screening.Screenings
+import repository.ReservationRepository
 import view.InputView
 import view.OutputView
 
@@ -16,6 +17,7 @@ class MovieReservationController(
     private val scheduler: Scheduler,
     private val inputView: InputView,
     private val outputView: OutputView,
+    private val reservationRepository: ReservationRepository,
 ) {
     fun run() {
         // 예매 시작
@@ -42,6 +44,8 @@ class MovieReservationController(
         // 결제하실?
         val isPaymentConfirmation = retryUntilValid { inputView.readPaymentConfirmation() }
         if (!isPaymentConfirmation) return
+
+        reservationRepository.save(reservations)
 
         // 예매 완료 전체 출력
         outputView.printReceipt(reservations, payResult)

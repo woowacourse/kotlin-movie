@@ -14,15 +14,15 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class Scheduler {
+open class Scheduler {
     private val screenings = Screenings(createScreenings())
 
-    fun getScreenings(
+    open fun getScreenings(
         movie: Movie,
         date: LocalDate,
     ): Screenings = screenings.findBy(movie, date)
 
-    fun getMovies(): Movies = Movies(listOf(F1_THE_MOVIE, TOY_STORY, IRON_MAN))
+    open fun getMovies(): Movies = Movies(listOf(F1_THE_MOVIE, TOY_STORY, IRON_MAN))
 
     companion object {
         private val F1_THE_MOVIE =

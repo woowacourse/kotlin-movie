@@ -12,8 +12,9 @@ class Screening(
     val movie: Movie,
     val startDateTime: LocalDateTime,
     val screen: Screen,
+    reservedSeatNumbers: Set<SeatNumber> = emptySet(),
 ) {
-    private val reservedSeatNumbers: MutableSet<SeatNumber> = mutableSetOf()
+    private val reservedSeatNumbers: MutableSet<SeatNumber> = reservedSeatNumbers.toMutableSet()
 
     val endDateTime: LocalDateTime
         get() = startDateTime.plusMinutes(movie.runningTime.minute)
