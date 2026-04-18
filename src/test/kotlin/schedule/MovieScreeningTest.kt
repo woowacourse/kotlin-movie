@@ -19,12 +19,14 @@ class MovieScreeningTest {
     fun `영화, 상영관, 기간이 같은 일정은 동일한 일정으로 판단한다`() {
         assertThat(
             MovieScreening(
+                screenId = 1,
                 movie = oneHourMovie,
                 screenTime = oneHourScreenTime,
                 seatGroup = SeatGroup(emptyList()),
             ),
         ).isEqualTo(
             MovieScreening(
+                screenId = 1,
                 movie = oneHourMovie,
                 screenTime = oneHourScreenTime,
                 seatGroup = SeatGroup(emptyList()),
@@ -36,6 +38,7 @@ class MovieScreeningTest {
     fun `배정된 시간의 길이가 영화의 러닝타임과 일치하지 않으면 에외를 발생시킨다`() {
         assertThatThrownBy {
             MovieScreening(
+                screenId = 1,
                 movie = oneHourMovie,
                 screenTime =
                     CinemaTimeRange(
@@ -51,6 +54,7 @@ class MovieScreeningTest {
     fun `배정된 시간의 길이가 영화의 러닝타임과 일치하면 예외를 발생시키지 않는다`() {
         assertThatCode {
             MovieScreening(
+                screenId = 1,
                 movie = oneHourMovie,
                 screenTime =
                     CinemaTimeRange(

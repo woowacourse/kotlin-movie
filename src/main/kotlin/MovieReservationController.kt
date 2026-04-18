@@ -3,18 +3,33 @@ import model.reservation.MovieReservationGroup
 import model.schedule.CinemaSchedule
 import model.schedule.MovieSchedule
 import model.schedule.MovieScreening
+import model.schedule.ScreenSchedule
 import model.seat.SeatColumn
 import model.seat.SeatPosition
 import model.seat.SeatRow
 import model.time.CinemaTime
+import model.time.CinemaTimeRange
 import view.InputView
 import view.MovieReservationResultDto
 import view.OutputView
+import java.time.LocalDateTime
 import java.time.format.DateTimeParseException
 
 class MovieReservationController(
-    private val cinemaSchedule: CinemaSchedule,
+    private val movieRepository: MovieRepository,
+    serviceTime: CinemaTimeRange,
 ) {
+    private val cinemaSchedule =
+        CinemaSchedule(
+            movieRepository.getAllMovieScreenings().groupBy { it.screenId }.map { (screenId, movieScreenings) ->
+                ScreenSchedule(
+                    screenId = screenId.toString(),
+                    servicePeriod = serviceTime,
+                    movieScreenings = movieScreenings,
+                )
+            },
+        )
+
     fun handleMovieReservations(
         initialMovieReservationGroup: MovieReservationGroup = MovieReservationGroup(emptySet()),
     ): MovieReservationGroup {
@@ -48,10 +63,9 @@ class MovieReservationController(
     private fun getMovieScheduleByName(): MovieSchedule {
         while (true) {
             try {
-                val movieName = MovieName(InputView.getMovieName())
-                val movieSchedule = cinemaSchedule[movieName]
-                if (movieSchedule.isEmpty()) throw IllegalArgumentException("해당하는 영화가 없습니다.")
-                return movieSchedule
+                val movieScreening = cinemaSchedule[MovieName(InputView.getMovieName())]
+                if (movieScreening.isEmpty()) throw IllegalArgumentException("해당하는 영화가 없습니다.")
+                return movieScreening
             } catch (err: IllegalArgumentException) {
                 OutputView.showErrorMessage(err.message ?: "알 수 없는 오류가 발생했습니다.")
             }
@@ -80,7 +94,7 @@ class MovieReservationController(
         while (true) {
             try {
                 val sortedMovieTimeTable = movieSchedule.getAllMovieStartTime().sorted()
-                val movieScreeningNumber = InputView.selectMovieScreening(sortedMovieTimeTable)
+                val movieScreeningNumber = InputView.selectMovieScreening(sortedMovieTimeTable) - 1
                 require(movieScreeningNumber in sortedMovieTimeTable.indices) { "잘못된 입력입니다" }
                 val reserveTime = CinemaTime(sortedMovieTimeTable[movieScreeningNumber])
                 val movieScreening = movieSchedule[reserveTime]
@@ -116,6 +130,17 @@ class MovieReservationController(
                     }
                 val finalMovieReservationGroup =
                     seatPositions.fold(movieReservationGroup) { group, seatPosition ->
+                        require(
+                            !movieRepository.isReservedSeat(
+                                movieScreening.info.split(":").first(),
+                                LocalDateTime.parse(
+                                    movieScreening.info.substringAfter(":"),
+                                ),
+                                seatPosition.getName().split(":").first(),
+                            ),
+                        ) {
+                            "이미 예약된 좌석입니다. 다른 좌석을 선택해 주세요"
+                        }
                         group.reserveSeat(
                             movieScreening = movieScreening,
                             seatPosition = seatPosition,
