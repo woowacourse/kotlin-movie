@@ -1,243 +1,143 @@
 import model.CinemaKiosk
 import model.CinemaTime
 import model.CinemaTimeRange
-import model.MovieReservationResult
-import model.movie.Movie
-import model.movie.MovieId
-import model.movie.MovieName
+import model.fixture.MovieFixture
 import model.movie.RunningTime
-import model.schedule.CinemaSchedule
+import model.reservation.MovieReservationResult
 import model.schedule.MovieScreening
-import model.schedule.ScreenSchedule
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
 import model.seat.SeatGroup
 import model.seat.SeatRow
-import model.seat.SeatState
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
-@OptIn(ExperimentalUuidApi::class)
 class CinemaKioskTest {
-    private lateinit var movieOne: Movie
-    private lateinit var movieTwo: Movie
-    private lateinit var idOne: String
-    private lateinit var idTwo: String
+    private lateinit var cinemaKiosk: CinemaKiosk
+    private lateinit var seatGroup: SeatGroup
 
     @BeforeEach
     fun setUp() {
-        movieOne =
-            Movie(
-                name = MovieName("혼자사는남자"),
-                id = MovieId(Uuid.generateV7()),
-                runningTime = RunningTime(60),
+        cinemaKiosk = CinemaKiosk()
+        seatGroup =
+            SeatGroup(
+                listOf(
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.S),
+                    Seat(SeatRow("A"), SeatColumn(2), SeatGrade.A),
+                    Seat(SeatRow("B"), SeatColumn(1), SeatGrade.B),
+                    Seat(SeatRow("B"), SeatColumn(2), SeatGrade.S),
+                ),
             )
-
-        movieTwo =
-            Movie(
-                name = MovieName("혼자사는남자"),
-                id = MovieId(Uuid.generateV7()),
-                runningTime = RunningTime(100),
-            )
-
-        idOne = "1"
-        idTwo = "2"
     }
 
-    @Test
-    fun `동일한 시간에 예약을 했다면 예약 실패 결과를 반환한다`() {
-        val screenSchedules =
-            listOf(
-                ScreenSchedule(
-                    screenId = "1",
-                    servicePeriod =
-                        CinemaTimeRange(
-                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
-                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
-                        ),
-                    movieScreenings =
-                        listOf(
-                            MovieScreening(
-                                movie = movieOne,
-                                screenTime =
-                                    CinemaTimeRange(
-                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
-                                    ),
-                                seatGroup =
-                                    SeatGroup(
-                                        listOf(
-                                            Seat(
-                                                row = SeatRow("A"),
-                                                column = SeatColumn(2),
-                                                state = SeatState.AVAILABLE,
-                                                grade = SeatGrade.A,
-                                            ),
-                                        ),
-                                    ),
-                            ),
-                        ),
-                ),
-                ScreenSchedule(
-                    screenId = "2",
-                    servicePeriod =
-                        CinemaTimeRange(
-                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
-                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
-                        ),
-                    movieScreenings =
-                        listOf(
-                            MovieScreening(
-                                movie = movieTwo,
-                                screenTime =
-                                    CinemaTimeRange(
-                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 40)),
-                                    ),
-                                seatGroup =
-                                    SeatGroup(
-                                        listOf(
-                                            Seat(
-                                                row = SeatRow("A"),
-                                                column = SeatColumn(2),
-                                                state = SeatState.AVAILABLE,
-                                                grade = SeatGrade.A,
-                                            ),
-                                        ),
-                                    ),
-                            ),
-                        ),
-                ),
-            )
-
-        val cinemaKiosk =
-            CinemaKiosk(
-                cinemaSchedule =
-                    CinemaSchedule(
-                        screenSchedules = screenSchedules,
-                    ),
-            )
-
-        cinemaKiosk.reserve(
-            MovieScreening(
-                movie = movieOne,
-                screenTime =
-                    CinemaTimeRange(
-                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
-                    ),
-                seatGroup =
-                    SeatGroup(
-                        listOf(
-                            Seat(
-                                row = SeatRow("A"),
-                                column = SeatColumn(2),
-                                state = SeatState.AVAILABLE,
-                                grade = SeatGrade.A,
-                            ),
-                        ),
-                    ),
-            ),
-            seatRow = SeatRow("A"),
-            seatColumn = SeatColumn(2),
+    private fun createScreening(
+        runningTimeMinutes: Int = 60,
+        startHour: Int = 11,
+        startMinute: Int = 0,
+        seatGroup: SeatGroup = this.seatGroup,
+    ): MovieScreening {
+        val start = LocalDateTime.of(2026, 4, 17, startHour, startMinute)
+        val end = start.plusMinutes(runningTimeMinutes.toLong())
+        return MovieScreening(
+            movie = MovieFixture.create(runningTime = RunningTime(runningTimeMinutes)),
+            screenTime = CinemaTimeRange(CinemaTime(start), CinemaTime(end)),
+            seatGroup = seatGroup,
         )
-
-        assertThat(
-            cinemaKiosk.reserve(
-                MovieScreening(
-                    movie = movieTwo,
-                    screenTime =
-                        CinemaTimeRange(
-                            start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                            end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 40)),
-                        ),
-                    seatGroup =
-                        SeatGroup(
-                            listOf(
-                                Seat(
-                                    row = SeatRow("A"),
-                                    column = SeatColumn(2),
-                                    state = SeatState.AVAILABLE,
-                                    grade = SeatGrade.A,
-                                ),
-                            ),
-                        ),
-                ),
-                seatRow = SeatRow("A"),
-                seatColumn = SeatColumn(2),
-            ),
-        ).isEqualTo(MovieReservationResult.Failed)
     }
 
     @Test
-    fun `같은 영화 상영 일정에 두 번 이상 예약이 가능하다`() {
-        val screenSchedules =
-            listOf(
-                ScreenSchedule(
-                    screenId = idOne,
-                    servicePeriod =
-                        CinemaTimeRange(
-                            CinemaTime(LocalDateTime.of(1999, 4, 7, 21, 50)),
-                            CinemaTime(LocalDateTime.of(2026, 4, 10, 22, 50)),
-                        ),
-                    movieScreenings =
-                        listOf(
-                            MovieScreening(
-                                movie = movieOne,
-                                screenTime =
-                                    CinemaTimeRange(
-                                        start = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-                                        end = CinemaTime(LocalDateTime.of(2026, 4, 8, 12, 0)),
-                                    ),
-                                seatGroup =
-                                    SeatGroup(
-                                        listOf(
-                                            Seat(
-                                                row = SeatRow("A"),
-                                                column = SeatColumn(1),
-                                                state = SeatState.AVAILABLE,
-                                                grade = SeatGrade.A,
-                                            ),
-                                            Seat(
-                                                row = SeatRow("A"),
-                                                column = SeatColumn(2),
-                                                state = SeatState.AVAILABLE,
-                                                grade = SeatGrade.A,
-                                            ),
-                                        ),
-                                    ),
-                            ),
-                        ),
-                ),
-            )
+    fun `좌석 예약에 성공하면 Success를 반환한다`() {
+        val screening = createScreening()
+        val result = cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(1))
+        assertThat(result).isInstanceOf(MovieReservationResult.Success::class.java)
+    }
 
-        val cinemaKiosk =
-            CinemaKiosk(
-                cinemaSchedule =
-                    CinemaSchedule(
-                        screenSchedules = screenSchedules,
-                    ),
-            )
+    @Test
+    fun `예약 성공 시 reserveResults에 추가된다`() {
+        val screening = createScreening()
+        cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(1))
+        assertThat(cinemaKiosk.reserveResults).hasSize(1)
+    }
 
-//        cinemaKiosk.reserve(
-//            movieName = MovieName("혼자사는남자"),
-//            startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-//            seatRow = SeatRow("A"),
-//            seatColumn = SeatColumn(1),
-//        )
-//
-//        assertThat(
-//            cinemaKiosk.reserve(
-//                movieName = MovieName("혼자사는남자"),
-//                startTime = CinemaTime(LocalDateTime.of(2026, 4, 8, 11, 0)),
-//                seatRow = SeatRow("A"),
-//                seatColumn = SeatColumn(2),
-//            ),
-//        ).isNotEqualTo(MovieReservationResult.Failed)
+    @Test
+    fun `초기 상태에서 reserveResults는 비어있다`() {
+        assertThat(cinemaKiosk.reserveResults).isEmpty()
+    }
+
+    @Test
+    fun `이미 예약된 좌석에 예약하면 Failed를 반환한다`() {
+        val screening = createScreening()
+        cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(1))
+        val result = cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(1))
+        assertThat(result).isEqualTo(MovieReservationResult.Failed)
+    }
+
+    @Test
+    fun `시간대가 겹치는 다른 상영에 예약하면 Failed를 반환한다`() {
+        val screening1 = createScreening(runningTimeMinutes = 60, startHour = 11)
+        val screening2 = createScreening(runningTimeMinutes = 100, startHour = 11)
+        cinemaKiosk.reserve(screening1, SeatRow("A"), SeatColumn(1))
+        val result = cinemaKiosk.reserve(screening2, SeatRow("A"), SeatColumn(1))
+        assertThat(result).isEqualTo(MovieReservationResult.Failed)
+    }
+
+    @Test
+    fun `시간대가 겹치지 않는 다른 상영에는 예약할 수 있다`() {
+        val screening1 = createScreening(runningTimeMinutes = 60, startHour = 11)
+        val screening2 = createScreening(runningTimeMinutes = 60, startHour = 15)
+        cinemaKiosk.reserve(screening1, SeatRow("A"), SeatColumn(1))
+        val result = cinemaKiosk.reserve(screening2, SeatRow("A"), SeatColumn(1))
+        assertThat(result).isInstanceOf(MovieReservationResult.Success::class.java)
+    }
+
+    @Test
+    fun `여러 좌석을 한 번에 예약하면 모두 성공한다`() {
+        val screening = createScreening()
+        val results =
+            cinemaKiosk.reserveSeats(
+                movieScreening = screening,
+                selectedSeats = listOf(SeatRow("A") to SeatColumn(1), SeatRow("A") to SeatColumn(2)),
+            )
+        assertThat(results).hasSize(2)
+    }
+
+    @Test
+    fun `여러 좌석 예약 중 실패하면 이전 성공 좌석도 취소되고 예외가 발생한다`() {
+        val screening = createScreening()
+        cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(2))
+
+        assertThatThrownBy {
+            cinemaKiosk.reserveSeats(
+                movieScreening = screening,
+                selectedSeats = listOf(SeatRow("A") to SeatColumn(1), SeatRow("A") to SeatColumn(2)),
+            )
+        }.isInstanceOf(IllegalArgumentException::class.java)
+    }
+
+    @Test
+    fun `여러 좌석 예약 실패 시 좌석을 다시 예약할 수 있다`() {
+        val screening = createScreening()
+        cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(2))
+        runCatching {
+            cinemaKiosk.reserveSeats(
+                movieScreening = screening,
+                selectedSeats = listOf(SeatRow("A") to SeatColumn(1), SeatRow("A") to SeatColumn(2)),
+            )
+        }
+        val result = cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(1))
+        assertThat(result).isInstanceOf(MovieReservationResult.Success::class.java)
+    }
+
+    @Test
+    fun `취소 후 해당 좌석을 다시 예약할 수 있다`() {
+        val screening = createScreening()
+        cinemaKiosk.reserve(screening, SeatRow("A"), SeatColumn(1))
+        cinemaKiosk.cancelReservations(screening, listOf(SeatRow("A") to SeatColumn(1)))
+        val result = screening.reserve(SeatRow("A"), SeatColumn(1))
+        assertThat(result).isInstanceOf(MovieReservationResult.Success::class.java)
     }
 }

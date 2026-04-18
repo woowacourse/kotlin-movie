@@ -1,41 +1,28 @@
 package model
 
-import model.schedule.CinemaSchedule
+import model.reservation.MovieReservationResult
+import model.reservation.Reservations
 import model.schedule.MovieScreening
 import model.seat.SeatColumn
 import model.seat.SeatRow
 
-class CinemaKiosk(
-    val cinemaSchedule: CinemaSchedule,
-) {
-    private val _reserveResults: MutableList<MovieReservationResult.Success> = mutableListOf()
-    val reserveResults: List<MovieReservationResult.Success> get() = _reserveResults.toList()
+class CinemaKiosk {
+    private val reservations = Reservations()
+    val reserveResults: List<MovieReservationResult.Success> get() = reservations.all
 
     fun reserve(
         movieScreening: MovieScreening,
         seatRow: SeatRow,
         seatColumn: SeatColumn,
     ): MovieReservationResult {
-        val seat = movieScreening.getSeat(seatRow, seatColumn) ?: return MovieReservationResult.Failed
-        if (_reserveResults.any {
-                it.screenTime != movieScreening.screenTime &&
-                    it.screenTime.overlaps(movieScreening.screenTime)
-            }
-        ) {
+        if (!reservations.canAccept(movieScreening)) {
             return MovieReservationResult.Failed
         }
-
-        if (seat.reserve()) {
-            val result =
-                MovieReservationResult.Success(
-                    movie = movieScreening.movie,
-                    screenTime = movieScreening.screenTime,
-                    seat = seat,
-                )
-            _reserveResults.add(result)
-            return result
+        val result = movieScreening.reserve(seatRow, seatColumn)
+        if (result is MovieReservationResult.Success) {
+            reservations.add(result)
         }
-        return MovieReservationResult.Failed
+        return result
     }
 
     fun cancelReservations(
@@ -43,7 +30,7 @@ class CinemaKiosk(
         positions: List<Pair<SeatRow, SeatColumn>>,
     ) {
         positions.forEach { (seatRow, seatColumn) ->
-            movieScreening.getSeat(seatRow, seatColumn)?.cancelReservation()
+            movieScreening.cancel(seatRow, seatColumn)
         }
     }
 

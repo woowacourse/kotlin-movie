@@ -1,5 +1,6 @@
-package model
+package model.reservation
 
+import model.CinemaTimeRange
 import model.movie.Movie
 import model.seat.Seat
 

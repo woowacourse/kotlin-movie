@@ -1,14 +1,14 @@
+import database.repository.MovieScreeningRepository
+import database.repository.ReservationRepository
 import model.CinemaKiosk
 import model.CinemaTime
-import model.MovieReservationResult
-import model.movie.Movie
-import model.movie.MovieCatalog
 import model.payment.MoviePayment
 import model.payment.PayType
-import model.payment.policy.EarlyLateDiscount
-import model.payment.policy.MovieDayDiscount
-import model.payment.policy.PayTypeDiscount
-import model.payment.policy.PointDiscount
+import model.payment.policy.discount.EarlyLateDiscount
+import model.payment.policy.discount.MovieDayDiscount
+import model.payment.policy.discount.PayTypeDiscount
+import model.payment.policy.discount.PointDiscount
+import model.reservation.MovieReservationResult
 import model.schedule.MovieScreening
 import model.schedule.onDate
 import view.InputView
@@ -16,40 +16,46 @@ import view.OutputView
 
 class CinemaController(
     val cinemaKiosk: CinemaKiosk,
-    val movieCatalog: MovieCatalog,
+    val screeningRepository: MovieScreeningRepository,
+    val reservationRepository: ReservationRepository,
 ) {
     fun run() {
         if (startReservation().not()) return
+        val reservationId = reservationRepository.createReservation()
         do {
             // 영화 예매
-            val selectedMovie = selectMovie(movieCatalog)
-            val movieScreening = getMovieSchedule(selectedMovie)
-
+            val movieScreening = selectMovieScreenings()
             // 날짜 선택하고 해당 날짜의 상영 일정 중 선택
             val selectedDate = selectDate()
             val onDateMovieScreening = movieScreening.onDate(selectedDate)
             OutputView.showMovieScreenings(onDateMovieScreening)
             val selectMovieScreening = selectMovieScreening(onDateMovieScreening)
             OutputView.showMovieSeatGroup(selectMovieScreening)
-            reserveSeats(selectMovieScreening)
+            reserveSeats(selectMovieScreening, reservationId)
         } while (InputView.askReserveMore())
         // 결제
-        processPayment()
+        processPayment(reservationId)
         OutputView.end()
     }
 
-    private fun startReservation(): Boolean = InputView.askStartReservation()
-
-    private fun selectMovie(movieCatalog: MovieCatalog): Movie {
+    private fun startReservation(): Boolean {
         while (true) {
-            val input = InputView.inputMovieName()
-            val movie = movieCatalog.findByName(input)
-            if (movie != null) return movie
-            OutputView.showInvalidMovieName()
+            try {
+                return InputView.askStartReservation()
+            } catch (e: IllegalArgumentException) {
+                OutputView.showErrorMessage(e.message)
+            }
         }
     }
 
-    private fun getMovieSchedule(movie: Movie): List<MovieScreening> = cinemaKiosk.cinemaSchedule.getMovieScreenings(movie)
+    private fun selectMovieScreenings(): List<MovieScreening> {
+        while (true) {
+            val name = InputView.inputMovieName()
+            val screenings = screeningRepository.findScreeningsByMovieName(name)
+            if (screenings != null) return screenings
+            OutputView.showInvalidMovieName()
+        }
+    }
 
     private fun selectDate(): CinemaTime {
         while (true) {
@@ -75,7 +81,10 @@ class CinemaController(
         }
     }
 
-    private fun reserveSeats(selectMovieScreening: MovieScreening): List<MovieReservationResult.Success> {
+    private fun reserveSeats(
+        selectMovieScreening: MovieScreening,
+        reservationId: Int,
+    ): List<MovieReservationResult.Success> {
         while (true) {
             try {
                 val selectSeats = InputView.selectSeats()
@@ -84,6 +93,14 @@ class CinemaController(
                         movieScreening = selectMovieScreening,
                         selectedSeats = selectSeats,
                     )
+                reservations.forEach { reservation ->
+                    val screeningId =
+                        screeningRepository.findScreeningId(
+                            name = reservation.movie.toString(),
+                            screenStart = reservation.screenTime.start.format("yyyy-MM-dd'T'HH:mm"),
+                        )
+                    reservationRepository.saveSeat(reservationId, screeningId!!, reservation.seat)
+                }
                 OutputView.showReservationInfo(reservations)
                 return reservations
             } catch (e: IllegalArgumentException) {
@@ -92,7 +109,7 @@ class CinemaController(
         }
     }
 
-    private fun processPayment() {
+    private fun processPayment(reservationId: Int) {
         while (true) {
             try {
                 OutputView.showShoppingCart(successResults = cinemaKiosk.reserveResults)
@@ -112,7 +129,16 @@ class CinemaController(
                     )
                 val finalPrice = moviePayment.getFinalPrice(payType)
                 OutputView.showTotalPrice(finalPrice)
-                askPaymentConfirm(finalPrice, point)
+                val isConfirm = askPaymentConfirm(finalPrice, point, reservationId)
+
+                if (isConfirm) {
+                    reservationRepository.updatePayment(
+                        reservationId = reservationId,
+                        totalPrice = finalPrice,
+                        usedPoint = point,
+                        payType = payType,
+                    )
+                }
                 return
             } catch (e: IllegalArgumentException) {
                 OutputView.showErrorMessage(e.message)
@@ -123,13 +149,18 @@ class CinemaController(
     private fun askPaymentConfirm(
         finalPrice: Int,
         point: Int,
-    ) {
+        reservationId: Int,
+    ): Boolean {
         if (InputView.askPaymentConfirm()) {
             OutputView.totalReservation(
                 successResults = cinemaKiosk.reserveResults,
                 price = finalPrice,
                 point = point,
             )
+            return true
         }
+
+        reservationRepository.delete(reservationId)
+        return false
     }
 }

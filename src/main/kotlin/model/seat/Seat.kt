@@ -5,35 +5,8 @@ import java.util.Objects
 class Seat(
     val row: SeatRow,
     val column: SeatColumn,
-    private var state: SeatState,
     val grade: SeatGrade,
 ) : Comparable<Seat> {
-    val price: Int =
-        when (grade) {
-            SeatGrade.S -> 18_000
-            SeatGrade.A -> 15_000
-            SeatGrade.B -> 12_000
-        }
-
-    fun reserve(): Boolean {
-        if (state == SeatState.AVAILABLE) {
-            state = SeatState.RESERVED
-            return true
-        }
-        return false
-    }
-
-    fun cancelReservation() {
-        if (state == SeatState.RESERVED) {
-            state = SeatState.AVAILABLE
-        }
-    }
-
-    fun isSameSeat(
-        row: SeatRow,
-        column: SeatColumn,
-    ): Boolean = this.row == row && this.column == column
-
     override fun equals(other: Any?): Boolean {
         if (other is Seat) {
             return row == other.row && column == other.column

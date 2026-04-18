@@ -1,6 +1,6 @@
 package view
 
-import model.MovieReservationResult
+import model.reservation.MovieReservationResult
 import model.schedule.MovieScreening
 
 object OutputView {
@@ -39,7 +39,7 @@ object OutputView {
     fun showReservationInfo(successResults: List<MovieReservationResult.Success>) {
         println(Message.SHOW_RESERVATION_INFO)
         successResults
-            .groupBy { it.movie.name to it.screenTime.start }
+            .groupBy { it.movie to it.screenTime.start }
             .forEach { (key, results) ->
                 val (movieName, startTime) = key
                 val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
@@ -50,7 +50,7 @@ object OutputView {
     fun showShoppingCart(successResults: List<MovieReservationResult.Success>) {
         println("장바구니")
         successResults
-            .groupBy { it.movie.name to it.screenTime.start }
+            .groupBy { it.movie to it.screenTime.start }
             .forEach { (key, results) ->
                 val (movieName, startTime) = key
                 val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }
@@ -71,7 +71,7 @@ object OutputView {
         println("예매 완료")
         println("내역:")
         successResults
-            .groupBy { it.movie.name to it.screenTime.start }
+            .groupBy { it.movie to it.screenTime.start }
             .forEach { (key, results) ->
                 val (movieName, startTime) = key
                 val seats = results.joinToString(", ") { "${it.seat.row}${it.seat.column}" }

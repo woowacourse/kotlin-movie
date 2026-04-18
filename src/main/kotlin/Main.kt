@@ -1,15 +1,16 @@
 @file:OptIn(ExperimentalUuidApi::class)
 
-import model.CinemaData
+import database.Database
+import database.repository.MovieScreeningRepository
+import database.repository.ReservationRepository
 import model.CinemaKiosk
-import model.schedule.CinemaSchedule
 import kotlin.uuid.ExperimentalUuidApi
 
 fun main() {
-    val screenSchedules = CinemaData.initScreenSchedule()
-    val cinemaSchedule = CinemaSchedule(screenSchedules = screenSchedules)
+    Database.init()
     CinemaController(
-        cinemaKiosk = CinemaKiosk(cinemaSchedule),
-        movieCatalog = CinemaData.initMovieCatalog(),
+        cinemaKiosk = CinemaKiosk(),
+        screeningRepository = MovieScreeningRepository(),
+        reservationRepository = ReservationRepository(),
     ).run()
 }

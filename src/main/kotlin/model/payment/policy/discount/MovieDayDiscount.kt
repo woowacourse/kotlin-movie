@@ -1,8 +1,8 @@
-package model.payment.policy
+package model.payment.policy.discount
 
-import model.MovieReservationResult
-import model.payment.DiscountPolicy
 import model.payment.PayType
+import model.payment.policy.price.PricingPolicy
+import model.reservation.MovieReservationResult
 
 class MovieDayDiscount : DiscountPolicy {
     override fun apply(
@@ -13,7 +13,10 @@ class MovieDayDiscount : DiscountPolicy {
         val discount =
             reservations
                 .filter { reservation -> MOVIE_DAYS.any { reservation.screenTime.start.isSameDayOfMonth(it) } }
-                .sumOf { (it.seat.price * MOVIE_DAY_DISCOUNT_RATE).toInt() }
+                .sumOf {
+                    val price = PricingPolicy.price(it.seat.grade)
+                    (price * MOVIE_DAY_DISCOUNT_RATE).toInt()
+                }
         return price - discount
     }
 

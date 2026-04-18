@@ -2,17 +2,16 @@ package model.payment
 
 import model.CinemaTime
 import model.CinemaTimeRange
-import model.MovieReservationResult
 import model.fixture.MovieFixture
-import model.payment.policy.EarlyLateDiscount
-import model.payment.policy.MovieDayDiscount
-import model.payment.policy.PayTypeDiscount
-import model.payment.policy.PointDiscount
+import model.payment.policy.discount.EarlyLateDiscount
+import model.payment.policy.discount.MovieDayDiscount
+import model.payment.policy.discount.PayTypeDiscount
+import model.payment.policy.discount.PointDiscount
+import model.reservation.MovieReservationResult
 import model.seat.Seat
 import model.seat.SeatColumn
 import model.seat.SeatGrade
 import model.seat.SeatRow
-import model.seat.SeatState
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -43,7 +42,6 @@ class MoviePaymentTest {
                                         row = SeatRow("A"),
                                         column = SeatColumn(1),
                                         grade = SeatGrade.A,
-                                        state = SeatState.RESERVED,
                                     ),
                             ),
                             MovieReservationResult.Success(
@@ -54,7 +52,6 @@ class MoviePaymentTest {
                                         row = SeatRow("A"),
                                         column = SeatColumn(2),
                                         grade = SeatGrade.S,
-                                        state = SeatState.RESERVED,
                                     ),
                             ),
                         ),
@@ -89,7 +86,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                         MovieReservationResult.Success(
@@ -100,7 +96,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(2),
                                     grade = SeatGrade.S,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                     ),
@@ -139,7 +134,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                         MovieReservationResult.Success(
@@ -150,7 +144,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(2),
                                     grade = SeatGrade.S,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                     ),
@@ -189,7 +182,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                         MovieReservationResult.Success(
@@ -200,7 +192,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(2),
                                     grade = SeatGrade.S,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                     ),
@@ -239,7 +230,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                     ),
@@ -277,7 +267,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                     ),
@@ -321,7 +310,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                         MovieReservationResult.Success(
@@ -332,7 +320,6 @@ class MoviePaymentTest {
                                     row = SeatRow("A"),
                                     column = SeatColumn(1),
                                     grade = SeatGrade.A,
-                                    state = SeatState.RESERVED,
                                 ),
                         ),
                     ),

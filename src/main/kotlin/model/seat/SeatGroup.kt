@@ -13,7 +13,7 @@ class SeatGroup(
         row: SeatRow,
         column: SeatColumn,
     ): Seat? {
-        val seat = seats.firstOrNull { it.isSameSeat(row, column) }
+        val seat = seats.firstOrNull { it.row == row && it.column == column }
         return seat
     }
 

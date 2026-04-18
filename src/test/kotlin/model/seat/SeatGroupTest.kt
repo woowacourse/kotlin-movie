@@ -13,7 +13,6 @@ class SeatGroupTest {
                     row = SeatRow("A"),
                     column = SeatColumn(1),
                     grade = SeatGrade.A,
-                    state = SeatState.PURCHASED,
                 ),
             )
         assertThat(
@@ -28,7 +27,6 @@ class SeatGroupTest {
                 row = SeatRow("A"),
                 column = SeatColumn(1),
                 grade = SeatGrade.A,
-                state = SeatState.PURCHASED,
             ),
         )
     }
@@ -41,13 +39,11 @@ class SeatGroupTest {
                     row = SeatRow("A"),
                     column = SeatColumn(1),
                     grade = SeatGrade.A,
-                    state = SeatState.PURCHASED,
                 ),
                 Seat(
                     row = SeatRow("A"),
                     column = SeatColumn(1),
                     grade = SeatGrade.A,
-                    state = SeatState.PURCHASED,
                 ),
             )
         assertThatThrownBy {

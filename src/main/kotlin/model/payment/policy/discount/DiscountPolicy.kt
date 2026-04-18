@@ -1,6 +1,7 @@
-package model.payment
+package model.payment.policy.discount
 
-import model.MovieReservationResult
+import model.payment.PayType
+import model.reservation.MovieReservationResult
 
 interface DiscountPolicy {
     fun apply(

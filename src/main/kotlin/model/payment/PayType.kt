@@ -1,7 +1,7 @@
 package model.payment
 
-import model.payment.DiscountPolicyObject.CASH_DISCOUNT_RATE
-import model.payment.DiscountPolicyObject.CREDIT_CARD_DISCOUNT_RATE
+private const val CREDIT_CARD_DISCOUNT_RATE = 0.05
+private const val CASH_DISCOUNT_RATE = 0.02
 
 enum class PayType(
     val id: Int,
