@@ -24,6 +24,8 @@ class Screen(
         return seat
     }
 
+    fun selectSeats(coordinates: List<SeatCoordinate>): List<Seat> = coordinates.map(::findAvailableSeat)
+
     companion object {
         const val MAX_ROW = 5
         const val MAX_COLUMN = 4

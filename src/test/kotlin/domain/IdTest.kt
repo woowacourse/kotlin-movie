@@ -8,19 +8,19 @@ import util.ErrorMessage
 
 class IdTest {
     @Test
-    fun `ID는 양수일 때 정상 생성 되어야 한다`() {
-        val result = assertDoesNotThrow { Id(1) }
+    fun `ID는 빈 값이 아닐 때 정상 생성 되어야 한다`() {
+        val result = assertDoesNotThrow { Id("movie-1") }
 
-        assertEquals(1, result.value)
+        assertEquals("movie-1", result.value)
     }
 
     @Test
-    fun `ID가 음수일 때 예외가 발생한다`() {
+    fun `ID가 빈 값이면 예외가 발생한다`() {
         val exception =
             assertThrows<IllegalArgumentException> {
-                Id(-1)
+                Id("   ")
             }
 
-        assertEquals(ErrorMessage.ID_MUST_BE_POSITIVE, exception.message)
+        assertEquals(ErrorMessage.ID_MUST_NOT_BE_BLANK, exception.message)
     }
 }

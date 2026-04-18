@@ -1,54 +1,41 @@
 package controller
 
-import domain.purchase.PaymentMethod
+import domain.purchase.Receipt
 import domain.reservation.Cart
 import domain.user.User
-import service.PaymentDiscountService
-import service.PointUsageService
-import service.PriceCalculationService
 import util.retryOnInvalidInput
 import view.InputView
 import view.OutputView
 
 class PaymentController {
-    private val priceCalculationService = PriceCalculationService()
-    private val pointUsageService = PointUsageService()
-    private val paymentDiscountService = PaymentDiscountService()
-
     fun run(
         cart: Cart,
         user: User,
-    ): Pair<Int, Int> {
-        var price = discountPerSeat(cart)
-        val pair = retryOnInvalidInput(OutputView::printError) { getUserPoint(user, price) }
-        price = pair.first
+    ): Receipt {
+        var receipt = cart.issueReceipt()
+        receipt = retryOnInvalidInput(OutputView::printError) { getUserPoint(receipt, user) }
 
-        price = retryOnInvalidInput(OutputView::printError) { getPaymentMethod(price) }
+        receipt = retryOnInvalidInput(OutputView::printError) { getPaymentMethod(receipt) }
 
-        OutputView.printTotalPrice(price)
+        OutputView.printTotalPrice(receipt.totalPrice())
 
-        return price to pair.second
+        return receipt
     }
+
+    fun createReceipt(cart: Cart): Receipt = cart.issueReceipt()
 
     fun getUserPoint(
+        receipt: Receipt,
         user: User,
-        totalPrice: Int,
-    ): Pair<Int, Int> {
+    ): Receipt {
         val input = InputView.readPoint()
-        return pointUsageService.apply(user, totalPrice, input)
+        return receipt.applyPoint(user, input)
     }
 
-    fun discountPerSeat(cart: Cart): Int = priceCalculationService.calculateDiscountedPrice(cart)
-
-    fun getPaymentMethod(price: Int): Int {
-        val method: PaymentMethod = InputView.readPaymentMethod()
-        return paymentDiscountService.apply(price, method)
-    }
+    fun getPaymentMethod(receipt: Receipt): Receipt = receipt.applyPaymentMethod(InputView.readPaymentMethod())
 
     fun confirmPayment(
         user: User,
-        usedPoint: Int,
-    ) {
-        user.discountPoint(usedPoint)
-    }
+        receipt: Receipt,
+    ) = receipt.confirm(user)
 }

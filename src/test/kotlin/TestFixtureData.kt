@@ -2,7 +2,7 @@ import domain.Id
 import domain.cinema.Movie
 import domain.cinema.MovieTheater
 import domain.cinema.Screen
-import domain.cinema.Screening
+import domain.cinema.ScreeningSchedule
 import domain.reservation.Cart
 import domain.reservation.ReservationInfo
 import domain.seat.Seat
@@ -15,16 +15,16 @@ import kotlinx.datetime.LocalDateTime
 object TestFixtureData {
     val users =
         listOf(
-            User(Id(1)),
-            User(Id(2)),
-            User(Id(3)),
+            User(Id("user-1")),
+            User(Id("user-2")),
+            User(Id("user-3")),
         )
 
     val movies =
         listOf(
-            Movie("해리 포터", Id(1), 152),
-            Movie("인터스텔라", Id(2), 169),
-            Movie("기생충", Id(3), 132),
+            Movie("해리 포터", Id("movie-harry-potter"), 152),
+            Movie("인터스텔라", Id("movie-interstellar"), 169),
+            Movie("기생충", Id("movie-parasite"), 132),
         )
 
     val seats =
@@ -39,16 +39,16 @@ object TestFixtureData {
 
     val screens =
         listOf(
-            Screen(seats, Id(1)),
-            Screen(seats, Id(2)),
-            Screen(seats, Id(3)),
+            Screen(seats, Id("screen-1")),
+            Screen(seats, Id("screen-2")),
+            Screen(seats, Id("screen-3")),
         )
 
     val screenings =
         listOf(
-            Screening(LocalDateTime(2026, 4, 10, 10, 0), screens[0], movies[0]),
-            Screening(LocalDateTime(2026, 4, 10, 14, 0), screens[1], movies[1]),
-            Screening(LocalDateTime(2026, 4, 10, 21, 0), screens[2], movies[2]),
+            ScreeningSchedule(LocalDateTime(2026, 4, 10, 10, 0), screens[0], movies[0]),
+            ScreeningSchedule(LocalDateTime(2026, 4, 10, 14, 0), screens[1], movies[1]),
+            ScreeningSchedule(LocalDateTime(2026, 4, 10, 21, 0), screens[2], movies[2]),
         )
 
     val reservationInfos =

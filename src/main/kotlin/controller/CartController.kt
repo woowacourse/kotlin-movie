@@ -1,6 +1,6 @@
 package controller
 
-import domain.cinema.Screening
+import domain.cinema.ScreeningSchedule
 import domain.reservation.Cart
 import domain.reservation.ReservationInfo
 import domain.seat.Seat
@@ -9,7 +9,7 @@ import view.OutputView
 class CartController {
     fun run(
         cart: Cart,
-        screening: Screening,
+        screening: ScreeningSchedule,
         seats: List<Seat>,
     ): Cart {
         val updatedCart = addAllReservationInfo(cart, screening, seats)
@@ -19,7 +19,7 @@ class CartController {
 
     fun addAllReservationInfo(
         cart: Cart,
-        screening: Screening,
+        screening: ScreeningSchedule,
         seats: List<Seat>,
     ): Cart = cart.addAll(screening, seats)
 

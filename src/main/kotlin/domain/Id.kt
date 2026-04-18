@@ -3,9 +3,9 @@ package domain
 import util.ErrorMessage
 
 data class Id(
-    val value: Int,
+    val value: String,
 ) {
     init {
-        require(value > 0) { ErrorMessage.ID_MUST_BE_POSITIVE }
+        require(value.isNotBlank()) { ErrorMessage.ID_MUST_NOT_BE_BLANK }
     }
 }

@@ -11,7 +11,7 @@ class UserTest {
     @Test
     fun `사용자는 ID로 정상 생성 되어야 한다`() {
         // given & when : User의 ID를 넣는다.
-        val result = User(Id(1))
+        val result = User(Id("user-test"))
 
         // then : 정상 생성 된다.
         assertNotNull(result)
@@ -20,7 +20,7 @@ class UserTest {
     @Test
     fun `포인트 사용 시 포인트가 차감된다`() {
         // given : User 객체가 주어진다
-        val result = User(Id(1))
+        val result = User(Id("user-test"))
 
         // when : discountPoint로 500을 입력했을 때
         result.discountPoint(500)
@@ -32,7 +32,7 @@ class UserTest {
     @Test
     fun `보유 포인트보다 많은 금액을 차감하면 예외가 발생한다`() {
         // given : User 객체가 주어진다
-        val result = User(Id(1))
+        val result = User(Id("user-test"))
 
         // when : discountPoint로 1500을 입력했을 때
         val exception =
