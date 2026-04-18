@@ -8,12 +8,15 @@ import domain.payment.Point
 import domain.reservation.TicketBucket
 import domain.screening.Screening
 import domain.screening.ScreeningSchedule
+import repository.ReservationRepository
+import repository.ScreeningRepository
 import view.InputView
 import view.OutputView
 import java.time.LocalDate
 
 class Controller(
-    var schedule: ScreeningSchedule,
+    private val screeningRepository: ScreeningRepository,
+    private val reservationRepository: ReservationRepository,
 ) {
     val paymentSystem = PaymentSystem()
 
@@ -22,6 +25,7 @@ class Controller(
         var ticketBucket = TicketBucket()
 
         do {
+            val schedule: ScreeningSchedule = screeningRepository.getSchedule()
             val movieTitle = getMovie()
             val reserveDate = getReserveDate()
             val movieSchedule = schedule.getMovieSchedule(movieTitle, reserveDate)
@@ -38,7 +42,7 @@ class Controller(
 
         if (!confirmPurchase(totalPrice)) return
 
-        schedule = schedule.reserve(bucket = ticketBucket)
+        reservationRepository.save(ticketBucket)
 
         OutputView.displayResult(ticketBucket, totalPrice, point)
     }

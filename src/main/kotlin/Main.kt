@@ -1,6 +1,13 @@
 import controller.Controller
-import domain.screening.Scheduler
+import database.DatabaseConfig
+import database.DatabaseInitializer
+import repository.ReservationRepository
+import repository.ScreeningRepository
 
 fun main() {
-    Controller(Scheduler.createSchedule()).run()
+    DatabaseInitializer.init(DatabaseConfig.getConnection())
+    val connection = DatabaseConfig.getConnection()
+    val screeningRepository = ScreeningRepository(connection)
+    val reservationRepository = ReservationRepository(connection)
+    Controller(screeningRepository, reservationRepository).run()
 }

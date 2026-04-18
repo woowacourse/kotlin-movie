@@ -108,7 +108,7 @@ object OutputView {
             val rowLine =
                 rowSeats
                     .sortedBy { it.position.column.value }
-                    .joinToString("") { " [${it.grade.name}]" }
+                    .joinToString("") { if (it.canReserve()) " [${it.grade.name}]" else " [X]" }
             println("$row$rowLine")
         }
     }
