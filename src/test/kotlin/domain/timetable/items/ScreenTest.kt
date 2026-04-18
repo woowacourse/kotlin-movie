@@ -1,9 +1,10 @@
 package domain.timetable.items
 
-import domain.seat.Seat
-import domain.seat.items.ColumnNumber
-import domain.seat.items.RowNumber
-import domain.seat.items.SeatGrade
+import movie.domain.seat.Seat
+import movie.domain.seat.items.ColumnNumber
+import movie.domain.seat.items.RowNumber
+import movie.domain.seat.items.SeatGrade
+import movie.domain.timetable.items.Screen
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,27 +14,27 @@ class ScreenTest {
             Seat(
                 rowNumber = RowNumber("A"),
                 columnNumber = ColumnNumber(1),
-                seatGrade = SeatGrade.GradeA,
+                seatGrade = SeatGrade.GradeB,
             ),
             Seat(
                 rowNumber = RowNumber("A"),
                 columnNumber = ColumnNumber(2),
-                seatGrade = SeatGrade.GradeA,
+                seatGrade = SeatGrade.GradeB,
             ),
             Seat(
                 rowNumber = RowNumber("A"),
                 columnNumber = ColumnNumber(3),
-                seatGrade = SeatGrade.GradeA,
+                seatGrade = SeatGrade.GradeB,
             ),
             Seat(
                 rowNumber = RowNumber("A"),
                 columnNumber = ColumnNumber(4),
-                seatGrade = SeatGrade.GradeA,
+                seatGrade = SeatGrade.GradeB,
             ),
             Seat(
                 rowNumber = RowNumber("A"),
                 columnNumber = ColumnNumber(5),
-                seatGrade = SeatGrade.GradeA,
+                seatGrade = SeatGrade.GradeB,
             ),
         )
 
@@ -44,7 +45,7 @@ class ScreenTest {
                 seats = seats,
             )
 
-        val result = screen.findSeat("A1")
+        val result = screen.findSeat(Seat.create(RowNumber("A"), ColumnNumber(1)))
         assertThat(result).isTrue()
     }
 
@@ -55,7 +56,7 @@ class ScreenTest {
                 seats = seats,
             )
 
-        val result = screen.findSeat("F1")
+        val result = screen.findSeat(Seat.create(RowNumber("F"), ColumnNumber(1)))
         assertThat(result).isFalse()
     }
 }
