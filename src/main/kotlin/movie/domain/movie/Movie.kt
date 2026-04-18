@@ -2,12 +2,12 @@ package movie.domain.movie
 
 import movie.domain.screening.Screenings
 import java.time.LocalDate
-import java.util.UUID
 
 data class Movie(
-    val id: UUID = UUID.randomUUID(),
+    val id: Long = 0L,
     val title: MovieTitle,
     val screenings: Screenings,
+    val runningTimeMinutes: Int,
 ) {
     fun hasScreeningOnDate(date: LocalDate): Boolean = screenings.hasScreeningOnDate(date)
 

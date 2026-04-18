@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class SeatColumnTest {
-
     @Test
     fun `SeatColumn은 1에서 4 사이여야 한다`() {
         assertThrows<IllegalArgumentException> {

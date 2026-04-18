@@ -12,5 +12,12 @@ interface PaymentMethod {
                 2 -> Cash()
                 else -> throw IllegalArgumentException("유효하지 않은 결제 수단입니다.")
             }
+
+        fun from(input: String): PaymentMethod =
+            when (input.uppercase()) {
+                "CREDIT_CARD" -> CreditCard()
+                "CASH" -> Cash()
+                else -> throw IllegalArgumentException("유효하지 않은 결제 수단입니다.")
+            }
     }
 }

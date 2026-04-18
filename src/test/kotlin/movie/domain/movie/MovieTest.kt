@@ -12,13 +12,12 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.UUID
 
 class MovieTest {
     @Test
     fun `영화 ID와 제목, 상영 목록을 갖고 있다`() {
         // given
-        val id = UUID.randomUUID()
+        val id = 1L
         val screenings =
             Screenings(
                 listOf(
@@ -39,7 +38,7 @@ class MovieTest {
             )
 
         // when
-        val movie = Movie(id, MovieTitle("F1 더 무비"), screenings)
+        val movie = Movie(id, MovieTitle("F1 더 무비"), screenings, runningTimeMinutes = 160)
 
         // then
         assertThat(id).isEqualTo(id)

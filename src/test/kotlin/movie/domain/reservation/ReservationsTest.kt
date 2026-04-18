@@ -26,7 +26,7 @@ class ReservationsTest {
     @Test
     fun `예매를 추가할 수 있다`() {
         // given
-        val reservationData = ReservationData.reservations
+        val reservationData = reservationFixtures()
         val selectedSeats =
             SelectedSeats(
                 listOf(
@@ -37,6 +37,7 @@ class ReservationsTest {
 
         val screening =
             Screening(
+                id = 103L,
                 MovieTitle("토이 스토리"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -66,7 +67,7 @@ class ReservationsTest {
 
     @Test
     fun `시간이 겹치는 예매를 추가할 수 없다`() {
-        val reservationData = ReservationData.reservations
+        val reservationData = reservationFixtures()
         val selectedSeats =
             SelectedSeats(
                 listOf(
@@ -77,6 +78,7 @@ class ReservationsTest {
 
         val screening =
             Screening(
+                id = 103L,
                 MovieTitle("토이 스토리"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -107,7 +109,7 @@ class ReservationsTest {
     @Test
     fun `전체 결제 대상 금액은 예매별 할인 적용 금액의 합이다`() {
         // given
-        val reservationData = ReservationData.reservations
+        val reservationData = reservationFixtures()
         val reservations = Reservations(reservationData)
         val discountPolicies =
             DiscountPolicies(
@@ -117,5 +119,51 @@ class ReservationsTest {
 
         // then
         assertThat(reservations.totalPrice(discountPolicies)).isEqualTo(Money(58000))
+    }
+
+    private fun reservationFixtures(): List<Reservation> {
+        val screen = Screen(ScreenId(1), Seats.createDefault())
+        val selectedSeats =
+            SelectedSeats(
+                listOf(
+                    Seat(SeatRow("A"), SeatColumn(1), SeatGrade.B),
+                    Seat(SeatRow("C"), SeatColumn(1), SeatGrade.S),
+                ),
+            )
+
+        val screening1 =
+            Screening(
+                id = 101L,
+                MovieTitle("토이 스토리"),
+                ScreeningSlot(
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0),
+                    ),
+                ),
+                ReservatedSeats(emptyList()),
+            )
+
+        val screening2 =
+            Screening(
+                id = 102L,
+                MovieTitle("F1 더 무비"),
+                ScreeningSlot(
+                    screen,
+                    ScreeningDateTime(
+                        LocalDate.of(2026, 1, 1),
+                        LocalTime.of(14, 0),
+                        LocalTime.of(16, 0),
+                    ),
+                ),
+                ReservatedSeats(emptyList()),
+            )
+
+        return listOf(
+            Reservation(screening1, selectedSeats),
+            Reservation(screening2, selectedSeats),
+        )
     }
 }

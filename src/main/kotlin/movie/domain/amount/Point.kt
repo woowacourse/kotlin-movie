@@ -14,4 +14,6 @@ value class Point(
         }
         return Point(value)
     }
+
+    fun toMoney(): Money = Money(value)
 }

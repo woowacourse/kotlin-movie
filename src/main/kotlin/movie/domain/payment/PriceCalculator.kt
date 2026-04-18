@@ -13,15 +13,11 @@ class PriceCalculator(
         point: Point,
         paymentMethod: PaymentMethod,
     ): PaymentResult {
-        var totalPrice = reservations.totalPrice(discountPolicies)
-
+        val totalPrice = reservations.totalPrice(discountPolicies)
         val usagePoint = point.usableAmount(totalPrice)
-        totalPrice = totalPrice.minus(Money(usagePoint.value))
-        totalPrice = paymentMethod.applyDiscount(totalPrice)
+        val afterPoint = totalPrice - Money(usagePoint.value)
+        val finalPrice = paymentMethod.applyDiscount(afterPoint)
 
-        return PaymentResult(
-            totalPrice = totalPrice,
-            usedPoint = usagePoint,
-        )
+        return PaymentResult(finalPrice, usagePoint, paymentMethod)
     }
 }

@@ -22,5 +22,3 @@ class SeatInputParserTest {
         }.isInstanceOf(IllegalArgumentException::class.java)
     }
 }
-
-

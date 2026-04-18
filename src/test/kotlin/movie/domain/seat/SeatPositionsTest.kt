@@ -14,4 +14,3 @@ class SeatPositionsTest {
         assert(exception.message == "좌석 위치 목록은 비어 있을 수 없습니다.")
     }
 }
-

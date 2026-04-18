@@ -11,5 +11,3 @@ class SeatPositions(
 
     fun display(): String = positions.joinToString(", ") { "${it.seatRow.value}${it.seatColumn.value}" }
 }
-
-

@@ -6,4 +6,3 @@ data class SeatPosition(
 ) {
     fun toSeat(seats: Seats): Seat = seats.findSeat(seatRow, seatColumn)
 }
-

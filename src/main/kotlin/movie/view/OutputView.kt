@@ -4,10 +4,8 @@ import movie.domain.amount.Money
 import movie.domain.amount.Point
 import movie.domain.reservation.Reservation
 import movie.domain.reservation.Reservations
-import movie.domain.screening.Screen
 import movie.domain.screening.Screening
 import movie.domain.screening.Screenings
-import movie.domain.seat.ReservatedSeats
 import movie.domain.seat.SeatColumn
 import movie.domain.seat.SeatRow
 
@@ -15,7 +13,7 @@ class OutputView {
     fun printScreeningList(screenings: Screenings) {
         println(SCREENING_LIST_HEADER)
         screenings.forEachIndexed { index, screening ->
-            println("[${index + 1}] ${screening.slot.startTime}")
+            println("[${index + 1}] ${screening.startTimeText()}")
         }
     }
 
@@ -23,18 +21,15 @@ class OutputView {
         println(SCREENING_TIME_OVERLAP_MESSAGE)
     }
 
-    fun printSeatLayout(
-        screen: Screen,
-        reservedSeats: ReservatedSeats,
-    ) {
+    fun printSeatLayout(screening: Screening) {
         println(SEAT_LAYOUT_HEADER)
         println("    1    2    3    4")
         val rows = listOf("A", "B", "C", "D", "E")
         for (row in rows) {
             print("$row ")
             for (col in 1..4) {
-                val seat = screen.seats.findSeat(SeatRow(row), SeatColumn(col))
-                if (reservedSeats.isAvailable(seat)) {
+                val seat = screening.findSeat(SeatRow(row), SeatColumn(col))
+                if (screening.isSeatAvailable(seat)) {
                     print("[ ${seat.grade}] ")
                 } else {
                     print("[XX] ")
@@ -44,18 +39,14 @@ class OutputView {
         }
     }
 
-    fun printSeatLayout(screening: Screening) {
-        printSeatLayout(screening.slot.screen, screening.reservatedSeats)
-    }
-
     fun printAddedToCart(reservation: Reservation) {
         println(ADDED_TO_CART_MESSAGE)
-        printReservationItem(reservation)
+        printReservationDetail(reservation)
     }
 
     fun printCart(reservations: Reservations) {
         println(CART_HEADER)
-        println(reservations.display())
+        printReservationList(reservations)
     }
 
     fun printFinalPrice(price: Money) {
@@ -70,7 +61,7 @@ class OutputView {
     ) {
         println(RESERVATION_COMPLETE_HEADER)
         println(RESERVATION_DETAIL_HEADER)
-        println(reservations.display())
+        printReservationList(reservations)
         println(
             PAYMENT_AMOUNT_FORMAT.format(
                 formatMoney(price),
@@ -90,8 +81,16 @@ class OutputView {
         println()
     }
 
-    private fun printReservationItem(reservation: Reservation) {
-        println(reservation.display())
+    private fun printReservationDetail(reservation: Reservation) {
+        println(
+            "- [${reservation.screeningTitleText()}] ${reservation.screeningDateText()} ${reservation.screeningStartTimeText()}  좌석: ${reservation.selectedSeatDisplay()}",
+        )
+    }
+
+    private fun printReservationList(reservations: Reservations) {
+        reservations.forEachIndexed { _, reservation ->
+            printReservationDetail(reservation)
+        }
     }
 
     private fun formatMoney(money: Money): String = String.format("%,d", money.value)

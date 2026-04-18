@@ -26,6 +26,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
+                id = 101L,
                 MovieTitle("토이 스토리"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -62,6 +63,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
+                id = 101L,
                 MovieTitle("토이 스토리"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -98,6 +100,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
+                id = 101L,
                 MovieTitle("토이 스토리"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -133,6 +136,7 @@ class ScreeningTest {
 
         val screening =
             Screening(
+                id = 101L,
                 MovieTitle("토이 스토리"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -162,6 +166,6 @@ class ScreeningTest {
 
         val reservation = updatedScreening.createReservation(selectedSeats)
         assertThat(reservation).isNotNull()
-        assertThat(reservation.display()).contains("좌석: A1")
+        assertThat(reservation.selectedSeatDisplay()).isEqualTo("A1")
     }
 }

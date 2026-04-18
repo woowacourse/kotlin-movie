@@ -10,6 +10,10 @@ data class Reservations(
         validateNoOverlapping()
     }
 
+    fun forEach(action: (Reservation) -> Unit) {
+        reservations.forEach(action)
+    }
+
     fun add(reservation: Reservation): Reservations = Reservations(reservations + reservation)
 
     fun totalPrice(discountPolicies: DiscountPolicies): Money =
@@ -17,8 +21,9 @@ data class Reservations(
             acc + reservation.calculateDiscountedPrice(discountPolicies)
         }
 
-    fun display(): String = reservations.joinToString("\n") { it.display() }
-
+    fun forEachIndexed(action: (Int, Reservation) -> Unit) {
+        reservations.forEachIndexed(action)
+    }
 
     private fun validateNoOverlapping() {
         reservations.forEachIndexed { index, reservation ->

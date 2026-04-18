@@ -10,8 +10,9 @@ class SeatInputParser {
         )
 
     private fun parseSeatPosition(token: String): SeatPosition {
-        val match = SEAT_FORMAT.matchEntire(token)
-            ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $token")
+        val match =
+            SEAT_FORMAT.matchEntire(token)
+                ?: throw IllegalArgumentException("유효하지 않은 좌석 형식입니다: $token")
 
         val row = SeatRow(match.groupValues[1].uppercase())
         val column = SeatColumn(match.groupValues[2].toInt())

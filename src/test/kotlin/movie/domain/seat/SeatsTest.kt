@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class SeatsTest {
-
     @Test
     fun `기본 좌석 목록은 20개의 좌석을 가진다`() {
         val seats = Seats.createDefault()

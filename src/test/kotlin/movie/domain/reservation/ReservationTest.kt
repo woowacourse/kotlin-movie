@@ -35,6 +35,7 @@ class ReservationTest {
 
         val screening =
             Screening(
+                id = 101L,
                 MovieTitle("F1 더 무비"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
@@ -81,6 +82,7 @@ class ReservationTest {
 
         val screening =
             Screening(
+                id = 101L,
                 MovieTitle("F1 더 무비"),
                 ScreeningSlot(
                     Screen(ScreenId(1), Seats.createDefault()),
