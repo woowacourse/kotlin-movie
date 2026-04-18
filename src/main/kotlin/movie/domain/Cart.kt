@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.error.ScheduleErrorMessage
 import movie.domain.seat.SeatNumber
 import kotlin.collections.toMutableList
 
@@ -14,7 +15,7 @@ class Cart(
         schedule: Schedule,
         seats: List<SeatNumber>,
     ) {
-        require(!isDuplicateTime(schedule = schedule)) { "상영시간은 중복될 수 없습니다." }
+        require(!isDuplicateTime(schedule = schedule)) { ScheduleErrorMessage.DUPLICATE_TIME }
 
         _reservations.add(Reservation(schedule, seats))
     }

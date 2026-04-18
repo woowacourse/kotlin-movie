@@ -97,3 +97,38 @@
 
 ### MovieController
 - [x] 영화 예매를 진행할 수 있다.
+
+## 3단계 구현 기능
+
+## Database
+### movie
+- [x] 영화 정보를 저장한다.
+- [x] title, running_time을 가진다.
+- [x] 여러 상영 정보를 가진다.
+
+### schedule
+- [x] 상영 정보를 저장한다.
+- [x] movie_id, start_time, end_time을 가진다.
+- [x] 하나의 영화에 속한다.
+- [x] 여러 예약 정보를 가진다.
+
+### reservation
+- [x] 예약 정보를 저장한다.
+- [x] schedule_id, total_price, reserved_at을 가진다.
+- [x] 하나의 상영에 속한다.
+- [x] 여러 좌석 정보를 가진다.
+
+### reserved_seat
+- [x] 예약된 좌석 정보를 저장한다.
+- [x] reservation_id, schedule_id, seat_number를 가진다.
+- [x] 하나의 예약에 속한다.
+- [x] 동일한 상영에서 동일 좌석은 한 번만 예약되도록 UNIQUE 제약 조건을 가진다.
+
+### 기능
+- [x] 상영중인 스케줄를 DB에서 가져올 수 있다.
+- [x] 예약을 저장할 수 있다.
+
+## 4단계 구현 기능
+- [x] API를 구현한다.
+  - [x] 영화를 조회하는 API를 구현한다. (GET /api/movies)
+  - [x] 영화를 예매하는 API를 구현한다. (POST /api/reservations)

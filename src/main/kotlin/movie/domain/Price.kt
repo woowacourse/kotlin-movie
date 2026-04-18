@@ -1,11 +1,13 @@
 package movie.domain
 
+import movie.error.PaymentErrorMessage
+
 @JvmInline
 value class Price(
     val amount: Int,
 ) {
     init {
-        require(amount >= 0) { "가격은 0원 이상이어야 합니다." }
+        require(amount >= 0) { PaymentErrorMessage.INVALID_PRICE }
     }
 
     operator fun minus(target: Price): Price = Price(this.amount - target.amount)

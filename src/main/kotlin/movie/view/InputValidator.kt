@@ -1,29 +1,32 @@
 package movie.view
 
+import movie.error.SystemErrorMessage
+import movie.error.SeatErrorMessage
+
 object InputValidator {
     private const val DATE_PATTERN = """\d{4}-\d{2}-\d{2}"""
     private const val SEAT_PATTERN = """^[A-Za-z]\d+$"""
 
     fun validateYesNo(input: String) {
-        require(input.uppercase() in setOf("Y", "N")) { "Y 또는 N만 입력할 수 있습니다." }
+        require(input.uppercase() in setOf("Y", "N")) { SystemErrorMessage.INVALID_YES_NO }
     }
 
     fun validateDate(input: String) {
-        require(Regex(DATE_PATTERN).matches(input)) { "날짜는 YYYY-MM-DD 형식이어야 합니다." }
+        require(Regex(DATE_PATTERN).matches(input)) { SystemErrorMessage.INVALID_DATE_FORMAT }
     }
 
     fun validateNumber(input: String) {
-        requireNotNull(input.toIntOrNull()) { "숫자를 입력해야 합니다." }
+        requireNotNull(input.toIntOrNull()) { SystemErrorMessage.INVALID_NUMBER_INPUT }
     }
 
     fun validateSeatNumbers(input: String) {
         val seatInputs = input.split(",").map { it.trim() }
 
-        require(seatInputs.isNotEmpty()) { "좌석을 하나 이상 입력해야 합니다." }
+        require(seatInputs.isNotEmpty()) { SeatErrorMessage.EMPTY_INPUT }
 
         seatInputs.forEach { seat ->
             require(Regex(SEAT_PATTERN).matches(seat)) {
-                "좌석은 A1, B2 형식으로 입력해야 합니다."
+                SeatErrorMessage.INVALID_FORMAT
             }
         }
     }

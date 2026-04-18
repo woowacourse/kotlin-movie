@@ -12,6 +12,7 @@ object ScheduleFixture {
         startTime: LocalDateTime = LocalDateTime.of(2026, 4, 10, 10, 0),
         endTime: LocalDateTime = LocalDateTime.of(2026, 4, 10, 12, 0),
     ) = Schedule(
+        id = 1L,
         movie = Movie(title = MovieTitle(title), runningTime = runningTime),
         startTime = startTime,
         endTime = endTime,

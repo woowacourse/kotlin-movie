@@ -74,7 +74,7 @@ object OutputView {
         schedule: Schedule,
         seats: List<SeatNumber>,
     ) {
-        val seatNumbers = seats.joinToString(", ")
+        val seatNumbers = seats.joinToString(", ") { "${it.row}${it.col}" }
         val startTime =
             schedule.startTime.format(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
@@ -129,7 +129,7 @@ object OutputView {
         val minute = "%02d".format((screeningMovie.startTime.minute))
         val movieTime = "$hour:$minute"
         val date = screeningMovie.startTime.toLocalDate()
-        val seatNumbers = reservation.seats.joinToString(", ")
+        val seatNumbers = reservation.seats.joinToString(", ") { "${it.row}${it.col}" }
 
         println("- [${screeningMovie.movie.title.value}] $date $movieTime 좌석: $seatNumbers")
     }

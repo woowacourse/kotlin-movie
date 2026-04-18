@@ -1,14 +1,16 @@
 package movie.domain.point
 
+import movie.error.PaymentErrorMessage
+
 @JvmInline
 value class Point(
     val amount: Int,
 ) {
     init {
-        require(amount >= 0) { "포인트는 0원 이상이어야 합니다." }
+        require(amount >= 0) { PaymentErrorMessage.INVALID_POINT }
     }
 
     constructor(input: String) : this(
-        amount = input.toIntOrNull() ?: throw IllegalArgumentException("포인트는 정수여야 합니다."),
+        amount = input.toIntOrNull() ?: throw IllegalArgumentException(PaymentErrorMessage.POINT_NOT_INTEGER),
     )
 }

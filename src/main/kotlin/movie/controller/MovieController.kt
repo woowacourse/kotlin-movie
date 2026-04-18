@@ -1,5 +1,8 @@
 package movie.controller
 
+import movie.error.MovieErrorMessage
+import movie.error.ScheduleErrorMessage
+import movie.error.SeatErrorMessage
 import movie.domain.Cart
 import movie.domain.MovieManager
 import movie.domain.MovieTitle
@@ -10,15 +13,19 @@ import movie.domain.payment.Cash
 import movie.domain.payment.PaymentMethod
 import movie.domain.point.Point
 import movie.domain.seat.SeatNumber
+import movie.service.ReservationService
+import movie.service.ScheduleService
 import movie.view.InputView
 import movie.view.OutputView
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieController(
-    private val movieManager: MovieManager,
+    private val scheduleService: ScheduleService,
+    private val reservationService: ReservationService,
     private val paymentManager: PaymentManager = PaymentManager(),
     private val cart: Cart = Cart(),
+    private val movieManager: MovieManager = MovieManager(scheduleService.getSchedules()),
 ) {
     fun run() {
         if (!getReservationStart()) {
@@ -75,6 +82,7 @@ class MovieController(
         OutputView.printTotalPrice(paymentPrice)
 
         if (getUserPayment()) {
+            cart.getReservations().forEach { reservationService.saveReservation(it) }
             OutputView.printReceipt(cart = cart, paymentPrice = paymentPrice, usePoint = usePoint)
             OutputView.printThankYou()
         }
@@ -85,7 +93,7 @@ class MovieController(
             val input = InputView.readMovieTitle()
             val title = MovieTitle(input)
 
-            require(movieManager.hasMovieTitle(title)) { "상영 중인 영화가 없습니다." }
+            require(movieManager.hasMovieTitle(title)) { MovieErrorMessage.NO_MOVIES_IN_THEATER }
 
             title
         }
@@ -114,7 +122,7 @@ class MovieController(
             val schedule = movieManager.getSchedule(title = title, startTime = movieTimes[index])
 
             require(!cart.isDuplicateTime(schedule)) {
-                "선택하신 상영 시간이 겹칩니다. 다른 시간을 선택해 주세요."
+                ScheduleErrorMessage.DUPLICATE_SELECTION_TIME
             }
 
             OutputView.printSeats(schedule)
@@ -129,7 +137,7 @@ class MovieController(
 
             val seats = input.map { SeatNumber(it) }
 
-            require(!schedule.isReservationSeats(seats)) { "이미 예약된 좌석입니다." }
+            require(!schedule.isReservationSeats(seats)) { SeatErrorMessage.ALREADY_RESERVED }
 
             seats
         }

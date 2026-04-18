@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.error.MovieErrorMessage
 import movie.domain.MovieTitle
 
 class Movie(
@@ -7,6 +8,6 @@ class Movie(
     val runningTime: Int,
 ) {
     init {
-        require(runningTime > 0) { "영화 러닝 타임은 0분 이하일 수 없습니다." }
+        require(runningTime > 0) { MovieErrorMessage.INVALID_RUNNING_TIME }
     }
 }

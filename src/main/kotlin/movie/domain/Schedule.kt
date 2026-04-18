@@ -1,10 +1,13 @@
 package movie.domain
 
+import movie.error.ScheduleErrorMessage
+import movie.error.SeatErrorMessage
 import movie.domain.seat.SeatNumber
 import movie.domain.seat.SelectedSeats
 import java.time.LocalDateTime
 
 class Schedule(
+    val id: Long,
     val movie: Movie,
     val startTime: LocalDateTime,
     val endTime: LocalDateTime,
@@ -12,7 +15,7 @@ class Schedule(
     val theater: Theater = Theater(),
 ) {
     init {
-        require(startTime < endTime) { "영화 시작 시각은 종료 시각보다 빨라야 합니다" }
+        require(startTime < endTime) { ScheduleErrorMessage.INVALID_TIME_RANGE }
     }
 
     fun isReservationSeats(seatNumbers: List<SeatNumber>): Boolean = seatNumbers.any { selectedSeat.isReservationSeat(it) }
@@ -24,7 +27,7 @@ class Schedule(
             target.startTime in startTime..endTime
 
     fun addSeats(seats: List<SeatNumber>) {
-        require(seats.all { theater.isValidSeatNumber(it) }) { "유효하지 않은 좌석입니다." }
+        require(seats.all { theater.isValidSeatNumber(it) }) { SeatErrorMessage.INVALID_NUMBER }
 
         selectedSeat.addSelectedSeats(seats)
     }

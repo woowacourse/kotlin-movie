@@ -1,5 +1,6 @@
 package movie.domain
 
+import movie.error.SeatErrorMessage
 import movie.domain.seat.Seat
 import movie.domain.seat.SeatNumber
 import movie.domain.seat.SeatRank
@@ -18,7 +19,7 @@ class Theater {
         seats
             .firstOrNull { it.seatNumber == seatNumber }
             ?.getPrice()
-            ?: throw IllegalArgumentException("존재하지 않는 좌석입니다.")
+            ?: throw IllegalArgumentException(SeatErrorMessage.NOT_FOUND)
 
     companion object {
         private fun createSeats(): List<Seat> {

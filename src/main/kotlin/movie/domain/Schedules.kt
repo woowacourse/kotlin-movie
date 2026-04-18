@@ -1,5 +1,7 @@
 package movie.domain
 
+import movie.error.MovieErrorMessage
+import movie.error.ScheduleErrorMessage
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -21,7 +23,7 @@ class Schedules(
                 it.movie.title == movieTitle && it.startTime.toLocalDate() == date
             }
 
-        require(schedules.isNotEmpty()) { "해당 영화가 해당 날짜에 상영하지 않습니다" }
+        require(schedules.isNotEmpty()) { MovieErrorMessage.NOT_FOUND_ON_DATE }
 
         return schedules
     }
@@ -37,5 +39,9 @@ class Schedules(
     ): Schedule =
         schedules.firstOrNull {
             it.movie.title == movieTitle && it.startTime == startTime
-        } ?: throw IllegalArgumentException("영화 제목 또는 시작 시간이 올바르지 않습니다.")
+        } ?: throw IllegalArgumentException(ScheduleErrorMessage.INVALID_MOVIE_OR_TIME)
+
+    fun getScheduleById(id: Long): Schedule =
+        schedules.firstOrNull { it.id == id }
+            ?: throw IllegalArgumentException(ScheduleErrorMessage.SCREENING_NOT_FOUND)
 }
