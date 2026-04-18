@@ -8,6 +8,7 @@ import domain.seat.SeatPosition
 import domain.seat.Seats
 
 data class ScreeningRoom(
+    val id: Long? = null,
     val name: ScreeningRoomName,
     val operatingTime: TimeRange,
     val seats: Seats = createDefaultSeats(),

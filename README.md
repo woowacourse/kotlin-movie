@@ -1,6 +1,74 @@
 # kotlin-movie
 
-# 기능 목록
+## 4단계 요구사항 목록
+
+- [x] Spring 의존성 추가
+- [x] 기존 프로젝트를 console로 분리
+- [x] MovieApiController 구현 및 테스트 코드 작성
+  - [x] 영화 목록 조회 API 추가 및 테스트 코드 작성
+  - [x] 예매 API 구현 및 ScreeningRepository 상영 조회 기능 추가 및 테스트 코드 작성
+
+## 3단계 시작 전 피드백 적용
+- [x] Controller 클래스 내 프로퍼티 가시성 수정 (public -> private)
+- [x] Ticket 클래스의 calculate 메서드 내 루프를 forEach로 변경
+- [x] ScreeningSchedule 불변 객체 반환이 controller의 schedule에 반영되도록 변경
+
+## 3단계 요구사항 목록
+
+- [x] H2 데이터베이스 의존성 추가
+- [x] 데이터베이스 스키마 설계
+- [x] JdbcConnection 구현 및 테스트 추가 
+- [x] ScreeningRoomRepository 구현 및 테스트 코드 추가
+- [x] MovieRepository 구현 및 테스트 코드 추가
+- [x] ScreeningRepository 구현 및 테스트 코드 추가
+- [x] ReservationRepository 구현 및 테스트 코드 작성
+
+### 데이터베이스 스키마 
+#### 1. `movies` (영화 정보)
+| 컬럼명 | 타입 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- |
+| **id** | BIGINT | PRIMARY KEY, AUTO_INCREMENT | 영화 고유 식별자 |
+| **title** | VARCHAR(255) | NOT NULL | 영화 제목 |
+| **running_time** | INT | NOT NULL | 상영 시간 (분 단위) |
+| **start_date** | DATE | NOT NULL | 상영 시작 가능일 |
+| **end_date** | DATE | NOT NULL | 상영 종료 예정일 |
+
+#### 2. `screening_rooms` (상영관 정보)
+| 컬럼명 | 타입 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- |
+| **id** | BIGINT | PRIMARY KEY, AUTO_INCREMENT | 상영관 고유 식별자 |
+| **name** | VARCHAR(255) | NOT NULL | 상영관 이름 (예: 1관) |
+| **operating_start_time** | TIME | NOT NULL | 영업 시작 시간 |
+| **operating_end_time** | TIME | NOT NULL | 영업 종료 시간 |
+
+#### 3. `screenings` (상영 스케줄)
+| 컬럼명 | 타입 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- |
+| **id** | BIGINT | PRIMARY KEY, AUTO_INCREMENT | 상영 회차 고유 식별자 |
+| **movie_id** | BIGINT | FOREIGN KEY (movies.id) | 상영될 영화 ID |
+| **room_id** | BIGINT | FOREIGN KEY (screening_rooms.id) | 상영될 장소 ID |
+| **start_time** | TIMESTAMP | NOT NULL | 상영 시작 일시 |
+
+#### 4. `reservations` (예매 정보)
+| 컬럼명 | 타입 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- |
+| **id** | BIGINT | PRIMARY KEY, AUTO_INCREMENT | 예매 고유 번호 |
+| **used_points** | INT | NOT NULL | 사용된 포인트 |
+| **payment_method** | VARCHAR(50) | NOT NULL | 결제 수단 (카드, 현금 등) |
+| **total_price** | INT | NOT NULL | 총 결제 금액 |
+| **created_at** | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 예매 생성 일시 |
+
+#### 5. `reserved_seats` (예약된 좌석 상세)
+| 컬럼명 | 타입 | 제약 조건 | 설명 |
+| :--- | :--- | :--- | :--- |
+| **id** | BIGINT | PRIMARY KEY, AUTO_INCREMENT | 좌석 예약 고유 식별자 |
+| **reservation_id** | BIGINT | FOREIGN KEY (reservations.id) | 연결된 예매 ID |
+| **screening_id** | BIGINT | FOREIGN KEY (screenings.id) | 상영 회차 ID |
+| **seat_row** | VARCHAR(5) | NOT NULL | 좌석 행 (예: A, B) |
+| **seat_column** | INT | NOT NULL | 좌석 열 (예: 1, 2) |
+
+
+## 1 | 2단계 기능 목록
 
 ## 도메인 - 모델
 
@@ -132,6 +200,33 @@
 ---
 
 ## 테스트 목록
+
+### DB 테스트
+
+#### JdbcConnection
+- [x] H2 데이터베이스 연결을 가져올 수 있다
+- [x] 연결된 커넥션은 유효해야 한다
+- [x] 설정된 DB URL이 올바른지 확인한다
+
+#### MovieRepository
+- [x] findAll은 저장된 모든 영화 목록을 반환한다
+- [x] findById는 존재하는 ID로 조회 시 해당 영화를 반환한다
+- [x] findById는 존재하지 않는 ID로 조회 시 예외를 던진다
+
+#### ScreeningRoomRepository
+- [x] findById는 존재하는 상영관 ID로 조회 시 상영관 객체를 반환한다
+- [x] findById는 존재하지 않는 ID로 조회 시 예외를 던진다
+
+#### ScreeningRepository
+- [x] findAll은 모든 상영 정보와 예약된 좌석 상태를 반환한다
+
+#### ReservationRepository
+- [x] save는 예약 정보와 좌석 정보를 저장한다
+
+### Spring 테스트
+- [x] 영화 목록 조회 요청 시 200 OK를 반환하고 영화와 상영 정보가 포함된다
+- [x] 정상적인 예매 요청 시 210 Created 응답과 함께 예매 내역을 반환한다
+- [x] 여러 영화를 한 번에 예매할 때 각 상영별 할인이 올바르게 적용되어 최종 금액이 반환된다
 
 ### 영화 테스트
 

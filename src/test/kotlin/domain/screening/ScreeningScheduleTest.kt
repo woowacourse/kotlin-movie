@@ -28,19 +28,37 @@ class ScreeningScheduleTest {
 
         // when
         val screening1 = createScreening(
+            id = 1L,
             movie = movie,
             startTime = startTime,
-            room = createScreeningRoom("커브볼 1관")
+            room = createScreeningRoom(name = "커브볼 1관")
         )
         val screening2 = createScreening(
+            id = 2L,
             movie = movie,
             startTime = startTime,
-            room = createScreeningRoom("커브볼 2관")
+            room = createScreeningRoom(name = "커브볼 2관")
         )
 
         // then
         shouldThrow<IllegalArgumentException> {
             ScreeningSchedule(listOf(screening1, screening2))
         }
+    }
+
+    @Test
+    fun `예약 시 좌석 정보가 반영된 새로운 상영 일정이 반환된다`() {
+        // given
+        val screening = createScreening()
+        val schedule = ScreeningSchedule(listOf(screening))
+        val ticket = domain.ticket.Ticket(screening, domain.seat.SeatPositions(listOf(domain.DomainTestFixture.seatA1())))
+        val bucket = domain.ticket.TicketBucket(listOf(ticket))
+
+        // when
+        val updatedSchedule = schedule.reserve(bucket)
+
+        // then
+        schedule.screenings[0].seats.isReservable(domain.DomainTestFixture.seatA1()) shouldBe true
+        updatedSchedule.screenings[0].seats.isReservable(domain.DomainTestFixture.seatA1()) shouldBe false
     }
 }

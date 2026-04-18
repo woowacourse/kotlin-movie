@@ -1,4 +1,4 @@
-package view
+package console.view
 
 import domain.common.Money
 import domain.common.Point

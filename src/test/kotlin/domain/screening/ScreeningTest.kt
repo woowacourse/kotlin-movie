@@ -21,7 +21,7 @@ class ScreeningTest {
         val startTime = LocalDateTime.of(2026, 4, 8, 10, 0)
 
         // when
-        val screening = createScreening(movie, room, startTime)
+        val screening = createScreening(movie = movie, room = room, startTime = startTime)
 
         // then
         screening.movie shouldBe movie

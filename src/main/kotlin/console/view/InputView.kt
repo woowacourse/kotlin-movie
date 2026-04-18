@@ -1,4 +1,4 @@
-package view
+package console.view
 
 import domain.movie.Title
 import domain.payment.PaymentType

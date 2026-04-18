@@ -14,7 +14,7 @@ class ScreeningRoomTest {
         val name = ScreeningRoomName("커피")
         val operatingTime = TimeRange(LocalTime.of(10, 0), LocalTime.of(18, 0))
         val seats = createScreeningRoom().seats
-        val screeningRoom = ScreeningRoom(name, operatingTime, seats)
+        val screeningRoom = ScreeningRoom(name = name, operatingTime = operatingTime, seats = seats)
 
         // when & then
         screeningRoom.name shouldBe name

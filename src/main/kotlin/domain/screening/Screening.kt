@@ -1,16 +1,15 @@
 package domain.screening
 
 import domain.common.TimeRange
+import domain.movie.Movie
 import domain.seat.ReserveState
 import domain.seat.SeatPosition
 import domain.seat.SeatPositions
 import domain.seat.Seats
-import domain.movie.Movie
 import java.time.LocalDateTime
-import java.util.UUID
 
 class Screening(
-    val id: String = UUID.randomUUID().toString(),
+    val id: Long? = null,
     val movie: Movie,
     val room: ScreeningRoom,
     val startTime: LocalDateTime,

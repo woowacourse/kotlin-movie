@@ -1,4 +1,4 @@
-package controller
+package console.controller
 
 import domain.common.Money
 import domain.discount.MoviedayDiscount
@@ -14,14 +14,14 @@ import domain.screening.Screening
 import domain.screening.ScreeningSchedule
 import domain.ticket.Ticket
 import domain.ticket.TicketBucket
-import view.InputView
-import view.OutputView
+import console.view.InputView
+import console.view.OutputView
 import java.time.LocalDate
 
 class Controller(
-    val schedule: ScreeningSchedule,
+    private var schedule: ScreeningSchedule,
 ) {
-    val paymentSystem = PaymentSystem(
+    private val paymentSystem = PaymentSystem(
         ticketDiscountStrategy = TicketDiscountPolicy(
             strategies = listOf(
                 MoviedayDiscount(),
@@ -56,7 +56,7 @@ class Controller(
 
         if (!confirmPurchase(totalPrice)) return
 
-        schedule.reserve(bucket = ticketBucket)
+        schedule = schedule.reserve(bucket = ticketBucket)
 
         OutputView.displayResult(ticketBucket, totalPrice, point)
     }

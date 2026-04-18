@@ -18,9 +18,10 @@ data class Ticket(
         seatPositions.hasAnyOverlap(other.seatPositions)
     private fun calculate(): Money {
         var total = Money(0)
-        for(position in seatPositions.positions) {
+        seatPositions.positions.forEach { position ->
             total += position.price
         }
+
         return total
     }
 
